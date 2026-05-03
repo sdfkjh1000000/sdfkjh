@@ -24,8 +24,8 @@ Reference in `index.html` `<head>`:
 
 Generated to `dist/` — upload by hand:
 
-- [ ] `dist/gsuite-profile.png` — https://myaccount.google.com/personal-info → click avatar → upload (replaces the smiley placeholder)
-- [ ] `dist/gsuite-logo.png` — https://admin.google.com → Account → Account settings → Personalization → upload (replaces "SDFKJH" colored letters)
+- [x] `dist/gsuite-profile.png` — uploaded 2026-05-03 (https://myaccount.google.com/personal-info — replaced smiley placeholder)
+- [x] `dist/gsuite-logo.png` — uploaded 2026-05-03 (https://admin.google.com → Account → Personalization — replaced colorful "SDFKJH" letters)
 
 ## Email signatures
 
