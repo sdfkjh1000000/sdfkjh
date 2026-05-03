@@ -8,3 +8,7 @@ Thumbs.db
 
 # Local-only working files (not for deployment)
 variants/
+
+# Build pipeline (per site-scaffold)
+node_modules/
+dist/

@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <rect width="512" height="512" fill="#1a1a1a"/>
+  <text x="256" y="330" text-anchor="middle"
+        font-family="'Consolas','Cascadia Mono','Courier New',monospace"
+        font-weight="700" font-size="200">
+    <tspan fill="#ff7a1a">[</tspan><tspan fill="#f0ebd9">mr</tspan><tspan fill="#ff7a1a">]</tspan>
+  </text>
+</svg>
