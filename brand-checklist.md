@@ -27,6 +27,16 @@ Generated to `dist/` — upload by hand:
 - [ ] `dist/gsuite-profile.png` — https://myaccount.google.com/personal-info → click avatar → upload (replaces the smiley placeholder)
 - [ ] `dist/gsuite-logo.png` — https://admin.google.com → Account → Account settings → Personalization → upload (replaces "SDFKJH" colored letters)
 
+## Email signatures
+
+Source-of-truth: `brand/email-signature.html`. To install: open the file in a browser, click inside the dashed box, `Ctrl+A` to select, copy, paste into Gmail → Settings → See all settings → General → Signature.
+
+- [x] sdfkjh signature (variant B: mark + identity card) — installed in Gmail for `mrhodes@sdfkjh.com` (2026-05-03)
+
+Notes:
+- Image is referenced via `https://sdfkjh.com/apple-touch-icon.png` (the live favicon). If the site goes down, signature image breaks for new sends.
+- Gmail sender display name is a separate setting (Settings → Accounts → Send mail as → edit) — currently "Michael R", not changed in this rebrand.
+
 ## OG cache invalidation (after re-shipping og-image)
 
 Twitter / Facebook / LinkedIn / Slack cache OG previews per-URL. If sdfkjh.com has been shared anywhere, force re-scrape:
