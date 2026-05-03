@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>SDFKJH</title>
+<meta name="description" content="// left hand meets right hand"/>
+<meta property="og:title" content="sdfkjh.com"/>
+<meta property="og:description" content="// left hand meets right hand"/>
+<meta property="og:type" content="website"/>
+<meta property="og:url" content="https://sdfkjh.com/"/>
+<meta property="og:image" content="https://sdfkjh.com/og-image.png"/>
+<meta property="og:image:width" content="1200"/>
+<meta property="og:image:height" content="630"/>
+<meta property="og:image:alt" content="sdfkjh.com"/>
+<meta name="twitter:card" content="summary_large_image"/>
+<style>
+  :root {
+    --bg: #0c0c0c;
+    --border: #222;
+    --green: #4ade80;
+    --muted: #64748b;
+    --muted2: #94a3b8;
+    --mono: 'Courier New', 'Lucida Console', monospace;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{font-family:var(--mono);background:var(--bg);color:var(--muted2);min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:2rem;text-align:center;}
+  .scanline{position:fixed;inset:0;background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,0.08) 2px,rgba(0,0,0,0.08) 4px);pointer-events:none;}
+  .glow{position:fixed;width:500px;height:500px;background:radial-gradient(circle,rgba(74,222,128,0.05) 0%,transparent 70%);top:50%;left:50%;transform:translate(-50%,-50%);pointer-events:none;}
+
+  .key-row{display:flex;justify-content:center;gap:.35rem;margin-bottom:2rem;}
+  .key{
+    display:inline-flex;align-items:center;justify-content:center;
+    width:38px;height:38px;
+    background:#111;
+    border:1px solid var(--border);
+    border-bottom:3px solid #1a1a1a;
+    border-radius:5px;
+    font-size:.8rem;font-weight:700;
+    color:var(--muted);
+    transition:transform 0.08s ease, border-bottom-width 0.08s ease, box-shadow 0.08s ease, background 0.08s ease;
+  }
+  .key.lit{
+    color:var(--green);
+    border-color:#16a34a;
+    border-bottom:3px solid #166534;
+    box-shadow:0 0 10px rgba(74,222,128,0.15);
+  }
+  .key.pressed{
+    transform:translateY(3px) !important;
+    border-bottom-width:1px !important;
+    background:#0a1a0a !important;
+    box-shadow:0 0 16px rgba(74,222,128,0.4) !important;
+  }
+  /* easter egg typed highlight */
+  .key.hacked{
+    color:#ff00ff !important;
+    border-color:#ff00ff !important;
+    border-bottom-color:#cc00cc !important;
+    box-shadow:0 0 14px rgba(255,0,255,0.5) !important;
+    transform:translateY(3px) !important;
+    border-bottom-width:1px !important;
+    background:#1a001a !important;
+  }
+
+  h1{font-size:3.5rem;font-weight:900;letter-spacing:-2px;color:#fff;margin-bottom:.5rem;}
+  .cursor{display:inline-block;width:8px;height:14px;background:var(--green);animation:blink 1s infinite;vertical-align:middle;margin-left:4px;}
+  @keyframes blink{0%,100%{opacity:1;}50%{opacity:0;}}
+
+  .tagline{font-size:.8rem;color:var(--muted);letter-spacing:2px;margin-bottom:2rem;}
+  .tagline span{color:var(--green);}
+  .links{display:flex;gap:1.5rem;justify-content:center;flex-wrap:wrap;}
+  .links a{color:var(--muted2);text-decoration:none;font-size:.8rem;transition:color .2s;}
+  .links a:hover{color:var(--green);}
+  footer{position:fixed;bottom:1.5rem;font-size:.7rem;color:var(--muted);}
+
+  /* ── NETRUNNER OVERLAY ───────────────────────────────── */
+  #nr-overlay{
+    display:none;
+    position:fixed;inset:0;z-index:9999;
+    background:#050510;
+    flex-direction:column;
+    animation:nr-in 0.35s ease;
+  }
+  #nr-overlay.active{ display:flex; }
+  @keyframes nr-in{from{opacity:0;transform:scale(1.04);}to{opacity:1;transform:scale(1);}}
+
+  #nr-close{
+    position:absolute;top:12px;right:16px;z-index:10;
+    background:transparent;border:1px solid #ff00ff55;
+    color:#ff00ff;font-family:'Courier New',monospace;font-size:11px;
+    padding:6px 14px;cursor:pointer;letter-spacing:2px;
+    text-shadow:0 0 6px #ff00ff;transition:all .2s;
+  }
+  #nr-close:hover{background:#ff00ff22;box-shadow:0 0 12px #ff00ff88;}
+
+  /* scanlines + vignette inside overlay */
+  #nr-overlay::before{
+    content:'';position:fixed;inset:0;
+    background:repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,0.13) 2px,rgba(0,0,0,0.13) 4px);
+    pointer-events:none;z-index:1;
+  }
+  #nr-overlay::after{
+    content:'';position:fixed;inset:0;
+    background:radial-gradient(ellipse at center,transparent 60%,rgba(0,0,0,0.65) 100%);
+    pointer-events:none;z-index:1;
+  }
+
+  #nr-header{
+    padding:10px 20px;border-bottom:1px solid #ff00ff44;
+    display:flex;justify-content:space-between;align-items:center;flex-shrink:0;
+    position:relative;z-index:2;
+  }
+  #nr-title{
+    font-family:'Courier New',monospace;font-size:17px;font-weight:900;
+    color:#ff00ff;text-shadow:0 0 10px #ff00ff,0 0 22px #ff00ff88;
+    letter-spacing:3px;animation:gpulse 2s ease-in-out infinite;
+  }
+  @keyframes gpulse{
+    0%,100%{text-shadow:0 0 10px #ff00ff,0 0 22px #ff00ff88;}
+    50%{text-shadow:0 0 20px #ff00ff,0 0 40px #ff00ff,0 0 60px #ff00ff44;}
+  }
+  #nr-stats{display:flex;gap:24px;font-size:12px;font-family:'Courier New',monospace;}
+  .nr-stat{color:#555;}.nr-stat span{color:#00ffff;text-shadow:0 0 8px #00ffff;}
+
+  #nr-main{display:flex;flex:1;overflow:hidden;position:relative;z-index:2;}
+
+  #nr-panel{
+    width:290px;flex-shrink:0;border-right:1px solid #ff00ff33;
+    padding:14px;display:flex;flex-direction:column;gap:10px;overflow-y:auto;
+    font-family:'Courier New',monospace;
+  }
+  .nr-ptitle{
+    font-size:10px;color:#ff00ff;text-shadow:0 0 6px #ff00ff;
+    letter-spacing:2px;border-bottom:1px solid #ff00ff33;padding-bottom:6px;
+  }
+  #nr-levname{font-size:18px;font-weight:900;color:#ffff00;text-shadow:0 0 12px #ffff00,0 0 24px #ffff0044;}
+  #nr-obj{
+    background:#0a0a1e;border:1px solid #00ff9f33;border-left:3px solid #00ff9f;
+    padding:10px 12px;font-size:12px;line-height:1.6;color:#aaffcc;white-space:pre-line;
+  }
+  #nr-hints{background:#0a0a1e;border:1px solid #ffff0033;padding:10px 12px;font-size:11px;color:#777;line-height:1.9;}
+  .nr-htitle{color:#ffff00;font-size:11px;margin-bottom:4px;text-shadow:0 0 6px #ffff0088;}
+  .nr-cmd{color:#ff00ff;text-shadow:0 0 4px #ff00ff88;}
+  #nr-pbwrap{background:#0a0a1e;border:1px solid #00ff9f33;height:8px;border-radius:4px;overflow:hidden;}
+  #nr-pb{height:100%;background:linear-gradient(90deg,#00ff9f,#00ffff);box-shadow:0 0 8px #00ff9f;transition:width .5s ease;width:0%;}
+  #nr-plabel{font-size:10px;color:#444;margin-top:2px;}
+
+  #nr-term{flex:1;display:flex;flex-direction:column;overflow:hidden;}
+  #nr-out{
+    flex:1;overflow-y:auto;padding:14px 18px;font-size:13px;line-height:1.7;
+    font-family:'Courier New',monospace;
+    scrollbar-width:thin;scrollbar-color:#ff00ff33 transparent;
+  }
+  #nr-out::-webkit-scrollbar{width:4px;}
+  #nr-out::-webkit-scrollbar-thumb{background:#ff00ff44;border-radius:2px;}
+
+  .nl{margin:1px 0;}
+  .nl.sys{color:#00ff9f;}.nl.sys::before{content:'[SYS] ';color:#00ff9f55;}
+  .nl.err{color:#ff4466;text-shadow:0 0 5px #ff446677;}.nl.err::before{content:'[ERR] ';color:#ff446655;}
+  .nl.ok{color:#ffff00;text-shadow:0 0 7px #ffff0077;}.nl.ok::before{content:'[OK]  ';color:#ffff0044;}
+  .nl.inf{color:#00ffff;}.nl.inf::before{content:'[INF] ';color:#00ffff55;}
+  .nl.echo{color:#ff00ff;text-shadow:0 0 4px #ff00ff55;}.nl.echo::before{content:'> ';}
+  .nl.blank{height:8px;}
+  .nl.ascii{color:#ff00ff;text-shadow:0 0 5px #ff00ff44;white-space:pre;font-size:11px;line-height:1.3;}
+  .nl.win{color:#00ff9f;text-shadow:0 0 9px #00ff9f;white-space:pre;font-size:10px;line-height:1.3;}
+
+  #nr-input-row{
+    display:flex;align-items:center;border-top:1px solid #ff00ff33;
+    padding:10px 18px;gap:8px;flex-shrink:0;background:#050510;
+    position:relative;z-index:2;font-family:'Courier New',monospace;
+  }
+  #nr-prompt{color:#ff00ff;text-shadow:0 0 8px #ff00ff;font-size:13px;white-space:nowrap;}
+  #nr-input{
+    flex:1;background:transparent;border:none;outline:none;
+    color:#00ff9f;font-family:'Courier New',monospace;font-size:13px;
+    text-shadow:0 0 6px #00ff9f88;caret-color:#ff00ff;
+  }
+  #nr-input::placeholder{color:#252525;}
+  #nr-next{
+    display:none;background:transparent;border:1px solid #00ff9f;color:#00ff9f;
+    font-family:'Courier New',monospace;font-size:10px;padding:6px 14px;
+    cursor:pointer;letter-spacing:2px;text-shadow:0 0 6px #00ff9f;
+    box-shadow:0 0 10px #00ff9f33;transition:all .2s;
+  }
+  #nr-next:hover{background:#00ff9f22;box-shadow:0 0 20px #00ff9f88;}
+</style>
+</head>
+<body>
+<div class="scanline"></div>
+<div class="glow"></div>
+
+<h1><span id="typed"></span><span class="cursor"></span></h1>
+
+<div class="key-row">
+  <div class="key">A</div>
+  <div class="key lit" id="k-s">S</div>
+  <div class="key lit" id="k-d">D</div>
+  <div class="key lit" id="k-f">F</div>
+  <div class="key" id="k-g">G</div>
+  <div class="key lit" id="k-h">H</div>
+  <div class="key lit" id="k-j">J</div>
+  <div class="key lit" id="k-k">K</div>
+  <div class="key" id="k-l">L</div>
+</div>
+
+<p class="tagline">// <span>left hand</span> meets <span>right hand</span></p>
+
+<div class="links">
+  <a href="/cdn-cgi/l/email-protection#1b72757d745b687f7d70717335787476"><span class="__cf_email__" data-cfemail="99f0f7fff6d9eafdfff2f3f1b7faf6f4">[email&#160;protected]</span></a>
+</div>
+
+<footer>// more coming soon</footer>
+
+<!-- ── NETRUNNER OVERLAY ──────────────────────────────────────────────── -->
+<div id="nr-overlay">
+  <button id="nr-close" onclick="nrClose()">✕ DISCONNECT</button>
+
+  <div id="nr-header">
+    <div id="nr-title">◈ NETRUNNER ◈</div>
+    <div id="nr-stats">
+      <div class="nr-stat">LEVEL <span id="nr-lstat">1/5</span></div>
+      <div class="nr-stat">SCORE <span id="nr-sstat">0</span></div>
+    </div>
+  </div>
+
+  <div id="nr-main">
+    <div id="nr-panel">
+      <div class="nr-ptitle">// MISSION BRIEFING</div>
+      <div id="nr-levname">LEVEL 01</div>
+      <div id="nr-obj"></div>
+      <div class="nr-ptitle">// INTEL</div>
+      <div id="nr-hints"><div class="nr-htitle">◆ HINTS</div><div id="nr-hcontent"></div></div>
+      <div class="nr-ptitle">// BREACH PROGRESS</div>
+      <div id="nr-pbwrap"><div id="nr-pb"></div></div>
+      <div id="nr-plabel">0 / 0 objectives</div>
+    </div>
+
+    <div id="nr-term">
+      <div id="nr-out"></div>
+      <div id="nr-input-row">
+        <div id="nr-prompt">root@netrunner:~$</div>
+        <input id="nr-input" type="text" autocomplete="off" spellcheck="false" placeholder="type a command..."/>
+        <button id="nr-next" onclick="nrNextLevel()">NEXT LEVEL ▶</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+/* ── ORIGINAL SITE SCRIPT ──────────────────────────────────────────────── */
+(function(){
+  const order   = ['k-s','k-d','k-f','k-k','k-j','k-h'];
+  const letters = ['S','D','F','K','J','H'];
+  const typed   = document.getElementById('typed');
+
+  function pressSequence() {
+    typed.textContent = '';
+    order.forEach((id, i) => {
+      const el = document.getElementById(id);
+      setTimeout(() => {
+        el.classList.add('pressed');
+        typed.textContent += letters[i];
+        setTimeout(() => el.classList.remove('pressed'), 150);
+      }, i * 180);
+    });
+  }
+  setTimeout(pressSequence, 800);
+  setInterval(pressSequence, 3000);
+})();
+
+/* ── EASTER EGG: type "sdfkjh" anywhere to unlock NETRUNNER ─────────── */
+(function(){
+  const SECRET  = 'sdfkjh';
+  // maps each letter → its key element id
+  const keyMap  = { s:'k-s', d:'k-d', f:'k-f', k:'k-k', j:'k-j', h:'k-h' };
+  let progress  = '';
+  let launched  = false;
+
+  document.addEventListener('keydown', function(e) {
+    if (launched) return;
+    // ignore modifier combos
+    if (e.ctrlKey || e.metaKey || e.altKey) return;
+    const ch = e.key.toLowerCase();
+
+    if (ch === SECRET[progress.length]) {
+      progress += ch;
+
+      // light up the key in magenta
+      const keyEl = document.getElementById(keyMap[ch]);
+      if (keyEl) {
+        keyEl.classList.add('hacked');
+        setTimeout(() => keyEl.classList.remove('hacked'), 350);
+      }
+
+      if (progress === SECRET) {
+        launched = true;
+        glitchLaunch();
+      }
+    } else {
+      // reset, but check if the wrong key starts a new sequence
+      progress = (ch === SECRET[0]) ? ch : '';
+    }
+  });
+
+  function glitchLaunch() {
+    let ticks = 0;
+    const glitch = setInterval(() => {
+      const h = Math.random() * 360 | 0;
+      document.body.style.filter = `hue-rotate(${h}deg) brightness(2.2) contrast(2)`;
+      ticks++;
+      if (ticks > 9) {
+        clearInterval(glitch);
+        document.body.style.filter = '';
+        nrOpen();
+      }
+    }, 55);
+  }
+})();
+
+/* ── MOBILE EASTER EGG: tap S→D→F→K→J→H keys in sequence ───────────── */
+(function(){
+  const sequence = ['k-s','k-d','k-f','k-k','k-j','k-h'];
+  const RESET_MS = 3000;
+  let progress = 0, timer = null, mobileLaunched = false;
+
+  sequence.forEach(function(id, idx) {
+    const el = document.getElementById(id);
+    if (!el) return;
+    el.addEventListener('touchstart', function(e) {
+      if (document.getElementById('nr-overlay').classList.contains('active')) return;
+      if (mobileLaunched) return;
+
+      if (idx === progress) {
+        progress++;
+        el.classList.add('hacked');
+        setTimeout(() => el.classList.remove('hacked'), 350);
+        clearTimeout(timer);
+        if (progress === sequence.length) {
+          progress = 0;
+          mobileLaunched = true;
+          let ticks = 0;
+          const glitch = setInterval(() => {
+            const h = Math.random() * 360 | 0;
+            document.body.style.filter = `hue-rotate(${h}deg) brightness(2.2) contrast(2)`;
+            ticks++;
+            if (ticks > 9) {
+              clearInterval(glitch);
+              document.body.style.filter = '';
+              nrOpen();
+            }
+          }, 55);
+        } else {
+          timer = setTimeout(function(){ progress = 0; }, RESET_MS);
+        }
+      } else {
+        progress = 0;
+        clearTimeout(timer);
+        if (idx === 0) {
+          progress = 1;
+          el.classList.add('hacked');
+          setTimeout(() => el.classList.remove('hacked'), 350);
+          timer = setTimeout(function(){ progress = 0; }, RESET_MS);
+        }
+      }
+    }, { passive: true });
+  });
+})();
+
+/* ── NETRUNNER GAME ENGINE ───────────────────────────────────────────── */
+const NR = (function(){
+
+  /* level definitions */
+  const levels = [
+    {
+      title:'LEVEL 01', name:'FIRST CONTACT',
+      objective:'You\'ve landed on an unknown server.\nIdentify the OS and list the files.\n\nComplete both recon tasks.',
+      commands:{
+        'whoami':    {r:['root'],t:'sys'},
+        'hostname':  {r:['NEON-SRV-01.blacknet.io'],t:'sys'},
+        'ls':        {r:['secret.txt','config.cfg','trap.exe'],t:'inf',o:'files'},
+        'ls -la':    {r:['drwxr-xr-x root  secret.txt','drwxr-xr-x root  config.cfg','-rwxr-xr-x root  trap.exe [DANGER]'],t:'inf',o:'files'},
+        'uname':     {r:['BLACKNET OS v2.1 — Unauthorized access punishable by law.'],t:'sys',o:'os'},
+        'uname -a':  {r:['BLACKNET OS v2.1 — Unauthorized access punishable by law.'],t:'sys',o:'os'},
+        'help':      {r:['Available: whoami, hostname, ls, uname'],t:'inf'},
+      },
+      obj:['files','os'],
+      hints:['Use <span class="nr-cmd">uname</span> to fingerprint the OS','Use <span class="nr-cmd">ls</span> to list files'],
+      boot:['Establishing encrypted tunnel...','Spoofing MAC address... DONE','Connection routed through 7 proxies.','Landing on target. Begin recon.'],
+    },
+    {
+      title:'LEVEL 02', name:'INFILTRATION',
+      objective:'The server holds encrypted credentials.\nRead the config file to find\nthe admin password.',
+      commands:{
+        'ls':               {r:['secret.txt','config.cfg','shadow','.hidden/'],t:'inf'},
+        'cat secret.txt':   {r:['CLASSIFIED. You don\'t have clearance... yet.'],t:'err'},
+        'cat config.cfg':   {r:['[AUTH]','admin_user=sysop','admin_pass=N30N_G4T3','timeout=300','# DO NOT SHARE'],t:'inf',o:'cfg'},
+        'cat shadow':       {r:['sysop:$6$rounds=656000$HASH_REDACTED','Permission denied — use config.cfg'],t:'err'},
+        'grep pass config.cfg':  {r:['admin_pass=N30N_G4T3'],t:'ok',o:'grep'},
+        'grep admin config.cfg': {r:['admin_user=sysop','admin_pass=N30N_G4T3'],t:'ok',o:'grep'},
+        'ls -la':           {r:['drwxr-xr-x  secret.txt','drwxr-xr-x  config.cfg','drwxr-xr-x  shadow','drwx------  .hidden/'],t:'inf'},
+        'help':             {r:['Available: ls, cat &lt;file&gt;, grep &lt;term&gt; &lt;file&gt;'],t:'inf'},
+      },
+      obj:['cfg','grep'],
+      hints:['<span class="nr-cmd">cat config.cfg</span> to read the file','<span class="nr-cmd">grep pass config.cfg</span> to filter output'],
+      boot:['Lateral movement initiated.','Scanning for credential files...','Found: config.cfg — potential goldmine.'],
+    },
+    {
+      title:'LEVEL 03', name:'PORT RECON',
+      objective:'A firewall blocks your path.\nScan the target, find open ports,\nthen SSH into the server.',
+      commands:{
+        'nmap 10.0.0.1':     {r:['PORT      STATE   SERVICE','22/tcp    open    ssh','80/tcp    open    http','443/tcp   closed  https','3306/tcp  open    mysql'],t:'inf',o:'scan'},
+        'nmap -sV 10.0.0.1': {r:['PORT      STATE   SERVICE  VERSION','22/tcp    open    ssh      OpenSSH 8.2','80/tcp    open    http     nginx 1.18','3306/tcp  open    mysql    MySQL 5.7'],t:'inf',o:'scan'},
+        'ping 10.0.0.1':     {r:['64 bytes from 10.0.0.1: icmp_seq=1 ttl=64 time=0.41ms','64 bytes from 10.0.0.1: icmp_seq=2 ttl=64 time=0.38ms'],t:'sys'},
+        'curl 10.0.0.1':     {r:['&lt;html&gt;BLACKNET PORTAL — Authorized Personnel Only&lt;/html&gt;'],t:'sys'},
+        'ssh 10.0.0.1':      {r:['Permission denied (publickey,password).','Hint: try ssh sysop@10.0.0.1'],t:'err'},
+        'ssh sysop@10.0.0.1':{r:['sysop@10.0.0.1 password: [N30N_G4T3]','...','Welcome to BLACKNET. Perimeter breached.'],t:'ok',o:'ssh'},
+        'help':              {r:['Available: nmap &lt;ip&gt;, ping &lt;ip&gt;, ssh &lt;user&gt;@&lt;ip&gt;'],t:'inf'},
+      },
+      obj:['scan','ssh'],
+      hints:['<span class="nr-cmd">nmap 10.0.0.1</span> to scan ports','<span class="nr-cmd">ssh sysop@10.0.0.1</span> to connect','Password from last mission: N30N_G4T3'],
+      boot:['Target acquired: 10.0.0.1','Firewall detected. Begin network recon.','Objective: breach the perimeter.'],
+    },
+    {
+      title:'LEVEL 04', name:'PRIVILEGE ESCALATION',
+      objective:'You\'re in as a low-privilege user.\nFind the sudo vector, escalate to root,\nthen capture the flag.',
+      commands:{
+        'id':                    {r:['uid=1001(sysop) gid=1001(sysop) groups=1001(sysop)'],t:'sys'},
+        'sudo -l':               {r:['User sysop may run: /usr/bin/vim as root (NOPASSWD)'],t:'inf',o:'sudol'},
+        'sudo vim':              {r:['Launching vim as root...','  :!whoami → root','Escalation confirmed via GTFOBins.'],t:'ok',o:'esc'},
+        'sudo bash':             {r:['Sorry, sysop is not allowed to run bash as root.'],t:'err'},
+        'sudo cat /root/flag.txt':{r:['╔══════════════════════════════════╗','  FLAG: CTF{N30N_R00T_4CC3SS_GR4NT3D}','╚══════════════════════════════════╝'],t:'ok',o:'flag'},
+        'sudo ls /root':         {r:['flag.txt  .bash_history  .ssh/'],t:'inf'},
+        'cat /etc/passwd':       {r:['root:x:0:0:root:/root:/bin/bash','sysop:x:1001:1001::/home/sysop:/bin/sh'],t:'inf'},
+        'help':                  {r:['Available: id, sudo -l, sudo &lt;cmd&gt;, sudo cat /root/flag.txt'],t:'inf'},
+      },
+      obj:['sudol','esc','flag'],
+      hints:['<span class="nr-cmd">id</span> shows your privilege level','<span class="nr-cmd">sudo -l</span> lists allowed commands','<span class="nr-cmd">sudo cat /root/flag.txt</span> gets the flag'],
+      boot:['Perimeter breached.','Current user: sysop [LOW PRIVILEGE]','Locate escalation vector.','Capture the root flag.'],
+    },
+    {
+      title:'LEVEL 05', name:'FINAL EXFIL',
+      objective:'Last mission. Dump the database,\ncover your tracks, then disconnect.\nLeave no trace.',
+      commands:{
+        'ps aux':                         {r:['PID  CMD','101  mysqld','204  sshd','315  nginx'],t:'inf'},
+        'mysql -u root -p':               {r:['Enter password: [N30N_G4T3]','MySQL monitor ready.'],t:'inf',o:'dbin'},
+        'mysqldump -u root -p blacknet':  {r:['Dumping: blacknet','Tables: users, sessions, logs, secrets','-- 2,847 records exported.','blacknet_dump.sql written.'],t:'ok',o:'dump'},
+        'history -c':                     {r:['Command history cleared.'],t:'ok',o:'tracks'},
+        'rm -f /var/log/auth.log':        {r:['auth.log deleted.'],t:'ok',o:'tracks'},
+        'shred /var/log/auth.log':        {r:['Shredding auth.log... DONE'],t:'ok',o:'tracks'},
+        'exit':                           {r:['Closing tunnel...','All clear. No traces found.'],t:'sys',o:'out'},
+        'disconnect':                     {r:['Closing tunnel...','All clear. No traces found.'],t:'sys',o:'out'},
+        'ls':                             {r:['blacknet_dump.sql  config.cfg  secret.txt'],t:'inf'},
+        'help':                           {r:['Available: ps aux, mysqldump, history -c, rm -f &lt;log&gt;, exit'],t:'inf'},
+      },
+      obj:['dbin','dump','tracks','out'],
+      hints:['<span class="nr-cmd">ps aux</span> to see running services','<span class="nr-cmd">mysqldump -u root -p blacknet</span>','<span class="nr-cmd">history -c</span> clears logs','<span class="nr-cmd">exit</span> to disconnect'],
+      boot:['FINAL MISSION: Data Exfiltration.','MySQL detected on port 3306.','Dump everything. Cover tracks. Get out.'],
+    },
+  ];
+
+  let score = 0, lvlIdx = 0, state = {}, history = [], histIdx = -1;
+  const out    = document.getElementById('nr-out');
+  const input  = document.getElementById('nr-input');
+  const pb     = document.getElementById('nr-pb');
+  const pblbl  = document.getElementById('nr-plabel');
+  const nxtBtn = document.getElementById('nr-next');
+
+  function print(html, cls, delay) {
+    setTimeout(function(){
+      const d = document.createElement('div');
+      d.className = 'nl ' + (cls||'sys');
+      d.innerHTML = html;
+      out.appendChild(d);
+      out.scrollTop = out.scrollHeight;
+    }, delay||0);
+  }
+  function blank(delay){ setTimeout(function(){ const d=document.createElement('div'); d.className='nl blank'; out.appendChild(d); out.scrollTop=out.scrollHeight; }, delay||0); }
+  function printLines(lines,cls,base,step){ (lines||[]).forEach(function(l,i){ print(l,cls,(base||0)+i*(step||80)); }); }
+
+  function updateStats(){
+    document.getElementById('nr-lstat').textContent = (lvlIdx+1)+'/5';
+    document.getElementById('nr-sstat').textContent = score;
+  }
+  function updateProgress(){
+    const lvl = levels[lvlIdx];
+    const total = lvl.obj.length;
+    const done  = lvl.obj.filter(function(o){ return state[o]; }).length;
+    pb.style.width = (total ? (done/total)*100 : 0)+'%';
+    pblbl.textContent = done+' / '+total+' objectives';
+  }
+
+  function loadLevel(idx){
+    lvlIdx = idx; state = {};
+    nxtBtn.style.display = 'none';
+    out.innerHTML = '';
+    const lvl = levels[idx];
+    document.getElementById('nr-levname').textContent = lvl.title;
+    document.getElementById('nr-obj').textContent     = lvl.objective;
+    document.getElementById('nr-hcontent').innerHTML  = lvl.hints.map(function(h){ return '◦ '+h; }).join('<br>');
+    updateStats(); updateProgress();
+
+    const hdr = ['════════════════════════════════════','  '+lvl.title+': '+lvl.name,'════════════════════════════════════'];
+    printLines(hdr,'ascii',0,60);
+    blank(hdr.length*60+40);
+    printLines(lvl.boot,'sys',hdr.length*60+60,90);
+    const ready = hdr.length*60 + lvl.boot.length*90 + 180;
+    blank(ready-80);
+    setTimeout(function(){ print('Type <span class="nr-cmd">help</span> for commands.','inf'); input.focus(); }, ready);
+  }
+
+  function checkWin(){
+    const lvl = levels[lvlIdx];
+    if (lvl.obj.every(function(o){ return state[o]; })){
+      score += 1000; updateStats(); blank();
+      if (lvlIdx < levels.length-1){
+        print('◈◈◈  OBJECTIVE COMPLETE  ◈◈◈','ok');
+        print('Mission accomplished. Proceed to next level.','inf');
+        nxtBtn.style.display = 'inline-block';
+      } else {
+        showWin();
+      }
+    }
+  }
+
+  function showWin(){
+    blank();
+    var art = [
+      ' ██╗   ██╗ ██████╗ ██╗   ██╗    ██╗    ██╗██╗███╗  ██╗',
+      ' ╚██╗ ██╔╝██╔═══██╗██║   ██║    ██║    ██║██║████╗ ██║',
+      '  ╚████╔╝ ██║   ██║██║   ██║    ██║ █╗ ██║██║██╔██╗██║',
+      '   ╚██╔╝  ██║   ██║╚██╗ ██╔╝    ██║███╗██║██║██║╚████║',
+      '    ██║   ╚██████╔╝ ╚████╔╝     ╚███╔███╔╝██║██║ ╚███║',
+      '    ╚═╝    ╚═════╝   ╚═══╝       ╚══╝╚══╝ ╚═╝╚═╝  ╚══╝',
+    ];
+    art.forEach(function(l,i){ setTimeout(function(){ var d=document.createElement('div'); d.className='nl win'; d.textContent=l; out.appendChild(d); out.scrollTop=out.scrollHeight; }, i*100); });
+    var t = art.length*100+200;
+    blank(t);
+    print('FINAL SCORE: <span style="color:#ffff00;text-shadow:0 0 10px #ffff00">'+score+'</span>','ok',t+80);
+    print('BLACKNET has been breached. All objectives complete.','ok',t+160);
+    print('Type <span class="nr-cmd">restart</span> to play again.','inf',t+240);
+  }
+
+  function handleCmd(raw){
+    const cmd = raw.trim();
+    if (!cmd) return;
+    history.unshift(cmd); histIdx = -1;
+    blank(); print(cmd,'echo');
+
+    if (cmd === 'restart'){ score=0; setTimeout(function(){ loadLevel(0); },300); return; }
+    if (cmd === 'clear')  { out.innerHTML=''; return; }
+
+    const lvl   = levels[lvlIdx];
+    const entry = lvl.commands[cmd.toLowerCase()];
+    if (entry){
+      printLines(entry.r, entry.t==='sys'?'sys':entry.t==='err'?'err':entry.t==='ok'?'ok':'inf', 60, 70);
+      if (entry.o && !state[entry.o]){
+        state[entry.o]=true; score+=200; updateStats(); updateProgress();
+        setTimeout(checkWin, entry.r.length*70+120);
+      }
+    } else {
+      print('Command not found: '+cmd,'err',60);
+      print('Type <span class="nr-cmd">help</span> for available commands.','inf',120);
+    }
+  }
+
+  input.addEventListener('keydown', function(e){
+    if (e.key==='ArrowUp')  { histIdx=Math.min(histIdx+1,history.length-1); input.value=history[histIdx]||''; e.preventDefault(); return; }
+    if (e.key==='ArrowDown'){ histIdx=Math.max(histIdx-1,-1); input.value=histIdx===-1?'':history[histIdx]; e.preventDefault(); return; }
+    if (e.key!=='Enter') return;
+    var v=input.value; input.value=''; handleCmd(v);
+  });
+
+  document.getElementById('nr-overlay').addEventListener('click', function(){ input.focus(); });
+
+  return {
+    start: function(){ loadLevel(0); },
+    next:  function(){ document.getElementById('nr-next').style.display='none'; loadLevel(lvlIdx+1); }
+  };
+})();
+
+function nrOpen(){
+  document.getElementById('nr-overlay').classList.add('active');
+  NR.start();
+}
+function nrClose(){
+  document.getElementById('nr-overlay').classList.remove('active');
+  document.getElementById('nr-out').innerHTML='';
+}
+function nrNextLevel(){
+  NR.next();
+}
+</script>
+</body>
+</html>

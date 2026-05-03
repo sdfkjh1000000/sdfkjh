@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630">
+  <defs>
+    <radialGradient id="bg" cx="0.5" cy="0.5" r="0.95">
+      <stop offset="0" stop-color="#0c1410"/>
+      <stop offset="1" stop-color="#000000"/>
+    </radialGradient>
+    <radialGradient id="glow" cx="0.5" cy="0.5" r="0.55">
+      <stop offset="0" stop-color="#39ff14" stop-opacity="0.22"/>
+      <stop offset="0.55" stop-color="#39ff14" stop-opacity="0.05"/>
+      <stop offset="1" stop-color="#39ff14" stop-opacity="0"/>
+    </radialGradient>
+    <pattern id="lines" width="3" height="3" patternUnits="userSpaceOnUse">
+      <rect width="3" height="1" fill="#39ff14" opacity="0.07"/>
+    </pattern>
+    <filter id="phosphor" x="-10%" y="-10%" width="120%" height="120%">
+      <feGaussianBlur stdDeviation="2.5" result="blur"/>
+      <feMerge>
+        <feMergeNode in="blur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <!-- background layers -->
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  <rect width="1200" height="630" fill="url(#glow)"/>
+  <rect width="1200" height="630" fill="url(#lines)"/>
+
+  <!-- terminal-screen bezel hint -->
+  <rect x="24" y="24" width="1152" height="582"
+        fill="none" stroke="#39ff14" stroke-width="1" opacity="0.15" rx="4"/>
+
+  <!-- prompt + domain + cursor block, all phosphor-glowed -->
+  <g filter="url(#phosphor)">
+    <text x="57" y="362"
+          font-family="'Consolas', 'Cascadia Mono', 'Courier New', monospace"
+          font-weight="700" font-size="150">
+      <tspan fill="#39ff14">$</tspan><tspan fill="#e8e8e8"> sdfkjh.com</tspan>
+    </text>
+    <rect x="1063" y="262" width="80" height="105" fill="#39ff14"/>
+  </g>
+</svg>
