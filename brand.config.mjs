@@ -35,7 +35,7 @@ export default {
       outputs: [
         { path: 'dist/gsuite-profile.png', format: 'png', width: 512, height: 512 }
       ],
-      platform: 'manual upload @ https://myaccount.google.com/personal-info'
+      platform: 'manual upload — workspace profile photo'
     },
     {
       name: 'gsuite-logo',
@@ -43,7 +43,7 @@ export default {
       outputs: [
         { path: 'dist/gsuite-logo.png', format: 'png', width: 320, height: 132 }
       ],
-      platform: 'manual upload @ https://admin.google.com (Account -> Account settings -> Personalization)'
+      platform: 'manual upload — workspace admin logo'
     }
   ]
 };
