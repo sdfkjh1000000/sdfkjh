@@ -41,6 +41,7 @@
   ]
 }
 </script>
+<script src="/consent.js" defer></script>
 
 <style>
   :root {
@@ -333,6 +334,8 @@
     position: relative; z-index: 2;
   }
   footer .lhs .br { color: var(--amber); }
+  footer .footer-links a { color: var(--muted); text-decoration: none; }
+  footer .footer-links a:hover { color: var(--amber); }
   footer .prompt { color: var(--amber); margin-right: 0.4rem; opacity: 0.6; }
   footer .blink {
     display: inline-block; width: 0.45em; height: 0.85em;
@@ -478,6 +481,24 @@
     box-shadow:0 0 10px #00ff9f33;transition:all .2s;
   }
   #nr-next:hover{background:#00ff9f22;box-shadow:0 0 20px #00ff9f88;}
+
+  /* consent banner */
+  .consent-banner{position:fixed;bottom:0;left:0;right:0;z-index:1000;background:#111;border-top:1px solid var(--border);box-shadow:0 -4px 24px rgba(0,0,0,.4);padding:1.25rem 1.5rem;animation:consent-in .25s ease}
+  @keyframes consent-in{from{transform:translateY(100%)}to{transform:translateY(0)}}
+  .consent-inner{max-width:720px;margin:0 auto;display:flex;align-items:center;gap:1.25rem}
+  .consent-text{font-family:var(--mono);font-size:.8rem;color:var(--muted);line-height:1.6;flex:1}
+  .consent-text a{color:var(--amber);text-decoration:none}
+  .consent-text a:hover{text-decoration:underline}
+  .consent-actions{display:flex;gap:.5rem;flex-shrink:0}
+  .consent-btn{border:none;border-radius:3px;padding:.45rem .9rem;font-family:var(--mono);font-size:.75rem;font-weight:600;cursor:pointer;letter-spacing:.5px;transition:background .15s}
+  .consent-decline{background:var(--border);color:var(--muted)}
+  .consent-decline:hover{background:#3a3a3a}
+  .consent-accept{background:var(--amber);color:#1a1a1a}
+  .consent-accept:hover{background:#ff8c33}
+  @media(max-width:600px){
+    .consent-inner{flex-direction:column;text-align:center}
+    .consent-actions{justify-content:center}
+  }
 </style>
 </head>
 <body>
@@ -576,6 +597,7 @@
 
 <footer>
   <span class="lhs"><span class="br">[</span> sdfkjh <span class="br">]</span> &middot; built by hand<span class="blink" aria-hidden="true"></span></span>
+  <span class="footer-links"><a href="/privacy.html">privacy</a> &middot; <a href="/do-not-sell.html">do not sell</a></span>
   <span><span class="prompt">&gt;</span> &copy; <span id="year">2026</span></span>
 </footer>
 
