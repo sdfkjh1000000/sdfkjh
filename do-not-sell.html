@@ -1,114 +1,177 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-<meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
 <title>Do Not Sell or Share My Personal Information — sdfkjh</title>
 <meta name="description" content="sdfkjh.com does not sell or share your personal information. Learn about your rights under the CCPA/CPRA."/>
+<meta name="color-scheme" content="light"/>
+<meta name="theme-color" content="#FDFBF7" media="(prefers-color-scheme: light)"/>
+<meta name="theme-color" content="#1C1917" media="(prefers-color-scheme: dark)"/>
+<meta name="robots" content="index, follow"/>
 <link rel="canonical" href="https://sdfkjh.com/do-not-sell.html"/>
-<link rel="icon" type="image/svg+xml" href="/favicon.svg"/>
-<meta name="theme-color" content="#1a1a1a"/>
 
 <meta property="og:type" content="website"/>
+<meta property="og:site_name" content="sdfkjh"/>
 <meta property="og:title" content="Do Not Sell or Share My Personal Information — sdfkjh"/>
+<meta property="og:description" content="sdfkjh.com does not sell or share your personal information. Learn about your rights under the CCPA/CPRA."/>
 <meta property="og:url" content="https://sdfkjh.com/do-not-sell.html"/>
 <meta property="og:image" content="https://sdfkjh.com/og-image.png"/>
 
+<link rel="icon" href="/favicon.svg" type="image/svg+xml"/>
+<link rel="apple-touch-icon" href="/apple-touch-icon.png"/>
+
+<link rel="preload" as="font" type="font/woff2" href="/assets/fonts/newsreader-500.woff2" crossorigin>
+<link rel="preload" as="font" type="font/woff2" href="/assets/fonts/source-serif-4-400.woff2" crossorigin>
+<link rel="preload" as="font" type="font/woff2" href="/assets/fonts/jetbrains-mono.woff2" crossorigin>
+
 <style>
+  /* ── self-hosted fonts ─────────────────────────────────────── */
+  @font-face {
+    font-family: 'Newsreader'; font-style: normal; font-weight: 500;
+    font-display: swap; src: url('/assets/fonts/newsreader-500.woff2') format('woff2');
+  }
+  @font-face {
+    font-family: 'Newsreader'; font-style: italic; font-weight: 500;
+    font-display: swap; src: url('/assets/fonts/newsreader-500-italic.woff2') format('woff2');
+  }
+  @font-face {
+    font-family: 'Source Serif 4'; font-style: normal; font-weight: 400;
+    font-display: swap; src: url('/assets/fonts/source-serif-4-400.woff2') format('woff2');
+  }
+  @font-face {
+    font-family: 'Source Serif 4'; font-style: italic; font-weight: 400;
+    font-display: swap; src: url('/assets/fonts/source-serif-4-400-italic.woff2') format('woff2');
+  }
+  @font-face {
+    font-family: 'JetBrains Mono'; font-style: normal; font-weight: 400 700;
+    font-display: swap; src: url('/assets/fonts/jetbrains-mono.woff2') format('woff2');
+  }
+
   :root {
-    --bg:        #1a1a1a;
-    --bg-soft:   #141414;
+    --paper:     #FDFBF7;
+    --surface:   #FFFFFF;
+    --ink:       #1C1917;
+    --ink-soft:  #57534E;
+    --border:    #E7E5E4;
     --amber:     #ff7a1a;
     --amber-dim: #b8551a;
-    --cream:     #f0ebd9;
-    --muted:     #94a3b8;
-    --muted-2:   #64748b;
-    --border:    #2a2a2a;
-    --mono:      'Consolas', 'Cascadia Mono', 'Courier New', monospace;
+    --serif:     "Newsreader", Georgia, serif;
+    --body:      "Source Serif 4", Georgia, serif;
+    --mono:      "JetBrains Mono", "Consolas", monospace;
   }
-  * { margin: 0; padding: 0; box-sizing: border-box; }
-  html, body { background: var(--bg); }
-  body {
-    font-family: var(--mono);
-    color: var(--cream);
-    line-height: 1.8;
-    padding: 3rem 1.5rem 4rem;
-    max-width: 640px;
-    margin: 0 auto;
-  }
+  *, *::before, *::after { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; background: var(--paper); color: var(--ink); font-family: var(--body); }
+  body { font-size: 17px; line-height: 1.7; }
 
+  .skip-link {
+    position: absolute; top: -100px; left: 12px; background: var(--ink); color: var(--paper);
+    border: 1px solid var(--amber-dim); border-radius: 2px; padding: 0.5rem 0.9rem;
+    font-family: var(--mono); font-size: 0.8rem; text-decoration: none; z-index: 100; transition: top 0.15s;
+  }
+  .skip-link:focus { top: 12px; outline: none; }
+  a:focus-visible, [tabindex]:focus-visible { outline: 2px solid var(--amber-dim); outline-offset: 3px; border-radius: 1px; }
+
+  /* header */
+  header[role="banner"] {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 22px 32px; border-bottom: 1px solid var(--border);
+  }
+  header .wm { font-family: var(--mono); font-weight: 500; font-size: 15px; letter-spacing: 0.04em; color: var(--ink); text-decoration: none; }
+  header .wm .br { color: var(--amber-dim); }
+  header nav a { font-family: var(--body); font-size: 14px; color: var(--ink-soft); text-decoration: none; }
+  header nav a:hover { color: var(--amber-dim); }
+
+  /* document */
+  main { max-width: 680px; margin: 0 auto; padding: 64px 32px 72px; }
   h1 {
-    font-size: 1.3rem;
-    color: var(--amber);
-    margin-bottom: 0.25rem;
-    letter-spacing: 0.5px;
+    font-family: var(--serif); font-weight: 500; font-size: clamp(30px, 4.6vw, 40px);
+    line-height: 1.12; letter-spacing: -0.02em; margin: 0 0 10px;
   }
   .lede {
-    font-size: 0.8rem;
-    color: var(--muted);
-    margin-bottom: 2.5rem;
+    font-family: var(--body); font-style: italic; font-size: clamp(17px, 2vw, 19px);
+    color: var(--ink-soft); margin: 0 0 40px;
   }
   h2 {
-    font-size: 0.85rem;
-    color: var(--amber);
-    margin-top: 2rem;
-    margin-bottom: 0.5rem;
-    text-transform: uppercase;
-    letter-spacing: 1px;
+    font-family: var(--serif); font-weight: 500; font-size: 22px; line-height: 1.25;
+    margin: 38px 0 10px; color: var(--ink);
   }
-  p { font-size: 0.8rem; color: var(--cream); margin-bottom: 1rem; opacity: 0.9; }
-  ul { margin: 0 0 1rem 1.5rem; }
-  li { font-size: 0.8rem; color: var(--cream); margin-bottom: 0.4rem; opacity: 0.9; }
-  a { color: var(--amber); text-decoration: none; }
-  a:hover { text-decoration: underline; }
-  .muted { color: var(--muted-2); font-size: 0.7rem; margin-top: 2rem; }
-  .back-link {
-    display: inline-block;
-    margin-top: 2rem;
-    font-size: 0.75rem;
-    color: var(--muted);
-    text-decoration: none;
-    border: 1px dashed var(--border);
-    padding: 0.4rem 0.8rem;
-    border-radius: 3px;
+  p { margin: 0 0 16px; }
+  ul { margin: 0 0 16px; padding-left: 20px; }
+  li { margin: 0 0 6px; }
+  li::marker { color: var(--amber-dim); }
+  a { color: var(--amber-dim); text-decoration: none; border-bottom: 1px solid rgba(184,85,26,0.35); }
+  a:hover { border-bottom-color: var(--amber-dim); }
+  .updated {
+    font-family: var(--mono); font-size: 12px; color: var(--ink-soft); letter-spacing: 0.03em;
+    margin: 44px 0 0; padding-top: 20px; border-top: 1px solid var(--border);
   }
-  .back-link:hover { color: var(--amber); border-color: var(--amber-dim); }
 
-  @media(max-width: 480px) {
-    body { padding: 2rem 1rem 3rem; }
-    h1 { font-size: 1.1rem; }
+  /* footer */
+  footer[role="contentinfo"] {
+    padding: 26px 32px; font-family: var(--mono); font-size: 12px; color: var(--ink-soft);
+    letter-spacing: 0.04em; border-top: 1px solid var(--border);
+    display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap;
+  }
+  footer a { color: var(--ink-soft); text-decoration: none; border: 0; }
+  footer a:hover { color: var(--amber-dim); }
+  footer .dot { color: var(--amber-dim); }
+
+  @media (max-width: 560px) {
+    header[role="banner"] { padding: 18px 20px; }
+    main { padding: 44px 20px 52px; }
+    footer[role="contentinfo"] { padding: 22px 20px; flex-direction: column; align-items: flex-start; }
+  }
+
+  @media print {
+    .skip-link, header nav { display: none !important; }
+    html, body { background: #fff !important; }
+    a { color: #1a1a1a !important; border: 0; }
   }
 </style>
 </head>
 <body>
 
-<h1>Do Not Sell or Share My Personal Information</h1>
-<p class="lede">Your rights under the California Consumer Privacy Act (CCPA) and California Privacy Rights Act (CPRA).</p>
+<a href="#main" class="skip-link">Skip to content</a>
 
-<h2>We don't sell or share your data</h2>
-<p>sdfkjh.com does not sell personal information as defined by the CCPA (Cal. Civ. Code &sect; 1798.140(ad)). We do not share personal information for cross-context behavioral advertising as defined by the CPRA (Cal. Civ. Code &sect; 1798.140(ah)).</p>
-<p>We have not sold or shared personal information in the preceding twelve months.</p>
+<header role="banner">
+  <a href="/" class="wm" aria-label="sdfkjh — home"><span class="br">[</span>&nbsp;sdfkjh&nbsp;<span class="br">]</span></a>
+  <nav aria-label="primary"><a href="mailto:info@sdfkjh.com">contact</a></nav>
+</header>
 
-<h2>What we collect</h2>
-<p>This site does not collect personal information. There is no contact form, no user accounts, and no analytics. The only way to contact us is via a direct email link — no data is transmitted to us through this website. For full details, see our <a href="/privacy.html">Privacy Policy</a>.</p>
+<main id="main">
+  <h1>Do Not Sell or Share My Personal Information</h1>
+  <p class="lede">Your rights under the California Consumer Privacy Act (CCPA) and California Privacy Rights Act (CPRA).</p>
 
-<h2>Third-party services</h2>
-<p>This site is hosted on Cloudflare. No other third-party services are loaded — no fonts, scripts, analytics, advertising, or tracking technologies. Cloudflare hosting does not constitute a "sale" or "sharing" of personal information under CCPA/CPRA.</p>
+  <h2>We don't sell or share your data</h2>
+  <p>sdfkjh.com does not sell personal information as defined by the CCPA (Cal. Civ. Code &sect; 1798.140(ad)). We do not share personal information for cross-context behavioral advertising as defined by the CPRA (Cal. Civ. Code &sect; 1798.140(ah)).</p>
+  <p>We have not sold or shared personal information in the preceding twelve months.</p>
 
-<h2>Your rights under CCPA/CPRA</h2>
-<p>California residents have the right to:</p>
-<ul>
-  <li>Know what personal information is collected and how it is used</li>
-  <li>Request deletion of personal information</li>
-  <li>Opt out of the sale or sharing of personal information (not applicable — we don't sell or share)</li>
-  <li>Non-discrimination for exercising privacy rights</li>
-</ul>
+  <h2>What we collect</h2>
+  <p>This site does not collect personal information. There is no contact form, no user accounts, and no analytics. The only way to contact us is via a direct email link — no data is transmitted to us through this website. For full details, see our <a href="/privacy.html">Privacy Policy</a>.</p>
 
-<h2>Contact</h2>
-<p>To exercise your rights or ask questions about our data practices: <a href="mailto:info@sdfkjh.com">info@sdfkjh.com</a></p>
+  <h2>Third-party services</h2>
+  <p>This site is hosted on Cloudflare. No third-party services are loaded — no external fonts, scripts, analytics, advertising, or tracking technologies. Fonts and images are served from this domain. Cloudflare hosting does not constitute a "sale" or "sharing" of personal information under CCPA/CPRA.</p>
 
-<p class="muted">Last updated: May 2026</p>
-<a class="back-link" href="/">&larr; back to home</a>
+  <h2>Your rights under CCPA/CPRA</h2>
+  <p>California residents have the right to:</p>
+  <ul>
+    <li>Know what personal information is collected and how it is used</li>
+    <li>Request deletion of personal information</li>
+    <li>Opt out of the sale or sharing of personal information (not applicable — we don't sell or share)</li>
+    <li>Non-discrimination for exercising privacy rights</li>
+  </ul>
+
+  <h2>Contact</h2>
+  <p>To exercise your rights or ask questions about our data practices: <a href="mailto:info@sdfkjh.com">info@sdfkjh.com</a></p>
+
+  <p class="updated">Last updated: May 2026</p>
+</main>
+
+<footer role="contentinfo">
+  <span>sdfkjh.com</span>
+  <span><a href="/privacy.html">privacy</a> <span class="dot">&middot;</span> <a href="/terms.html">terms</a></span>
+</footer>
 
 </body>
 </html>

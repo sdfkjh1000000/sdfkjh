@@ -3,20 +3,12 @@
 <head>
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Privacy Policy — sdfkjh</title>
-<meta name="description" content="Privacy policy for sdfkjh.com — what information we collect and how we use it."/>
+<title>404 — Not Found — sdfkjh</title>
+<meta name="description" content="That page isn't on sdfkjh.com."/>
 <meta name="color-scheme" content="light"/>
 <meta name="theme-color" content="#FDFBF7" media="(prefers-color-scheme: light)"/>
 <meta name="theme-color" content="#1C1917" media="(prefers-color-scheme: dark)"/>
-<meta name="robots" content="index, follow"/>
-<link rel="canonical" href="https://sdfkjh.com/privacy.html"/>
-
-<meta property="og:type" content="website"/>
-<meta property="og:site_name" content="sdfkjh"/>
-<meta property="og:title" content="Privacy Policy — sdfkjh"/>
-<meta property="og:description" content="Privacy policy for sdfkjh.com — what information we collect and how we use it."/>
-<meta property="og:url" content="https://sdfkjh.com/privacy.html"/>
-<meta property="og:image" content="https://sdfkjh.com/og-image.png"/>
+<meta name="robots" content="noindex, follow"/>
 
 <link rel="icon" href="/favicon.svg" type="image/svg+xml"/>
 <link rel="apple-touch-icon" href="/apple-touch-icon.png"/>
@@ -62,7 +54,7 @@
   }
   *, *::before, *::after { box-sizing: border-box; }
   html, body { margin: 0; padding: 0; background: var(--paper); color: var(--ink); font-family: var(--body); }
-  body { font-size: 17px; line-height: 1.7; }
+  body { font-size: 17px; line-height: 1.7; min-height: 100vh; display: flex; flex-direction: column; }
 
   .skip-link {
     position: absolute; top: -100px; left: 12px; background: var(--ink); color: var(--paper);
@@ -83,29 +75,30 @@
   header nav a:hover { color: var(--amber-dim); }
 
   /* document */
-  main { max-width: 680px; margin: 0 auto; padding: 64px 32px 72px; }
+  main { flex: 1; max-width: 680px; margin: 0 auto; padding: 96px 32px 72px; }
+  .code {
+    font-family: var(--mono); font-weight: 500; font-size: 13px; letter-spacing: 0.18em;
+    text-transform: uppercase; color: var(--amber-dim); margin: 0 0 12px;
+  }
   h1 {
-    font-family: var(--serif); font-weight: 500; font-size: clamp(32px, 5vw, 44px);
-    line-height: 1.1; letter-spacing: -0.02em; margin: 0 0 10px;
+    font-family: var(--serif); font-weight: 500; font-size: clamp(48px, 9vw, 88px);
+    line-height: 1; letter-spacing: -0.02em; margin: 0 0 14px;
   }
   .lede {
-    font-family: var(--body); font-style: italic; font-size: clamp(17px, 2vw, 19px);
-    color: var(--ink-soft); margin: 0 0 40px;
-  }
-  h2 {
-    font-family: var(--serif); font-weight: 500; font-size: 22px; line-height: 1.25;
-    margin: 38px 0 10px; color: var(--ink);
+    font-family: var(--body); font-style: italic; font-size: clamp(18px, 2.4vw, 22px);
+    color: var(--ink-soft); margin: 0 0 28px;
   }
   p { margin: 0 0 16px; }
-  ul { margin: 0 0 16px; padding-left: 20px; }
-  li { margin: 0 0 6px; }
-  li::marker { color: var(--amber-dim); }
-  a { color: var(--amber-dim); text-decoration: none; border-bottom: 1px solid rgba(184,85,26,0.35); }
-  a:hover { border-bottom-color: var(--amber-dim); }
-  .updated {
-    font-family: var(--mono); font-size: 12px; color: var(--ink-soft); letter-spacing: 0.03em;
-    margin: 44px 0 0; padding-top: 20px; border-top: 1px solid var(--border);
+  .home-row {
+    font-family: var(--mono); font-size: 13px; font-weight: 500; letter-spacing: 0.35em;
+    color: var(--ink-soft); margin: 28px 0 0; padding-top: 18px; border-top: 1px solid var(--border);
   }
+  .home-row .lit { color: var(--amber-dim); font-weight: 700; }
+  a.back {
+    font-family: var(--mono); font-size: 13px; color: var(--amber-dim);
+    text-decoration: none; border-bottom: 1px solid rgba(184,85,26,0.35);
+  }
+  a.back:hover { border-bottom-color: var(--amber-dim); }
 
   /* footer */
   footer[role="contentinfo"] {
@@ -113,20 +106,19 @@
     letter-spacing: 0.04em; border-top: 1px solid var(--border);
     display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap;
   }
-  footer a { color: var(--ink-soft); text-decoration: none; border: 0; }
+  footer a { color: var(--ink-soft); text-decoration: none; }
   footer a:hover { color: var(--amber-dim); }
   footer .dot { color: var(--amber-dim); }
 
   @media (max-width: 560px) {
     header[role="banner"] { padding: 18px 20px; }
-    main { padding: 44px 20px 52px; }
+    main { padding: 64px 20px 52px; }
     footer[role="contentinfo"] { padding: 22px 20px; flex-direction: column; align-items: flex-start; }
   }
 
   @media print {
     .skip-link, header nav { display: none !important; }
     html, body { background: #fff !important; }
-    a { color: #1a1a1a !important; border: 0; }
   }
 </style>
 </head>
@@ -140,32 +132,12 @@
 </header>
 
 <main id="main">
-  <h1>Privacy Policy</h1>
-  <p class="lede">What information sdfkjh.com collects and how it is used.</p>
-
-  <h2>Information collected</h2>
-  <p>This site does not collect personal information. There is no contact form, no analytics, no tracking cookies, and no user accounts. The only contact method is a mailto link (info@sdfkjh.com), which opens your own email client — no data is transmitted to us until you send an email.</p>
-
-  <h2>Information collected automatically</h2>
-  <p>We don't use analytics software or tracking cookies on this site.</p>
-  <p>Our hosting provider, Cloudflare, processes web requests as part of delivering the site. Cloudflare may log request metadata such as IP addresses as part of their standard infrastructure operation. See <a href="https://www.cloudflare.com/privacypolicy/" rel="noopener">Cloudflare's privacy policy</a> for details.</p>
-
-  <h2>Third-party services</h2>
-  <p>None. This site loads no third-party scripts, fonts, analytics, or tracking resources. Fonts and images are served from this domain; only Cloudflare's infrastructure is involved, for hosting and delivery.</p>
-
-  <h2>Cookies and local storage</h2>
-  <p>This site stores a single value in your browser's localStorage to remember your privacy notice preference (accept or decline). No cookies are used.</p>
-
-  <h2>Data retention</h2>
-  <p>No user data is collected or stored by this site. If you email us directly, that correspondence is retained only as long as needed to respond.</p>
-
-  <h2>California privacy rights (CCPA/CPRA)</h2>
-  <p>We do not sell or share personal information as defined by California law. For a full statement of your rights under the CCPA and CPRA, see our <a href="/do-not-sell.html">Do Not Sell or Share My Personal Information</a> page.</p>
-
-  <h2>Contact</h2>
-  <p>Questions about this policy: <a href="mailto:info@sdfkjh.com">info@sdfkjh.com</a></p>
-
-  <p class="updated">Last updated: May 2026</p>
+  <p class="code">Error 404 &middot; page not found</p>
+  <h1>Off the home row.</h1>
+  <p class="lede">That address doesn't match anything on sdfkjh.com.</p>
+  <p>The page may have moved, or it may never have existed. Either way, the keys are still here.</p>
+  <p><a class="back" href="/">&larr; back to sdfkjh.com</a></p>
+  <p class="home-row" aria-hidden="true">A&nbsp;<span class="lit">S</span>&nbsp;<span class="lit">D</span>&nbsp;<span class="lit">F</span>&nbsp;G&nbsp;<span class="lit">H</span>&nbsp;<span class="lit">J</span>&nbsp;<span class="lit">K</span>&nbsp;L</p>
 </main>
 
 <footer role="contentinfo">
