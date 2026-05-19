@@ -3,8 +3,13 @@
 <head>
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>sdfkjh — brand identity &amp; web development</title>
-<meta name="description" content="A practice of two disciplines — hire one person for both, or either. Brand systems and fast, durable websites."/>
+<script>
+  if (!matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    document.documentElement.classList.add('js-fade');
+  }
+</script>
+<title>sdfkjh — brand and web, built on the home keys</title>
+<meta name="description" content="sdfkjh is six letters off the home row. The page is the portfolio — every section runs."/>
 <meta name="color-scheme" content="light"/>
 <meta name="theme-color" content="#FDFBF7" media="(prefers-color-scheme: light)"/>
 <meta name="theme-color" content="#1C1917" media="(prefers-color-scheme: dark)"/>
@@ -14,25 +19,27 @@
 <meta property="og:type" content="website"/>
 <meta property="og:site_name" content="sdfkjh"/>
 <meta property="og:url" content="https://sdfkjh.com/"/>
-<meta property="og:title" content="sdfkjh — brand identity &amp; web development"/>
-<meta property="og:description" content="A practice of two disciplines — hire one person for both, or either."/>
+<meta property="og:title" content="sdfkjh — brand and web, built on the home keys"/>
+<meta property="og:description" content="sdfkjh is six letters off the home row. The page is the portfolio — every section runs."/>
 <meta property="og:image" content="https://sdfkjh.com/og-image.png"/>
 <meta property="og:image:width" content="1200"/>
 <meta property="og:image:height" content="630"/>
-<meta property="og:image:alt" content="sdfkjh — brand identity and web development."/>
+<meta property="og:image:alt" content="sdfkjh — brand and web, built on the home keys."/>
 <meta property="og:locale" content="en_US"/>
 
 <meta name="twitter:card" content="summary_large_image"/>
-<meta name="twitter:title" content="sdfkjh — brand identity &amp; web development"/>
-<meta name="twitter:description" content="Two disciplines, one practice. Hire one person for both, or either."/>
+<meta name="twitter:title" content="sdfkjh — brand and web, built on the home keys"/>
+<meta name="twitter:description" content="sdfkjh is six letters off the home row. The page is the portfolio — every section runs."/>
 <meta name="twitter:image" content="https://sdfkjh.com/og-image.png"/>
-<meta name="twitter:image:alt" content="sdfkjh — brand identity and web development."/>
+<meta name="twitter:image:alt" content="sdfkjh — brand and web, built on the home keys."/>
 
 <link rel="icon" href="/favicon.svg" type="image/svg+xml"/>
 <link rel="apple-touch-icon" href="/apple-touch-icon.png"/>
 
 <link rel="preload" as="font" type="font/woff2" href="/assets/fonts/newsreader-500.woff2" crossorigin>
+<link rel="preload" as="font" type="font/woff2" href="/assets/fonts/newsreader-500-italic.woff2" crossorigin>
 <link rel="preload" as="font" type="font/woff2" href="/assets/fonts/source-serif-4-400.woff2" crossorigin>
+<link rel="preload" as="font" type="font/woff2" href="/assets/fonts/source-serif-4-400-italic.woff2" crossorigin>
 <link rel="preload" as="font" type="font/woff2" href="/assets/fonts/jetbrains-mono.woff2" crossorigin>
 <link rel="preload" as="image" type="image/avif" href="/assets/img/hero.avif" fetchpriority="high">
 
@@ -47,16 +54,23 @@
       "@id": "https://sdfkjh.com/#website",
       "url": "https://sdfkjh.com/",
       "name": "sdfkjh",
-      "description": "A practice of two disciplines — hire one person for both, or either. Brand systems and fast, durable websites."
+      "description": "sdfkjh is six letters off the home row. The page is the portfolio — every section runs.",
+      "inLanguage": "en"
     },
     {
-      "@type": "ProfessionalService",
-      "@id": "https://sdfkjh.com/#practice",
-      "name": "sdfkjh",
+      "@type": "WebPage",
+      "@id": "https://sdfkjh.com/#page",
       "url": "https://sdfkjh.com/",
-      "areaServed": "Worldwide",
-      "serviceType": ["Brand identity", "Web development"],
-      "email": "mailto:info@sdfkjh.com"
+      "name": "sdfkjh",
+      "isPartOf": { "@id": "https://sdfkjh.com/#website" },
+      "inLanguage": "en",
+      "dateModified": "2026-05-19",
+      "primaryImageOfPage": {
+        "@type": "ImageObject",
+        "url": "https://sdfkjh.com/og-image.png",
+        "width": 1200,
+        "height": 630
+      }
     }
   ]
 }
@@ -169,7 +183,7 @@
     font-family: var(--serif); font-weight: 500; font-size: clamp(38px, 5.6vw, 64px);
     line-height: 1.06; letter-spacing: -0.02em; margin: 0 0 18px; max-width: 16ch;
   }
-  .hero h1 em { font-style: italic; color: var(--amber); }
+  .hero h1 em { font-style: italic; color: var(--amber-dim); }
   .hero .kicker {
     font-style: italic; font-size: clamp(17px, 2vw, 20px); color: var(--ink-soft);
     max-width: 40ch; margin: 0 0 30px;
@@ -364,6 +378,29 @@
     html, body { background: #fff !important; }
   }
 </style>
+<style>
+  /* ── polish: accent pulse (registered custom property for smooth interpolation) ── */
+  @property --amber {
+    syntax: '<color>';
+    inherits: true;
+    initial-value: #ff7a1a;
+  }
+  body { transition: --amber 0.15s ease; }
+  body.amber-pulse { --amber: #ffaa44; }
+
+  /* ── polish: section fade-in on scroll ── */
+  html.js-fade section {
+    opacity: 0;
+    transform: translateY(8px);
+    transition: opacity 0.35s cubic-bezier(0.2, 0.9, 0.4, 1.1),
+                transform 0.35s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+    will-change: opacity, transform;
+  }
+  html.js-fade section.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+</style>
 </head>
 <body>
 
@@ -371,7 +408,6 @@
 
 <header role="banner">
   <a href="/" class="wm" aria-label="sdfkjh — home"><span class="br">[</span>&nbsp;sdfkjh&nbsp;<span class="br">]</span></a>
-  <nav aria-label="primary"><a href="mailto:info@sdfkjh.com">contact</a></nav>
 </header>
 
 <main id="main">
@@ -383,7 +419,7 @@
         <span class="wm-lg" aria-hidden="true"><span class="br">[</span>&nbsp;sdfkjh<span class="cursor"></span><span class="br">]</span></span>
         <hr class="rule" aria-hidden="true"/>
         <h1>Brand <em>and</em> web, built on the home keys.</h1>
-        <p class="kicker">A practice of two disciplines &mdash; hire one person for both, or either.</p>
+        <p class="kicker">Below: the thing itself.</p>
         <p class="home-row" aria-hidden="true">A&nbsp;<span class="lit">S</span>&nbsp;<span class="lit">D</span>&nbsp;<span class="lit">F</span>&nbsp;G&nbsp;<span class="lit">H</span>&nbsp;<span class="lit">J</span>&nbsp;<span class="lit">K</span>&nbsp;L</p>
       </div>
       <div class="image">
@@ -399,16 +435,17 @@
   <!-- THESIS — live markdown -->
   <section class="thesis">
     <div class="wrap">
-      <p class="eyebrow">The thesis &middot; markdown</p>
-      <p class="code-caption"><span class="t">rendered live from</span> thesis.md <span class="t">— a tiny parser, ~25 lines</span></p>
+      <h2 class="eyebrow">The take &middot; markdown</h2>
+      <p class="code-caption"><span class="t">rendered live from</span> take.md <span class="t">— a tiny parser, ~25 lines</span></p>
       <div class="panes">
-        <div class="src" aria-hidden="true"><span class="h">## The thesis</span>
+        <div class="src" aria-hidden="true"><span class="h">## The take</span>
 
-Brand work decides how a thing <span class="b">**sounds and looks**</span>.
-Web work decides whether it <span class="b">**loads, ranks, and lasts**</span>.
+Left hand: <span class="b">**sdf**</span>. Right hand: <span class="b">**kjh**</span>.
 
-<span class="q">&gt; Both are systems — built once, shipped everywhere.</span><span class="caret"></span></div>
-        <div class="out"><h3>The thesis</h3><p>Brand work decides how a thing <strong>sounds and looks</strong>. Web work decides whether it <strong>loads, ranks, and lasts</strong>.</p><blockquote>Both are systems — built once, shipped everywhere.</blockquote></div>
+Brand and web are two hands on one keyboard.
+
+<span class="q">&gt; The page is what they type together.</span><span class="caret"></span></div>
+        <div class="out"><h3>The take</h3><p>Left hand: <strong>sdf</strong>. Right hand: <strong>kjh</strong>.</p><p>Brand and web are two hands on one keyboard.</p><blockquote>The page is what they type together.</blockquote></div>
       </div>
       <p class="replay"><button type="button">&#8635; replay</button></p>
     </div>
@@ -417,24 +454,24 @@ Web work decides whether it <span class="b">**loads, ranks, and lasts**</span>.
   <!-- SOURCE — format switcher -->
   <section class="source">
     <div class="wrap">
-      <p class="eyebrow">One source &middot; html / md / json / css</p>
-      <p class="code-caption"><span class="t">the two disciplines, held as one</span> CONTENT <span class="t">object — rendered four ways</span></p>
+      <h2 class="eyebrow">One source &middot; html / md / json / css</h2>
+      <p class="code-caption"><span class="t">one</span> object<span class="t">, four skins</span></p>
       <div class="switch" role="group" aria-label="Render format">
         <button data-fmt="html" aria-pressed="true">html</button>
         <button data-fmt="markdown" aria-pressed="false">markdown</button>
         <button data-fmt="json" aria-pressed="false">json</button>
         <button data-fmt="css" aria-pressed="false">css</button>
       </div>
-      <div class="stage" aria-live="polite">
+      <div class="stage">
         <div class="render-html">
           <div>
-            <p class="e">One</p><h4>Brand identity.</h4>
-            <ul><li>Wordmarks &amp; visual identity systems</li><li>Palette, typography, voice as a set</li><li>From wordmark to email signature</li></ul>
+            <p class="e">Left hand &middot; sdf</p><h4>Brand.</h4>
+            <ul><li>Wordmark: [ sdfkjh ] in mono, brackets in amber</li><li>Type: Newsreader, Source Serif 4, JetBrains Mono</li><li>Palette: paper, ink, amber</li></ul>
           </div>
           <div>
-            <p class="e">Two</p><h4>Web development.</h4>
-            <ul><li>Single page to full multi-page site</li><li>Modern hosting, fast by default</li><li>Accessibility, SEO, performance baked in</li></ul>
-            <p class="strip">cloudflare pages · lighthouse-tuned · accessibility-first · shipping since 2003</p>
+            <p class="e">Right hand &middot; kjh</p><h4>Web.</h4>
+            <ul><li>Markup: one static index.html</li><li>Stack: vanilla JS, no framework</li><li>Hosting: Cloudflare Pages, edge-served</li></ul>
+            <p class="strip">html · markdown · json · css · javascript — one page, all five</p>
           </div>
         </div>
       </div>
@@ -444,17 +481,13 @@ Web work decides whether it <span class="b">**loads, ranks, and lasts**</span>.
   <!-- SYSTEM — css playground -->
   <section class="system">
     <div class="wrap">
-      <p class="eyebrow">The brand system &middot; css</p>
-      <p class="code-caption"><span class="t">every value below is a</span> :root <span class="t">custom property — drive it</span></p>
+      <h2 class="eyebrow">The brand system &middot; css</h2>
+      <p class="code-caption"><span class="t">turn the</span> knobs<span class="t">. the page moves.</span></p>
       <div class="grid">
         <div class="canvas">
           <span class="wm"><span class="br">[</span>&nbsp;sdfkjh&nbsp;<span class="br">]</span></span>
           <h3>Brand <em>and</em> web.</h3>
           <hr class="rule"/>
-          <div class="card">
-            <h4>Two disciplines, one practice.</h4>
-            <p>Brand work decides how a thing sounds and looks. Web work decides whether it loads, ranks, and lasts.</p>
-          </div>
           <div class="swatches" aria-hidden="true">
             <span class="sw" style="background:#ff7a1a"></span>
             <span class="sw" style="background:#b8551a"></span>
@@ -480,7 +513,7 @@ Web work decides whether it <span class="b">**loads, ranks, and lasts**</span>.
             <label><span>--radius</span><span class="val" data-val="radius">2px</span></label>
             <input type="range" min="0" max="18" value="2" data-knob="radius" aria-label="corner radius"/>
           </div>
-          <div class="readout"></div>
+          <div class="readout" aria-live="polite"></div>
         </div>
       </div>
     </div>
@@ -489,14 +522,14 @@ Web work decides whether it <span class="b">**loads, ranks, and lasts**</span>.
   <!-- BOTH — js repl -->
   <section class="both">
     <div class="wrap">
-      <p class="eyebrow">One practice &middot; javascript</p>
+      <h2 class="eyebrow">javascript &middot; live</h2>
       <p class="code-caption"><span class="t">the console is the nav — also reachable by scrolling</span></p>
-      <p class="closing">Brand identity and web development are the same job at different layers.</p>
-      <p class="lead">Two hands at the home keys &mdash; <em>sdf / kjh</em> &mdash; one practice. Say hello below, or just write to <a href="mailto:info@sdfkjh.com" style="color:var(--amber-dim)">info@sdfkjh.com</a>.</p>
+      <p class="closing">sdf meets kjh.</p>
+      <p class="lead">type a command. or just email.</p>
       <div class="frame">
         <div class="bar"><span class="dot a"></span><span class="dot"></span><span class="dot"></span><span class="title">sdfkjh — type a command</span></div>
         <div class="scroll" aria-live="polite">
-          <div class="ln amber">[ sdfkjh ] — brand identity &amp; web development</div>
+          <div class="ln amber">[ sdfkjh ] — ready.</div>
           <div class="ln sys">type 'help' to look around, or just scroll the page.</div>
           <div class="ln sys"></div>
         </div>
@@ -528,17 +561,17 @@ Web work decides whether it <span class="b">**loads, ranks, and lasts**</span>.
 const CONTENT = {
   wordmark: "sdfkjh",
   h1: "Brand and web, built on the home keys.",
-  kicker: "A practice of two disciplines — hire one person for both, or either.",
+  kicker: "Every section below is a working artifact, not a description of one.",
   brand: {
-    title: "Brand identity",
-    items: ["Wordmarks & visual identity systems", "Palette, typography, voice as a set", "From wordmark to email signature"]
+    title: "Brand",
+    items: ["Wordmark: [ sdfkjh ] in mono, brackets in amber", "Type: Newsreader, Source Serif 4, JetBrains Mono", "Palette: paper, ink, amber"]
   },
   web: {
-    title: "Web development",
-    items: ["Single page to full multi-page site", "Modern hosting, fast by default", "Accessibility, SEO, performance baked in"],
-    strip: "cloudflare pages · lighthouse-tuned · accessibility-first · shipping since 2003"
+    title: "Web",
+    items: ["Markup: one static index.html", "Stack: vanilla JS, no framework", "Hosting: Cloudflare Pages, edge-served"],
+    strip: "html · markdown · json · css · javascript — one page, all five"
   },
-  closing: "Brand identity and web development are the same job at different layers.",
+  closing: "The page is what they type together.",
   contact: "info@sdfkjh.com"
 };
 const esc = s => s.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
@@ -551,12 +584,13 @@ const esc = s => s.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;
   const replay = root.querySelector('.replay button');
   const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  const md = `## The thesis
+  const md = `## The take
 
-Brand work decides how a thing **sounds and looks**.
-Web work decides whether it **loads, ranks, and lasts**.
+Left hand: **sdf**. Right hand: **kjh**.
 
-> Both are systems — built once, shipped everywhere.`;
+Brand and web are two hands on one keyboard.
+
+> The page is what they type together.`;
 
   function parse(t){
     const inline = s => esc(s).replace(/\*\*([^*]+)\*\*/g,'<strong>$1</strong>');
@@ -590,7 +624,22 @@ Web work decides whether it **loads, ranks, and lasts**.
     })();
   }
   replay.addEventListener('click', run);
-  run();
+
+  // gate first run on viewport so the page doesn't burn ~3s of main-thread
+  // work on loads that never scroll to the section
+  let started = false;
+  if ('IntersectionObserver' in window) {
+    const io = new IntersectionObserver((entries) => {
+      if (entries[0].isIntersecting && !started) {
+        started = true;
+        run();
+        io.disconnect();
+      }
+    }, { threshold: 0.25 });
+    io.observe(root);
+  } else {
+    run();
+  }
 })();
 
 /* ── SOURCE — format switcher ───────────────────────────────── */
@@ -607,7 +656,7 @@ Web work decides whether it **loads, ranks, and lasts**.
         <ul>${d.items.map(i=>`<li>${i}</li>`).join('')}</ul>
         ${d.strip ? `<p class="strip">${d.strip}</p>` : ''}
       </div>`;
-      return `<div class="render-html">${col(c.brand,'One')}${col(c.web,'Two')}</div>`;
+      return `<div class="render-html">${col(c.brand,'Left hand &middot; sdf')}${col(c.web,'Right hand &middot; kjh')}</div>`;
     },
     markdown(){
       const md = `### ${c.brand.title}
@@ -654,7 +703,9 @@ ${c.web.items.map(i=>'- '+i).join('\n')}
     btns.forEach(b => b.setAttribute('aria-pressed', String(b.dataset.fmt === fmt)));
   }
   btns.forEach(b => b.addEventListener('click', () => render(b.dataset.fmt)));
-  render('html');
+  // initial state is already in the static markup; just sync aria-pressed
+  // (avoids a redundant innerHTML rebuild on first paint)
+  btns.forEach(b => b.setAttribute('aria-pressed', String(b.dataset.fmt === 'html')));
 })();
 
 /* ── SYSTEM — css playground ────────────────────────────────── */
@@ -714,11 +765,11 @@ ${c.web.items.map(i=>'- '+i).join('\n')}
   const cmds = {
     help(){
       line('Available commands:', 'amber');
-      lines(['  whoami   — the practice in one line',
-             '  brand    — the brand-identity half',
-             '  web      — the web-development half',
-             '  both     — why they are one practice',
-             '  contact  — get in touch',
+      lines(['  whoami   — show the wordmark',
+             '  brand    — show the brand',
+             '  web      — show the web',
+             '  both     — show both',
+             '  contact  — show the email',
              '  clear    — wipe the screen']);
     },
     whoami(){ line('sdfkjh', 'head'); line(c.kicker); },
@@ -728,7 +779,7 @@ ${c.web.items.map(i=>'- '+i).join('\n')}
       lines(c.web.items.map(i => '  — ' + i));
       line('  ' + c.web.strip, 'amber');
     },
-    both(){ line('One practice.', 'head'); line(c.closing + ' Two hands at the home keys — sdf / kjh.'); },
+    both(){ line(c.closing, 'head'); },
     contact(){ line('Reach:', 'amber'); line('  ' + c.contact); },
     clear(){ scroll.innerHTML = ''; }
   };
@@ -739,15 +790,92 @@ ${c.web.items.map(i=>'- '+i).join('\n')}
     if (cmds[cmd]) cmds[cmd]();
     else { line('command not found: ' + cmd, 'err'); line("type 'help' for the list"); }
   }
+  const history = [];
+  let histIdx = -1;
   input.addEventListener('keydown', e => {
-    if (e.key !== 'Enter') return;
-    const v = input.value; input.value = ''; exec(v);
+    if (e.key === 'Enter') {
+      const v = input.value; input.value = '';
+      if (v.trim()) history.push(v);
+      histIdx = history.length;
+      exec(v);
+      return;
+    }
+    if (e.key === 'ArrowUp') {
+      e.preventDefault();
+      if (history.length && histIdx > 0) {
+        histIdx--;
+        input.value = history[histIdx];
+      }
+      return;
+    }
+    if (e.key === 'ArrowDown') {
+      e.preventDefault();
+      if (histIdx < history.length - 1) {
+        histIdx++;
+        input.value = history[histIdx];
+      } else {
+        histIdx = history.length;
+        input.value = '';
+      }
+    }
   });
 
   scroll.innerHTML = '';
-  line('[ sdfkjh ] — brand identity & web development', 'amber');
+  line('[ sdfkjh ] — ready.', 'amber');
   line("type 'help' to look around, or just scroll the page.");
   line('');
+})();
+</script>
+<script>
+/* ── polish: section fade-in + accent pulse on scroll ──────────── */
+(function(){
+  // js-fade is only added when reduced-motion is OFF (see head script).
+  // If it's missing, the user opted out — do nothing.
+  if (!document.documentElement.classList.contains('js-fade')) return;
+
+  const sections = document.querySelectorAll('section');
+  if (!sections.length) return;
+
+  if (!('IntersectionObserver' in window)) {
+    // No IO support: just show everything, skip pulse.
+    sections.forEach(s => s.classList.add('is-visible'));
+    return;
+  }
+
+  // Fade-in: each section reveals once, then is unobserved.
+  const fadeObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('is-visible');
+        fadeObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.15 });
+
+  // Pulse: amber brightens for 150ms the first time each section enters.
+  const pulsed = new WeakSet();
+  let pulseTimer = null;
+  function pulse(){
+    document.body.classList.add('amber-pulse');
+    if (pulseTimer) clearTimeout(pulseTimer);
+    pulseTimer = setTimeout(() => {
+      document.body.classList.remove('amber-pulse');
+      pulseTimer = null;
+    }, 150);
+  }
+  const pulseObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting && !pulsed.has(entry.target)) {
+        pulsed.add(entry.target);
+        pulse();
+      }
+    });
+  }, { threshold: 0.15 });
+
+  sections.forEach(s => {
+    fadeObserver.observe(s);
+    pulseObserver.observe(s);
+  });
 })();
 </script>
 </body>
