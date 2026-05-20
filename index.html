@@ -274,7 +274,7 @@
 
   /* ── system: css playground ────────────────────────────────── */
   .system { padding: var(--gap, 52px) 0; }
-  .system .grid { display: grid; grid-template-columns: 1fr 300px; gap: 0; border: 1px solid var(--border); border-radius: calc(3px * var(--radius-scale, 1)); overflow: hidden; }
+  .system .grid { display: grid; border: 1px solid var(--border); border-radius: calc(3px * var(--radius-scale, 1)); overflow: hidden; }
   .system .canvas { padding: 44px 44px; background: var(--paper); transition: background-color 0.3s ease; }
   .system .canvas .wm { font-size: calc(22px * var(--type-scale, 1)); display: inline-block; margin-bottom: 16px; }
   .system .canvas .wm .br { color: var(--amber-dim); }
@@ -287,7 +287,7 @@
   .system .canvas .swatches { display: flex; gap: 8px; margin-top: 22px; }
   .system .canvas .sw { width: 38px; height: 24px; border-radius: calc(2px * var(--radius-scale, 1)); }
   /* panel is tool chrome — pinned dark in both themes so its controls stay legible */
-  .system .panel { background: #1C1917; color: #FDFBF7; padding: 28px 26px; font-family: var(--mono); font-size: calc(12px * var(--type-scale, 1)); }
+  .system .panel { background: #1C1917; color: #FDFBF7; padding: 28px 26px; border-top: 1px solid #3a3631; font-family: var(--mono); font-size: calc(12px * var(--type-scale, 1)); }
   .system .panel h4 { font-family: var(--mono); font-size: calc(11px * var(--type-scale, 1)); color: var(--amber); letter-spacing: 0.1em; margin: 0 0 18px; text-transform: uppercase; }
   .system .field { margin-bottom: 22px; }
   .system .field label { display: block; margin-bottom: 6px; color: #cfcbc2; }
@@ -409,14 +409,71 @@
 
   /* ── responsive ────────────────────────────────────────────── */
   @media (max-width: 760px) {
-    .hero .wrap, .thesis .panes, .source .render-html, .system .grid { grid-template-columns: 1fr; }
+    .hero .wrap, .thesis .panes, .source .render-html { grid-template-columns: 1fr; }
+    .system .grid { max-width: 420px; margin-inline: auto; }
     .hero .wrap { gap: 36px; }
     .hero .text { max-width: none; }
     .hero .image { aspect-ratio: 3 / 2; }
     .thesis .src { border-right: 0; border-bottom: 1px solid var(--border); }
-    .system .panel { border-top: 1px solid #3a3631; }
     .consent-inner { flex-direction: column; align-items: stretch; gap: 14px; text-align: center; }
     .consent-actions { justify-content: center; }
+  }
+
+  /* ── desktop: the editor sits full-width below the preview and flows
+     its controls into as many columns as the width allows ── */
+  @media (min-width: 761px) {
+    .system .panel {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+      gap: 0 24px;
+      align-content: start;
+      align-items: start;
+    }
+    .system .panel > h4,
+    .system .panel > .toggle,
+    .system .panel > .readout,
+    .system .panel > .fx,
+    .system .panel > .lab,
+    .system .panel > .reset { grid-column: 1 / -1; }
+
+    .system .fx {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+      gap: 0 24px;
+      align-items: start;
+    }
+    .system .fx > h4 { grid-column: 1 / -1; }
+
+    .system .lab {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+      gap: 0 24px;
+      align-content: start;
+      align-items: start;
+    }
+    .system .lab > h4,
+    .system .lab > .lab-presets,
+    .system .lab > .lab-groups { grid-column: 1 / -1; }
+    .system .lab > .master { grid-column: span 2; }
+    .system .lab .lab-presets { flex-direction: row; }
+    .system .lab .lab-preset { flex: 1; min-width: 0; }
+    .system .lab .lab-groups {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+      gap: 6px;
+      align-items: start;
+    }
+    .system .lab .lab-groups > details { margin-bottom: 0; }
+    /* an opened group breaks out to the full width and pushes the rest down */
+    .system .lab .lab-groups > details[open] { grid-column: 1 / -1; }
+    /* ...and tiles its effects horizontally instead of one long column */
+    .system .lab .lab-groups > details[open] .gbody {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 4px 20px;
+      align-items: start;
+    }
+    .system .lab .lab-groups > details[open] .gbody .feat { border-top: 0; }
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -538,20 +595,34 @@
     }
   }
 
-  /* ── playground · preset buttons (panel → presets) ──────────────
-     each snaps every control to a curated, award-winning setting. */
-  .system .presets { display: flex; gap: 6px; }
-  .system .preset {
-    flex: 1; font-family: var(--mono); font-size: calc(11px * var(--type-scale, 1));
-    background: #2a2724; color: #cfcbc2; border: 1px solid #3a3631;
-    border-radius: calc(2px * var(--radius-scale, 1)); padding: 9px 4px;
-    cursor: pointer; letter-spacing: 0.03em; transition: all 0.13s;
+  /* ── effects-lab · award-winning presets ───────────────────────
+     each preset button snaps the whole lab to a curated state. */
+  .lab .lab-rov { margin-top: 2px; }
+  .lab .lab-presets { display: flex; flex-direction: column; gap: 6px; margin-bottom: 14px; }
+  .lab .lab-preset {
+    display: flex; flex-direction: column; gap: 2px; text-align: left;
+    font-family: var(--mono); background: #2a2724; color: #cfcbc2;
+    border: 1px solid #3a3631; border-radius: calc(2px * var(--radius-scale, 1));
+    padding: 8px 11px; cursor: pointer; transition: all 0.13s;
   }
-  .system .preset:hover { border-color: var(--amber); color: #FDFBF7; }
-  .system .preset[aria-pressed="true"] {
-    background: var(--amber); color: #1C1917; border-color: var(--amber); font-weight: 700;
+  .lab .lab-preset:hover { border-color: var(--amber); color: #FDFBF7; }
+  .lab .lab-preset:focus-visible { outline: 2px solid var(--amber); outline-offset: 1px; }
+  .lab .lab-preset .nm {
+    color: var(--amber); text-transform: uppercase; letter-spacing: 0.1em;
+    font-size: calc(11px * var(--type-scale, 1));
   }
-  .system .preset:focus-visible { outline: 2px solid var(--amber); outline-offset: 1px; }
+  .lab .lab-preset .fl { color: #8a857a; font-size: calc(10px * var(--type-scale, 1)); }
+  .lab .lab-preset[aria-pressed="true"] { border-color: var(--amber); background: #322a1f; }
+
+  /* ── effects-lab · mic status indicator ────────────────────────── */
+  .lab .lab-mic-status {
+    margin: 7px 0 0; font-family: var(--mono); letter-spacing: 0.04em;
+    font-size: calc(10px * var(--type-scale, 1)); color: #8a857a;
+  }
+  .lab .lab-mic-status[hidden] { display: none; }
+  .lab .lab-mic-status::before { content: '\25CF\00A0'; }
+  .lab .lab-mic-status[data-state="ok"]  { color: #67c98a; }
+  .lab .lab-mic-status[data-state="err"] { color: #ef6b6b; }
 </style>
 <style>
   /* ════════════════════════════════════════════════════════════════
@@ -994,14 +1065,6 @@ Brand and web are two hands on one keyboard.
         <div class="panel">
           <h4>// section editor</h4>
           <label class="toggle" style="margin-bottom:20px"><input type="checkbox" data-theme/><span>dark mode</span><em>css</em></label>
-          <div class="ctrl">
-            <label>presets</label>
-            <div class="presets" role="group" aria-label="design presets">
-              <button type="button" class="preset" data-preset="minimal" aria-pressed="false">minimal</button>
-              <button type="button" class="preset" data-preset="bold" aria-pressed="false">bold</button>
-              <button type="button" class="preset" data-preset="ethereal" aria-pressed="false">ethereal</button>
-            </div>
-          </div>
           <div class="field">
             <label for="ed-target">section</label>
             <select id="ed-target" data-target>
@@ -1069,10 +1132,10 @@ Brand and web are two hands on one keyboard.
             <label><span>gap</span><span class="val" data-val="gap">52px</span></label>
             <input type="range" min="16" max="120" step="4" value="52" data-knob="gap" aria-label="section gap"/>
           </div>
-          <div class="readout" aria-live="polite"></div>
           <div class="fx" role="group" aria-label="scroll effects">
             <h4>// effects</h4>
             <label class="toggle"><input type="checkbox" data-fx="fade" checked/><span>fade in</span><em>js</em></label>
+            <div class="fxgroup">
             <label class="toggle"><input type="checkbox" data-fx="slide"/><span>slide in</span><em>js</em></label>
             <div class="knob param">
               <label><span>slide distance</span><span class="val" data-fxval="dist">64px</span></label>
@@ -1082,10 +1145,13 @@ Brand and web are two hands on one keyboard.
               <label><span>slide speed</span><span class="val" data-fxval="speed">0.68s</span></label>
               <input type="range" min="0" max="100" step="5" value="60" data-fxp="speed" aria-label="slide speed"/>
             </div>
+            </div>
+            <div class="fxgroup">
             <label class="toggle"><input type="checkbox" data-fx="zoom"/><span>zoom on scroll</span><em>css</em></label>
             <div class="knob param">
               <label><span>zoom depth</span><span class="val" data-fxval="zoom">0.61&times;</span></label>
               <input type="range" min="0" max="100" step="5" value="60" data-fxp="zoom" aria-label="zoom depth"/>
+            </div>
             </div>
             <label class="toggle"><input type="checkbox" data-fx="tags"/><span>show html tags</span><em>html</em></label>
             <label class="toggle"><input type="checkbox" data-fx="cursor"/><span>cursor follower</span><em>js</em></label>
@@ -1121,8 +1187,21 @@ Brand and web are two hands on one keyboard.
               <button type="button" class="lab-btn" data-lab-randomize>randomize</button>
               <button type="button" class="lab-btn" data-lab-clear>all off</button>
             </div>
+            <label class="toggle lab-rov"><input type="checkbox" data-lab-rov/><span>random on visit</span></label>
+            <div class="lab-presets" role="group" aria-label="award-winning presets">
+              <button type="button" class="lab-preset" data-lab-preset="locomotive" aria-pressed="false">
+                <span class="nm">locomotive</span><span class="fl">smooth scroll &middot; scroll-driven storytelling</span>
+              </button>
+              <button type="button" class="lab-preset" data-lab-preset="active-theory" aria-pressed="false">
+                <span class="nm">active theory</span><span class="fl">bold &middot; experimental &middot; immersive</span>
+              </button>
+              <button type="button" class="lab-preset" data-lab-preset="hug" aria-pressed="false">
+                <span class="nm">hug</span><span class="fl">soft &middot; poetic &middot; text-forward</span>
+              </button>
+            </div>
 
-            <details open>
+            <div class="lab-groups">
+            <details>
               <summary><span class="cap">scroll</span><span class="ct">7 effects</span></summary>
               <div class="gbody">
                 <div class="feat">
@@ -1378,12 +1457,15 @@ Brand and web are two hands on one keyboard.
                 </div>
                 <div class="feat">
                   <label class="toggle"><input type="checkbox" data-lab="audio-reactive"/><span>audio-reactive (mic)</span><em>js</em></label>
+                  <p class="lab-mic-status" data-mic-status hidden></p>
                   <div class="knob param"><label><span>sensitivity</span><span class="val" data-labval="audio-reactive">50</span></label>
                     <input type="range" min="0" max="100" value="50" data-labp="audio-reactive" disabled aria-label="audio sensitivity"/></div>
                 </div>
               </div>
             </details>
+            </div>
           </div>
+          <div class="readout" aria-live="polite"></div>
           <button type="button" class="reset" data-reset>reset entire page</button>
         </div>
       </div>
@@ -1613,7 +1695,6 @@ ${c.web.items.map(i=>'- '+i).join('\n')}
   const gapKnob   = root.querySelector('input[data-knob="gap"]');
   const readout   = root.querySelector('.readout');
   const resetBtn  = root.querySelector('button[data-reset]');
-  const presetBtns= [...root.querySelectorAll('button[data-preset]')];
   const themeBox  = document.querySelector('input[data-theme]');
 
   const TARGETS = {
@@ -1635,25 +1716,6 @@ ${c.web.items.map(i=>'- '+i).join('\n')}
      but a reload ("leaving and coming back") starts fresh, by design */
   const DEFAULTS = { accent: '#ff7a1a', paper: '#FDFBF7', type: 'editorial', size: 1, radius: 1, track: 0, lead: 1.7, pad: 32, gap: 52 };
   const overrides = {};
-
-  /* curated full-page looks — every control, in one click */
-  const PRESETS = {
-    minimal:  { accent: '#1c7ed6', paper: '#FFFFFF', type: 'sans',      size: 0.95, radius: 0,
-                track: 0,     lead: 1.6, pad: 48, gap: 64,
-                fx:  { fade: true, slide: false, zoom: false, tags: false, cursor: false, grain: false, glass: false },
-                fxp: { dist: 64,  speed: 60, zoom: 60 },
-                dark: false, hover: 'border', parallax: 'off' },
-    bold:     { accent: '#c2255c', paper: '#ECEAE6', type: 'mono',      size: 1.15, radius: 0.5,
-                track: -0.01, lead: 1.5, pad: 24, gap: 44,
-                fx:  { fade: true, slide: true,  zoom: false, tags: false, cursor: true,  grain: true,  glass: false },
-                fxp: { dist: 120, speed: 75, zoom: 60 },
-                dark: false, hover: 'lift',   parallax: 'heavy' },
-    ethereal: { accent: '#7048e8', paper: '#FBF3E4', type: 'editorial', size: 1.05, radius: 4,
-                track: 0.02,  lead: 2.0, pad: 56, gap: 88,
-                fx:  { fade: true, slide: false, zoom: true,  tags: false, cursor: false, grain: false, glass: true },
-                fxp: { dist: 64,  speed: 35, zoom: 80 },
-                dark: false, hover: 'glow',   parallax: 'light' }
-  };
 
   /* ── colour maths ── */
   const clamp = n => Math.max(0, Math.min(255, Math.round(n)));
@@ -1775,8 +1837,6 @@ ${c.web.items.map(i=>'- '+i).join('\n')}
     overrides[key] = s;
     paint(TARGETS[key], s);
     show(s);
-    /* any manual control change de-selects the active preset chip */
-    presetBtns.forEach(b => b.setAttribute('aria-pressed', 'false'));
   }
   function onSwitch(){
     const s = overrides[sel.value] || DEFAULTS;
@@ -1832,7 +1892,6 @@ ${c.web.items.map(i=>'- '+i).join('\n')}
       setFx(FX_DEFAULT);
       setParams(FXP_DEFAULT);
       setExtras(false, 'none', 'off');
-      presetBtns.forEach(b => b.setAttribute('aria-pressed', 'false'));
     } else {
       delete overrides[sel.value];
       strip(TARGETS[sel.value]);
@@ -1851,7 +1910,7 @@ ${c.web.items.map(i=>'- '+i).join('\n')}
   }
   themeBox.addEventListener('change', () => setDark(themeBox.checked));
 
-  /* ── presets: snap the whole page to a curated design at once ── */
+  /* ── reset helper: dark / hover / parallax in one call ── */
   function setExtras(dark, hover, parallax){
     setDark(dark);
     const hs = document.querySelector('select[data-hover]');
@@ -1859,20 +1918,6 @@ ${c.web.items.map(i=>'- '+i).join('\n')}
     const ps = document.querySelector('select[data-parallax]');
     if (ps){ ps.value = parallax; ps.dispatchEvent(new Event('change')); }
   }
-  function applyPreset(name){
-    const p = PRESETS[name];
-    if (!p) return;
-    Object.keys(overrides).forEach(k => { delete overrides[k]; strip(TARGETS[k]); });
-    sel.value = 'page';
-    resetBtn.textContent = 'reset entire page';
-    writeControls(p);
-    apply();                         /* paints the whole page, clears preset chips */
-    setFx(p.fx);
-    setParams(p.fxp);
-    setExtras(p.dark, p.hover, p.parallax);
-    presetBtns.forEach(b => b.setAttribute('aria-pressed', String(b.dataset.preset === name)));
-  }
-  presetBtns.forEach(b => b.addEventListener('click', () => applyPreset(b.dataset.preset)));
 
   function wireRow(row){
     row.addEventListener('click', e => {
@@ -2500,19 +2545,34 @@ ${c.web.items.map(i=>'- '+i).join('\n')}
 
   /* ── audio-reactive (microphone, opt-in) ── */
   let audioCtx, analyser, audioBuf, audioRAF = null, audioStream = null;
+  const micStatus = lab.querySelector('[data-mic-status]');
+  function setMicStatus(text, state){
+    if (!micStatus) return;
+    micStatus.textContent = text || '';
+    micStatus.dataset.state = state || '';
+    micStatus.hidden = !text;
+  }
   async function audioStart(){
     if (audioCtx) return;
+    setMicStatus('requesting mic…', 'pending');
     try {
+      if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia)
+        throw new Error('getUserMedia unsupported');
       audioStream = await navigator.mediaDevices.getUserMedia({ audio: true });
       audioCtx = new (window.AudioContext || window.webkitAudioContext)();
       analyser = audioCtx.createAnalyser(); analyser.fftSize = 256;
       audioCtx.createMediaStreamSource(audioStream).connect(analyser);
       audioBuf = new Uint8Array(analyser.frequencyBinCount);
       audioRAF = requestAnimationFrame(audioFrame);
+      setMicStatus('active', 'ok');
     } catch (e){
       const t = $tog('audio-reactive');
-      if (t){ t.checked = false; html.classList.remove('lab-audio-reactive'); }
+      if (t) t.checked = false;
+      html.classList.remove('lab-audio-reactive');
+      const s = $sld('audio-reactive');
+      if (s) s.disabled = true;
       audioCtx = null;
+      setMicStatus('Mic unavailable', 'err');
     }
   }
   function audioFrame(){
@@ -2527,6 +2587,7 @@ ${c.web.items.map(i=>'- '+i).join('\n')}
     if (audioStream){ audioStream.getTracks().forEach(t => t.stop()); audioStream = null; }
     if (audioCtx){ audioCtx.close(); audioCtx = null; }
     html.style.setProperty('--lab-audio', '0');
+    setMicStatus('', 'off');
   }
 
   /* ── typewriter / split-text ── */
@@ -2652,7 +2713,8 @@ ${c.web.items.map(i=>'- '+i).join('\n')}
   function applyFeature(id){
     const on = isOn(id);
     html.classList.toggle('lab-' + id, on);
-    const s = $sld(id), se = $sel(id);
+    const s = $sld(id);
+    const se = $sel(id) || lab.querySelector('select[data-lab-sel^="' + id + '-"]');
     if (s)  s.disabled  = !on;
     if (se) se.disabled = !on;
     const b = BEHAVIOR[id];
@@ -2675,11 +2737,11 @@ ${c.web.items.map(i=>'- '+i).join('\n')}
   });
 
   /* ── wiring ── */
-  toggles.forEach(t => t.addEventListener('change', () => applyFeature(t.dataset.lab)));
+  toggles.forEach(t => t.addEventListener('change', () => { applyFeature(t.dataset.lab); clearChips(); }));
   lab.querySelectorAll('input[data-labp]').forEach(s =>
-    s.addEventListener('input', () => tuneFeature(s.dataset.labp)));
+    s.addEventListener('input', () => { tuneFeature(s.dataset.labp); clearChips(); }));
   lab.querySelectorAll('select[data-lab-sel]').forEach(s =>
-    s.addEventListener('change', () => tuneFeature(s.dataset.labSel.replace(/-(dir|curve)$/, ''))));
+    s.addEventListener('change', () => { tuneFeature(s.dataset.labSel.replace(/-(dir|curve)$/, '')); clearChips(); }));
   masterEl.addEventListener('input', () => {
     lab.querySelector('[data-lab-masterval]').textContent = masterEl.value + '%';
     toggles.forEach(t => { if (t.checked) tuneFeature(t.dataset.lab); });
@@ -2688,6 +2750,7 @@ ${c.web.items.map(i=>'- '+i).join('\n')}
   lab.querySelector('[data-lab-clear]').addEventListener('click', () => {
     toggles.forEach(t => { if (!t.disabled) t.checked = false; });
     applyAll();
+    clearChips();
   });
   lab.querySelector('[data-lab-randomize]').addEventListener('click', () => {
     toggles.forEach(t => {
@@ -2700,6 +2763,7 @@ ${c.web.items.map(i=>'- '+i).join('\n')}
       se.selectedIndex = Math.floor(Math.random() * se.options.length);
     });
     applyAll();
+    clearChips();
   });
 
   /* ── shared listeners ── */
@@ -2790,6 +2854,68 @@ ${c.web.items.map(i=>'- '+i).join('\n')}
 
   /* ── initial paint: readouts reflect the 50/100% defaults ── */
   toggles.forEach(t => updateReadout(t.dataset.lab));
+
+  /* ── award-winning presets ─────────────────────────────────────
+     each preset names the effects to switch ON with a curated 0..100
+     intensity; every other effect is switched OFF. disabled toggles
+     (reduced-motion / coarse-pointer gated) are skipped. ── */
+  const LAB_PRESETS = {
+    'locomotive': {
+      on: { 'smooth-scroll': 50, 'scroll-fade': 32, 'scroll-slide': 28,
+            'parallax-depth': 52, 'magnetic-cursor': 30, 'cursor-ring': 50 },
+      sel: { 'smooth-scroll-curve': 'ease', 'scroll-slide-dir': 'up' }
+    },
+    'active-theory': {
+      on: { 'tilt-card': 72, 'liquid-hover': 55, 'border-run': 55, 'glitch-text': 22,
+            'animated-gradient': 26, 'particle-network': 52, 'chromatic': 22,
+            'wobble-load': 56 },
+      sel: {}
+    },
+    'hug': {
+      on: { 'typewriter': 24, 'split-text': 50, 'floating': 32, 'blob-morph': 46,
+            'vignette': 24, 'variable-weight': 52, 'letter-osc': 26 },
+      sel: {}
+    }
+  };
+  const presetBtns = [...lab.querySelectorAll('button[data-lab-preset]')];
+  function clearChips(){ presetBtns.forEach(b => b.setAttribute('aria-pressed', 'false')); }
+  function applyLabPreset(name){
+    const p = LAB_PRESETS[name];
+    if (!p) return;
+    toggles.forEach(t => { t.checked = false; });
+    for (const id in p.on){
+      const t = $tog(id);
+      if (t && !t.disabled){
+        t.checked = true;
+        const s = $sld(id);
+        if (s) s.value = p.on[id];
+      }
+    }
+    for (const id in p.sel){
+      const se = lab.querySelector('select[data-lab-sel="' + id + '"]');
+      if (se) se.value = p.sel[id];
+    }
+    applyAll();
+    presetBtns.forEach(b => b.setAttribute('aria-pressed', String(b.dataset.labPreset === name)));
+  }
+  presetBtns.forEach(b => b.addEventListener('click', () => applyLabPreset(b.dataset.labPreset)));
+
+  /* ── random on visit — persisted in localStorage; when on, one of the
+     three presets is applied at load. off = page loads with effects off. ── */
+  const ROV_KEY = 'sdfkjh:lab-random-on-visit';
+  const rovBox = lab.querySelector('input[data-lab-rov]');
+  if (rovBox){
+    let saved = false;
+    try { saved = localStorage.getItem(ROV_KEY) === '1'; } catch (e){}
+    rovBox.checked = saved;
+    rovBox.addEventListener('change', () => {
+      try { localStorage.setItem(ROV_KEY, rovBox.checked ? '1' : '0'); } catch (e){}
+    });
+    if (saved){
+      const names = Object.keys(LAB_PRESETS);
+      applyLabPreset(names[Math.floor(Math.random() * names.length)]);
+    }
+  }
 })();
 </script>
 </body>
