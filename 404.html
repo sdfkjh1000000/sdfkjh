@@ -17,6 +17,8 @@
 <link rel="preload" as="font" type="font/woff2" href="/assets/fonts/source-serif-4-400.woff2" crossorigin>
 <link rel="preload" as="font" type="font/woff2" href="/assets/fonts/jetbrains-mono.woff2" crossorigin>
 
+<script src="/consent.js" defer></script>
+
 <style>
   /* ── self-hosted fonts ─────────────────────────────────────── */
   @font-face {
@@ -110,15 +112,44 @@
   footer a:hover { color: var(--amber-dim); }
   footer .dot { color: var(--amber-dim); }
 
+  /* consent banner */
+  .consent-banner {
+    position: fixed; bottom: 0; left: 0; right: 0; z-index: 1000;
+    background: #1C1917; color: #FDFBF7;
+    border-top: 2px solid var(--amber); padding: 16px 24px;
+    animation: consent-in 0.25s ease;
+  }
+  @keyframes consent-in { from { transform: translateY(100%); } to { transform: translateY(0); } }
+  .consent-inner { max-width: 1080px; margin: 0 auto; display: flex; align-items: center; gap: 24px; }
+  .consent-text {
+    font-family: var(--mono); font-size: 12px; line-height: 1.7;
+    color: #cfcbc2; flex: 1; margin: 0; letter-spacing: 0.02em;
+  }
+  .consent-text a { color: var(--amber); text-decoration: none; }
+  .consent-text a:hover { text-decoration: underline; }
+  .consent-actions { display: flex; gap: 8px; flex-shrink: 0; }
+  .consent-btn {
+    font-family: var(--mono); font-size: 12px; font-weight: 500;
+    border: 1px solid #3a3631; border-radius: 2px; padding: 7px 16px;
+    cursor: pointer; letter-spacing: 0.03em; transition: all 0.12s;
+  }
+  .consent-decline { background: none; color: #cfcbc2; }
+  .consent-decline:hover { border-color: #8a857a; color: var(--paper); }
+  .consent-accept { background: var(--amber); color: var(--ink); border-color: var(--amber); }
+  .consent-accept:hover { background: #ff8c33; }
+
   @media (max-width: 560px) {
     header[role="banner"] { padding: 18px 20px; }
     main { padding: 64px 20px 52px; }
     footer[role="contentinfo"] { padding: 22px 20px; flex-direction: column; align-items: flex-start; }
+    .consent-inner { flex-direction: column; align-items: stretch; gap: 14px; text-align: center; }
+    .consent-actions { justify-content: center; }
   }
 
   @media print {
-    .skip-link, header nav { display: none !important; }
+    .skip-link, header nav, .consent-banner { display: none !important; }
     html, body { background: #fff !important; }
+    a { color: #1a1a1a !important; border: 0; }
   }
 </style>
 </head>
