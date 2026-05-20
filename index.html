@@ -1677,18 +1677,31 @@ ${c.web.items.map(i=>'- '+i).join('\n')}
     }
     return dim;
   }
+  /* lighten the accent until small text clears WCAG-AA on a dark paper —
+     the dark-mode counterpart of aaDim (darkening would only hurt here) */
+  function aaLight(accent, paper){
+    let [r,g,b] = rgb(accent), lit = accent, guard = 0;
+    while (contrast(lit, paper) < 4.5 && guard++ < 48){
+      r += (255-r)*0.12; g += (255-g)*0.12; b += (255-b)*0.12; lit = toHex(r,g,b);
+    }
+    return lit;
+  }
 
   function paint(el, s){
     const t = TYPES[s.type];
+    /* a whole-page override coexists with dark mode: when dark is on the
+       colour tokens follow the dark theme while the user's type, spacing
+       and accent choices are kept. section overrides stay light and
+       self-contained, so dark only applies to the page target */
+    const dark = el === document.documentElement && themeBox.checked;
+    const paper = dark ? '#1C1917' : s.paper;
     el.style.setProperty('--amber', s.accent);
-    el.style.setProperty('--amber-dim', aaDim(s.accent, s.paper));
-    el.style.setProperty('--paper', s.paper);
-    /* the editor's papers are all light — pin the matching light ink set so a
-       painted target stays self-consistent even when dark mode is on */
-    el.style.setProperty('--ink', '#1C1917');
-    el.style.setProperty('--ink-soft', '#57534E');
-    el.style.setProperty('--surface', '#FFFFFF');
-    el.style.setProperty('--border', '#E7E5E4');
+    el.style.setProperty('--amber-dim', dark ? aaLight(s.accent, paper) : aaDim(s.accent, paper));
+    el.style.setProperty('--paper', paper);
+    el.style.setProperty('--ink',      dark ? '#F5F1EA' : '#1C1917');
+    el.style.setProperty('--ink-soft', dark ? '#A8A29E' : '#57534E');
+    el.style.setProperty('--surface',  dark ? '#262220' : '#FFFFFF');
+    el.style.setProperty('--border',   dark ? '#3A3631' : '#E7E5E4');
     el.style.setProperty('--serif', t.serif);
     el.style.setProperty('--body', t.body);
     el.style.setProperty('--type-scale', s.size);
@@ -1764,12 +1777,6 @@ ${c.web.items.map(i=>'- '+i).join('\n')}
     show(s);
     /* any manual control change de-selects the active preset chip */
     presetBtns.forEach(b => b.setAttribute('aria-pressed', 'false'));
-    /* painting the page yields a light, self-consistent theme — keep the
-       dark-mode control honest by clearing it */
-    if (key === 'page' && themeBox.checked){
-      themeBox.checked = false;
-      document.documentElement.classList.remove('dark');
-    }
   }
   function onSwitch(){
     const s = overrides[sel.value] || DEFAULTS;
@@ -1834,18 +1841,13 @@ ${c.web.items.map(i=>'- '+i).join('\n')}
     show(DEFAULTS);
   }
 
-  /* ── dark mode — owned here so it can yield to / from the page override ── */
+  /* ── dark mode — coexists with the section editor: a page override is
+     re-painted so its colours follow the theme while its type, spacing
+     and accent choices are preserved, instead of being discarded ── */
   function setDark(on){
     themeBox.checked = on;
     document.documentElement.classList.toggle('dark', on);
-    /* dark mode themes the page through root tokens; a page-level editor
-       override would mask it, so drop that override when dark turns on */
-    if (on && overrides.page){
-      delete overrides.page;
-      strip(TARGETS.page);
-      if (sel.value === 'page'){ writeControls(DEFAULTS); show(DEFAULTS); }
-      presetBtns.forEach(b => b.setAttribute('aria-pressed', 'false'));
-    }
+    if (overrides.page) paint(TARGETS.page, overrides.page);
   }
   themeBox.addEventListener('change', () => setDark(themeBox.checked));
 
