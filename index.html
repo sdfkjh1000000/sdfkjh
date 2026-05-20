@@ -4,9 +4,8 @@
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
 <script>
-  if (!matchMedia('(prefers-reduced-motion: reduce)').matches) {
-    document.documentElement.classList.add('js-fade');
-  }
+  /* default reveal effect on; the fade CSS is itself gated on reduced-motion */
+  document.documentElement.classList.add('fx-fade');
 </script>
 <title>sdfkjh — brand and web, built on the home keys</title>
 <meta name="description" content="sdfkjh is six letters off the home row. The page is the portfolio — every section runs."/>
@@ -107,13 +106,31 @@
     --border:    #E7E5E4;
     --amber:     #ff7a1a;
     --amber-dim: #b8551a;
+    --type-scale:   1;
+    --radius-scale: 1;
+    --fx-slide-dist: 64px;
+    --fx-slide-dur:  0.68s;
+    --fx-zoom-scale: 0.61;
     --serif:     "Newsreader", Georgia, serif;
     --body:      "Source Serif 4", Georgia, serif;
     --mono:      "JetBrains Mono", "Consolas", monospace;
   }
+  /* ── playground · dark mode (toggle: panel → dark mode) ───────────
+     swaps the paper/ink token set; --amber-dim lightens so small amber
+     text still clears WCAG-AA on the dark paper. */
+  html.dark {
+    color-scheme: dark;
+    --paper:     #1C1917;
+    --surface:   #262220;
+    --ink:       #F5F1EA;
+    --ink-soft:  #A8A29E;
+    --border:    #3A3631;
+    --amber-dim: #ff9a4d;
+  }
+  html { transition: background-color 0.3s ease; }
   *, *::before, *::after { box-sizing: border-box; }
   html, body { margin: 0; padding: 0; background: var(--paper); color: var(--ink); font-family: var(--body); }
-  body { font-size: 17px; line-height: 1.7; }
+  body { font-size: calc(17px * var(--type-scale, 1)); line-height: var(--leading, 1.7); letter-spacing: var(--tracking, normal); }
   img { max-width: 100%; display: block; }
   picture { display: contents; }
 
@@ -121,7 +138,7 @@
   .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap; border: 0; }
   .skip-link {
     position: absolute; top: -100px; left: 12px; background: var(--ink); color: var(--paper);
-    border: 1px solid var(--amber-dim); border-radius: 2px; padding: 0.5rem 0.9rem;
+    border: 1px solid var(--amber-dim); border-radius: calc(2px * var(--radius-scale, 1)); padding: 0.5rem 0.9rem;
     font-family: var(--mono); font-size: 0.8rem; text-decoration: none; z-index: 100; transition: top 0.15s;
   }
   .skip-link:focus { top: 12px; outline: none; }
@@ -132,16 +149,17 @@
   /* ── shared chrome ─────────────────────────────────────────── */
   .wm { font-family: var(--mono); font-weight: 500; letter-spacing: 0.04em; }
   .wm .br { color: var(--amber); }
-  .wrap { max-width: 1080px; margin: 0 auto; padding: 0 32px; }
+  .wrap { max-width: 1080px; margin: 0 auto; padding: 0 var(--pad, 32px); }
 
-  section { border-top: 1px solid var(--border); }
+  /* sections paint their own paper so the token playground can re-theme them one at a time */
+  section { border-top: 1px solid var(--border); background: var(--paper); letter-spacing: var(--tracking, normal); line-height: var(--leading, 1.7); transition: background-color 0.3s ease, opacity 0.5s ease, translate var(--fx-slide-dur, 0.68s) cubic-bezier(0.2, 0.9, 0.3, 1), transform 0.3s cubic-bezier(0.2, 0.9, 0.3, 1), box-shadow 0.3s ease, outline-color 0.2s ease; }
   .eyebrow {
-    font-family: var(--mono); font-size: 12px; font-weight: 600; color: var(--amber-dim);
+    font-family: var(--mono); font-size: calc(12px * var(--type-scale, 1)); font-weight: 600; color: var(--amber-dim);
     letter-spacing: 0.12em; text-transform: uppercase; margin: 0 0 6px;
   }
   /* the "view-source" annotation, distilled into a consistent caption */
   .code-caption {
-    font-family: var(--mono); font-size: 11px; color: var(--ink-soft);
+    font-family: var(--mono); font-size: calc(11px * var(--type-scale, 1)); color: var(--ink-soft);
     letter-spacing: 0.03em; border-left: 2px solid var(--amber); padding-left: 10px;
     margin: 0 0 26px;
   }
@@ -152,13 +170,13 @@
     display: flex; justify-content: space-between; align-items: center;
     padding: 22px 32px; border-bottom: 1px solid var(--border);
   }
-  header .wm { font-size: 15px; color: var(--ink); text-decoration: none; }
+  header .wm { font-size: calc(15px * var(--type-scale, 1)); color: var(--ink); text-decoration: none; }
   header .wm .br { color: var(--amber-dim); }
-  header nav a { font-family: var(--body); font-size: 14px; color: var(--ink-soft); text-decoration: none; }
+  header nav a { font-family: var(--body); font-size: calc(14px * var(--type-scale, 1)); color: var(--ink-soft); text-decoration: none; }
   header nav a:hover { color: var(--amber-dim); }
 
   /* ── hero ──────────────────────────────────────────────────── */
-  .hero { padding: 64px 0 52px; }
+  .hero { padding: var(--gap, 52px) 0; }
   .hero .wrap {
     display: grid; grid-template-columns: 1.05fr 1fr;
     gap: 56px; align-items: center;
@@ -166,11 +184,11 @@
   .hero .text { max-width: 560px; }
   .hero .image {
     aspect-ratio: 4 / 5; overflow: hidden;
-    background: #0d0d0d; border-radius: 2px;
+    background: #0d0d0d; border-radius: calc(2px * var(--radius-scale, 1));
   }
   .hero .image img { width: 100%; height: 100%; object-fit: cover; }
   .hero .wm-lg {
-    font-family: var(--mono); font-weight: 500; font-size: clamp(30px, 4.4vw, 44px);
+    font-family: var(--mono); font-weight: 500; font-size: calc(clamp(30px, 4.4vw, 44px) * var(--type-scale, 1));
     letter-spacing: 0.02em; color: var(--ink); display: inline-block; margin-bottom: 18px;
   }
   .hero .wm-lg .cursor {
@@ -180,26 +198,26 @@
   @keyframes blink { 0%,50% { opacity: 1; } 50.01%,100% { opacity: 0; } }
   .hero .rule { height: 2px; width: 64px; background: var(--amber); border: 0; margin: 0 0 22px; }
   .hero h1 {
-    font-family: var(--serif); font-weight: 500; font-size: clamp(38px, 5.6vw, 64px);
+    font-family: var(--serif); font-weight: 500; font-size: calc(clamp(38px, 5.6vw, 64px) * var(--type-scale, 1));
     line-height: 1.06; letter-spacing: -0.02em; margin: 0 0 18px; max-width: 16ch;
   }
   .hero h1 em { font-style: italic; color: var(--amber-dim); }
   .hero .kicker {
-    font-style: italic; font-size: clamp(17px, 2vw, 20px); color: var(--ink-soft);
+    font-style: italic; font-size: calc(clamp(17px, 2vw, 20px) * var(--type-scale, 1)); color: var(--ink-soft);
     max-width: 40ch; margin: 0 0 30px;
   }
   .hero .home-row {
-    font-family: var(--mono); font-size: 13px; font-weight: 500; letter-spacing: 0.35em;
+    font-family: var(--mono); font-size: calc(13px * var(--type-scale, 1)); font-weight: 500; letter-spacing: 0.35em;
     color: var(--ink-soft); padding-top: 16px; border-top: 1px solid var(--border); margin: 0; max-width: 360px;
   }
   .hero .home-row .lit { color: var(--amber-dim); font-weight: 700; }
 
   /* ── thesis: live markdown ─────────────────────────────────── */
-  .thesis { padding: 52px 0; }
-  .thesis .panes { display: grid; grid-template-columns: 1fr 1fr; gap: 0; border: 1px solid var(--border); border-radius: 3px; overflow: hidden; }
+  .thesis { padding: var(--gap, 52px) 0; }
+  .thesis .panes { display: grid; grid-template-columns: 1fr 1fr; gap: 0; border: 1px solid var(--border); border-radius: calc(3px * var(--radius-scale, 1)); overflow: hidden; }
   .thesis .src {
     background: var(--surface); border-right: 1px solid var(--border);
-    padding: 28px 32px; font-family: var(--mono); font-size: 13px; line-height: 1.95;
+    padding: 28px 32px; font-family: var(--mono); font-size: calc(13px * var(--type-scale, 1)); line-height: 1.95;
     white-space: pre-wrap; color: var(--ink-soft); min-height: 240px;
   }
   .thesis .src .h { color: var(--amber-dim); font-weight: 700; }
@@ -210,44 +228,44 @@
     vertical-align: -2px; animation: blink 1.05s steps(1,end) infinite;
   }
   .thesis .out { padding: 28px 34px; }
-  .thesis .out h3 { font-family: var(--serif); font-weight: 500; font-size: 26px; margin: 0 0 12px; }
-  .thesis .out p { margin: 0 0 14px; font-size: 18px; }
+  .thesis .out h3 { font-family: var(--serif); font-weight: 500; font-size: calc(26px * var(--type-scale, 1)); margin: 0 0 12px; }
+  .thesis .out p { margin: 0 0 14px; font-size: calc(18px * var(--type-scale, 1)); }
   .thesis .out strong { color: var(--amber-dim); font-weight: 600; }
   .thesis .out blockquote {
     margin: 0; padding-left: 18px; border-left: 2px solid var(--amber);
-    font-style: italic; color: var(--ink-soft); font-size: 18px;
+    font-style: italic; color: var(--ink-soft); font-size: calc(18px * var(--type-scale, 1));
   }
   .thesis .replay {
-    margin-top: 12px; font-family: var(--mono); font-size: 12px;
+    margin-top: 12px; font-family: var(--mono); font-size: calc(12px * var(--type-scale, 1));
   }
   .thesis .replay button {
-    font-family: var(--mono); font-size: 12px; background: none; border: 1px solid var(--border);
-    color: var(--ink-soft); padding: 5px 14px; border-radius: 2px; cursor: pointer;
+    font-family: var(--mono); font-size: calc(12px * var(--type-scale, 1)); background: none; border: 1px solid var(--border);
+    color: var(--ink-soft); padding: 5px 14px; border-radius: calc(2px * var(--radius-scale, 1)); cursor: pointer;
   }
   .thesis .replay button:hover { border-color: var(--amber-dim); color: var(--ink); }
 
   /* ── source: format switcher ───────────────────────────────── */
-  .source { padding: 52px 0; }
+  .source { padding: var(--gap, 52px) 0; }
   .source .switch { display: flex; gap: 8px; flex-wrap: wrap; margin: 0 0 20px; }
   .source .switch button {
-    font-family: var(--mono); font-size: 12px; font-weight: 500; padding: 7px 16px;
+    font-family: var(--mono); font-size: calc(12px * var(--type-scale, 1)); font-weight: 500; padding: 7px 16px;
     border: 1px solid var(--border); background: var(--surface); color: var(--ink-soft);
-    border-radius: 2px; cursor: pointer; letter-spacing: 0.04em; transition: all 0.12s;
+    border-radius: calc(2px * var(--radius-scale, 1)); cursor: pointer; letter-spacing: 0.04em; transition: all 0.12s;
   }
   .source .switch button:hover { border-color: var(--amber-dim); color: var(--ink); }
   .source .switch button[aria-pressed="true"] { background: var(--ink); color: var(--paper); border-color: var(--ink); }
   .source .stage {
-    border: 1px solid var(--border); border-radius: 3px; background: var(--surface); min-height: 320px;
+    border: 1px solid var(--border); border-radius: calc(3px * var(--radius-scale, 1)); background: var(--surface); min-height: 320px;
   }
   .source .render-html { padding: 36px 40px; display: grid; grid-template-columns: 1fr 1fr; gap: 40px; }
-  .source .render-html h4 { font-family: var(--serif); font-weight: 500; font-size: 24px; margin: 0 0 6px; }
-  .source .render-html .e { font-family: var(--mono); font-size: 11px; color: var(--amber-dim); letter-spacing: 0.1em; text-transform: uppercase; margin: 0 0 10px; }
-  .source .render-html p { margin: 0 0 14px; font-size: 15px; }
-  .source .render-html ul { margin: 0; padding: 0; list-style: none; font-size: 14px; color: var(--ink-soft); }
+  .source .render-html h4 { font-family: var(--serif); font-weight: 500; font-size: calc(24px * var(--type-scale, 1)); margin: 0 0 6px; }
+  .source .render-html .e { font-family: var(--mono); font-size: calc(11px * var(--type-scale, 1)); color: var(--amber-dim); letter-spacing: 0.1em; text-transform: uppercase; margin: 0 0 10px; }
+  .source .render-html p { margin: 0 0 14px; font-size: calc(15px * var(--type-scale, 1)); }
+  .source .render-html ul { margin: 0; padding: 0; list-style: none; font-size: calc(14px * var(--type-scale, 1)); color: var(--ink-soft); }
   .source .render-html li::before { content: "— "; color: var(--amber-dim); }
-  .source .render-html .strip { font-family: var(--mono); font-size: 11px; color: var(--amber-dim); margin-top: 14px; padding-top: 12px; border-top: 1px solid var(--border); }
+  .source .render-html .strip { font-family: var(--mono); font-size: calc(11px * var(--type-scale, 1)); color: var(--amber-dim); margin-top: 14px; padding-top: 12px; border-top: 1px solid var(--border); }
   .source pre {
-    margin: 0; padding: 28px 32px; font-family: var(--mono); font-size: 13px;
+    margin: 0; padding: 28px 32px; font-family: var(--mono); font-size: calc(13px * var(--type-scale, 1));
     line-height: 1.85; overflow-x: auto; color: var(--ink);
   }
   .source pre .k { color: var(--amber-dim); }
@@ -255,27 +273,41 @@
   .source pre .c { color: #64748b; }
 
   /* ── system: css playground ────────────────────────────────── */
-  .system { padding: 52px 0; }
-  .system .grid { display: grid; grid-template-columns: 1fr 300px; gap: 0; border: 1px solid var(--border); border-radius: 3px; overflow: hidden; }
-  .system .canvas { padding: 44px 44px; background: var(--c-paper, #FDFBF7); transition: background 0.15s; }
-  .system .canvas .wm { font-size: calc(22px * var(--c-scale, 1)); display: inline-block; margin-bottom: 16px; }
-  .system .canvas .wm .br { color: var(--c-amber, #ff7a1a); }
+  .system { padding: var(--gap, 52px) 0; }
+  .system .grid { display: grid; grid-template-columns: 1fr 300px; gap: 0; border: 1px solid var(--border); border-radius: calc(3px * var(--radius-scale, 1)); overflow: hidden; }
+  .system .canvas { padding: 44px 44px; background: var(--paper); transition: background-color 0.3s ease; }
+  .system .canvas .wm { font-size: calc(22px * var(--type-scale, 1)); display: inline-block; margin-bottom: 16px; }
+  .system .canvas .wm .br { color: var(--amber-dim); }
   .system .canvas h3 {
     font-family: var(--serif); font-weight: 500; margin: 0 0 14px;
-    font-size: calc(34px * var(--c-scale, 1)); line-height: 1.1;
+    font-size: calc(34px * var(--type-scale, 1)); line-height: 1.1;
   }
-  .system .canvas h3 em { font-style: italic; color: var(--c-amber, #ff7a1a); }
-  .system .canvas .rule { height: 3px; width: 60px; background: var(--c-amber, #ff7a1a); border: 0; margin: 0 0 18px; border-radius: var(--c-radius, 2px); }
-  .system .canvas .card {
-    padding: 20px 24px; background: var(--surface); border: 1px solid var(--border);
-    border-radius: var(--c-radius, 2px);
-  }
-  .system .canvas .card h4 { font-family: var(--serif); font-weight: 500; margin: 0 0 4px; font-size: calc(19px * var(--c-scale, 1)); }
-  .system .canvas .card p { margin: 0; font-size: 14px; color: var(--ink-soft); }
+  .system .canvas h3 em { font-style: italic; color: var(--amber-dim); }
+  .system .canvas .rule { height: 3px; width: 60px; background: var(--amber); border: 0; margin: 0 0 18px; border-radius: calc(2px * var(--radius-scale, 1)); }
   .system .canvas .swatches { display: flex; gap: 8px; margin-top: 22px; }
-  .system .canvas .sw { width: 38px; height: 24px; border-radius: var(--c-radius, 2px); }
-  .system .panel { background: var(--ink); color: var(--paper); padding: 28px 26px; font-family: var(--mono); font-size: 12px; }
-  .system .panel h4 { font-family: var(--mono); font-size: 11px; color: var(--amber); letter-spacing: 0.1em; margin: 0 0 18px; text-transform: uppercase; }
+  .system .canvas .sw { width: 38px; height: 24px; border-radius: calc(2px * var(--radius-scale, 1)); }
+  /* panel is tool chrome — pinned dark in both themes so its controls stay legible */
+  .system .panel { background: #1C1917; color: #FDFBF7; padding: 28px 26px; font-family: var(--mono); font-size: calc(12px * var(--type-scale, 1)); }
+  .system .panel h4 { font-family: var(--mono); font-size: calc(11px * var(--type-scale, 1)); color: var(--amber); letter-spacing: 0.1em; margin: 0 0 18px; text-transform: uppercase; }
+  .system .field { margin-bottom: 22px; }
+  .system .field label { display: block; margin-bottom: 6px; color: #cfcbc2; }
+  .system .field select {
+    width: 100%; background: #2a2724; color: #f0ebd9;
+    border: 1px solid #3a3631; border-radius: calc(2px * var(--radius-scale, 1)); padding: 7px 8px;
+    font-family: var(--mono); font-size: calc(12px * var(--type-scale, 1));
+  }
+  .system .field select:focus-visible { outline: 2px solid var(--amber); outline-offset: 1px; }
+  .system .ctrl { margin-bottom: 22px; }
+  .system .ctrl > label { display: block; margin-bottom: 8px; color: #cfcbc2; }
+  .system .swatchrow { display: flex; flex-wrap: wrap; gap: 7px; }
+  .system .swatch {
+    width: 30px; height: 30px; padding: 0; cursor: pointer;
+    border: 1px solid #3a3631; border-radius: calc(3px * var(--radius-scale, 1));
+    transition: transform 0.1s ease;
+  }
+  .system .swatch:hover { transform: scale(1.12); }
+  .system .swatch[aria-pressed="true"] { outline: 2px solid var(--paper); outline-offset: 2px; }
+  .system .swatch:focus-visible { outline: 2px solid var(--amber); outline-offset: 2px; }
   .system .knob { margin-bottom: 20px; }
   .system .knob label { display: flex; justify-content: space-between; margin-bottom: 6px; color: #cfcbc2; }
   .system .knob label .val { color: var(--amber); }
@@ -283,61 +315,81 @@
   .system .readout { margin-top: 22px; padding-top: 16px; border-top: 1px solid #3a3631; color: #8a857a; line-height: 1.9; white-space: pre; }
   .system .readout .prop { color: var(--amber); }
   .system .readout .v { color: #cfcbc2; }
+  .system .reset {
+    margin-top: 18px; width: 100%; background: none; color: #8a857a;
+    border: 1px solid #3a3631; border-radius: calc(2px * var(--radius-scale, 1)); padding: 9px;
+    font-family: var(--mono); font-size: calc(11px * var(--type-scale, 1)); cursor: pointer;
+    transition: color 0.15s, border-color 0.15s;
+  }
+  .system .reset:hover { color: var(--amber); border-color: var(--amber-dim); }
+  .system .reset:focus-visible { outline: 2px solid var(--amber); outline-offset: 1px; }
+  .system .fx { margin-top: 22px; padding-top: 18px; border-top: 1px solid #3a3631; }
+  .system .toggle { display: flex; align-items: center; gap: 9px; margin-bottom: 12px; color: #cfcbc2; cursor: pointer; }
+  .system .toggle input { width: 15px; height: 15px; margin: 0; flex: none; accent-color: var(--amber); cursor: pointer; }
+  .system .toggle span { flex: 1; }
+  .system .toggle em {
+    font-style: normal; font-size: calc(10px * var(--type-scale, 1)); color: var(--amber);
+    border: 1px solid #3a3631; border-radius: calc(2px * var(--radius-scale, 1));
+    padding: 1px 6px; letter-spacing: 0.06em; text-transform: uppercase;
+  }
+  .system .toggle:has(input:disabled) { opacity: 0.45; cursor: not-allowed; }
+  .system .fx .knob.param { margin: 2px 0 14px 4px; padding-left: 14px; border-left: 1px solid #3a3631; }
+  .system .knob:has(input:disabled) { opacity: 0.4; }
 
   /* ── both: js repl ─────────────────────────────────────────── */
-  .both { padding: 52px 0 64px; }
+  .both { padding: var(--gap, 52px) 0; }
   .both .closing {
-    font-family: var(--serif); font-weight: 500; font-size: clamp(24px, 3vw, 32px);
+    font-family: var(--serif); font-weight: 500; font-size: calc(clamp(24px, 3vw, 32px) * var(--type-scale, 1));
     line-height: 1.3; max-width: 22ch; margin: 0 0 8px;
   }
   .both .closing em { font-style: italic; color: var(--amber-dim); }
-  .both .lead { font-size: 17px; color: var(--ink-soft); max-width: 52ch; margin: 0 0 28px; }
+  .both .lead { font-size: calc(17px * var(--type-scale, 1)); color: var(--ink-soft); max-width: 52ch; margin: 0 0 28px; }
   .both .keys-strip { margin: 32px 0 0; }
   .both .keys-strip img {
     width: 100%; height: 220px; object-fit: cover;
-    border-radius: 2px; filter: grayscale(1) contrast(1.02);
+    border-radius: calc(2px * var(--radius-scale, 1)); filter: grayscale(1) contrast(1.02);
   }
   .both .frame {
-    max-width: 680px; border: 1px solid var(--border); border-radius: 4px; overflow: hidden;
+    max-width: 680px; border: 1px solid var(--border); border-radius: calc(4px * var(--radius-scale, 1)); overflow: hidden;
     background: var(--surface); box-shadow: 0 20px 48px -30px rgba(28,25,23,0.3);
   }
-  .both .bar { background: var(--ink); color: #8a857a; padding: 9px 16px; font-family: var(--mono); font-size: 12px; display: flex; gap: 8px; align-items: center; }
+  .both .bar { background: #1C1917; color: #8a857a; padding: 9px 16px; font-family: var(--mono); font-size: calc(12px * var(--type-scale, 1)); display: flex; gap: 8px; align-items: center; }
   .both .bar .dot { width: 9px; height: 9px; border-radius: 50%; background: #3a3631; }
   .both .bar .dot.a { background: var(--amber); }
   .both .bar .title { margin-left: 8px; }
-  .both .scroll { padding: 20px 22px; height: 300px; overflow-y: auto; font-family: var(--mono); font-size: 13px; line-height: 1.75; }
+  .both .scroll { padding: 20px 22px; height: 300px; overflow-y: auto; font-family: var(--mono); font-size: calc(13px * var(--type-scale, 1)); line-height: 1.75; }
   .both .ln { margin: 2px 0; white-space: pre-wrap; }
   .both .ln.cmd { color: var(--ink); }
   .both .ln.cmd::before { content: "› "; color: var(--amber-dim); }
   .both .ln.sys { color: var(--ink-soft); }
   .both .ln.amber { color: var(--amber-dim); }
-  .both .ln.head { font-family: var(--serif); font-size: 22px; color: var(--ink); margin: 6px 0 2px; }
+  .both .ln.head { font-family: var(--serif); font-size: calc(22px * var(--type-scale, 1)); color: var(--ink); margin: 6px 0 2px; }
   .both .ln.err { color: #b91c1c; }
   .both .inrow { display: flex; align-items: center; gap: 8px; border-top: 1px solid var(--border); padding: 11px 22px; background: var(--paper); }
-  .both .inrow .prompt { font-family: var(--mono); color: var(--amber-dim); font-size: 13px; }
-  .both .inrow input { flex: 1; border: 0; outline: 0; background: none; font-family: var(--mono); font-size: 13px; color: var(--ink); }
-  .both .hint { font-family: var(--mono); font-size: 11px; color: var(--ink-soft); margin: 12px 0 0; }
+  .both .inrow .prompt { font-family: var(--mono); color: var(--amber-dim); font-size: calc(13px * var(--type-scale, 1)); }
+  .both .inrow input { flex: 1; border: 0; outline: 0; background: none; font-family: var(--mono); font-size: calc(13px * var(--type-scale, 1)); color: var(--ink); }
+  .both .hint { font-family: var(--mono); font-size: calc(11px * var(--type-scale, 1)); color: var(--ink-soft); margin: 12px 0 0; }
   .both .hint b { color: var(--amber-dim); font-weight: 500; }
 
   /* ── consent banner ────────────────────────────────────────── */
   .consent-banner {
     position: fixed; bottom: 0; left: 0; right: 0; z-index: 1000;
-    background: var(--ink); color: var(--paper);
+    background: #1C1917; color: #FDFBF7;
     border-top: 2px solid var(--amber); padding: 16px 24px;
     animation: consent-in 0.25s ease;
   }
   @keyframes consent-in { from { transform: translateY(100%); } to { transform: translateY(0); } }
   .consent-inner { max-width: 1080px; margin: 0 auto; display: flex; align-items: center; gap: 24px; }
   .consent-text {
-    font-family: var(--mono); font-size: 12px; line-height: 1.7;
+    font-family: var(--mono); font-size: calc(12px * var(--type-scale, 1)); line-height: 1.7;
     color: #cfcbc2; flex: 1; margin: 0; letter-spacing: 0.02em;
   }
   .consent-text a { color: var(--amber); text-decoration: none; }
   .consent-text a:hover { text-decoration: underline; }
   .consent-actions { display: flex; gap: 8px; flex-shrink: 0; }
   .consent-btn {
-    font-family: var(--mono); font-size: 12px; font-weight: 500;
-    border: 1px solid #3a3631; border-radius: 2px; padding: 7px 16px;
+    font-family: var(--mono); font-size: calc(12px * var(--type-scale, 1)); font-weight: 500;
+    border: 1px solid #3a3631; border-radius: calc(2px * var(--radius-scale, 1)); padding: 7px 16px;
     cursor: pointer; letter-spacing: 0.03em; transition: all 0.12s;
   }
   .consent-decline { background: none; color: #cfcbc2; }
@@ -347,7 +399,7 @@
 
   /* ── footer ────────────────────────────────────────────────── */
   footer[role="contentinfo"] {
-    padding: 26px 32px; font-family: var(--mono); font-size: 12px; color: var(--ink-soft);
+    padding: 26px 32px; font-family: var(--mono); font-size: calc(12px * var(--type-scale, 1)); color: var(--ink-soft);
     letter-spacing: 0.04em; border-top: 1px solid var(--border);
     display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap;
   }
@@ -388,18 +440,462 @@
   body { transition: --amber 0.15s ease; }
   body.amber-pulse { --amber: #ffaa44; }
 
-  /* ── polish: section fade-in on scroll ── */
-  html.js-fade section {
-    opacity: 0;
-    transform: translateY(8px);
-    transition: opacity 0.35s cubic-bezier(0.2, 0.9, 0.4, 1.1),
-                transform 0.35s cubic-bezier(0.2, 0.9, 0.4, 1.1);
-    will-change: opacity, transform;
+  /* ── scroll effects — toggled from the section editor ──────────── */
+  /* fade + slide reveal on entry: JS adds .fx-in when a section scrolls
+     into view. fade animates opacity, slide animates translate — separate
+     properties, so the two compose. zoom is pure CSS (scroll-driven). */
+  @media (prefers-reduced-motion: no-preference) {
+    html.fx-fade  section                   { opacity: 0; }
+    html.fx-fade  section.fx-in              { opacity: 1; }
+    html.fx-slide section                   { translate: calc(-1 * var(--fx-slide-dist, 64px)) 0; }
+    html.fx-slide section:nth-of-type(even) { translate: var(--fx-slide-dist, 64px) 0; }
+    html.fx-slide section.fx-in             { translate: 0 0; }
+    @supports (animation-timeline: view()) {
+      html.fx-zoom section {
+        animation: fx-zoom-in linear both;
+        animation-timeline: view();
+        animation-range: cover 0% cover 45%;
+      }
+      @keyframes fx-zoom-in { from { scale: var(--fx-zoom-scale, 0.61); } to { scale: 1; } }
+    }
   }
-  html.js-fade section.is-visible {
-    opacity: 1;
-    transform: translateY(0);
+  /* html-tags overlay — reveals the semantic markup; no motion, always available */
+  html.fx-tags section { position: relative; outline: 1px dashed var(--amber-dim); outline-offset: -1px; }
+  html.fx-tags section::before {
+    content: '<section class="' attr(class) '">';
+    position: absolute; top: 0; left: 0; z-index: 6; pointer-events: none;
+    font-family: var(--mono); font-size: 10px; line-height: 1.6;
+    background: var(--amber-dim); color: var(--paper);
+    padding: 1px 7px; letter-spacing: 0.04em;
   }
+
+  /* ── playground · cursor follower (toggle: // effects → cursor) ──
+     award-winning micro-interaction: an eased ring lags an instant dot,
+     and the ring swells over interactive targets. */
+  html.fx-cursor, html.fx-cursor * { cursor: none !important; }
+  .cursor-ring, .cursor-dot {
+    position: fixed; top: 0; left: 0; pointer-events: none;
+    border-radius: 50%; opacity: 0; will-change: transform;
+  }
+  .cursor-ring {
+    z-index: 9000; width: 30px; height: 30px; margin: -15px 0 0 -15px;
+    border: 1.5px solid var(--amber);
+    transition: opacity 0.25s ease, width 0.16s ease, height 0.16s ease,
+                margin 0.16s ease, background-color 0.16s ease;
+  }
+  .cursor-dot {
+    z-index: 9001; width: 6px; height: 6px; margin: -3px 0 0 -3px;
+    background: var(--amber); transition: opacity 0.25s ease;
+  }
+  html.fx-cursor .cursor-ring, html.fx-cursor .cursor-dot { opacity: 1; }
+  .cursor-ring.hot {
+    width: 52px; height: 52px; margin: -26px 0 0 -26px;
+    background: color-mix(in srgb, var(--amber) 14%, transparent);
+  }
+
+  /* ── playground · film-grain overlay (toggle: // effects → grain) ──
+     an inline fractal-noise SVG, tiled and blended for analog texture. */
+  .grain {
+    position: fixed; inset: 0; z-index: 8000; pointer-events: none;
+    opacity: 0; transition: opacity 0.35s ease; mix-blend-mode: overlay;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.82' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+  html.fx-grain .grain { opacity: 0.42; }
+
+  /* ── playground · hover effects (panel → hover effect) ──────────
+     each section is a hover target; transform-based effects compose
+     with the slide reveal, which animates the separate `translate`. */
+  html.hover-lift   main section:hover { transform: translateY(-7px); box-shadow: 0 26px 56px -30px rgba(28,25,23,0.55); position: relative; z-index: 2; }
+  html.hover-glow   main section:hover { box-shadow: inset 0 0 0 1px var(--amber), 0 0 52px -8px color-mix(in srgb, var(--amber) 58%, transparent); position: relative; z-index: 2; }
+  html.hover-border main section:hover { outline: 2px solid var(--amber); outline-offset: -2px; }
+  html.hover-scale  main section:hover { transform: scale(1.015); position: relative; z-index: 2; }
+
+  /* ── playground · glassmorphism (panel → // effects → glass) ──── */
+  html.fx-glass .thesis .src,
+  html.fx-glass .source .stage,
+  html.fx-glass .system .canvas,
+  html.fx-glass .both .frame {
+    background: color-mix(in srgb, var(--surface) 58%, transparent);
+    -webkit-backdrop-filter: blur(14px) saturate(1.6);
+    backdrop-filter: blur(14px) saturate(1.6);
+  }
+
+  /* ── playground · parallax (panel → parallax) ───────────────────
+     scroll-driven: the hero image is over-sized and drifts within its
+     clipped frame as its section passes through the viewport. */
+  @media (prefers-reduced-motion: no-preference) {
+    @supports (animation-timeline: view()) {
+      html.parallax .hero .image img {
+        height: calc(100% + 2.4 * var(--parallax-depth, 38px));
+        animation: parallax-drift linear both;
+        animation-timeline: view();
+        animation-range: cover;
+      }
+      @keyframes parallax-drift {
+        from { transform: translateY(calc(-1 * var(--parallax-depth, 38px))); }
+        to   { transform: translateY(var(--parallax-depth, 38px)); }
+      }
+    }
+  }
+
+  /* ── playground · preset buttons (panel → presets) ──────────────
+     each snaps every control to a curated, award-winning setting. */
+  .system .presets { display: flex; gap: 6px; }
+  .system .preset {
+    flex: 1; font-family: var(--mono); font-size: calc(11px * var(--type-scale, 1));
+    background: #2a2724; color: #cfcbc2; border: 1px solid #3a3631;
+    border-radius: calc(2px * var(--radius-scale, 1)); padding: 9px 4px;
+    cursor: pointer; letter-spacing: 0.03em; transition: all 0.13s;
+  }
+  .system .preset:hover { border-color: var(--amber); color: #FDFBF7; }
+  .system .preset[aria-pressed="true"] {
+    background: var(--amber); color: #1C1917; border-color: var(--amber); font-weight: 700;
+  }
+  .system .preset:focus-visible { outline: 2px solid var(--amber); outline-offset: 1px; }
+</style>
+<style>
+  /* ════════════════════════════════════════════════════════════════
+     EFFECTS LAB — award-style interactions, every one opt-in from the
+     panel. Each effect is gated on an html.lab-<id> class and tuned by
+     a CSS custom property the controller sets; with no lab- class on
+     <html> the page renders exactly as before. All names are lab-*.
+     ════════════════════════════════════════════════════════════════ */
+
+  /* each section gets its own perspective; one transition covers every
+     channel the lab effects animate so toggles ease instead of snap */
+  main section { perspective: 1000px; }
+  html[class*="lab-"] main section {
+    transition:
+      background-color 0.3s ease, opacity 0.55s ease,
+      translate 0.7s cubic-bezier(0.2,0.9,0.3,1),
+      scale 0.7s cubic-bezier(0.2,0.9,0.3,1),
+      transform 0.3s cubic-bezier(0.2,0.9,0.3,1),
+      rotate 0.18s ease, box-shadow 0.3s ease, outline-color 0.2s ease,
+      filter 0.25s ease, clip-path 0.75s cubic-bezier(0.2,0.9,0.3,1);
+  }
+  html[class*="lab-"] main section > .wrap {
+    transition: transform 0.22s ease, rotate 0.16s ease;
+  }
+
+  /* ── SCROLL ────────────────────────────────────────────────────── */
+  @media (prefers-reduced-motion: no-preference) {
+    html.lab-scroll-fade  main section:not(.lab-seen) { opacity: 0; }
+    html.lab-scroll-slide main section:not(.lab-seen) {
+      translate: var(--lab-slide-x, 0) var(--lab-slide-y, 0);
+    }
+    html.lab-scroll-scale main section:not(.lab-seen) { scale: var(--lab-scroll-scale, 0.8); }
+    html.lab-clip-reveal  main section:not(.lab-seen) {
+      clip-path: inset(var(--lab-clip, 42%) 0 0 0);
+    }
+  }
+  .lab-progress-bar {
+    position: fixed; top: 0; left: 0; height: var(--lab-prog-h, 3px);
+    width: 0%; background: var(--amber); z-index: 9500; display: none;
+    transition: width 0.08s linear;
+  }
+  html.lab-scroll-progress .lab-progress-bar { display: block; }
+  html.lab-scroll-pin main section .eyebrow {
+    position: sticky; top: var(--lab-pin-top, 12px); z-index: 5;
+    background: var(--paper); padding: 6px 0; width: max-content; max-width: 100%;
+  }
+  html.lab-smooth-scroll { scroll-behavior: smooth; }
+
+  /* ── HOVER ─────────────────────────────────────────────────────── */
+  html.lab-hover-scale main section:hover {
+    transform: scale(var(--lab-hscale, 1.03)); position: relative; z-index: 3;
+  }
+  html.lab-hover-glow main section:hover {
+    box-shadow: 0 0 var(--lab-hglow, 44px) -6px color-mix(in srgb, var(--amber) 72%, transparent),
+                inset 0 0 0 1px var(--amber);
+    position: relative; z-index: 3;
+  }
+  html.lab-liquid-hover main section:hover {
+    transform: scale(calc(1 + var(--lab-liquid, 0.05)))
+               scaleY(calc(1 - var(--lab-liquid, 0.05) * 0.7));
+    position: relative; z-index: 3;
+  }
+  html.lab-border-run main section { position: relative; }
+  html.lab-border-run main section::after {
+    content: ''; position: absolute; inset: 0; z-index: 4; pointer-events: none;
+    border-radius: inherit; opacity: 0; padding: 2px;
+    background: linear-gradient(90deg, transparent 10%, var(--amber), transparent 90%) 0 0 / 300% 100%;
+    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor; mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    mask-composite: exclude; transition: opacity 0.2s ease;
+  }
+  html.lab-border-run main section:hover::after {
+    opacity: 1; animation: lab-border-run var(--lab-border-spd, 1.2s) linear infinite;
+  }
+  @keyframes lab-border-run { to { background-position: 300% 0; } }
+  .lab-ripple {
+    position: absolute; border-radius: 50%; pointer-events: none; z-index: 6;
+    background: color-mix(in srgb, var(--amber) 50%, transparent);
+    transform: translate(-50%, -50%) scale(0); opacity: 0.7;
+  }
+  @keyframes lab-ripple-go { to { transform: translate(-50%,-50%) scale(1); opacity: 0; } }
+  html.lab-text-distort h1:hover, html.lab-text-distort h2:hover,
+  html.lab-text-distort h3:hover, html.lab-text-distort h4:hover,
+  html.lab-text-distort .closing:hover {
+    filter: blur(var(--lab-distort, 1.4px));
+    transform: skewX(calc(var(--lab-distort, 1.4px) * -2.4));
+    transition: filter 0.1s ease, transform 0.1s ease;
+  }
+
+  /* ── CURSOR ────────────────────────────────────────────────────── */
+  .lab-cur { position: fixed; top: 0; left: 0; pointer-events: none; opacity: 0; }
+  html.lab-cursor-ring .lab-cur-ring,
+  html.lab-magnetic-cursor .lab-cur-ring,
+  html.lab-cursor-text .lab-cur-text { opacity: 1; }
+  .lab-cur-ring {
+    z-index: 9300; width: 34px; height: 34px; margin: -17px 0 0 -17px;
+    border: 1.5px solid var(--amber); border-radius: 50%;
+    transition: opacity 0.25s ease, width 0.16s ease, height 0.16s ease, margin 0.16s ease;
+  }
+  .lab-cur-ring.lab-hot {
+    width: 54px; height: 54px; margin: -27px 0 0 -27px;
+    background: color-mix(in srgb, var(--amber) 14%, transparent);
+  }
+  .lab-cur-trail span {
+    position: fixed; top: 0; left: 0; width: 8px; height: 8px;
+    margin: -4px 0 0 -4px; border-radius: 50%; background: var(--amber);
+    pointer-events: none; z-index: 9290; opacity: 0;
+  }
+  .lab-cur-text {
+    z-index: 9305; font-family: var(--mono); font-size: 11px; color: var(--amber-dim);
+    background: var(--paper); border: 1px solid var(--amber);
+    padding: 2px 8px; margin: 16px 0 0 16px; white-space: nowrap;
+  }
+  .lab-spotlight {
+    position: fixed; inset: 0; pointer-events: none; z-index: 9100; opacity: 0;
+    transition: opacity 0.3s ease;
+    background: radial-gradient(circle var(--lab-spotlight-r, 170px) at var(--lab-sx, 50%) var(--lab-sy, 50%),
+                transparent 0, transparent 72%, rgba(12,10,9,0.55) 100%);
+  }
+  html.lab-cursor-spotlight .lab-spotlight { opacity: 1; }
+
+  /* ── TEXT ──────────────────────────────────────────────────────── */
+  html.lab-variable-weight h1, html.lab-variable-weight h2,
+  html.lab-variable-weight h3, html.lab-variable-weight h4,
+  html.lab-variable-weight .wm, html.lab-variable-weight .wm-lg,
+  html.lab-variable-weight .closing, html.lab-variable-weight .code-caption {
+    font-weight: var(--lab-vfweight, 500);
+    font-variation-settings: "wght" var(--lab-vfweight, 500);
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    html.lab-letter-osc h1, html.lab-letter-osc h3, html.lab-letter-osc .closing {
+      animation: lab-letter-osc 3.2s ease-in-out infinite;
+    }
+    @keyframes lab-letter-osc {
+      0%,100% { letter-spacing: -0.02em; }
+      50%     { letter-spacing: var(--lab-osc, 0.12em); }
+    }
+  }
+  html.lab-text-gradient h1, html.lab-text-gradient h3, html.lab-text-gradient .closing {
+    background: linear-gradient(100deg, var(--amber-dim), var(--ink) var(--lab-tgrad, 55%), var(--amber-dim));
+    -webkit-background-clip: text; background-clip: text;
+    -webkit-text-fill-color: transparent; color: transparent;
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    html.lab-glitch-text h1, html.lab-glitch-text h3, html.lab-glitch-text .closing {
+      animation: lab-glitch calc(2.6s - var(--lab-glitch, 0.5) * 2s) steps(2, end) infinite;
+    }
+    @keyframes lab-glitch {
+      0%,90%,100% { transform: translate(0); filter: none; }
+      91% { transform: translate(calc(var(--lab-glitch,0.5) * -5px), 0); filter: hue-rotate(40deg); }
+      94% { transform: translate(calc(var(--lab-glitch,0.5) *  5px), 0); }
+      97% { transform: translate(calc(var(--lab-glitch,0.5) * -3px), 0); filter: saturate(2.4); }
+    }
+  }
+  .lab-caret {
+    display: inline-block; width: 0.5em; height: 1em; background: var(--amber);
+    vertical-align: -0.12em; margin-left: 0.06em;
+  }
+
+  /* ── BACKGROUND ────────────────────────────────────────────────── */
+  .lab-fixed { position: fixed; inset: 0; pointer-events: none; }
+  .lab-gradient {
+    z-index: -3; opacity: 0; transition: opacity 0.5s ease;
+    background: linear-gradient(130deg, var(--amber), #c2255c, #7048e8, #1c7ed6, var(--amber));
+    background-size: 360% 360%;
+  }
+  html.lab-animated-gradient .lab-gradient {
+    opacity: 0.2; animation: lab-grad-shift var(--lab-gradient-spd, 16s) ease infinite;
+  }
+  @keyframes lab-grad-shift {
+    0%,100% { background-position: 0% 50%; } 50% { background-position: 100% 50%; }
+  }
+  .lab-grain2 {
+    z-index: 8100; opacity: 0; mix-blend-mode: overlay;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)'/%3E%3C/svg%3E");
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    html.lab-moving-grain .lab-grain2 {
+      opacity: var(--lab-grain-op, 0.34);
+      animation: lab-grain-move var(--lab-grain-spd, 0.55s) steps(4) infinite;
+    }
+    @keyframes lab-grain-move {
+      0%{transform:translate(0,0)} 25%{transform:translate(-5%,4%)}
+      50%{transform:translate(4%,-5%)} 75%{transform:translate(-4%,-3%)} 100%{transform:translate(0,0)}
+    }
+  }
+  .lab-canvas { z-index: -2; opacity: 0; transition: opacity 0.5s ease; width: 100%; height: 100%; }
+  html.lab-particle-network .lab-particles { opacity: 1; }
+  html.lab-webgl-bg .lab-webgl { opacity: 0.85; }
+  /* behind-the-page layers (z-index -2/-3) only show once every opaque
+     paper surface above them is cleared — body included, since the body
+     background paints over negative-z children */
+  html.lab-bg-show body,
+  html.lab-bg-show main section,
+  html.lab-bg-show header[role="banner"],
+  html.lab-bg-show footer[role="contentinfo"] { background-color: transparent; }
+  html.lab-magnetic-button main button,
+  html.lab-magnetic-button header a,
+  html.lab-magnetic-button footer a { transition: transform 0.18s ease; }
+  html.lab-scene-3d .hero .text,
+  html.lab-scene-3d .hero .image { transition: transform 0.12s ease; }
+  html.lab-video-scrub .both .keys-strip img { transition: object-position 0.1s linear; }
+  .lab-caret { animation: blink 1.05s steps(1,end) infinite; }
+  .lab-blob {
+    position: fixed; z-index: -3; opacity: 0; transition: opacity 0.6s ease;
+    width: 64vmax; height: 64vmax; left: 50%; top: 42%;
+    margin: -32vmax 0 0 -32vmax; filter: blur(64px); pointer-events: none;
+    background: radial-gradient(circle, color-mix(in srgb, var(--amber) 62%, transparent), transparent 70%);
+    border-radius: 42% 58% 63% 37% / 45% 38% 62% 55%;
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    html.lab-blob-morph .lab-blob {
+      opacity: 0.5; animation: lab-blob-morph var(--lab-blob-spd, 14s) ease-in-out infinite;
+    }
+    @keyframes lab-blob-morph {
+      0%,100% { border-radius: 42% 58% 63% 37% / 45% 38% 62% 55%; transform: rotate(0) scale(1); }
+      50%     { border-radius: 58% 42% 38% 62% / 58% 62% 38% 42%; transform: rotate(180deg) scale(1.16); }
+    }
+  }
+  html.lab-blob-morph.lab-reduce .lab-blob { opacity: 0.5; }
+  .lab-grid {
+    z-index: 7000; opacity: 0; transition: opacity 0.3s ease;
+    background-image:
+      linear-gradient(color-mix(in srgb, var(--amber) 32%, transparent) 1px, transparent 1px),
+      linear-gradient(90deg, color-mix(in srgb, var(--amber) 32%, transparent) 1px, transparent 1px);
+    background-size: var(--lab-grid, 48px) var(--lab-grid, 48px);
+  }
+  html.lab-grid-overlay .lab-grid { opacity: 1; }
+  /* element class is deliberately NOT "lab-vignette" — that is the <html>
+     toggle class, and a bare .lab-vignette rule would then also style <html> */
+  .lab-vig-layer {
+    z-index: 8200; opacity: 0; transition: opacity 0.4s ease;
+    box-shadow: inset 0 0 14vmax 2vmax rgba(12,10,9,var(--lab-vignette, 0.5));
+  }
+  html.lab-vignette .lab-vig-layer { opacity: 1; }
+  html.lab-chromatic main {
+    filter: drop-shadow(var(--lab-chroma, 2px) 0 0 rgba(255,0,80,0.55))
+            drop-shadow(calc(var(--lab-chroma, 2px) * -1) 0 0 rgba(0,200,255,0.55));
+  }
+
+  /* ── LAYOUT ────────────────────────────────────────────────────── */
+  html.lab-asymmetry main section:nth-of-type(even) > .wrap { transform: translateX(var(--lab-asym, 0px)); }
+  html.lab-asymmetry main section:nth-of-type(odd)  > .wrap { transform: translateX(calc(var(--lab-asym, 0px) * -1)); }
+  @media (prefers-reduced-motion: no-preference) {
+    html.lab-stagger .lab-stag-item {
+      opacity: 0; transform: translateY(18px);
+      transition: opacity 0.5s ease, transform 0.5s ease;
+    }
+    html.lab-stagger .lab-stag-item.lab-stag-in { opacity: 1; transform: none; }
+  }
+  html.lab-morph-cards .thesis .panes,
+  html.lab-morph-cards .source .stage,
+  html.lab-morph-cards .both .frame,
+  html.lab-morph-cards .system .grid {
+    border-radius:
+      calc(4px + var(--lab-morph, 14px)) calc(4px + var(--lab-morph, 14px) * 0.25)
+      calc(4px + var(--lab-morph, 14px)) calc(4px + var(--lab-morph, 14px) * 0.25);
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    html.lab-floating .hero .image,
+    html.lab-floating .both .keys-strip img {
+      animation: lab-float 4.6s ease-in-out infinite;
+    }
+    @keyframes lab-float {
+      0%,100% { transform: translateY(calc(var(--lab-float, 10px) * -1)); }
+      50%     { transform: translateY(var(--lab-float, 10px)); }
+    }
+    html.lab-wobble-load.lab-wobble-go main section {
+      animation: lab-wobble 0.9s cubic-bezier(0.36,0.07,0.19,0.97) both;
+    }
+    @keyframes lab-wobble {
+      0%,100% { transform: none; }
+      20% { transform: translateX(calc(var(--lab-wobble, 9px) * -1)) rotate(-1deg); }
+      40% { transform: translateX(var(--lab-wobble, 9px)) rotate(1deg); }
+      60% { transform: translateX(calc(var(--lab-wobble, 9px) * -0.5)); }
+      80% { transform: translateX(calc(var(--lab-wobble, 9px) * 0.3)); }
+    }
+  }
+
+  /* ── ADVANCED ──────────────────────────────────────────────────── */
+  html.lab-audio-reactive .hero .wm-lg {
+    scale: calc(1 + var(--lab-audio, 0) * 0.16);
+    transition: scale 0.06s linear;
+  }
+  html.lab-audio-reactive .hero .rule {
+    width: calc(64px + var(--lab-audio, 0) * 220px);
+    transition: width 0.06s linear;
+  }
+
+  /* ── effects-lab panel chrome ──────────────────────────────────── */
+  .lab { margin-top: 22px; padding-top: 18px; border-top: 1px solid #3a3631; }
+  .lab > h4 {
+    font-family: var(--mono); font-size: calc(11px * var(--type-scale,1));
+    color: var(--amber); letter-spacing: 0.1em; margin: 0 0 14px; text-transform: uppercase;
+  }
+  .lab .lab-actions { display: flex; gap: 6px; margin-bottom: 8px; }
+  .lab .lab-btn {
+    flex: 1; font-family: var(--mono); font-size: calc(11px * var(--type-scale,1));
+    background: #2a2724; color: #cfcbc2; border: 1px solid #3a3631;
+    border-radius: calc(2px * var(--radius-scale,1)); padding: 9px 4px;
+    cursor: pointer; letter-spacing: 0.03em; transition: all 0.13s;
+  }
+  .lab .lab-btn:hover { border-color: var(--amber); color: #FDFBF7; }
+  .lab .lab-btn:focus-visible { outline: 2px solid var(--amber); outline-offset: 1px; }
+  .lab details {
+    border: 1px solid #3a3631; border-radius: calc(2px * var(--radius-scale,1));
+    margin-bottom: 6px; background: #211e1c;
+  }
+  .lab summary {
+    cursor: pointer; padding: 9px 11px; list-style: none;
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  .lab summary::-webkit-details-marker { display: none; }
+  .lab summary .cap {
+    color: var(--amber); text-transform: uppercase;
+    letter-spacing: 0.1em; font-size: calc(11px * var(--type-scale,1));
+  }
+  .lab summary .ct { color: #8a857a; font-size: calc(10px * var(--type-scale,1)); }
+  .lab summary:focus-visible { outline: 2px solid var(--amber); outline-offset: -2px; }
+  .lab details[open] > summary { border-bottom: 1px solid #2c2926; }
+  .lab .gbody { padding: 2px 11px 6px; }
+  .lab .feat { padding: 9px 0; border-top: 1px solid #2c2926; }
+  .lab .feat:first-child { border-top: 0; }
+  .lab .feat .toggle { margin-bottom: 0; }
+  .lab .feat .knob.param {
+    margin: 8px 0 0 4px; padding-left: 14px; border-left: 1px solid #3a3631;
+  }
+  .lab .feat select {
+    width: 100%; margin-top: 8px; background: #2a2724; color: #f0ebd9;
+    border: 1px solid #3a3631; border-radius: calc(2px * var(--radius-scale,1));
+    padding: 6px 7px; font-family: var(--mono); font-size: calc(11px * var(--type-scale,1));
+  }
+  .lab .knob:has(input:disabled) { opacity: 0.4; }
+  .lab .feat select:disabled { opacity: 0.4; }
+  .lab .feat select:focus-visible { outline: 2px solid var(--amber); outline-offset: 1px; }
+
+  @media (prefers-reduced-motion: reduce) {
+    /* motion-driven lab effects are JS-gated off too; this is the CSS belt */
+    html.lab-scroll-fade main section:not(.lab-seen),
+    html.lab-scroll-slide main section:not(.lab-seen),
+    html.lab-scroll-scale main section:not(.lab-seen),
+    html.lab-clip-reveal main section:not(.lab-seen) { opacity: 1; translate: 0; scale: 1; clip-path: none; }
+  }
+  @media print { .lab-progress-bar, .lab-fixed, .lab-cur, .lab-spotlight, .lab-blob { display: none !important; } }
 </style>
 </head>
 <body>
@@ -489,31 +985,406 @@ Brand and web are two hands on one keyboard.
           <h3>Brand <em>and</em> web.</h3>
           <hr class="rule"/>
           <div class="swatches" aria-hidden="true">
-            <span class="sw" style="background:#ff7a1a"></span>
-            <span class="sw" style="background:#b8551a"></span>
-            <span class="sw" style="background:#f0ebd9"></span>
-            <span class="sw" style="background:#1c1917;border:1px solid #e7e5e4"></span>
+            <span class="sw" style="background:var(--amber)"></span>
+            <span class="sw" style="background:var(--amber-dim)"></span>
+            <span class="sw" style="background:var(--paper);box-shadow:inset 0 0 0 1px var(--border)"></span>
+            <span class="sw" style="background:var(--ink)"></span>
           </div>
         </div>
         <div class="panel">
-          <h4>// design tokens</h4>
-          <div class="knob">
-            <label><span>--accent</span><span class="val" data-val="amber">#ff7a1a</span></label>
-            <input type="range" min="0" max="60" value="28" data-knob="amber" aria-label="accent hue"/>
+          <h4>// section editor</h4>
+          <label class="toggle" style="margin-bottom:20px"><input type="checkbox" data-theme/><span>dark mode</span><em>css</em></label>
+          <div class="ctrl">
+            <label>presets</label>
+            <div class="presets" role="group" aria-label="design presets">
+              <button type="button" class="preset" data-preset="minimal" aria-pressed="false">minimal</button>
+              <button type="button" class="preset" data-preset="bold" aria-pressed="false">bold</button>
+              <button type="button" class="preset" data-preset="ethereal" aria-pressed="false">ethereal</button>
+            </div>
+          </div>
+          <div class="field">
+            <label for="ed-target">section</label>
+            <select id="ed-target" data-target>
+              <option value="page">entire page</option>
+              <option value="hero">hero</option>
+              <option value="thesis">the take</option>
+              <option value="source">one source</option>
+              <option value="system">the brand system</option>
+              <option value="both">console</option>
+            </select>
+          </div>
+          <div class="ctrl">
+            <label>accent</label>
+            <div class="swatchrow" data-swatches="accent" role="group" aria-label="accent colour">
+              <button type="button" class="swatch" data-color="#ff7a1a" style="background:#ff7a1a" aria-pressed="true" aria-label="amber"></button>
+              <button type="button" class="swatch" data-color="#e8590c" style="background:#e8590c" aria-pressed="false" aria-label="orange"></button>
+              <button type="button" class="swatch" data-color="#e03131" style="background:#e03131" aria-pressed="false" aria-label="red"></button>
+              <button type="button" class="swatch" data-color="#c2255c" style="background:#c2255c" aria-pressed="false" aria-label="pink"></button>
+              <button type="button" class="swatch" data-color="#7048e8" style="background:#7048e8" aria-pressed="false" aria-label="violet"></button>
+              <button type="button" class="swatch" data-color="#1c7ed6" style="background:#1c7ed6" aria-pressed="false" aria-label="blue"></button>
+              <button type="button" class="swatch" data-color="#0ca678" style="background:#0ca678" aria-pressed="false" aria-label="teal"></button>
+              <button type="button" class="swatch" data-color="#2f9e44" style="background:#2f9e44" aria-pressed="false" aria-label="green"></button>
+            </div>
+          </div>
+          <div class="ctrl">
+            <label>paper</label>
+            <div class="swatchrow" data-swatches="paper" role="group" aria-label="paper colour">
+              <button type="button" class="swatch" data-color="#FFFFFF" style="background:#FFFFFF" aria-pressed="false" aria-label="white"></button>
+              <button type="button" class="swatch" data-color="#FDFBF7" style="background:#FDFBF7" aria-pressed="true" aria-label="cream"></button>
+              <button type="button" class="swatch" data-color="#FBF3E4" style="background:#FBF3E4" aria-pressed="false" aria-label="warm"></button>
+              <button type="button" class="swatch" data-color="#EEF1F4" style="background:#EEF1F4" aria-pressed="false" aria-label="cool"></button>
+              <button type="button" class="swatch" data-color="#ECEAE6" style="background:#ECEAE6" aria-pressed="false" aria-label="stone"></button>
+            </div>
+          </div>
+          <div class="field">
+            <label for="ed-type">type</label>
+            <select id="ed-type" data-type>
+              <option value="editorial">editorial — Newsreader</option>
+              <option value="mono">monospace — JetBrains</option>
+              <option value="sans">system sans</option>
+              <option value="serif">system serif</option>
+            </select>
           </div>
           <div class="knob">
-            <label><span>--paper</span><span class="val" data-val="paper">#FDFBF7</span></label>
-            <input type="range" min="0" max="100" value="40" data-knob="paper" aria-label="paper warmth"/>
+            <label><span>size</span><span class="val" data-val="size">1.00&times;</span></label>
+            <input type="range" min="0.85" max="1.25" step="0.05" value="1" data-knob="size" aria-label="font size"/>
           </div>
           <div class="knob">
-            <label><span>--type-scale</span><span class="val" data-val="scale">1.00&times;</span></label>
-            <input type="range" min="85" max="125" value="100" data-knob="scale" aria-label="type scale"/>
+            <label><span>radius</span><span class="val" data-val="radius">1.00&times;</span></label>
+            <input type="range" min="0" max="4" step="0.25" value="1" data-knob="radius" aria-label="corner radius"/>
           </div>
           <div class="knob">
-            <label><span>--radius</span><span class="val" data-val="radius">2px</span></label>
-            <input type="range" min="0" max="18" value="2" data-knob="radius" aria-label="corner radius"/>
+            <label><span>tracking</span><span class="val" data-val="track">0.00em</span></label>
+            <input type="range" min="-0.02" max="0.14" step="0.01" value="0" data-knob="track" aria-label="letter spacing"/>
+          </div>
+          <div class="knob">
+            <label><span>leading</span><span class="val" data-val="lead">1.70</span></label>
+            <input type="range" min="1.2" max="2.2" step="0.05" value="1.7" data-knob="lead" aria-label="line height"/>
+          </div>
+          <div class="knob">
+            <label><span>padding</span><span class="val" data-val="pad">32px</span></label>
+            <input type="range" min="0" max="96" step="4" value="32" data-knob="pad" aria-label="container padding"/>
+          </div>
+          <div class="knob">
+            <label><span>gap</span><span class="val" data-val="gap">52px</span></label>
+            <input type="range" min="16" max="120" step="4" value="52" data-knob="gap" aria-label="section gap"/>
           </div>
           <div class="readout" aria-live="polite"></div>
+          <div class="fx" role="group" aria-label="scroll effects">
+            <h4>// effects</h4>
+            <label class="toggle"><input type="checkbox" data-fx="fade" checked/><span>fade in</span><em>js</em></label>
+            <label class="toggle"><input type="checkbox" data-fx="slide"/><span>slide in</span><em>js</em></label>
+            <div class="knob param">
+              <label><span>slide distance</span><span class="val" data-fxval="dist">64px</span></label>
+              <input type="range" min="0" max="256" step="8" value="64" data-fxp="dist" aria-label="slide distance"/>
+            </div>
+            <div class="knob param">
+              <label><span>slide speed</span><span class="val" data-fxval="speed">0.68s</span></label>
+              <input type="range" min="0" max="100" step="5" value="60" data-fxp="speed" aria-label="slide speed"/>
+            </div>
+            <label class="toggle"><input type="checkbox" data-fx="zoom"/><span>zoom on scroll</span><em>css</em></label>
+            <div class="knob param">
+              <label><span>zoom depth</span><span class="val" data-fxval="zoom">0.61&times;</span></label>
+              <input type="range" min="0" max="100" step="5" value="60" data-fxp="zoom" aria-label="zoom depth"/>
+            </div>
+            <label class="toggle"><input type="checkbox" data-fx="tags"/><span>show html tags</span><em>html</em></label>
+            <label class="toggle"><input type="checkbox" data-fx="cursor"/><span>cursor follower</span><em>js</em></label>
+            <label class="toggle"><input type="checkbox" data-fx="grain"/><span>film grain</span><em>css</em></label>
+            <label class="toggle"><input type="checkbox" data-fx="glass"/><span>glassmorphism</span><em>css</em></label>
+            <div class="field" style="margin:16px 0 0">
+              <label for="ed-hover">hover effect</label>
+              <select id="ed-hover" data-hover>
+                <option value="none">none</option>
+                <option value="lift">lift</option>
+                <option value="glow">glow</option>
+                <option value="border">border</option>
+                <option value="scale">scale</option>
+              </select>
+            </div>
+            <div class="field">
+              <label for="ed-parallax">parallax</label>
+              <select id="ed-parallax" data-parallax>
+                <option value="off">off</option>
+                <option value="light">light</option>
+                <option value="medium">medium</option>
+                <option value="heavy">heavy</option>
+              </select>
+            </div>
+          </div>
+          <div class="lab" role="group" aria-label="effects lab">
+            <h4>// effects lab</h4>
+            <div class="knob master">
+              <label><span>master intensity</span><span class="val" data-lab-masterval>100%</span></label>
+              <input type="range" min="0" max="100" step="5" value="100" data-lab-master aria-label="master intensity"/>
+            </div>
+            <div class="lab-actions">
+              <button type="button" class="lab-btn" data-lab-randomize>randomize</button>
+              <button type="button" class="lab-btn" data-lab-clear>all off</button>
+            </div>
+
+            <details open>
+              <summary><span class="cap">scroll</span><span class="ct">7 effects</span></summary>
+              <div class="gbody">
+                <div class="feat">
+                  <label class="toggle"><input type="checkbox" data-lab="scroll-fade"/><span>fade reveal</span><em>js</em></label>
+                  <div class="knob param"><label><span>reveal distance</span><span class="val" data-labval="scroll-fade">50</span></label>
+                    <input type="range" min="0" max="100" value="50" data-labp="scroll-fade" disabled aria-label="fade reveal intensity"/></div>
+                </div>
+                <div class="feat">
+                  <label class="toggle"><input type="checkbox" data-lab="scroll-slide"/><span>slide reveal</span><em>js</em></label>
+                  <select data-lab-sel="scroll-slide-dir" disabled aria-label="slide direction">
+                    <option value="up">from below</option><option value="down">from above</option>
+                    <option value="left">from left</option><option value="right">from right</option>
+                  </select>
+                  <div class="knob param"><label><span>slide distance</span><span class="val" data-labval="scroll-slide">50</span></label>
+                    <input type="range" min="0" max="100" value="50" data-labp="scroll-slide" disabled aria-label="slide reveal intensity"/></div>
+                </div>
+                <div class="feat">
+                  <label class="toggle"><input type="checkbox" data-lab="scroll-scale"/><span>scale reveal</span><em>css</em></label>
+                  <div class="knob param"><label><span>start scale</span><span class="val" data-labval="scroll-scale">50</span></label>
+                    <input type="range" min="0" max="100" value="50" data-labp="scroll-scale" disabled aria-label="scale reveal intensity"/></div>
+                </div>
+                <div class="feat">
+                  <label class="toggle"><input type="checkbox" data-lab="parallax-depth"/><span>parallax depth</span><em>js</em></label>
+                  <div class="knob param"><label><span>movement</span><span class="val" data-labval="parallax-depth">50</span></label>
+                    <input type="range" min="0" max="100" value="50" data-labp="parallax-depth" disabled aria-label="parallax depth intensity"/></div>
+                </div>
+                <div class="feat">
+                  <label class="toggle"><input type="checkbox" data-lab="scroll-pin"/><span>pin section label</span><em>css</em></label>
+                  <div class="knob param"><label><span>pin offset</span><span class="val" data-labval="scroll-pin">50</span></label>
+                    <input type="range" min="0" max="100" value="50" data-labp="scroll-pin" disabled aria-label="scroll pin intensity"/></div>
+                </div>
+                <div class="feat">
+                  <label class="toggle"><input type="checkbox" data-lab="smooth-scroll"/><span>smooth scroll</span><em>js</em></label>
+                  <select data-lab-sel="smooth-scroll-curve" disabled aria-label="smooth scroll curve">
+                    <option value="ease">ease</option><option value="linear">linear</option><option value="power">power-out</option>
+                  </select>
+                  <div class="knob param"><label><span>duration</span><span class="val" data-labval="smooth-scroll">50</span></label>
+                    <input type="range" min="0" max="100" value="50" data-labp="smooth-scroll" disabled aria-label="smooth scroll duration"/></div>
+                </div>
+                <div class="feat">
+                  <label class="toggle"><input type="checkbox" data-lab="scroll-progress"/><span>scroll progress bar</span><em>js</em></label>
+                  <div class="knob param"><label><span>thickness</span><span class="val" data-labval="scroll-progress">50</span></label>
+                    <input type="range" min="0" max="100" value="50" data-labp="scroll-progress" disabled aria-label="scroll progress thickness"/></div>
+                </div>
+              </div>
+            </details>
+
+            <details>
+              <summary><span class="cap">hover</span><span class="ct">8 effects</span></summary>
+              <div class="gbody">
+                <div class="feat">
+                  <label class="toggle"><input type="checkbox" data-lab="magnetic-button"/><span>magnetic buttons</span><em>js</em></label>
+                  <div class="knob param"><label><span>pull distance</span><span class="val" data-labval="magnetic-button">50</span></label>
+                    <input type="range" min="0" max="100" value="50" data-labp="magnetic-button" disabled aria-label="magnetic pull intensity"/></div>
+                </div>
+                <div class="feat">
+                  <label class="toggle"><input type="checkbox" data-lab="liquid-hover"/><span>liquid hover</span><em>css</em></label>
+                  <div class="knob param"><label><span>squish</span><span class="val" data-labval="liquid-hover">50</span></label>
+                    <input type="range" min="0" max="100" value="50" data-labp="liquid-hover" disabled aria-label="liquid hover intensity"/></div>
+                </div>
+                <div class="feat">
+                  <label class="toggle"><input type="checkbox" data-lab="tilt-card"/><span>3D tilt card</span><em>js</em></label>
+                  <div class="knob param"><label><span>max rotation</span><span class="val" data-labval="tilt-card">50</span></label>
+                    <input type="range" min="0" max="100" value="50" data-labp="tilt-card" disabled aria-label="tilt rotation intensity"/></div>
+                </div>
+                <div class="feat">
+                  <label class="toggle"><input type="checkbox" data-lab="border-run"/><span>border run</span><em>css</em></label>
+                  <div class="knob param"><label><span>speed</span><span class="val" data-labval="border-run">50</span></label>
+                    <input type="range" min="0" max="100" value="50" data-labp="border-run" disabled aria-label="border run speed"/></div>
+                </div>
+                <div class="feat">
+                  <label class="toggle"><input type="checkbox" data-lab="ripple-click"/><span>ripple on click</span><em>js</em></label>
+                  <div class="knob param"><label><span>radius</span><span class="val" data-labval="ripple-click">50</span></label>
+                    <input type="range" min="0" max="100" value="50" data-labp="ripple-click" disabled aria-label="ripple radius"/></div>
+                </div>
+                <div class="feat">
+                  <label class="toggle"><input type="checkbox" data-lab="hover-scale"/><span>scale on hover</span><em>css</em></label>
+                  <div class="knob param"><label><span>max scale</span><span class="val" data-labval="hover-scale">50</span></label>
+                    <input type="range" min="0" max="100" value="50" data-labp="hover-scale" disabled aria-label="hover scale intensity"/></div>
+                </div>
+                <div class="feat">
+                  <label class="toggle"><input type="checkbox" data-lab="hover-glow"/><span>glow on hover</span><em>css</em></label>
+                  <div class="knob param"><label><span>brightness</span><span class="val" data-labval="hover-glow">50</span></label>
+                    <input type="range" min="0" max="100" value="50" data-labp="hover-glow" disabled aria-label="hover glow intensity"/></div>
+                </div>
+                <div class="feat">
+                  <label class="toggle"><input type="checkbox" data-lab="text-distort"/><span>text distort on hover</span><em>css</em></label>
+                  <div class="knob param"><label><span>distortion</span><span class="val" data-labval="text-distort">50</span></label>
+                    <input type="range" min="0" max="100" value="50" data-labp="text-distort" disabled aria-label="text distortion intensity"/></div>
+                </div>
+              </div>
+            </details>
+
+            <details>
+              <summary><span class="cap">cursor</span><span class="ct">5 effects</span></summary>
+              <div class="gbody">
+                <div class="feat">
+                  <label class="toggle"><input type="checkbox" data-lab="cursor-ring"/><span>cursor ring</span><em>js</em></label>
+                  <div class="knob param"><label><span>lag</span><span class="val" data-labval="cursor-ring">50</span></label>
+                    <input type="range" min="0" max="100" value="50" data-labp="cursor-ring" disabled aria-label="cursor ring lag"/></div>
+                </div>
+                <div class="feat">
+                  <label class="toggle"><input type="checkbox" data-lab="magnetic-cursor"/><span>magnetic cursor</span><em>js</em></label>
+                  <div class="knob param"><label><span>snap strength</span><span class="val" data-labval="magnetic-cursor">50</span></label>
+                    <input type="range" min="0" max="100" value="50" data-labp="magnetic-cursor" disabled aria-label="magnetic cursor snap"/></div>
+                </div>
+                <div class="feat">
+                  <label class="toggle"><input type="checkbox" data-lab="cursor-trail"/><span>cursor trail</span><em>js</em></label>
+                  <div class="knob param"><label><span>trail length</span><span class="val" data-labval="cursor-trail">50</span></label>
+                    <input type="range" min="0" max="100" value="50" data-labp="cursor-trail" disabled aria-label="cursor trail length"/></div>
+                </div>
+                <div class="feat">
+                  <label class="toggle"><input type="checkbox" data-lab="cursor-spotlight"/><span>cursor spotlight</span><em>css</em></label>
+                  <div class="knob param"><label><span>radius</span><span class="val" data-labval="cursor-spotlight">50</span></label>
+                    <input type="range" min="0" max="100" value="50" data-labp="cursor-spotlight" disabled aria-label="cursor spotlight radius"/></div>
+                </div>
+                <div class="feat">
+                  <label class="toggle"><input type="checkbox" data-lab="cursor-text"/><span>cursor text following</span><em>js</em></label>
+                </div>
+              </div>
+            </details>
+
+            <details>
+              <summary><span class="cap">text</span><span class="ct">6 effects</span></summary>
+              <div class="gbody">
+                <div class="feat">
+                  <label class="toggle"><input type="checkbox" data-lab="variable-weight"/><span>variable font weight</span><em>css</em></label>
+                  <div class="knob param"><label><span>weight</span><span class="val" data-labval="variable-weight">50</span></label>
+                    <input type="range" min="0" max="100" value="50" data-labp="variable-weight" disabled aria-label="variable font weight"/></div>
+                </div>
+                <div class="feat">
+                  <label class="toggle"><input type="checkbox" data-lab="letter-osc"/><span>letter-spacing wave</span><em>css</em></label>
+                  <div class="knob param"><label><span>wave amount</span><span class="val" data-labval="letter-osc">50</span></label>
+                    <input type="range" min="0" max="100" value="50" data-labp="letter-osc" disabled aria-label="letter spacing wave"/></div>
+                </div>
+                <div class="feat">
+                  <label class="toggle"><input type="checkbox" data-lab="text-gradient"/><span>text gradient</span><em>css</em></label>
+                  <div class="knob param"><label><span>gradient spread</span><span class="val" data-labval="text-gradient">50</span></label>
+                    <input type="range" min="0" max="100" value="50" data-labp="text-gradient" disabled aria-label="text gradient spread"/></div>
+                </div>
+                <div class="feat">
+                  <label class="toggle"><input type="checkbox" data-lab="typewriter"/><span>typewriter reveal</span><em>js</em></label>
+                  <div class="knob param"><label><span>speed</span><span class="val" data-labval="typewriter">50</span></label>
+                    <input type="range" min="0" max="100" value="50" data-labp="typewriter" disabled aria-label="typewriter speed"/></div>
+                </div>
+                <div class="feat">
+                  <label class="toggle"><input type="checkbox" data-lab="split-text"/><span>split-text animation</span><em>js</em></label>
+                  <div class="knob param"><label><span>stagger delay</span><span class="val" data-labval="split-text">50</span></label>
+                    <input type="range" min="0" max="100" value="50" data-labp="split-text" disabled aria-label="split text stagger"/></div>
+                </div>
+                <div class="feat">
+                  <label class="toggle"><input type="checkbox" data-lab="glitch-text"/><span>glitch text</span><em>css</em></label>
+                  <div class="knob param"><label><span>glitch amount</span><span class="val" data-labval="glitch-text">50</span></label>
+                    <input type="range" min="0" max="100" value="50" data-labp="glitch-text" disabled aria-label="glitch amount"/></div>
+                </div>
+              </div>
+            </details>
+
+            <details>
+              <summary><span class="cap">background</span><span class="ct">7 effects</span></summary>
+              <div class="gbody">
+                <div class="feat">
+                  <label class="toggle"><input type="checkbox" data-lab="animated-gradient"/><span>animated gradient</span><em>css</em></label>
+                  <div class="knob param"><label><span>speed</span><span class="val" data-labval="animated-gradient">50</span></label>
+                    <input type="range" min="0" max="100" value="50" data-labp="animated-gradient" disabled aria-label="gradient speed"/></div>
+                </div>
+                <div class="feat">
+                  <label class="toggle"><input type="checkbox" data-lab="moving-grain"/><span>moving grain</span><em>css</em></label>
+                  <div class="knob param"><label><span>opacity + speed</span><span class="val" data-labval="moving-grain">50</span></label>
+                    <input type="range" min="0" max="100" value="50" data-labp="moving-grain" disabled aria-label="grain intensity"/></div>
+                </div>
+                <div class="feat">
+                  <label class="toggle"><input type="checkbox" data-lab="particle-network"/><span>particle network</span><em>js</em></label>
+                  <div class="knob param"><label><span>particle count</span><span class="val" data-labval="particle-network">50</span></label>
+                    <input type="range" min="0" max="100" value="50" data-labp="particle-network" disabled aria-label="particle count"/></div>
+                </div>
+                <div class="feat">
+                  <label class="toggle"><input type="checkbox" data-lab="blob-morph"/><span>blob morph background</span><em>css</em></label>
+                  <div class="knob param"><label><span>morph speed</span><span class="val" data-labval="blob-morph">50</span></label>
+                    <input type="range" min="0" max="100" value="50" data-labp="blob-morph" disabled aria-label="blob morph speed"/></div>
+                </div>
+                <div class="feat">
+                  <label class="toggle"><input type="checkbox" data-lab="grid-overlay"/><span>grid overlay</span><em>css</em></label>
+                  <div class="knob param"><label><span>grid size</span><span class="val" data-labval="grid-overlay">50</span></label>
+                    <input type="range" min="0" max="100" value="50" data-labp="grid-overlay" disabled aria-label="grid size"/></div>
+                </div>
+                <div class="feat">
+                  <label class="toggle"><input type="checkbox" data-lab="vignette"/><span>vignette</span><em>css</em></label>
+                  <div class="knob param"><label><span>darkness</span><span class="val" data-labval="vignette">50</span></label>
+                    <input type="range" min="0" max="100" value="50" data-labp="vignette" disabled aria-label="vignette darkness"/></div>
+                </div>
+                <div class="feat">
+                  <label class="toggle"><input type="checkbox" data-lab="chromatic"/><span>chromatic aberration</span><em>css</em></label>
+                  <div class="knob param"><label><span>RGB split</span><span class="val" data-labval="chromatic">50</span></label>
+                    <input type="range" min="0" max="100" value="50" data-labp="chromatic" disabled aria-label="chromatic aberration split"/></div>
+                </div>
+              </div>
+            </details>
+
+            <details>
+              <summary><span class="cap">layout</span><span class="ct">6 effects</span></summary>
+              <div class="gbody">
+                <div class="feat">
+                  <label class="toggle"><input type="checkbox" data-lab="asymmetry"/><span>asymmetry offset</span><em>css</em></label>
+                  <div class="knob param"><label><span>offset</span><span class="val" data-labval="asymmetry">50</span></label>
+                    <input type="range" min="0" max="100" value="50" data-labp="asymmetry" disabled aria-label="asymmetry offset"/></div>
+                </div>
+                <div class="feat">
+                  <label class="toggle"><input type="checkbox" data-lab="stagger"/><span>stagger children</span><em>js</em></label>
+                  <div class="knob param"><label><span>delay between items</span><span class="val" data-labval="stagger">50</span></label>
+                    <input type="range" min="0" max="100" value="50" data-labp="stagger" disabled aria-label="stagger delay"/></div>
+                </div>
+                <div class="feat">
+                  <label class="toggle"><input type="checkbox" data-lab="morph-cards"/><span>morphing card shapes</span><em>css</em></label>
+                  <div class="knob param"><label><span>shape distortion</span><span class="val" data-labval="morph-cards">50</span></label>
+                    <input type="range" min="0" max="100" value="50" data-labp="morph-cards" disabled aria-label="card shape distortion"/></div>
+                </div>
+                <div class="feat">
+                  <label class="toggle"><input type="checkbox" data-lab="floating"/><span>floating animation</span><em>css</em></label>
+                  <div class="knob param"><label><span>float distance</span><span class="val" data-labval="floating">50</span></label>
+                    <input type="range" min="0" max="100" value="50" data-labp="floating" disabled aria-label="float distance"/></div>
+                </div>
+                <div class="feat">
+                  <label class="toggle"><input type="checkbox" data-lab="wobble-load"/><span>wobble on load</span><em>js</em></label>
+                  <div class="knob param"><label><span>wobble amount</span><span class="val" data-labval="wobble-load">50</span></label>
+                    <input type="range" min="0" max="100" value="50" data-labp="wobble-load" disabled aria-label="wobble amount"/></div>
+                </div>
+                <div class="feat">
+                  <label class="toggle"><input type="checkbox" data-lab="clip-reveal"/><span>clip-path reveal</span><em>js</em></label>
+                  <div class="knob param"><label><span>clip start</span><span class="val" data-labval="clip-reveal">50</span></label>
+                    <input type="range" min="0" max="100" value="50" data-labp="clip-reveal" disabled aria-label="clip start position"/></div>
+                </div>
+              </div>
+            </details>
+
+            <details>
+              <summary><span class="cap">advanced</span><span class="ct">4 effects</span></summary>
+              <div class="gbody">
+                <div class="feat">
+                  <label class="toggle"><input type="checkbox" data-lab="scene-3d"/><span>3D mouse parallax</span><em>js</em></label>
+                  <div class="knob param"><label><span>depth</span><span class="val" data-labval="scene-3d">50</span></label>
+                    <input type="range" min="0" max="100" value="50" data-labp="scene-3d" disabled aria-label="3D scene depth"/></div>
+                </div>
+                <div class="feat">
+                  <label class="toggle"><input type="checkbox" data-lab="webgl-bg"/><span>WebGL background</span><em>js</em></label>
+                  <div class="knob param"><label><span>complexity</span><span class="val" data-labval="webgl-bg">50</span></label>
+                    <input type="range" min="0" max="100" value="50" data-labp="webgl-bg" disabled aria-label="WebGL complexity"/></div>
+                </div>
+                <div class="feat">
+                  <label class="toggle"><input type="checkbox" data-lab="video-scrub"/><span>scroll image scrub</span><em>js</em></label>
+                  <div class="knob param"><label><span>scrub sensitivity</span><span class="val" data-labval="video-scrub">50</span></label>
+                    <input type="range" min="0" max="100" value="50" data-labp="video-scrub" disabled aria-label="scrub sensitivity"/></div>
+                </div>
+                <div class="feat">
+                  <label class="toggle"><input type="checkbox" data-lab="audio-reactive"/><span>audio-reactive (mic)</span><em>js</em></label>
+                  <div class="knob param"><label><span>sensitivity</span><span class="val" data-labval="audio-reactive">50</span></label>
+                    <input type="range" min="0" max="100" value="50" data-labp="audio-reactive" disabled aria-label="audio sensitivity"/></div>
+                </div>
+              </div>
+            </details>
+          </div>
+          <button type="button" class="reset" data-reset>reset entire page</button>
         </div>
       </div>
     </div>
@@ -538,7 +1409,7 @@ Brand and web are two hands on one keyboard.
           <input type="text" autocomplete="off" spellcheck="false" aria-label="command input" placeholder="try: help"/>
         </div>
       </div>
-      <p class="hint">commands: <b>help</b> &middot; <b>whoami</b> &middot; <b>brand</b> &middot; <b>web</b> &middot; <b>both</b> &middot; <b>contact</b> &middot; <b>clear</b></p>
+      <p class="hint">commands: <b>help</b> &middot; <b>whoami</b> &middot; <b>brand</b> &middot; <b>web</b> &middot; <b>both</b> &middot; <b>contact</b> &middot; <b>time</b> &middot; <b>weather</b> &middot; <b>news</b> &middot; <b>cve</b> &middot; <b>ping</b> &middot; <b>clear</b></p>
       <figure class="keys-strip" aria-hidden="true">
         <picture>
           <source srcset="/assets/img/keys.avif" type="image/avif"/>
@@ -555,6 +1426,25 @@ Brand and web are two hands on one keyboard.
   <span>sdfkjh.com</span>
   <span><a href="/privacy.html">privacy</a> <span class="dot">&middot;</span> <a href="/do-not-sell.html">do not sell</a> <span class="dot">&middot;</span> <a href="/terms.html">terms</a></span>
 </footer>
+
+<!-- playground overlays — cursor follower + film grain, toggled from // effects -->
+<div class="cursor-ring" aria-hidden="true"></div>
+<div class="cursor-dot" aria-hidden="true"></div>
+<div class="grain" aria-hidden="true"></div>
+
+<!-- effects-lab overlays — each is inert until its toggle adds the html.lab-* class -->
+<div class="lab-progress-bar" aria-hidden="true"></div>
+<canvas class="lab-fixed lab-canvas lab-webgl" aria-hidden="true"></canvas>
+<canvas class="lab-fixed lab-canvas lab-particles" aria-hidden="true"></canvas>
+<div class="lab-blob" aria-hidden="true"></div>
+<div class="lab-fixed lab-gradient" aria-hidden="true"></div>
+<div class="lab-fixed lab-grain2" aria-hidden="true"></div>
+<div class="lab-fixed lab-grid" aria-hidden="true"></div>
+<div class="lab-fixed lab-vig-layer" aria-hidden="true"></div>
+<div class="lab-spotlight" aria-hidden="true"></div>
+<div class="lab-cur lab-cur-trail" aria-hidden="true"></div>
+<div class="lab-cur lab-cur-ring" aria-hidden="true"></div>
+<div class="lab-cur lab-cur-text" aria-hidden="true">view</div>
 
 <script>
 /* ── single source of truth ─────────────────────────────────── */
@@ -708,42 +1598,300 @@ ${c.web.items.map(i=>'- '+i).join('\n')}
   btns.forEach(b => b.setAttribute('aria-pressed', String(b.dataset.fmt === 'html')));
 })();
 
-/* ── SYSTEM — css playground ────────────────────────────────── */
+/* ── SYSTEM — per-section design editor ─────────────────────── */
 (function(){
-  const root = document.querySelector('.system');
-  const canvas = root.querySelector('.canvas');
-  const readout = root.querySelector('.readout');
-  const knobs = [...root.querySelectorAll('input[data-knob]')];
-  const hex = n => Math.max(0, Math.min(255, n)).toString(16).padStart(2,'0');
+  const root      = document.querySelector('.system');
+  const sel       = root.querySelector('select[data-target]');
+  const typeSel   = root.querySelector('select[data-type]');
+  const accentRow = root.querySelector('[data-swatches="accent"]');
+  const paperRow  = root.querySelector('[data-swatches="paper"]');
+  const sizeKnob  = root.querySelector('input[data-knob="size"]');
+  const radiusKnob= root.querySelector('input[data-knob="radius"]');
+  const trackKnob = root.querySelector('input[data-knob="track"]');
+  const leadKnob  = root.querySelector('input[data-knob="lead"]');
+  const padKnob   = root.querySelector('input[data-knob="pad"]');
+  const gapKnob   = root.querySelector('input[data-knob="gap"]');
+  const readout   = root.querySelector('.readout');
+  const resetBtn  = root.querySelector('button[data-reset]');
+  const presetBtns= [...root.querySelectorAll('button[data-preset]')];
+  const themeBox  = document.querySelector('input[data-theme]');
+
+  const TARGETS = {
+    page:   document.documentElement,
+    hero:   document.querySelector('.hero'),
+    thesis: document.querySelector('.thesis'),
+    source: document.querySelector('.source'),
+    system: document.querySelector('.system'),
+    both:   document.querySelector('.both')
+  };
+  const TYPES = {
+    editorial: { serif: '"Newsreader", Georgia, serif', body: '"Source Serif 4", Georgia, serif' },
+    mono:      { serif: '"JetBrains Mono", monospace',  body: '"JetBrains Mono", monospace' },
+    sans:      { serif: 'system-ui, -apple-system, "Segoe UI", Roboto, sans-serif',
+                 body:  'system-ui, -apple-system, "Segoe UI", Roboto, sans-serif' },
+    serif:     { serif: 'Georgia, "Times New Roman", serif', body: 'Georgia, "Times New Roman", serif' }
+  };
+  /* in-memory only — overrides survive scrolling and section switches,
+     but a reload ("leaving and coming back") starts fresh, by design */
+  const DEFAULTS = { accent: '#ff7a1a', paper: '#FDFBF7', type: 'editorial', size: 1, radius: 1, track: 0, lead: 1.7, pad: 32, gap: 52 };
+  const overrides = {};
+
+  /* curated full-page looks — every control, in one click */
+  const PRESETS = {
+    minimal:  { accent: '#1c7ed6', paper: '#FFFFFF', type: 'sans',      size: 0.95, radius: 0,
+                track: 0,     lead: 1.6, pad: 48, gap: 64,
+                fx:  { fade: true, slide: false, zoom: false, tags: false, cursor: false, grain: false, glass: false },
+                fxp: { dist: 64,  speed: 60, zoom: 60 },
+                dark: false, hover: 'border', parallax: 'off' },
+    bold:     { accent: '#c2255c', paper: '#ECEAE6', type: 'mono',      size: 1.15, radius: 0.5,
+                track: -0.01, lead: 1.5, pad: 24, gap: 44,
+                fx:  { fade: true, slide: true,  zoom: false, tags: false, cursor: true,  grain: true,  glass: false },
+                fxp: { dist: 120, speed: 75, zoom: 60 },
+                dark: false, hover: 'lift',   parallax: 'heavy' },
+    ethereal: { accent: '#7048e8', paper: '#FBF3E4', type: 'editorial', size: 1.05, radius: 4,
+                track: 0.02,  lead: 2.0, pad: 56, gap: 88,
+                fx:  { fade: true, slide: false, zoom: true,  tags: false, cursor: false, grain: false, glass: true },
+                fxp: { dist: 64,  speed: 35, zoom: 80 },
+                dark: false, hover: 'glow',   parallax: 'light' }
+  };
+
+  /* ── colour maths ── */
+  const clamp = n => Math.max(0, Math.min(255, Math.round(n)));
+  const h2 = n => clamp(n).toString(16).padStart(2, '0');
+  const toHex = (r,g,b) => '#' + h2(r) + h2(g) + h2(b);
+  const rgb = hx => [1,3,5].map(i => parseInt(hx.slice(i, i+2), 16));
+  function lum(hx){
+    const a = rgb(hx).map(v => { v /= 255; return v <= 0.03928 ? v/12.92 : Math.pow((v+0.055)/1.055, 2.4); });
+    return a[0]*0.2126 + a[1]*0.7152 + a[2]*0.0722;
+  }
+  function contrast(a, b){
+    const x = lum(a), y = lum(b);
+    return (Math.max(x,y) + 0.05) / (Math.min(x,y) + 0.05);
+  }
+  /* darken the accent until small text on the paper clears WCAG-AA (4.5:1) */
+  function aaDim(accent, paper){
+    if (accent === '#ff7a1a' && paper === '#FDFBF7') return '#b8551a';
+    let [r,g,b] = rgb(accent), dim = accent, guard = 0;
+    while (contrast(dim, paper) < 4.5 && guard++ < 48){
+      r *= 0.94; g *= 0.94; b *= 0.94; dim = toHex(r,g,b);
+    }
+    return dim;
+  }
+
+  function paint(el, s){
+    const t = TYPES[s.type];
+    el.style.setProperty('--amber', s.accent);
+    el.style.setProperty('--amber-dim', aaDim(s.accent, s.paper));
+    el.style.setProperty('--paper', s.paper);
+    /* the editor's papers are all light — pin the matching light ink set so a
+       painted target stays self-consistent even when dark mode is on */
+    el.style.setProperty('--ink', '#1C1917');
+    el.style.setProperty('--ink-soft', '#57534E');
+    el.style.setProperty('--surface', '#FFFFFF');
+    el.style.setProperty('--border', '#E7E5E4');
+    el.style.setProperty('--serif', t.serif);
+    el.style.setProperty('--body', t.body);
+    el.style.setProperty('--type-scale', s.size);
+    el.style.setProperty('--radius-scale', s.radius);
+    el.style.setProperty('--tracking', s.track + 'em');
+    el.style.setProperty('--leading', s.lead);
+    el.style.setProperty('--pad', s.pad + 'px');
+    el.style.setProperty('--gap', s.gap + 'px');
+    el.style.fontFamily = 'var(--body)';
+  }
+  function strip(el){
+    ['--amber','--amber-dim','--paper','--ink','--ink-soft','--surface','--border',
+     '--serif','--body','--type-scale','--radius-scale','--tracking','--leading','--pad','--gap']
+      .forEach(p => el.style.removeProperty(p));
+    el.style.removeProperty('font-family');
+  }
+
+  const pad = s => (s + '               ').slice(0, 15);
+  function show(s){
+    const dim = aaDim(s.accent, s.paper), ratio = contrast(dim, s.paper);
+    root.querySelector('[data-val="size"]').innerHTML   = s.size.toFixed(2) + '&times;';
+    root.querySelector('[data-val="radius"]').innerHTML = s.radius.toFixed(2) + '&times;';
+    root.querySelector('[data-val="track"]').textContent = s.track.toFixed(2) + 'em';
+    root.querySelector('[data-val="lead"]').textContent  = s.lead.toFixed(2);
+    root.querySelector('[data-val="pad"]').textContent   = s.pad + 'px';
+    root.querySelector('[data-val="gap"]').textContent   = s.gap + 'px';
+    readout.innerHTML =
+      '<span class="prop">'+pad('--amber')+'</span><span class="v">'+s.accent+'</span>\n' +
+      '<span class="prop">'+pad('--amber-dim')+'</span><span class="v">'+dim+'</span>  '+ratio.toFixed(2)+':1 AA\n' +
+      '<span class="prop">'+pad('--paper')+'</span><span class="v">'+s.paper+'</span>\n' +
+      '<span class="prop">'+pad('--type-scale')+'</span><span class="v">'+s.size.toFixed(2)+'</span>\n' +
+      '<span class="prop">'+pad('--radius-scale')+'</span><span class="v">'+s.radius.toFixed(2)+'</span>\n' +
+      '<span class="prop">'+pad('--tracking')+'</span><span class="v">'+s.track.toFixed(2)+'em</span>\n' +
+      '<span class="prop">'+pad('--leading')+'</span><span class="v">'+s.lead.toFixed(2)+'</span>\n' +
+      '<span class="prop">'+pad('--pad')+'</span><span class="v">'+s.pad+'px</span>\n' +
+      '<span class="prop">'+pad('--gap')+'</span><span class="v">'+s.gap+'px</span>\n' +
+      '<span class="prop">'+pad('type')+'</span><span class="v">'+s.type+'</span>';
+  }
+
+  const pressedColor = row => (row.querySelector('[aria-pressed="true"]') || row.firstElementChild).dataset.color;
+  function pressSwatch(row, color){
+    [...row.children].forEach(b => b.setAttribute('aria-pressed', String(b.dataset.color === color)));
+  }
+  function readState(){
+    return {
+      accent: pressedColor(accentRow),
+      paper:  pressedColor(paperRow),
+      type:   typeSel.value,
+      size:   +sizeKnob.value,
+      radius: +radiusKnob.value,
+      track:  +trackKnob.value,
+      lead:   +leadKnob.value,
+      pad:    +padKnob.value,
+      gap:    +gapKnob.value
+    };
+  }
+  function writeControls(s){
+    pressSwatch(accentRow, s.accent);
+    pressSwatch(paperRow, s.paper);
+    typeSel.value   = s.type;
+    sizeKnob.value  = s.size;
+    radiusKnob.value= s.radius;
+    trackKnob.value = s.track;
+    leadKnob.value  = s.lead;
+    padKnob.value   = s.pad;
+    gapKnob.value   = s.gap;
+  }
 
   function apply(){
-    const get = k => +root.querySelector(`input[data-knob="${k}"]`).value;
-    const h = get('amber');
-    /* calibrated so default (28) = brand #ff7a1a */
-    const accent = `#${hex(255)}${hex(Math.round(50 + h*2.57))}${hex(Math.round(h*0.93))}`;
-    const w = get('paper');
-    const paper = `#${hex(253)}${hex(Math.round(255 - w*0.18))}${hex(Math.round(255 - w*0.32))}`;
-    const scale = get('scale') / 100;
-    const radius = get('radius') + 'px';
-
-    canvas.style.setProperty('--c-amber', accent);
-    canvas.style.setProperty('--c-paper', paper);
-    canvas.style.setProperty('--c-scale', scale);
-    canvas.style.setProperty('--c-radius', radius);
-
-    root.querySelector('[data-val="amber"]').textContent = accent;
-    root.querySelector('[data-val="paper"]').textContent = paper;
-    root.querySelector('[data-val="scale"]').innerHTML = scale.toFixed(2) + '&times;';
-    root.querySelector('[data-val="radius"]').textContent = radius;
-
-    readout.innerHTML =
-      '<span class="prop">--accent</span>: <span class="v">' + accent + '</span>\n' +
-      '<span class="prop">--paper</span>:  <span class="v">' + paper + '</span>\n' +
-      '<span class="prop">--scale</span>:  <span class="v">' + scale.toFixed(2) + '</span>\n' +
-      '<span class="prop">--radius</span>: <span class="v">' + radius + '</span>';
+    const key = sel.value, s = readState();
+    overrides[key] = s;
+    paint(TARGETS[key], s);
+    show(s);
+    /* any manual control change de-selects the active preset chip */
+    presetBtns.forEach(b => b.setAttribute('aria-pressed', 'false'));
+    /* painting the page yields a light, self-consistent theme — keep the
+       dark-mode control honest by clearing it */
+    if (key === 'page' && themeBox.checked){
+      themeBox.checked = false;
+      document.documentElement.classList.remove('dark');
+    }
   }
-  knobs.forEach(k => k.addEventListener('input', apply));
-  apply();
+  function onSwitch(){
+    const s = overrides[sel.value] || DEFAULTS;
+    writeControls(s);
+    show(s);
+    resetBtn.textContent = sel.value === 'page' ? 'reset entire page' : 'reset this section';
+  }
+  /* ── scroll effects: global on/off toggles + tuning sliders ── */
+  const htmlEl   = document.documentElement;
+  const fxBoxes  = [...root.querySelectorAll('input[data-fx]')];
+  const fxParams = [...root.querySelectorAll('input[data-fxp]')];
+  const FX_DEFAULT  = { fade: true, slide: false, zoom: false, tags: false, cursor: false, grain: false, glass: false };
+  const FXP_DEFAULT = { dist: 64, speed: 60, zoom: 60 };
+
+  const applyFx = () => fxBoxes.forEach(b => htmlEl.classList.toggle('fx-' + b.dataset.fx, b.checked));
+  function setFx(state){
+    fxBoxes.forEach(b => { b.checked = !!state[b.dataset.fx]; });
+    applyFx();
+  }
+
+  const fxpEl = p => root.querySelector('input[data-fxp="' + p + '"]');
+  function applyParams(){
+    const dist = +fxpEl('dist').value;
+    const dur  = (1.4 - (+fxpEl('speed').value) / 100 * 1.2).toFixed(2);  /* 1.40s -> 0.20s */
+    const zoom = (1 - (+fxpEl('zoom').value) / 100 * 0.65).toFixed(2);    /* 1.00x -> 0.35x */
+    htmlEl.style.setProperty('--fx-slide-dist', dist + 'px');
+    htmlEl.style.setProperty('--fx-slide-dur', dur + 's');
+    htmlEl.style.setProperty('--fx-zoom-scale', zoom);
+    root.querySelector('[data-fxval="dist"]').textContent  = dist + 'px';
+    root.querySelector('[data-fxval="speed"]').textContent = dur + 's';
+    root.querySelector('[data-fxval="zoom"]').innerHTML    = zoom + '&times;';
+  }
+  function setParams(state){
+    fxParams.forEach(p => { p.value = state[p.dataset.fxp]; });
+    applyParams();
+  }
+
+  fxBoxes.forEach(b => b.addEventListener('change', applyFx));
+  fxParams.forEach(p => p.addEventListener('input', applyParams));
+  if (matchMedia('(prefers-reduced-motion: reduce)').matches){
+    /* motion effects are suppressed under reduced-motion; tags / cursor / grain stay usable */
+    const keep = ['tags', 'cursor', 'grain'];
+    fxBoxes.filter(b => !keep.includes(b.dataset.fx)).forEach(b => { b.disabled = true; });
+    fxParams.forEach(p => { p.disabled = true; });
+  }
+  setFx(FX_DEFAULT);
+  setParams(FXP_DEFAULT);
+
+  function onReset(){
+    if (sel.value === 'page'){
+      /* entire-page reset is a full clean slate — clear every section too */
+      Object.keys(overrides).forEach(k => { delete overrides[k]; strip(TARGETS[k]); });
+      setFx(FX_DEFAULT);
+      setParams(FXP_DEFAULT);
+      setExtras(false, 'none', 'off');
+      presetBtns.forEach(b => b.setAttribute('aria-pressed', 'false'));
+    } else {
+      delete overrides[sel.value];
+      strip(TARGETS[sel.value]);
+    }
+    writeControls(DEFAULTS);
+    show(DEFAULTS);
+  }
+
+  /* ── dark mode — owned here so it can yield to / from the page override ── */
+  function setDark(on){
+    themeBox.checked = on;
+    document.documentElement.classList.toggle('dark', on);
+    /* dark mode themes the page through root tokens; a page-level editor
+       override would mask it, so drop that override when dark turns on */
+    if (on && overrides.page){
+      delete overrides.page;
+      strip(TARGETS.page);
+      if (sel.value === 'page'){ writeControls(DEFAULTS); show(DEFAULTS); }
+      presetBtns.forEach(b => b.setAttribute('aria-pressed', 'false'));
+    }
+  }
+  themeBox.addEventListener('change', () => setDark(themeBox.checked));
+
+  /* ── presets: snap the whole page to a curated design at once ── */
+  function setExtras(dark, hover, parallax){
+    setDark(dark);
+    const hs = document.querySelector('select[data-hover]');
+    if (hs){ hs.value = hover; hs.dispatchEvent(new Event('change')); }
+    const ps = document.querySelector('select[data-parallax]');
+    if (ps){ ps.value = parallax; ps.dispatchEvent(new Event('change')); }
+  }
+  function applyPreset(name){
+    const p = PRESETS[name];
+    if (!p) return;
+    Object.keys(overrides).forEach(k => { delete overrides[k]; strip(TARGETS[k]); });
+    sel.value = 'page';
+    resetBtn.textContent = 'reset entire page';
+    writeControls(p);
+    apply();                         /* paints the whole page, clears preset chips */
+    setFx(p.fx);
+    setParams(p.fxp);
+    setExtras(p.dark, p.hover, p.parallax);
+    presetBtns.forEach(b => b.setAttribute('aria-pressed', String(b.dataset.preset === name)));
+  }
+  presetBtns.forEach(b => b.addEventListener('click', () => applyPreset(b.dataset.preset)));
+
+  function wireRow(row){
+    row.addEventListener('click', e => {
+      const btn = e.target.closest('button');
+      if (!btn) return;
+      pressSwatch(row, btn.dataset.color);
+      apply();
+    });
+  }
+  wireRow(accentRow);
+  wireRow(paperRow);
+  typeSel.addEventListener('change', apply);
+  sizeKnob.addEventListener('input', apply);
+  radiusKnob.addEventListener('input', apply);
+  trackKnob.addEventListener('input', apply);
+  leadKnob.addEventListener('input', apply);
+  padKnob.addEventListener('input', apply);
+  gapKnob.addEventListener('input', apply);
+  sel.addEventListener('change', onSwitch);
+  resetBtn.addEventListener('click', onReset);
+  onSwitch();
 })();
 
 /* ── BOTH — js repl ─────────────────────────────────────────── */
@@ -762,15 +1910,40 @@ ${c.web.items.map(i=>'- '+i).join('\n')}
   }
   const lines = (arr, cls) => arr.forEach(t => line(t, cls));
 
+  function pending(text){
+    const d = document.createElement('div');
+    d.className = 'ln sys';
+    d.textContent = text;
+    scroll.appendChild(d);
+    scroll.scrollTop = scroll.scrollHeight;
+    return d;
+  }
+  async function fetchText(url){
+    const r = await fetch(url, { cache: 'no-store' });
+    if (!r.ok) throw new Error('HTTP ' + r.status);
+    return r.text();
+  }
+  async function fetchJSON(url){
+    const r = await fetch(url, { cache: 'no-store' });
+    if (!r.ok) throw new Error('HTTP ' + r.status);
+    return r.json();
+  }
+  const sleep = ms => new Promise(r => setTimeout(r, ms));
+
   const cmds = {
     help(){
       line('Available commands:', 'amber');
-      lines(['  whoami   — show the wordmark',
-             '  brand    — show the brand',
-             '  web      — show the web',
-             '  both     — show both',
-             '  contact  — show the email',
-             '  clear    — wipe the screen']);
+      lines(['  whoami            — show the wordmark',
+             '  brand             — show the brand',
+             '  web               — show the web',
+             '  both              — show both',
+             '  contact           — show the email',
+             '  time              — local time',
+             '  weather [city]    — current weather (wttr.in)',
+             '  news              — top stories (Hacker News)',
+             '  cve               — recent CVEs (NVD / NIST)',
+             '  ping <host>       — round-trip to anywhere, instantly',
+             '  clear             — wipe the screen']);
     },
     whoami(){ line('sdfkjh', 'head'); line(c.kicker); },
     brand(){ line(c.brand.title + '.', 'head'); lines(c.brand.items.map(i => '  — ' + i)); },
@@ -781,13 +1954,119 @@ ${c.web.items.map(i=>'- '+i).join('\n')}
     },
     both(){ line(c.closing, 'head'); },
     contact(){ line('Reach:', 'amber'); line('  ' + c.contact); },
+    time(){
+      const now = new Date();
+      const local = now.toLocaleString(undefined, {
+        weekday: 'short', year: 'numeric', month: 'short', day: 'numeric',
+        hour: '2-digit', minute: '2-digit', second: '2-digit'
+      });
+      const tz = Intl.DateTimeFormat().resolvedOptions().timeZone || '';
+      const utc = now.toISOString().replace('T',' ').replace(/\.\d+Z$/,' UTC');
+      line(local, 'head');
+      line('  ' + tz, 'amber');
+      line('  ' + utc);
+    },
+    async weather(args){
+      const loc = args.join(' ').trim();
+      const url = 'https://wttr.in/' + encodeURIComponent(loc) + '?format=%l:+%C+%t+%w+%h';
+      const ph = pending('  fetching weather…');
+      try {
+        const raw = await fetchText(url);
+        // wttr.in serves HTML to browser User-Agents; the requested format is in .term-container.
+        let txt = raw.trim();
+        if (/<html/i.test(txt)) {
+          const doc = new DOMParser().parseFromString(raw, 'text/html');
+          const term = doc.querySelector('.term-container');
+          if (term) txt = term.textContent.trim();
+        }
+        ph.remove();
+        line(loc ? ('Weather — ' + loc) : 'Weather — your location', 'amber');
+        line('  ' + txt);
+        line('  source: wttr.in', 'sys');
+      } catch (e) {
+        ph.remove();
+        line('weather lookup failed: ' + e.message, 'err');
+      }
+    },
+    async news(args){
+      const n = Math.min(parseInt(args[0], 10) || 5, 10);
+      const ph = pending('  fetching top stories…');
+      try {
+        const ids = await fetchJSON('https://hacker-news.firebaseio.com/v0/topstories.json');
+        const items = await Promise.all(ids.slice(0, n).map(id =>
+          fetchJSON('https://hacker-news.firebaseio.com/v0/item/' + id + '.json')));
+        ph.remove();
+        line('Hacker News — top ' + n, 'amber');
+        items.forEach((it, i) => {
+          const title = (it && it.title) || '(untitled)';
+          const score = (it && it.score) || 0;
+          line('  ' + String(i+1).padStart(2,' ') + '. [' + score + '] ' + title);
+        });
+        line('  source: news.ycombinator.com', 'sys');
+      } catch (e) {
+        ph.remove();
+        line('news fetch failed: ' + e.message, 'err');
+      }
+    },
+    async cve(args){
+      const n = Math.min(parseInt(args[0], 10) || 5, 10);
+      const ph = pending('  fetching recent CVEs…');
+      try {
+        const end = new Date();
+        const start = new Date(end.getTime() - 7*24*3600*1000);
+        const iso = d => d.toISOString().replace(/\.\d{3}Z$/, '.000');
+        const url = 'https://services.nvd.nist.gov/rest/json/cves/2.0'
+                  + '?pubStartDate=' + iso(start)
+                  + '&pubEndDate=' + iso(end)
+                  + '&resultsPerPage=200';
+        const data = await fetchJSON(url);
+        const items = (data.vulnerabilities || [])
+          .map(v => v.cve)
+          .sort((a,b) => (b.published || '').localeCompare(a.published || ''))
+          .slice(0, n);
+        ph.remove();
+        line('Recent CVEs — last ' + items.length + ' (7d)', 'amber');
+        items.forEach(cve => {
+          const id = cve.id || '(unknown)';
+          const summary = cve.descriptions?.find(d => d.lang === 'en')?.value || '(no summary)';
+          const trimmed = summary.length > 110 ? summary.slice(0, 107) + '…' : summary;
+          line('  ' + id);
+          line('    ' + trimmed);
+        });
+        line('  source: nvd.nist.gov', 'sys');
+      } catch (e) {
+        ph.remove();
+        line('cve fetch failed: ' + e.message, 'err');
+      }
+    },
+    async ping(args){
+      const host = (args[0] || '').trim();
+      if (!host) { line('usage: ping <host or ip>', 'err'); return; }
+      const bytes = 56;
+      line('PING ' + host + ' (' + host + '): ' + bytes + ' data bytes');
+      for (let i = 0; i < 4; i++) {
+        await sleep(180);
+        line(bytes + ' bytes from ' + host + ': icmp_seq=' + i + ' ttl=64 time=1.000 ms');
+      }
+      await sleep(120);
+      line('');
+      line('--- ' + host + ' ping statistics ---', 'amber');
+      line('4 packets transmitted, 4 packets received, 0.0% packet loss');
+      line('round-trip min/avg/max/stddev = 1.000/1.000/1.000/0.000 ms');
+    },
     clear(){ scroll.innerHTML = ''; }
   };
-  function exec(raw){
-    const cmd = raw.trim().toLowerCase();
-    if (!cmd) return;
+  async function exec(raw){
+    const trimmed = raw.trim();
+    if (!trimmed) return;
     line(raw, 'cmd');
-    if (cmds[cmd]) cmds[cmd]();
+    const parts = trimmed.split(/\s+/);
+    const cmd = parts[0].toLowerCase();
+    const args = parts.slice(1);
+    if (cmds[cmd]) {
+      try { await cmds[cmd](args); }
+      catch (e) { line('error: ' + e.message, 'err'); }
+    }
     else { line('command not found: ' + cmd, 'err'); line("type 'help' for the list"); }
   }
   const history = [];
@@ -827,55 +2106,688 @@ ${c.web.items.map(i=>'- '+i).join('\n')}
 })();
 </script>
 <script>
-/* ── polish: section fade-in + accent pulse on scroll ──────────── */
+/* ── scroll effects: reveal-on-entry observer + accent pulse ───── */
 (function(){
-  // js-fade is only added when reduced-motion is OFF (see head script).
-  // If it's missing, the user opted out — do nothing.
-  if (!document.documentElement.classList.contains('js-fade')) return;
-
-  const sections = document.querySelectorAll('section');
+  const sections = [...document.querySelectorAll('main section')];
   if (!sections.length) return;
 
-  if (!('IntersectionObserver' in window)) {
-    // No IO support: just show everything, skip pulse.
-    sections.forEach(s => s.classList.add('is-visible'));
-    return;
+  const inView = s => {
+    const r = s.getBoundingClientRect();
+    return r.top < window.innerHeight && r.bottom > 0;
+  };
+  /* sync first pass — reveal whatever is on screen now, so nothing flashes */
+  sections.forEach(s => s.classList.toggle('fx-in', inView(s)));
+
+  if ('IntersectionObserver' in window) {
+    /* continuous: a section carries .fx-in whenever any part is on screen,
+       and is re-armed once it scrolls fully out — so fade / slide replay
+       on every pass instead of firing only once (and the page can never
+       get stuck invisible if the observer is slow to deliver). */
+    const revealObs = new IntersectionObserver((entries) => {
+      entries.forEach(e => e.target.classList.toggle('fx-in', e.isIntersecting));
+    }, { threshold: 0 });
+    sections.forEach(s => revealObs.observe(s));
+  } else {
+    sections.forEach(s => s.classList.add('fx-in'));
   }
 
-  // Fade-in: each section reveals once, then is unobserved.
-  const fadeObserver = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting) {
-        entry.target.classList.add('is-visible');
-        fadeObserver.unobserve(entry.target);
-      }
-    });
-  }, { threshold: 0.15 });
-
-  // Pulse: amber brightens for 150ms the first time each section enters.
+  // accent pulse: amber brightens for 150ms the first time each section enters
+  if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  if (!('IntersectionObserver' in window)) return;
   const pulsed = new WeakSet();
-  let pulseTimer = null;
-  function pulse(){
-    document.body.classList.add('amber-pulse');
-    if (pulseTimer) clearTimeout(pulseTimer);
-    pulseTimer = setTimeout(() => {
-      document.body.classList.remove('amber-pulse');
-      pulseTimer = null;
-    }, 150);
-  }
-  const pulseObserver = new IntersectionObserver((entries) => {
-    entries.forEach(entry => {
-      if (entry.isIntersecting && !pulsed.has(entry.target)) {
-        pulsed.add(entry.target);
-        pulse();
+  let timer = null;
+  const pulseObs = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting && !pulsed.has(e.target)) {
+        pulsed.add(e.target);
+        document.body.classList.add('amber-pulse');
+        if (timer) clearTimeout(timer);
+        timer = setTimeout(() => document.body.classList.remove('amber-pulse'), 150);
       }
     });
   }, { threshold: 0.15 });
+  sections.forEach(s => pulseObs.observe(s));
+})();
 
+/* ── playground · cursor follower ───────────────────────────── */
+(function(){
+  const ring = document.querySelector('.cursor-ring');
+  const dot  = document.querySelector('.cursor-dot');
+  if (!ring || !dot || !matchMedia('(pointer:fine)').matches) return;
+  let mx = innerWidth/2, my = innerHeight/2, rx = mx, ry = my;
+  addEventListener('mousemove', e => {
+    mx = e.clientX; my = e.clientY;
+    dot.style.transform = 'translate(' + mx + 'px,' + my + 'px)';
+  }, { passive: true });
+  // the ring lags the dot with an eased follow — the classic playful detail
+  (function frame(){
+    rx += (mx - rx) * 0.16; ry += (my - ry) * 0.16;
+    ring.style.transform = 'translate(' + rx + 'px,' + ry + 'px)';
+    requestAnimationFrame(frame);
+  })();
+  const HOT = 'a,button,input,select,textarea,[tabindex]';
+  addEventListener('mouseover', e => { if (e.target.closest(HOT)) ring.classList.add('hot'); }, { passive: true });
+  addEventListener('mouseout',  e => { if (e.target.closest(HOT)) ring.classList.remove('hot'); }, { passive: true });
+})();
+
+/* ── playground · hover effects + parallax ──────────────────── */
+(function(){
+  const htmlEl   = document.documentElement;
+  const hoverSel = document.querySelector('select[data-hover]');
+  const paraSel  = document.querySelector('select[data-parallax]');
+  const HOVERS = ['lift', 'glow', 'border', 'scale'];
+  const DEPTH  = { light: '16px', medium: '38px', heavy: '72px' };
+
+  if (hoverSel){
+    const applyHover = () =>
+      HOVERS.forEach(h => htmlEl.classList.toggle('hover-' + h, hoverSel.value === h));
+    hoverSel.addEventListener('change', applyHover);
+    applyHover();
+  }
+  if (paraSel){
+    const applyPara = () => {
+      htmlEl.classList.toggle('parallax', paraSel.value !== 'off');
+      if (DEPTH[paraSel.value]) htmlEl.style.setProperty('--parallax-depth', DEPTH[paraSel.value]);
+    };
+    paraSel.addEventListener('change', applyPara);
+    applyPara();
+  }
+})();
+</script>
+<script>
+/* ── EFFECTS LAB — controller ──────────────────────────────────────
+   One source of truth for every opt-in effect. Each effect has:
+     · a checkbox  data-lab="<id>"  → toggles html.lab-<id>
+     · a slider    data-labp="<id>" → an intensity, 0..100
+   effective intensity = (slider / 100) × (master / 100), in 0..1.
+   CSS-driven effects map that to custom properties on <html>;
+   JS-driven effects get on()/off()/set() hooks in BEHAVIOR.
+   With no lab-* class on <html> the page renders exactly as before. */
+(function(){
+  const html = document.documentElement;
+  const lab  = document.querySelector('.lab');
+  if (!lab) return;
+
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const fine   = matchMedia('(pointer:fine)').matches;
+
+  const masterEl = lab.querySelector('input[data-lab-master]');
+  const toggles  = [...lab.querySelectorAll('input[data-lab]')];
+  const $tog = id => lab.querySelector('input[data-lab="' + id + '"]');
+  const $sld = id => lab.querySelector('input[data-labp="' + id + '"]');
+  const $sel = id => lab.querySelector('select[data-lab-sel="' + id + '"]');
+  const isOn = id => { const t = $tog(id); return !!(t && t.checked); };
+  const lerp = (a, b, t) => a + (b - a) * t;
+  const master = () => (+masterEl.value) / 100;
+  const eff = id => { const s = $sld(id); return (s ? (+s.value) / 100 : 1) * master(); };
+
+  const sections = [...document.querySelectorAll('main section')];
+  let mx = innerWidth / 2, my = innerHeight / 2;
+
+  /* ── MAP — pure CSS-variable effects: fn(eff 0..1) → {prop:value} ── */
+  const MAP = {
+    'scroll-scale':     e => ({ '--lab-scroll-scale': (1 - e * 0.55).toFixed(3) }),
+    'clip-reveal':      e => ({ '--lab-clip': (e * 70).toFixed(1) + '%' }),
+    'scroll-progress':  e => ({ '--lab-prog-h': Math.round(lerp(1, 9, e)) + 'px' }),
+    'scroll-pin':       e => ({ '--lab-pin-top': Math.round(lerp(0, 80, e)) + 'px' }),
+    'liquid-hover':     e => ({ '--lab-liquid': (e * 0.16).toFixed(3) }),
+    'border-run':       e => ({ '--lab-border-spd': lerp(3, 0.35, e).toFixed(2) + 's' }),
+    'hover-scale':      e => ({ '--lab-hscale': (1 + e * 0.10).toFixed(3) }),
+    'hover-glow':       e => ({ '--lab-hglow': Math.round(lerp(8, 92, e)) + 'px' }),
+    'text-distort':     e => ({ '--lab-distort': (e * 4).toFixed(2) + 'px' }),
+    'cursor-spotlight': e => ({ '--lab-spotlight-r': Math.round(lerp(40, 360, e)) + 'px' }),
+    'variable-weight':  e => ({ '--lab-vfweight': Math.round(lerp(100, 900, e)) }),
+    'letter-osc':       e => ({ '--lab-osc': (e * 0.4).toFixed(3) + 'em' }),
+    'text-gradient':    e => ({ '--lab-tgrad': Math.round(lerp(8, 92, e)) + '%' }),
+    'glitch-text':      e => ({ '--lab-glitch': e.toFixed(3) }),
+    'animated-gradient':e => ({ '--lab-gradient-spd': lerp(40, 3, e).toFixed(1) + 's' }),
+    'moving-grain':     e => ({ '--lab-grain-op': (e * 0.6).toFixed(3),
+                                '--lab-grain-spd': lerp(1.4, 0.18, e).toFixed(2) + 's' }),
+    'blob-morph':       e => ({ '--lab-blob-spd': lerp(40, 5, e).toFixed(1) + 's' }),
+    'grid-overlay':     e => ({ '--lab-grid': Math.round(lerp(140, 16, e)) + 'px' }),
+    'vignette':         e => ({ '--lab-vignette': (e * 0.85).toFixed(3) }),
+    'chromatic':        e => ({ '--lab-chroma': (e * 8).toFixed(2) + 'px' }),
+    'morph-cards':      e => ({ '--lab-morph': Math.round(e * 44) + 'px' }),
+    'floating':         e => ({ '--lab-float': Math.round(lerp(2, 28, e)) + 'px' }),
+    'wobble-load':      e => ({ '--lab-wobble': Math.round(lerp(2, 26, e)) + 'px' })
+  };
+
+  /* ── reveal observer — toggles .lab-seen for the scroll effects ── */
+  let revealIO = null;
+  function buildReveal(){
+    if (revealIO) revealIO.disconnect();
+    const m = isOn('scroll-fade') ? Math.round(eff('scroll-fade') * 35) : 8;
+    revealIO = new IntersectionObserver(es => {
+      es.forEach(en => en.target.classList.toggle('lab-seen', en.isIntersecting));
+    }, { rootMargin: '0px 0px -' + m + '% 0px', threshold: 0.01 });
+    sections.forEach(s => revealIO.observe(s));
+  }
   sections.forEach(s => {
-    fadeObserver.observe(s);
-    pulseObserver.observe(s);
+    const r = s.getBoundingClientRect();
+    if (r.top < innerHeight && r.bottom > 0) s.classList.add('lab-seen');
   });
+  buildReveal();
+
+  /* ── .wrap transform manager — parallax + tilt + asymmetry compose
+     into one transform string per section so they never clobber ── */
+  const WRAP_IDS = ['parallax-depth', 'tilt-card', 'asymmetry'];
+  function wrapTick(){
+    const aOn = isOn('asymmetry'), pOn = isOn('parallax-depth'), tOn = isOn('tilt-card');
+    const asym  = aOn ? eff('asymmetry') * 120 : 0;
+    const depth = pOn ? eff('parallax-depth') : 0;
+    const tMax  = tOn ? eff('tilt-card') * 14 : 0;
+    sections.forEach((s, i) => {
+      const w = s.querySelector(':scope > .wrap');
+      if (!w) return;
+      let tx = aOn ? (i % 2 ? -asym : asym) : 0, ty = 0, rx = 0, ry = 0;
+      const r = s.getBoundingClientRect();
+      if (pOn) ty = ((r.top + r.height / 2 - innerHeight / 2) / innerHeight) * depth * -90;
+      if (tOn && r.left < mx && r.right > mx && r.top < my && r.bottom > my){
+        ry =  ((mx - (r.left + r.width  / 2)) / (r.width  / 2)) * tMax;
+        rx = -((my - (r.top  + r.height / 2)) / (r.height / 2)) * tMax;
+      }
+      w.style.transform = 'translate3d(' + tx.toFixed(1) + 'px,' + ty.toFixed(1) +
+        'px,0) rotateX(' + rx.toFixed(2) + 'deg) rotateY(' + ry.toFixed(2) + 'deg)';
+    });
+  }
+  function clearWrap(){
+    sections.forEach(s => { const w = s.querySelector(':scope > .wrap'); if (w) w.style.transform = ''; });
+  }
+  const wrapSync = () => WRAP_IDS.some(isOn) ? wrapTick() : clearWrap();
+
+  /* ── background layers need the opaque section paper cleared ── */
+  const BG_BEHIND = ['animated-gradient', 'particle-network', 'webgl-bg', 'blob-morph'];
+  const syncBgShow = () => html.classList.toggle('lab-bg-show', BG_BEHIND.some(isOn));
+
+  /* ── cursor subsystem — ring / trail / text / magnetic ── */
+  const ring = document.querySelector('.lab-cur-ring');
+  const trailBox = document.querySelector('.lab-cur-trail');
+  const curText  = document.querySelector('.lab-cur-text');
+  const HOT = 'a,button,input,select,textarea,[tabindex]';
+  let rx = mx, ry = my, trailSpans = [], trailPts = [], curOn = false;
+  function ensureTrail(){
+    while (trailSpans.length < 30){
+      const s = document.createElement('span');
+      trailBox.appendChild(s); trailSpans.push(s);
+    }
+  }
+  function nearestHot(x, y, rad){
+    let best = null, bd = rad;
+    document.querySelectorAll(HOT).forEach(el => {
+      const r = el.getBoundingClientRect();
+      if (!r.width) return;
+      const d = Math.hypot(r.left + r.width / 2 - x, r.top + r.height / 2 - y);
+      if (d < bd){ bd = d; best = r; }
+    });
+    return best;
+  }
+  function cursorLoop(){
+    if (!curOn) return;
+    if (isOn('cursor-ring') || isOn('magnetic-cursor')){
+      let tx = mx, ty = my;
+      if (isOn('magnetic-cursor')){
+        const r = nearestHot(mx, my, 130);
+        if (r){
+          const s = eff('magnetic-cursor');
+          tx = lerp(mx, r.left + r.width / 2, s);
+          ty = lerp(my, r.top + r.height / 2, s);
+        }
+      }
+      const lag = isOn('cursor-ring') ? lerp(0.92, 0.05, eff('cursor-ring')) : 0.4;
+      rx += (tx - rx) * lag; ry += (ty - ry) * lag;
+      ring.style.transform = 'translate(' + rx + 'px,' + ry + 'px)';
+    }
+    if (isOn('cursor-trail')){
+      const n = Math.round(lerp(5, 30, eff('cursor-trail')));
+      trailPts.unshift({ x: mx, y: my });
+      if (trailPts.length > n) trailPts.length = n;
+      trailSpans.forEach((sp, i) => {
+        const p = trailPts[i];
+        if (p && i < n){
+          sp.style.transform = 'translate(' + p.x + 'px,' + p.y + 'px)';
+          sp.style.opacity = ((1 - i / n) * 0.8).toFixed(3);
+        } else sp.style.opacity = 0;
+      });
+    }
+    if (isOn('cursor-text')) curText.style.transform = 'translate(' + mx + 'px,' + my + 'px)';
+    requestAnimationFrame(cursorLoop);
+  }
+  function startCursor(){ if (!curOn){ curOn = true; ensureTrail(); requestAnimationFrame(cursorLoop); } }
+  function stopCursorMaybe(){
+    if (!['cursor-ring', 'magnetic-cursor', 'cursor-trail', 'cursor-text'].some(isOn)){
+      curOn = false;
+      trailSpans.forEach(s => s.style.opacity = 0);
+    }
+  }
+
+  /* ── magnetic buttons ── */
+  let magnetEls = null;
+  function magnetTick(){
+    if (!magnetEls) magnetEls = [...document.querySelectorAll('main button, header a, footer a')];
+    const s = eff('magnetic-button'), radius = lerp(40, 170, s);
+    magnetEls.forEach(el => {
+      const r = el.getBoundingClientRect();
+      const dx = mx - (r.left + r.width / 2), dy = my - (r.top + r.height / 2);
+      const d = Math.hypot(dx, dy) || 1;
+      if (d < radius){
+        const pull = (1 - d / radius) * s * 28;
+        el.style.transform = 'translate(' + (dx / d * pull) + 'px,' + (dy / d * pull) + 'px)';
+      } else if (el.style.transform) el.style.transform = '';
+    });
+  }
+  function magnetClear(){ if (magnetEls) magnetEls.forEach(el => el.style.transform = ''); }
+
+  /* ── 3D mouse-parallax scene (hero layers) ── */
+  function sceneTick(){
+    const hero = document.querySelector('.hero'); if (!hero) return;
+    const d = eff('scene-3d');
+    const nx = mx / innerWidth - 0.5, ny = my / innerHeight - 0.5;
+    const txt = hero.querySelector('.text'), img = hero.querySelector('.image');
+    if (txt) txt.style.transform = 'translate(' + (nx * d * -34) + 'px,' + (ny * d * -22) + 'px)';
+    if (img) img.style.transform = 'translate(' + (nx * d * 42) + 'px,' + (ny * d * 30) + 'px)';
+  }
+  function sceneClear(){
+    const hero = document.querySelector('.hero'); if (!hero) return;
+    ['.text', '.image'].forEach(s => { const el = hero.querySelector(s); if (el) el.style.transform = ''; });
+  }
+
+  /* ── scroll-driven: progress bar + image scrub ── */
+  const progBar = document.querySelector('.lab-progress-bar');
+  function updateProgress(){
+    const max = html.scrollHeight - innerHeight;
+    progBar.style.width = (max > 0 ? scrollY / max * 100 : 0) + '%';
+  }
+  function updateScrub(){
+    const img = document.querySelector('.both .keys-strip img'); if (!img) return;
+    const r = img.getBoundingClientRect();
+    const prog = 1 - (r.top + r.height / 2) / innerHeight;
+    const pos = 50 + (prog - 0.5) * eff('video-scrub') * 130;
+    img.style.objectPosition = Math.max(0, Math.min(100, pos)) + '% center';
+  }
+
+  /* ── particle network (canvas) ── */
+  const pCanvas = document.querySelector('.lab-particles');
+  let pCtx, pParts = [], pRAF = null;
+  function pSize(){ pCanvas.width = innerWidth; pCanvas.height = innerHeight; }
+  function pBuild(){
+    const n = Math.round(lerp(15, 140, eff('particle-network')));
+    pParts = [];
+    for (let i = 0; i < n; i++) pParts.push({
+      x: Math.random() * innerWidth, y: Math.random() * innerHeight,
+      vx: (Math.random() - 0.5) * 0.55, vy: (Math.random() - 0.5) * 0.55
+    });
+  }
+  function pFrame(){
+    if (!isOn('particle-network')){ pRAF = null; return; }
+    pCtx.clearRect(0, 0, pCanvas.width, pCanvas.height);
+    pCtx.fillStyle = pCtx.strokeStyle = '#ff7a1a';
+    for (const p of pParts){
+      p.x += p.vx; p.y += p.vy;
+      if (p.x < 0 || p.x > pCanvas.width)  p.vx *= -1;
+      if (p.y < 0 || p.y > pCanvas.height) p.vy *= -1;
+      pCtx.beginPath(); pCtx.arc(p.x, p.y, 1.7, 0, 6.3); pCtx.fill();
+    }
+    for (let i = 0; i < pParts.length; i++)
+      for (let j = i + 1; j < pParts.length; j++){
+        const a = pParts[i], b = pParts[j];
+        const d = Math.hypot(a.x - b.x, a.y - b.y);
+        if (d < 124){
+          pCtx.globalAlpha = (1 - d / 124) * 0.5;
+          pCtx.beginPath(); pCtx.moveTo(a.x, a.y); pCtx.lineTo(b.x, b.y); pCtx.stroke();
+        }
+      }
+    pCtx.globalAlpha = 1;
+    pRAF = requestAnimationFrame(pFrame);
+  }
+  function pStart(){
+    if (!pCtx) pCtx = pCanvas.getContext('2d');
+    pSize(); pBuild();
+    if (!pRAF) pRAF = requestAnimationFrame(pFrame);
+  }
+
+  /* ── WebGL plasma background ── */
+  const glCanvas = document.querySelector('.lab-webgl');
+  let gl, glProg, glU = {}, glRAF = null, glT0 = 0, glBroken = false;
+  function glInit(){
+    gl = glCanvas.getContext('webgl') || glCanvas.getContext('experimental-webgl');
+    if (!gl){ glBroken = true; return false; }
+    const vs = 'attribute vec2 p;void main(){gl_Position=vec4(p,0.0,1.0);}';
+    const fs = 'precision mediump float;uniform vec2 r;uniform float t;uniform float c;' +
+      'void main(){vec2 uv=(gl_FragCoord.xy/r-0.5);uv.x*=r.x/r.y;float v=0.0;' +
+      'for(int i=1;i<=5;i++){float fi=float(i);float on=step(fi,c+0.5);' +
+      'v+=(sin(uv.x*fi*3.0+t)+cos(uv.y*fi*3.0-t*0.7))*on;}v/=c;' +
+      'float m=0.5+0.5*sin(v*3.1416);' +
+      'gl_FragColor=vec4(mix(vec3(1.0,0.478,0.102),vec3(0.110,0.494,0.839),m),1.0);}';
+    const mk = (ty, src) => { const s = gl.createShader(ty); gl.shaderSource(s, src); gl.compileShader(s); return s; };
+    glProg = gl.createProgram();
+    gl.attachShader(glProg, mk(gl.VERTEX_SHADER, vs));
+    gl.attachShader(glProg, mk(gl.FRAGMENT_SHADER, fs));
+    gl.linkProgram(glProg);
+    if (!gl.getProgramParameter(glProg, gl.LINK_STATUS)){ glBroken = true; return false; }
+    gl.useProgram(glProg);
+    const buf = gl.createBuffer();
+    gl.bindBuffer(gl.ARRAY_BUFFER, buf);
+    gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1,-1, 1,-1, -1,1, 1,1]), gl.STATIC_DRAW);
+    const loc = gl.getAttribLocation(glProg, 'p');
+    gl.enableVertexAttribArray(loc);
+    gl.vertexAttribPointer(loc, 2, gl.FLOAT, false, 0, 0);
+    glU.r = gl.getUniformLocation(glProg, 'r');
+    glU.t = gl.getUniformLocation(glProg, 't');
+    glU.c = gl.getUniformLocation(glProg, 'c');
+    return true;
+  }
+  function glSize(){ glCanvas.width = innerWidth; glCanvas.height = innerHeight; if (gl) gl.viewport(0,0,glCanvas.width,glCanvas.height); }
+  function glFrame(ts){
+    if (!isOn('webgl-bg')){ glRAF = null; return; }
+    if (!glT0) glT0 = ts;
+    gl.uniform2f(glU.r, glCanvas.width, glCanvas.height);
+    gl.uniform1f(glU.t, (ts - glT0) / 1000);
+    gl.uniform1f(glU.c, lerp(1, 5, eff('webgl-bg')));
+    gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
+    glRAF = requestAnimationFrame(glFrame);
+  }
+  function glStart(){
+    if (glBroken) return;
+    if (!glProg && !glInit()){
+      const t = $tog('webgl-bg'); if (t){ t.checked = false; html.classList.remove('lab-webgl-bg'); }
+      return;
+    }
+    glSize();
+    if (!glRAF) glRAF = requestAnimationFrame(glFrame);
+  }
+
+  /* ── audio-reactive (microphone, opt-in) ── */
+  let audioCtx, analyser, audioBuf, audioRAF = null, audioStream = null;
+  async function audioStart(){
+    if (audioCtx) return;
+    try {
+      audioStream = await navigator.mediaDevices.getUserMedia({ audio: true });
+      audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+      analyser = audioCtx.createAnalyser(); analyser.fftSize = 256;
+      audioCtx.createMediaStreamSource(audioStream).connect(analyser);
+      audioBuf = new Uint8Array(analyser.frequencyBinCount);
+      audioRAF = requestAnimationFrame(audioFrame);
+    } catch (e){
+      const t = $tog('audio-reactive');
+      if (t){ t.checked = false; html.classList.remove('lab-audio-reactive'); }
+      audioCtx = null;
+    }
+  }
+  function audioFrame(){
+    if (!isOn('audio-reactive')){ audioRAF = null; return; }
+    analyser.getByteFrequencyData(audioBuf);
+    let sum = 0; for (let i = 0; i < audioBuf.length; i++) sum += audioBuf[i];
+    const avg = sum / audioBuf.length / 255;
+    html.style.setProperty('--lab-audio', Math.min(1, avg * eff('audio-reactive') * 2.4).toFixed(3));
+    audioRAF = requestAnimationFrame(audioFrame);
+  }
+  function audioStop(){
+    if (audioStream){ audioStream.getTracks().forEach(t => t.stop()); audioStream = null; }
+    if (audioCtx){ audioCtx.close(); audioCtx = null; }
+    html.style.setProperty('--lab-audio', '0');
+  }
+
+  /* ── typewriter / split-text ── */
+  const TW_SEL = '.system .canvas h3, .both .closing';
+  const SP_SEL = '.hero h1';
+  const twSaved = new Map(); let twTimers = [];
+  function twClear(){ twTimers.forEach(clearTimeout); twTimers = []; }
+  function twOn(){
+    twClear();
+    document.querySelectorAll(TW_SEL).forEach(el => {
+      if (!twSaved.has(el)) twSaved.set(el, el.innerHTML);
+      const full = twSaved.get(el), text = el.textContent;
+      el.textContent = '';
+      const caret = document.createElement('span'); caret.className = 'lab-caret';
+      el.appendChild(caret);
+      const delay = lerp(120, 14, eff('typewriter'));
+      let i = 0;
+      (function step(){
+        if (!isOn('typewriter')) return;
+        caret.insertAdjacentText('beforebegin', text[i] || '');
+        if (++i < text.length) twTimers.push(setTimeout(step, delay));
+        else twTimers.push(setTimeout(() => { el.innerHTML = full; }, 420));
+      })();
+    });
+  }
+  function twOff(){ twClear(); twSaved.forEach((h, el) => el.innerHTML = h); }
+  const spSaved = new Map();
+  function spOn(){
+    document.querySelectorAll(SP_SEL).forEach(el => {
+      if (!spSaved.has(el)) spSaved.set(el, el.innerHTML);
+      const text = spSaved.get(el).replace(/<[^>]+>/g, '');
+      el.textContent = '';
+      const stag = lerp(10, 90, eff('split-text'));
+      let i = 0, w = null;
+      /* group chars into per-word wrappers so the line still breaks on
+         word boundaries while each character animates individually */
+      [...text].forEach(ch => {
+        if (ch === ' ' || ch === '\n'){ el.appendChild(document.createTextNode(ch)); w = null; return; }
+        if (!w){
+          w = document.createElement('span');
+          w.style.cssText = 'display:inline-block;white-space:nowrap';
+          el.appendChild(w);
+        }
+        const sp = document.createElement('span');
+        sp.textContent = ch === ' ' ? ' ' : ch;
+        sp.style.cssText = 'display:inline-block;transition:opacity .5s ease,transform .5s ease;' +
+          'opacity:0;transform:translateY(0.5em) rotate(8deg)';
+        w.appendChild(sp);
+        setTimeout(() => { if (isOn('split-text')){ sp.style.opacity = 1; sp.style.transform = 'none'; } }, i++ * stag + 60);
+      });
+    });
+  }
+  function spOff(){ spSaved.forEach((h, el) => el.innerHTML = h); }
+
+  /* ── stagger children ── */
+  const STAG_SEL = '.hero .text > *, .thesis .out > *, .source .render-html li, ' +
+                   '.system .canvas > *, .both .frame, .both .hint';
+  function stagOn(){
+    const items = [...document.querySelectorAll(STAG_SEL)];
+    const d = lerp(20, 150, eff('stagger'));
+    items.forEach((el, i) => {
+      el.classList.add('lab-stag-item'); el.classList.remove('lab-stag-in');
+      setTimeout(() => { if (isOn('stagger')) el.classList.add('lab-stag-in'); }, i * d + 40);
+    });
+  }
+  function stagOff(){
+    document.querySelectorAll('.lab-stag-item').forEach(el =>
+      el.classList.remove('lab-stag-item', 'lab-stag-in'));
+  }
+
+  /* ── wobble on load ── */
+  function wobbleGo(){
+    html.classList.remove('lab-wobble-go');
+    void html.offsetWidth;
+    html.classList.add('lab-wobble-go');
+    setTimeout(() => html.classList.remove('lab-wobble-go'), 1000);
+  }
+
+  /* ── BEHAVIOR — JS lifecycle hooks. on()/off() fire on toggle,
+     set() fires on toggle + every intensity / master change ── */
+  const BEHAVIOR = {
+    'scroll-fade':  { set: buildReveal },
+    'scroll-slide': { set(e){
+        const dir = ($sel('scroll-slide-dir') || {}).value || 'up';
+        const d = e * 200;
+        const x = dir === 'left' ? d : dir === 'right' ? -d : 0;
+        const y = dir === 'up'   ? d : dir === 'down'  ? -d : 0;
+        html.style.setProperty('--lab-slide-x', x + 'px');
+        html.style.setProperty('--lab-slide-y', y + 'px');
+      } },
+    'scroll-progress': { on: updateProgress, off(){ progBar.style.width = '0%'; } },
+    'magnetic-button': { on(){ magnetEls = null; }, off: magnetClear },
+    'cursor-ring':      { on: startCursor, off: stopCursorMaybe },
+    'magnetic-cursor':  { on: startCursor, off: stopCursorMaybe },
+    'cursor-trail':     { on: startCursor, off: stopCursorMaybe },
+    'cursor-text':      { on: startCursor, off: stopCursorMaybe },
+    'typewriter':  { on: twOn, off: twOff, set(){ if (isOn('typewriter')) twOn(); } },
+    'split-text':  { on: spOn, off: spOff, set(){ if (isOn('split-text')) spOn(); } },
+    'stagger':     { on: stagOn, off: stagOff, set(){ if (isOn('stagger')) stagOn(); } },
+    'particle-network': { on: pStart, off(){ if (pRAF){ cancelAnimationFrame(pRAF); pRAF = null; } },
+                          set(){ if (isOn('particle-network')) pBuild(); } },
+    'webgl-bg':    { on: glStart, off(){ if (glRAF){ cancelAnimationFrame(glRAF); glRAF = null; } } },
+    'video-scrub': { on: updateScrub, off(){
+        const img = document.querySelector('.both .keys-strip img'); if (img) img.style.objectPosition = ''; } },
+    'scene-3d':    { off: sceneClear },
+    'audio-reactive': { on: audioStart, off: audioStop },
+    'wobble-load': { on: wobbleGo, set(){ if (isOn('wobble-load')) wobbleGo(); } }
+  };
+
+  /* ── apply / tune ── */
+  function updateReadout(id){
+    const out = lab.querySelector('[data-labval="' + id + '"]');
+    if (out) out.textContent = Math.round(eff(id) * 100);
+  }
+  function tuneFeature(id){
+    const e = eff(id);
+    if (MAP[id]){ const v = MAP[id](e); for (const k in v) html.style.setProperty(k, v[k]); }
+    const b = BEHAVIOR[id];
+    if (b && b.set && isOn(id)) b.set(e);
+    if (WRAP_IDS.includes(id)) wrapSync();
+    updateReadout(id);
+  }
+  function applyFeature(id){
+    const on = isOn(id);
+    html.classList.toggle('lab-' + id, on);
+    const s = $sld(id), se = $sel(id);
+    if (s)  s.disabled  = !on;
+    if (se) se.disabled = !on;
+    const b = BEHAVIOR[id];
+    if (b){ if (on && b.on) b.on(); if (!on && b.off) b.off(); }
+    syncBgShow();
+    tuneFeature(id);
+  }
+  const applyAll = () => { toggles.forEach(t => applyFeature(t.dataset.lab)); };
+
+  /* ── reduced-motion / coarse-pointer gating ── */
+  const SAFE = new Set(['scroll-pin','liquid-hover','hover-scale','hover-glow','border-run',
+    'text-distort','cursor-ring','magnetic-cursor','cursor-spotlight','cursor-text',
+    'variable-weight','text-gradient','grid-overlay','vignette','chromatic','asymmetry','morph-cards']);
+  const POINTER = ['magnetic-button','tilt-card','cursor-ring','magnetic-cursor',
+    'cursor-trail','cursor-spotlight','cursor-text','scene-3d'];
+  toggles.forEach(t => {
+    const id = t.dataset.lab;
+    if (reduce && !SAFE.has(id)) t.disabled = true;
+    if (!fine && POINTER.includes(id)) t.disabled = true;
+  });
+
+  /* ── wiring ── */
+  toggles.forEach(t => t.addEventListener('change', () => applyFeature(t.dataset.lab)));
+  lab.querySelectorAll('input[data-labp]').forEach(s =>
+    s.addEventListener('input', () => tuneFeature(s.dataset.labp)));
+  lab.querySelectorAll('select[data-lab-sel]').forEach(s =>
+    s.addEventListener('change', () => tuneFeature(s.dataset.labSel.replace(/-(dir|curve)$/, ''))));
+  masterEl.addEventListener('input', () => {
+    lab.querySelector('[data-lab-masterval]').textContent = masterEl.value + '%';
+    toggles.forEach(t => { if (t.checked) tuneFeature(t.dataset.lab); });
+  });
+
+  lab.querySelector('[data-lab-clear]').addEventListener('click', () => {
+    toggles.forEach(t => { if (!t.disabled) t.checked = false; });
+    applyAll();
+  });
+  lab.querySelector('[data-lab-randomize]').addEventListener('click', () => {
+    toggles.forEach(t => {
+      const id = t.dataset.lab;
+      t.checked = !t.disabled && id !== 'audio-reactive' && Math.random() < 0.32;
+      const s = $sld(id);
+      if (s) s.value = 20 + Math.round(Math.random() * 70);
+    });
+    lab.querySelectorAll('select[data-lab-sel]').forEach(se => {
+      se.selectedIndex = Math.floor(Math.random() * se.options.length);
+    });
+    applyAll();
+  });
+
+  /* ── shared listeners ── */
+  let scrollQ = false;
+  addEventListener('scroll', () => {
+    if (scrollQ) return;
+    scrollQ = true;
+    requestAnimationFrame(() => {
+      scrollQ = false;
+      if (isOn('scroll-progress')) updateProgress();
+      if (isOn('parallax-depth'))  wrapTick();
+      if (isOn('video-scrub'))     updateScrub();
+    });
+  }, { passive: true });
+
+  addEventListener('mousemove', e => {
+    mx = e.clientX; my = e.clientY;
+    if (isOn('cursor-spotlight')){
+      html.style.setProperty('--lab-sx', mx + 'px');
+      html.style.setProperty('--lab-sy', my + 'px');
+    }
+    if (isOn('magnetic-button')) magnetTick();
+    if (isOn('scene-3d'))        sceneTick();
+    if (isOn('tilt-card'))       wrapTick();
+  }, { passive: true });
+
+  addEventListener('mouseover', e => {
+    if (curOn && e.target.closest(HOT)){
+      ring.classList.add('lab-hot');
+      if (isOn('cursor-text')){
+        const el = e.target.closest(HOT);
+        curText.textContent = el.matches('input,textarea') ? 'type'
+          : el.matches('select') ? 'pick' : el.matches('a') ? 'open' : 'click';
+      }
+    }
+  }, { passive: true });
+  addEventListener('mouseout', e => {
+    if (e.target.closest(HOT)){ ring.classList.remove('lab-hot'); curText.textContent = 'explore'; }
+  }, { passive: true });
+
+  addEventListener('click', e => {
+    if (isOn('ripple-click') && !e.target.closest('.panel')){
+      const sec = e.target.closest('main section');
+      if (sec){
+        const r = sec.getBoundingClientRect();
+        const sp = document.createElement('span');
+        sp.className = 'lab-ripple';
+        const size = lerp(60, 460, eff('ripple-click'));
+        sp.style.width = sp.style.height = size + 'px';
+        sp.style.left = (e.clientX - r.left) + 'px';
+        sp.style.top  = (e.clientY - r.top) + 'px';
+        sp.style.animation = 'lab-ripple-go 0.6s ease-out forwards';
+        if (getComputedStyle(sec).position === 'static') sec.style.position = 'relative';
+        sec.style.overflow = 'hidden';
+        sec.appendChild(sp);
+        setTimeout(() => { sp.remove(); sec.style.overflow = ''; }, 640);
+      }
+    }
+    const a = e.target.closest('a[href^="#"]');
+    if (a && isOn('smooth-scroll') && a.getAttribute('href').length > 1){
+      const target = document.querySelector(a.getAttribute('href'));
+      if (target){
+        e.preventDefault();
+        const startY = scrollY, dist = target.getBoundingClientRect().top;
+        const dur = lerp(220, 1500, eff('smooth-scroll'));
+        const cv = ($sel('smooth-scroll-curve') || {}).value || 'ease';
+        const ease = cv === 'linear' ? (t => t)
+          : cv === 'power' ? (t => 1 - Math.pow(1 - t, 3))
+          : (t => t < 0.5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2);
+        const prev = html.style.scrollBehavior; html.style.scrollBehavior = 'auto';
+        let t0 = null;
+        (function step(ts){
+          if (t0 === null) t0 = ts;
+          const p = Math.min(1, (ts - t0) / dur);
+          scrollTo(0, startY + dist * ease(p));
+          if (p < 1) requestAnimationFrame(step);
+          else html.style.scrollBehavior = prev;
+        })(performance.now());
+      }
+    }
+  });
+
+  addEventListener('resize', () => {
+    if (isOn('particle-network')){ pSize(); pBuild(); }
+    if (isOn('webgl-bg')) glSize();
+    wrapSync();
+  }, { passive: true });
+
+  /* ── initial paint: readouts reflect the 50/100% defaults ── */
+  toggles.forEach(t => updateReadout(t.dataset.lab));
 })();
 </script>
 </body>
