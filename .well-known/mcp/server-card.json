@@ -1,0 +1,26 @@
+{
+  "$schema": "https://static.modelcontextprotocol.io/schemas/mcp-server-card/v1.json",
+  "version": "1.0",
+  "protocolVersion": "2025-06-18",
+  "serverInfo": {
+    "name": "sdfkjh-mcp",
+    "title": "sdfkjh",
+    "version": "1.0.0"
+  },
+  "description": "Read-only information about sdfkjh.com — a single-page craft showcase (the page is the portfolio) and the small family of hand-built sites published under it: what sdfkjh is, the live sites, and the homepage console commands.",
+  "iconUrl": "https://sdfkjh.com/favicon.svg",
+  "documentationUrl": "https://sdfkjh.com",
+  "transport": {
+    "type": "streamable-http",
+    "endpoint": "https://mcp.sdfkjh.com/mcp"
+  },
+  "capabilities": {
+    "tools": {
+      "listChanged": false
+    }
+  },
+  "authentication": {
+    "required": false
+  },
+  "tools": "dynamic"
+}

@@ -1,0 +1,12 @@
+{
+  "$schema": "https://schemas.agentskills.io/discovery/0.2.0/schema.json",
+  "skills": [
+    {
+      "name": "sdfkjh",
+      "type": "skill-md",
+      "description": "Answer questions about sdfkjh.com — a single-page craft showcase and the small family of hand-built sites published under it: what sdfkjh is, the live sites, and the homepage console commands.",
+      "url": "/.well-known/agent-skills/sdfkjh/SKILL.md",
+      "digest": "sha256:35a1c667854e1fc283fdeff41c47f5ceea13ef989d189c5176ee07ee8dc414a5"
+    }
+  ]
+}

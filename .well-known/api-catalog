@@ -1,0 +1,19 @@
+{
+  "linkset": [
+    {
+      "anchor": "https://sdfkjh.com/api/sites",
+      "service-desc": [
+        {
+          "href": "https://sdfkjh.com/.well-known/sites-openapi.json",
+          "type": "application/json"
+        }
+      ],
+      "service-doc": [
+        {
+          "href": "https://sdfkjh.com/",
+          "type": "text/html"
+        }
+      ]
+    }
+  ]
+}

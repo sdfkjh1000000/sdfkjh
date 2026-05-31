@@ -1,0 +1,59 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "sdfkjh.com Site Directory API",
+    "version": "1.0.0",
+    "description": "Read-only directory of the live, hand-built sites published under sdfkjh.com. No authentication; cached for 1 hour.",
+    "contact": {
+      "name": "sdfkjh",
+      "email": "info@sdfkjh.com",
+      "url": "https://sdfkjh.com"
+    }
+  },
+  "servers": [{ "url": "https://sdfkjh.com" }],
+  "paths": {
+    "/api/sites": {
+      "get": {
+        "summary": "List the live sites published under sdfkjh.com",
+        "operationId": "listSites",
+        "responses": {
+          "200": {
+            "description": "The site directory.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "required": ["name", "count", "sites"],
+                  "properties": {
+                    "name": { "type": "string" },
+                    "description": { "type": "string" },
+                    "contact": { "type": "string" },
+                    "count": { "type": "integer" },
+                    "sites": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "required": ["name", "url", "summary"],
+                        "properties": {
+                          "name": { "type": "string", "description": "Site name." },
+                          "url": { "type": "string", "format": "uri", "description": "Canonical homepage URL." },
+                          "summary": { "type": "string", "description": "One-paragraph description of the site." },
+                          "tags": {
+                            "type": "array",
+                            "items": { "type": "string" },
+                            "description": "Topic/category tags."
+                          },
+                          "stack": { "type": "string", "description": "How the site is built and hosted." }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
