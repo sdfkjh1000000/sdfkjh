@@ -200,7 +200,11 @@
   .hero .image img { width: 100%; height: 100%; object-fit: cover; }
   .hero .wm-lg {
     font-family: var(--mono); font-weight: 500; font-size: calc(clamp(30px, 4.4vw, 44px) * var(--type-scale, 1));
-    letter-spacing: 0.02em; color: var(--ink); display: inline-block; margin-bottom: 18px;
+    letter-spacing: 0.02em; color: var(--ink); display: inline-block; margin-bottom: 6px;
+  }
+  .hero .est {
+    font-family: var(--mono); font-size: calc(12px * var(--type-scale, 1)); font-weight: 500;
+    letter-spacing: 0.22em; text-transform: uppercase; color: var(--ink-soft); margin: 0 0 20px;
   }
   .hero .wm-lg .cursor {
     display: inline-block; width: 0.5em; height: 0.9em; background: var(--amber);
@@ -995,6 +999,7 @@
     <div class="wrap">
       <div class="text">
         <span class="wm-lg" aria-hidden="true"><span class="br">[</span>&nbsp;sdfkjh<span class="cursor"></span><span class="br">]</span></span>
+        <p class="est">Est. 2010</p>
         <hr class="rule" aria-hidden="true"/>
         <h1>Brand <em>and</em> web, built on the home keys.</h1>
         <p class="kicker">Below: the thing itself.</p>
