@@ -273,7 +273,7 @@
     border: 1px solid var(--border); border-radius: calc(3px * var(--radius-scale, 1)); background: var(--surface); min-height: 320px;
   }
   .source .render-html { padding: 36px 40px; display: grid; grid-template-columns: 1fr 1fr; gap: 40px; }
-  .source .render-html h4 { font-family: var(--serif); font-weight: 500; font-size: calc(24px * var(--type-scale, 1)); margin: 0 0 6px; }
+  .source .render-html h3 { font-family: var(--serif); font-weight: 500; font-size: calc(24px * var(--type-scale, 1)); margin: 0 0 6px; }
   .source .render-html .e { font-family: var(--mono); font-size: calc(11px * var(--type-scale, 1)); color: var(--amber-dim); letter-spacing: 0.1em; text-transform: uppercase; margin: 0 0 10px; }
   .source .render-html p { margin: 0 0 14px; font-size: calc(15px * var(--type-scale, 1)); }
   .source .render-html ul { margin: 0; padding: 0; list-style: none; font-size: calc(14px * var(--type-scale, 1)); color: var(--ink-soft); }
@@ -1048,11 +1048,11 @@ Brand and web are two hands on one keyboard.
       <div class="stage">
         <div class="render-html">
           <div>
-            <p class="e">Left hand &middot; sdf</p><h4>Brand.</h4>
+            <p class="e">Left hand &middot; sdf</p><h3>Brand.</h3>
             <ul><li>Wordmark: [ sdfkjh ] in mono, brackets in amber</li><li>Type: Newsreader, Source Serif 4, JetBrains Mono</li><li>Palette: paper, ink, amber</li></ul>
           </div>
           <div>
-            <p class="e">Right hand &middot; kjh</p><h4>Web.</h4>
+            <p class="e">Right hand &middot; kjh</p><h3>Web.</h3>
             <ul><li>Markup: one static index.html</li><li>Stack: vanilla JS, no framework</li><li>Hosting: Cloudflare Pages, edge-served</li></ul>
             <p class="strip">html · markdown · json · css · javascript — one page, all five</p>
           </div>
@@ -1642,7 +1642,7 @@ Brand and web are two hands on one keyboard.
   const views = {
     html(){
       const col = (d, n) => `<div>
-        <p class="e">${n}</p><h4>${d.title}.</h4>
+        <p class="e">${n}</p><h3>${d.title}.</h3>
         <ul>${d.items.map(i=>`<li>${i}</li>`).join('')}</ul>
         ${d.strip ? `<p class="strip">${d.strip}</p>` : ''}
       </div>`;
