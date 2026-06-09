@@ -12,3 +12,10 @@ variants/
 # Build pipeline (per site-scaffold)
 node_modules/
 dist/
+
+# Brand/build source (DEPLOY-02 - not part of the served site)
+brand/
+scripts/
+brand.config.mjs
+package.json
+package-lock.json
