@@ -32,7 +32,7 @@ No user data is collected or stored by this site. If you email us directly, that
 
 ## California privacy rights (CCPA/CPRA)
 
-We do not sell or share personal information as defined by California law. For a full statement of your rights under the CCPA and CPRA, see our [Do Not Sell or Share My Personal Information](/do-not-sell.html) page.
+We do not sell or share personal information as defined by California law. For a full statement of your rights under the CCPA and CPRA, see our [Do Not Sell or Share My Personal Information](/do-not-sell) page.
 
 ## Contact
 

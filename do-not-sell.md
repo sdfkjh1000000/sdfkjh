@@ -14,11 +14,11 @@ We have not sold or shared personal information in the preceding twelve months.
 
 ## What we collect
 
-This site does not collect personal information. There is no contact form, no user accounts, and no analytics. The only way to contact us is via a direct email link — no data is transmitted to us through this website. For full details, see our [Privacy Policy](/privacy.html).
+This site does not collect personal information. There is no contact form, no user accounts, and no analytics. The only way to contact us is via a direct email link — no data is transmitted to us through this website. For full details, see our [Privacy Policy](/privacy).
 
 ## Third-party services
 
-This site is hosted on Cloudflare. No external fonts, scripts, analytics, advertising, or tracking technologies are loaded on its own — fonts and images are served from this domain. The on-page command console can optionally call public third-party APIs (wttr.in, Hacker News, NVD) when you run specific commands, and only then; see the [privacy policy](/privacy.html) for details. Neither Cloudflare hosting nor those on-demand lookups constitute a "sale" or "sharing" of personal information under CCPA/CPRA.
+This site is hosted on Cloudflare. No external fonts, scripts, analytics, advertising, or tracking technologies are loaded on its own — fonts and images are served from this domain. The on-page command console can optionally call public third-party APIs (wttr.in, Hacker News, NVD) when you run specific commands, and only then; see the [privacy policy](/privacy) for details. Neither Cloudflare hosting nor those on-demand lookups constitute a "sale" or "sharing" of personal information under CCPA/CPRA.
 
 ## Your rights under CCPA/CPRA
 
