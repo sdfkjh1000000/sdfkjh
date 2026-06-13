@@ -1,0 +1,342 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>proportion lab — math-driven color &amp; type</title>
+<meta name="description" content="Internal test page: Fibonacci hue palettes, golden-ratio accent/support, and golden-ratio type scales, generated live."/>
+<meta name="robots" content="noindex, nofollow"/>
+<meta name="color-scheme" content="light dark"/>
+
+<link rel="icon" href="/favicon.svg" type="image/svg+xml"/>
+
+<style>
+  @font-face { font-family:'Newsreader'; font-style:normal; font-weight:500; font-display:swap; src:url('/assets/fonts/newsreader-500.woff2') format('woff2'); }
+  @font-face { font-family:'Newsreader'; font-style:italic; font-weight:500; font-display:swap; src:url('/assets/fonts/newsreader-500-italic.woff2') format('woff2'); }
+  @font-face { font-family:'Source Serif 4'; font-style:normal; font-weight:400; font-display:swap; src:url('/assets/fonts/source-serif-4-400.woff2') format('woff2'); }
+  @font-face { font-family:'Source Serif 4'; font-style:italic; font-weight:400; font-display:swap; src:url('/assets/fonts/source-serif-4-400-italic.woff2') format('woff2'); }
+  @font-face { font-family:'JetBrains Mono'; font-style:normal; font-weight:400 700; font-display:swap; src:url('/assets/fonts/jetbrains-mono.woff2') format('woff2'); }
+
+  :root {
+    --paper:#FDFBF7; --surface:#FFFFFF; --ink:#1C1917; --ink-soft:#57534E;
+    --border:#E7E5E4; --amber:#ff7a1a; --amber-dim:#b8551a;
+    --serif:"Newsreader",Georgia,serif; --body:"Source Serif 4",Georgia,serif; --mono:"JetBrains Mono","Consolas",monospace;
+  }
+  html.dark {
+    color-scheme:dark; --paper:#1C1917; --surface:#262220; --ink:#F5F1EA;
+    --ink-soft:#A8A29E; --border:#3A3631; --amber-dim:#ff9a4d;
+  }
+  *,*::before,*::after { box-sizing:border-box; }
+  html,body { margin:0; padding:0; background:var(--paper); color:var(--ink); font-family:var(--body); }
+  html { transition:background-color .3s ease; }
+  body { font-size:17px; line-height:1.7; }
+  a { color:var(--amber-dim); }
+
+  .wrap { max-width:1080px; margin:0 auto; padding:0 32px; }
+  .wm { font-family:var(--mono); font-weight:500; letter-spacing:.04em; }
+  .wm .br { color:var(--amber); }
+
+  header { display:flex; justify-content:space-between; align-items:center; padding:22px 32px; border-bottom:1px solid var(--border); }
+  header .wm { font-size:15px; color:var(--ink); text-decoration:none; }
+  header .wm .br { color:var(--amber-dim); }
+  header .right { display:flex; align-items:center; gap:16px; }
+  header .tag { font-family:var(--mono); font-size:11px; letter-spacing:.1em; text-transform:uppercase; color:var(--amber-dim); border:1px solid var(--border); border-radius:2px; padding:3px 9px; }
+  .theme-btn { font-family:var(--mono); font-size:12px; background:none; border:1px solid var(--border); color:var(--ink-soft); border-radius:2px; padding:5px 12px; cursor:pointer; }
+  .theme-btn:hover { border-color:var(--amber-dim); color:var(--ink); }
+
+  .intro { padding:48px 0 8px; }
+  .intro h1 { font-family:var(--serif); font-weight:500; font-size:clamp(32px,5vw,52px); line-height:1.06; letter-spacing:-.02em; margin:0 0 16px; }
+  .intro h1 em { font-style:italic; color:var(--amber-dim); }
+  .intro p { font-size:18px; color:var(--ink-soft); max-width:60ch; margin:0 0 8px; }
+  .intro .note { font-family:var(--mono); font-size:12px; color:var(--ink-soft); border-left:2px solid var(--amber); padding-left:10px; margin-top:22px; max-width:64ch; line-height:1.7; }
+
+  section { border-top:1px solid var(--border); padding:52px 0; }
+  .eyebrow { font-family:var(--mono); font-size:12px; font-weight:600; color:var(--amber-dim); letter-spacing:.12em; text-transform:uppercase; margin:0 0 6px; }
+  section h2 { font-family:var(--serif); font-weight:500; font-size:32px; line-height:1.1; margin:0 0 8px; }
+  section h2 em { font-style:italic; color:var(--amber-dim); }
+  .lede { font-size:17px; color:var(--ink-soft); max-width:62ch; margin:0 0 28px; }
+
+  .demo { display:grid; grid-template-columns:1fr 320px; gap:0; border:1px solid var(--border); border-radius:4px; overflow:hidden; background:var(--surface); }
+  .stage { padding:34px 36px; background:var(--paper); }
+  .panel { background:#1C1917; color:#FDFBF7; padding:26px 24px; font-family:var(--mono); font-size:12px; }
+  .panel h4 { font-size:11px; color:var(--amber); letter-spacing:.1em; margin:0 0 18px; text-transform:uppercase; }
+  .panel .field { margin-bottom:20px; }
+  .panel label { display:flex; justify-content:space-between; margin-bottom:7px; color:#cfcbc2; }
+  .panel label .val { color:var(--amber); }
+  .panel input[type=range] { width:100%; accent-color:var(--amber); }
+  .panel input[type=color] { width:100%; height:38px; background:#2a2724; border:1px solid #3a3631; border-radius:2px; padding:3px; cursor:pointer; }
+  .panel select { width:100%; background:#2a2724; color:#f0ebd9; border:1px solid #3a3631; border-radius:2px; padding:7px 8px; font-family:var(--mono); font-size:12px; }
+  .panel .readout { margin-top:20px; padding-top:14px; border-top:1px solid #3a3631; color:#8a857a; line-height:1.9; white-space:pre-wrap; }
+  .panel .readout .v { color:#cfcbc2; }
+
+  .swrow { display:grid; grid-template-columns:repeat(auto-fit,minmax(80px,1fr)); gap:14px; }
+  .sw { min-width:0; }
+  .sw .chip { height:96px; border-radius:3px; border:1px solid var(--border); }
+  .sw .meta { font-family:var(--mono); font-size:11px; color:var(--ink-soft); margin-top:8px; line-height:1.6; }
+  .sw .meta .hex { color:var(--ink); text-transform:uppercase; }
+  .sw .role { font-family:var(--mono); font-size:10px; letter-spacing:.08em; text-transform:uppercase; color:var(--amber-dim); margin-bottom:6px; }
+
+  .pair { display:grid; grid-template-columns:repeat(3,1fr); gap:18px; }
+  .pair .big { height:140px; border-radius:4px; border:1px solid var(--border); display:flex; align-items:flex-end; padding:12px; }
+  .pair .big span { font-family:var(--mono); font-size:11px; padding:3px 7px; border-radius:2px; background:rgba(255,255,255,.82); color:#1C1917; text-transform:uppercase; letter-spacing:.04em; }
+
+  .scale-row { display:flex; align-items:baseline; gap:16px; padding:10px 0; border-bottom:1px solid var(--border); }
+  .scale-row:last-child { border-bottom:0; }
+  .scale-row .label { font-family:var(--mono); font-size:11px; color:var(--amber-dim); letter-spacing:.06em; text-transform:uppercase; width:96px; flex:none; }
+  .scale-row .px { font-family:var(--mono); font-size:11px; color:var(--ink-soft); width:64px; flex:none; text-align:right; }
+  .scale-row .sample { font-family:var(--serif); font-weight:500; line-height:1.1; color:var(--ink); overflow:hidden; white-space:nowrap; text-overflow:ellipsis; }
+  .scale-row .sample.body { font-family:var(--body); font-weight:400; line-height:1.5; white-space:normal; }
+
+  .caveat { margin-top:24px; font-family:var(--mono); font-size:12px; color:var(--ink-soft); background:var(--surface); border:1px solid var(--border); border-left:2px solid var(--amber); border-radius:3px; padding:14px 16px; line-height:1.7; }
+  .caveat b { color:var(--amber-dim); font-weight:500; }
+
+  footer { padding:26px 32px; font-family:var(--mono); font-size:12px; color:var(--ink-soft); letter-spacing:.04em; border-top:1px solid var(--border); }
+
+  @media (max-width:760px) {
+    .demo { grid-template-columns:1fr; }
+    .panel { border-top:1px solid #3a3631; }
+    .pair { grid-template-columns:1fr; }
+  }
+</style>
+</head>
+<body>
+<header>
+  <a class="wm" href="/">sdf<span class="br">kjh</span></a>
+  <div class="right">
+    <span class="tag">internal · proportion lab</span>
+    <button class="theme-btn" id="theme" type="button">dark</button>
+  </div>
+</header>
+
+<main>
+  <div class="wrap intro">
+    <h1>Math-driven <em>color &amp; type</em></h1>
+    <p>Three formulas for generating palettes and scales from a single input. Every swatch and size below is computed live from the formula — change the input on the right and watch it regenerate.</p>
+    <p class="note">Test page. Not linked from the site, marked <code>noindex</code>. These formulas set a defensible floor, not a finished design — contrast and rhythm still get adjusted by eye afterward.</p>
+  </div>
+
+  <section>
+    <div class="wrap">
+      <p class="eyebrow">Formula 01</p>
+      <h2>Fibonacci <em>hue palette</em></h2>
+      <p class="lede">From one base color in HSB, step the hue by Fibonacci numbers (5, 8, 13, 21) times a spacing constant. Saturation is nudged per swatch so the set reads connected, not like a wheel sample.</p>
+      <div class="demo">
+        <div class="stage"><div class="swrow" id="fibSwatches"></div></div>
+        <div class="panel">
+          <h4>Input</h4>
+          <div class="field">
+            <label>Base hue <span class="val" id="fibHueVal">28°</span></label>
+            <input type="range" id="fibHue" min="0" max="359" value="28"/>
+          </div>
+          <div class="field">
+            <label>Base saturation <span class="val" id="fibSatVal">85%</span></label>
+            <input type="range" id="fibSat" min="20" max="100" value="85"/>
+          </div>
+          <div class="field">
+            <label>Base brightness <span class="val" id="fibBriVal">96%</span></label>
+            <input type="range" id="fibBri" min="40" max="100" value="96"/>
+          </div>
+          <div class="field">
+            <label>Spacing constant <span class="val" id="fibKVal">12</span></label>
+            <input type="range" id="fibK" min="6" max="20" value="12"/>
+          </div>
+          <div class="readout" id="fibReadout"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <p class="eyebrow">Formula 02</p>
+      <h2>Golden-ratio <em>accent &amp; support</em></h2>
+      <p class="lede">Rotate the primary hue by the golden angle (360 − 360 ÷ 1.618 = 137.5°) to find an accent, then drop the primary's saturation ~60% for a quiet support shade.</p>
+      <div class="demo">
+        <div class="stage">
+          <div class="pair" id="goldPair"></div>
+        </div>
+        <div class="panel">
+          <h4>Input</h4>
+          <div class="field">
+            <label>Primary color</label>
+            <input type="color" id="goldPrimary" value="#008cbb"/>
+          </div>
+          <div class="field">
+            <label>Support desaturation <span class="val" id="goldDesatVal">60%</span></label>
+            <input type="range" id="goldDesat" min="30" max="90" value="60"/>
+          </div>
+          <div class="readout" id="goldReadout"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <p class="eyebrow">Formula 03</p>
+      <h2>Golden-ratio <em>type scale</em></h2>
+      <p class="lede">Multiply up from body size by a fixed ratio for each step in the hierarchy. 1.618 is dramatic — good for hero and landing; switch to a calmer ratio to see why dense UI usually wants one.</p>
+      <div class="demo">
+        <div class="stage"><div id="scaleStage"></div></div>
+        <div class="panel">
+          <h4>Input</h4>
+          <div class="field">
+            <label>Body size <span class="val" id="scaleBodyVal">16px</span></label>
+            <input type="range" id="scaleBody" min="12" max="22" value="16"/>
+          </div>
+          <div class="field">
+            <label>Ratio</label>
+            <select id="scaleRatio">
+              <option value="1.618">1.618 — golden (dramatic)</option>
+              <option value="1.5">1.5 — perfect fifth</option>
+              <option value="1.333">1.333 — perfect fourth</option>
+              <option value="1.25">1.25 — major third</option>
+              <option value="1.2">1.2 — minor third (calm, dense UI)</option>
+            </select>
+          </div>
+          <div class="readout" id="scaleReadout"></div>
+        </div>
+      </div>
+      <div class="caveat">
+        <b>Where these break:</b> the golden-angle accent lands near a split-complement and can feel jarring at full chroma — the support desaturation is what keeps the pair usable. A 1.618 type scale grows fast (16→26→42→68): fine for a hero, often too aggressive for dense UI, where 1.2–1.333 reads calmer. And all three ignore contrast — every generated pair still needs a WCAG check.
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="wrap">
+  proportion lab · generated client-side · <a href="/">back to sdfkjh.com</a>
+</footer>
+
+<script>
+  const $ = function (id) { return document.getElementById(id); };
+
+  function hsbToRgb(h, s, b) {
+    h = ((h % 360) + 360) % 360; s /= 100; b /= 100;
+    const c = b * s, x = c * (1 - Math.abs((h / 60) % 2 - 1)), m = b - c;
+    let r = 0, g = 0, bl = 0;
+    if (h < 60) { r = c; g = x; } else if (h < 120) { r = x; g = c; }
+    else if (h < 180) { g = c; bl = x; } else if (h < 240) { g = x; bl = c; }
+    else if (h < 300) { r = x; bl = c; } else { r = c; bl = x; }
+    return [r, g, bl].map(function (v) { return Math.round((v + m) * 255); });
+  }
+  function toHex(rgb) {
+    return '#' + rgb.map(function (v) { return v.toString(16).padStart(2, '0'); }).join('');
+  }
+  function hsbToHex(h, s, b) { return toHex(hsbToRgb(h, s, b)); }
+
+  function rgbToHsb(r, g, b) {
+    r /= 255; g /= 255; b /= 255;
+    const mx = Math.max(r, g, b), mn = Math.min(r, g, b), d = mx - mn;
+    let h = 0;
+    if (d !== 0) {
+      if (mx === r) h = ((g - b) / d) % 6;
+      else if (mx === g) h = (b - r) / d + 2;
+      else h = (r - g) / d + 4;
+      h *= 60; if (h < 0) h += 360;
+    }
+    return [h, mx === 0 ? 0 : (d / mx) * 100, mx * 100];
+  }
+  function hexToRgb(hex) {
+    const n = parseInt(hex.slice(1), 16);
+    return [(n >> 16) & 255, (n >> 8) & 255, n & 255];
+  }
+  function luminance(rgb) {
+    const a = rgb.map(function (v) { v /= 255; return v <= 0.03928 ? v / 12.92 : Math.pow((v + 0.055) / 1.055, 2.4); });
+    return 0.2126 * a[0] + 0.7152 * a[1] + 0.0722 * a[2];
+  }
+  function contrast(hexA, hexB) {
+    const l1 = luminance(hexToRgb(hexA)), l2 = luminance(hexToRgb(hexB));
+    return ((Math.max(l1, l2) + 0.05) / (Math.min(l1, l2) + 0.05));
+  }
+
+  const FIB = [0, 5, 8, 13, 21];
+  function renderFib() {
+    const h = +$('fibHue').value, s = +$('fibSat').value, b = +$('fibBri').value, k = +$('fibK').value;
+    $('fibHueVal').textContent = h + '°'; $('fibSatVal').textContent = s + '%';
+    $('fibBriVal').textContent = b + '%'; $('fibKVal').textContent = k;
+    const wrap = $('fibSwatches'); wrap.innerHTML = '';
+    let steps = '';
+    FIB.forEach(function (fib, i) {
+      const delta = fib * k;
+      const hue = (h + delta) % 360;
+      const sat = i === 0 ? s : Math.max(20, s - i * 9);
+      const hex = hsbToHex(hue, sat, b);
+      const el = document.createElement('div');
+      el.className = 'sw';
+      el.innerHTML = '<div class="role">' + (i === 0 ? 'base' : '+' + delta + '°') + '</div>' +
+        '<div class="chip" style="background:' + hex + '"></div>' +
+        '<div class="meta"><span class="hex">' + hex + '</span><br>h ' + Math.round(hue) + '° · s ' + sat + '% · b ' + b + '%</div>';
+      wrap.appendChild(el);
+      if (i > 0) steps += '<span class="v">' + fib + '×' + k + '</span> = +' + delta + '°  →  h' + Math.round(hue) + '°\n';
+    });
+    $('fibReadout').innerHTML = 'fib 5·8·13·21 × ' + k + '\n' + steps;
+  }
+
+  function renderGold() {
+    const primary = $('goldPrimary').value;
+    const desat = +$('goldDesat').value;
+    $('goldDesatVal').textContent = desat + '%';
+    const [h, s, b] = rgbToHsb.apply(null, hexToRgb(primary));
+    const accentHue = (h + 137.5) % 360;
+    const accent = hsbToHex(accentHue, s, b);
+    const support = hsbToHex(h, s * (1 - desat / 100), b);
+    const data = [
+      { role: 'primary', hex: primary, note: 'h ' + Math.round(h) + '°' },
+      { role: 'accent · +137.5°', hex: accent, note: 'h ' + Math.round(accentHue) + '°' },
+      { role: 'support · −' + desat + '% sat', hex: support, note: 's ' + Math.round(s * (1 - desat / 100)) + '%' }
+    ];
+    const wrap = $('goldPair'); wrap.innerHTML = '';
+    data.forEach(function (d) {
+      const el = document.createElement('div');
+      el.innerHTML = '<div class="role">' + d.role + '</div>' +
+        '<div class="big" style="background:' + d.hex + '"><span>' + d.hex.toUpperCase() + '</span></div>' +
+        '<div class="meta" style="font-family:var(--mono);font-size:11px;color:var(--ink-soft);margin-top:8px">' + d.note + '</div>';
+      wrap.appendChild(el);
+    });
+    const cAccent = contrast(primary, accent).toFixed(2);
+    const cSupport = contrast(primary, support).toFixed(2);
+    $('goldReadout').innerHTML =
+      '360 ÷ 1.618 = 222.5\n360 − 222.5 = <span class="v">137.5°</span>\n\n' +
+      'primary→accent contrast <span class="v">' + cAccent + ':1</span>\n' +
+      'primary→support contrast <span class="v">' + cSupport + ':1</span>';
+  }
+
+  const STEPS = ['body', 'subheading', 'heading', 'display'];
+  function renderScale() {
+    const body = +$('scaleBody').value;
+    const ratio = +$('scaleRatio').value;
+    $('scaleBodyVal').textContent = body + 'px';
+    const stage = $('scaleStage'); stage.innerHTML = '';
+    let read = 'base ' + body + 'px × ' + ratio + '\n';
+    STEPS.forEach(function (name, i) {
+      const size = body * Math.pow(ratio, i);
+      const px = Math.round(size);
+      const row = document.createElement('div');
+      row.className = 'scale-row';
+      const sampleText = name === 'body'
+        ? 'Body copy holds the baseline the rest of the scale multiplies up from.'
+        : 'The quick brown fox';
+      row.innerHTML = '<div class="label">' + name + '</div>' +
+        '<div class="px">' + px + 'px</div>' +
+        '<div class="sample' + (name === 'body' ? ' body' : '') + '" style="font-size:' + Math.min(px, 68) + 'px">' + sampleText + '</div>';
+      stage.appendChild(row);
+      read += STEPS[i] + ' ' + (i === 0 ? '= ' : '×' + ratio + ' = ') + '<span class="v">' + px + 'px</span>\n';
+    });
+    $('scaleReadout').innerHTML = read;
+  }
+
+  const theme = $('theme');
+  theme.addEventListener('click', function () {
+    const dark = document.documentElement.classList.toggle('dark');
+    theme.textContent = dark ? 'light' : 'dark';
+  });
+
+  ['fibHue', 'fibSat', 'fibBri', 'fibK'].forEach(function (id) { $(id).addEventListener('input', renderFib); });
+  ['goldPrimary', 'goldDesat'].forEach(function (id) { $(id).addEventListener('input', renderGold); });
+  ['scaleBody', 'scaleRatio'].forEach(function (id) { $(id).addEventListener('input', renderScale); });
+
+  renderFib(); renderGold(); renderScale();
+</script>
+</body>
+</html>
