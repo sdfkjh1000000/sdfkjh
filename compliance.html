@@ -1,0 +1,247 @@
+<!doctype html>
+<!--
+                                        ███████╗██████╗ ███████╗██╗  ██╗     ██╗██╗  ██╗
+                                        ██╔════╝██╔══██╗██╔════╝██║ ██╔╝     ██║██║  ██║
+                                        ███████╗██║  ██║█████╗  █████╔╝      ██║███████║
+                                        ╚════██║██║  ██║██╔══╝  ██╔═██╗ ██   ██║██╔══██║
+                                        ███████║██████╔╝██║     ██║  ██╗╚█████╔╝██║  ██║
+                                        ╚══════╝╚═════╝ ╚═╝     ╚═╝  ╚═╝ ╚════╝ ╚═╝  ╚═╝
+
+                                                  Designed & built by sdfkjh.com
+-->
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>The Compliance Layer — sdfkjh</title>
+<meta name="description" content="Every page on this site carries a legal and accessibility layer you're not meant to notice. This page points at it."/>
+<meta name="color-scheme" content="light"/>
+<meta name="theme-color" content="#FDFBF7" media="(prefers-color-scheme: light)"/>
+<meta name="theme-color" content="#1C1917" media="(prefers-color-scheme: dark)"/>
+<meta name="robots" content="index, follow"/>
+<link rel="canonical" href="https://sdfkjh.com/compliance"/>
+
+<meta property="og:type" content="website"/>
+<meta property="og:site_name" content="sdfkjh"/>
+<meta property="og:title" content="The Compliance Layer — sdfkjh"/>
+<meta property="og:description" content="Every page on this site carries a legal and accessibility layer you're not meant to notice. This page points at it."/>
+<meta property="og:url" content="https://sdfkjh.com/compliance"/>
+<meta property="og:image" content="https://sdfkjh.com/og-image.png"/>
+<meta property="og:image:width" content="1200"/>
+<meta property="og:image:height" content="630"/>
+<meta property="og:image:alt" content="sdfkjh — brand and web, built on the home keys."/>
+<meta property="og:locale" content="en_US"/>
+
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:title" content="The Compliance Layer — sdfkjh"/>
+<meta name="twitter:description" content="Every page on this site carries a legal and accessibility layer you're not meant to notice. This page points at it."/>
+<meta name="twitter:image" content="https://sdfkjh.com/og-image.png"/>
+<meta name="twitter:image:alt" content="sdfkjh — brand and web, built on the home keys."/>
+
+<link rel="icon" href="/favicon.svg" type="image/svg+xml"/>
+<link rel="apple-touch-icon" href="/apple-touch-icon.png"/>
+
+<link rel="preload" as="font" type="font/woff2" href="/assets/fonts/newsreader-500.woff2" crossorigin>
+<link rel="preload" as="font" type="font/woff2" href="/assets/fonts/source-serif-4-400.woff2" crossorigin>
+<link rel="preload" as="font" type="font/woff2" href="/assets/fonts/jetbrains-mono.woff2" crossorigin>
+
+<script src="/consent.js" defer></script>
+
+<style>
+  /* ── self-hosted fonts ─────────────────────────────────────── */
+  @font-face {
+    font-family: 'Newsreader'; font-style: normal; font-weight: 500;
+    font-display: swap; src: url('/assets/fonts/newsreader-500.woff2') format('woff2');
+  }
+  @font-face {
+    font-family: 'Newsreader'; font-style: italic; font-weight: 500;
+    font-display: swap; src: url('/assets/fonts/newsreader-500-italic.woff2') format('woff2');
+  }
+  @font-face {
+    font-family: 'Source Serif 4'; font-style: normal; font-weight: 400;
+    font-display: swap; src: url('/assets/fonts/source-serif-4-400.woff2') format('woff2');
+  }
+  @font-face {
+    font-family: 'Source Serif 4'; font-style: italic; font-weight: 400;
+    font-display: swap; src: url('/assets/fonts/source-serif-4-400-italic.woff2') format('woff2');
+  }
+  @font-face {
+    font-family: 'JetBrains Mono'; font-style: normal; font-weight: 400 700;
+    font-display: swap; src: url('/assets/fonts/jetbrains-mono.woff2') format('woff2');
+  }
+
+  :root {
+    --paper:     #FDFBF7;
+    --surface:   #FFFFFF;
+    --ink:       #1C1917;
+    --ink-soft:  #57534E;
+    --border:    #E7E5E4;
+    --amber:     #ff7a1a;
+    --amber-dim: #b8551a;
+    --serif:     "Newsreader", Georgia, serif;
+    --body:      "Source Serif 4", Georgia, serif;
+    --mono:      "JetBrains Mono", "Consolas", monospace;
+  }
+  *, *::before, *::after { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; background: var(--paper); color: var(--ink); font-family: var(--body); }
+  body { font-size: 17px; line-height: 1.7; }
+
+  .skip-link {
+    position: absolute; top: -100px; left: 12px; background: var(--ink); color: var(--paper);
+    border: 1px solid var(--amber-dim); border-radius: 2px; padding: 0.5rem 0.9rem;
+    font-family: var(--mono); font-size: 0.8rem; text-decoration: none; z-index: 100; transition: top 0.15s;
+  }
+  .skip-link:focus { top: 12px; outline: none; }
+  a:focus-visible, [tabindex]:focus-visible { outline: 2px solid var(--amber-dim); outline-offset: 3px; border-radius: 1px; }
+
+  /* header */
+  header[role="banner"] {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 22px 32px; border-bottom: 1px solid var(--border);
+  }
+  header .wm { font-family: var(--mono); font-weight: 500; font-size: 15px; letter-spacing: 0.04em; color: var(--ink); text-decoration: none; }
+  header .wm .br { color: var(--amber-dim); }
+  header nav a { font-family: var(--body); font-size: 14px; color: var(--ink-soft); text-decoration: none; }
+  header nav a:hover { color: var(--amber-dim); }
+
+  /* document */
+  main { max-width: 680px; margin: 0 auto; padding: 64px 32px 72px; }
+  h1 {
+    font-family: var(--serif); font-weight: 500; font-size: clamp(32px, 5vw, 44px);
+    line-height: 1.1; letter-spacing: -0.02em; margin: 0 0 10px;
+  }
+  .lede {
+    font-family: var(--body); font-style: italic; font-size: clamp(17px, 2vw, 19px);
+    color: var(--ink-soft); margin: 0 0 40px;
+  }
+  h2 {
+    font-family: var(--serif); font-weight: 500; font-size: 22px; line-height: 1.25;
+    margin: 38px 0 10px; color: var(--ink);
+  }
+  p { margin: 0 0 16px; }
+  ul { margin: 0 0 16px; padding-left: 20px; }
+  li { margin: 0 0 6px; }
+  li::marker { color: var(--amber-dim); }
+  a { color: var(--amber-dim); text-decoration: none; border-bottom: 1px solid rgba(184,85,26,0.35); }
+  a:hover { border-bottom-color: var(--amber-dim); }
+  code {
+    font-family: var(--mono); font-size: 0.85em; background: var(--surface);
+    border: 1px solid var(--border); border-radius: 2px; padding: 0.1em 0.35em;
+  }
+  .updated {
+    font-family: var(--mono); font-size: 12px; color: var(--ink-soft); letter-spacing: 0.03em;
+    margin: 44px 0 0; padding-top: 20px; border-top: 1px solid var(--border);
+  }
+
+  /* footer */
+  footer[role="contentinfo"] {
+    padding: 26px 32px; font-family: var(--mono); font-size: 12px; color: var(--ink-soft);
+    letter-spacing: 0.04em; border-top: 1px solid var(--border);
+    display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap;
+  }
+  footer a { color: var(--ink-soft); text-decoration: none; border: 0; }
+  footer a:hover { color: var(--amber-dim); }
+  footer .dot { color: var(--amber-dim); }
+
+  /* consent banner */
+  .consent-banner {
+    position: fixed; bottom: 0; left: 0; right: 0; z-index: 1000;
+    background: #1C1917; color: #FDFBF7;
+    border-top: 2px solid var(--amber); padding: 16px 24px;
+    animation: consent-in 0.25s ease;
+  }
+  @keyframes consent-in { from { transform: translateY(100%); } to { transform: translateY(0); } }
+  .consent-inner { max-width: 1080px; margin: 0 auto; display: flex; align-items: center; gap: 24px; }
+  .consent-text {
+    font-family: var(--mono); font-size: 12px; line-height: 1.7;
+    color: #cfcbc2; flex: 1; margin: 0; letter-spacing: 0.02em;
+  }
+  .consent-text a { color: var(--amber); text-decoration: underline; }
+  .consent-text a:hover { text-decoration: underline; }
+  .consent-actions { display: flex; gap: 8px; flex-shrink: 0; }
+  .consent-btn {
+    font-family: var(--mono); font-size: 12px; font-weight: 500;
+    border: 1px solid #3a3631; border-radius: 2px; padding: 7px 16px;
+    cursor: pointer; letter-spacing: 0.03em; transition: all 0.12s;
+  }
+  .consent-decline { background: none; color: #cfcbc2; }
+  .consent-decline:hover { border-color: #8a857a; color: var(--paper); }
+  .consent-accept { background: var(--amber); color: var(--ink); border-color: var(--amber); }
+  .consent-accept:hover { background: #ff8c33; }
+
+  @media (max-width: 560px) {
+    header[role="banner"] { padding: 18px 20px; }
+    main { padding: 44px 20px 52px; }
+    footer[role="contentinfo"] { padding: 22px 20px; flex-direction: column; align-items: flex-start; }
+    .consent-inner { flex-direction: column; align-items: stretch; gap: 14px; text-align: center; }
+    .consent-actions { justify-content: center; }
+  }
+
+  @media print {
+    .skip-link, header nav, .consent-banner { display: none !important; }
+    html, body { background: #fff !important; }
+    a { color: #1a1a1a !important; border: 0; }
+  }
+</style>
+
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    "name": "The Compliance Layer — sdfkjh",
+    "description": "Every page on this site carries a legal and accessibility layer you're not meant to notice. This page points at it.",
+    "url": "https://sdfkjh.com/compliance",
+    "isPartOf": {
+      "@id": "https://sdfkjh.com/#website"
+    }
+  }
+  </script>
+
+</head>
+<body>
+
+<a href="#main" class="skip-link">Skip to content</a>
+
+<header role="banner">
+  <a href="/" class="wm" aria-label="sdfkjh — home"><span class="br">[</span>&nbsp;sdfkjh&nbsp;<span class="br">]</span></a>
+  <nav aria-label="primary"><a href="mailto:info@sdfkjh.com">contact</a></nav>
+</header>
+
+<main id="main">
+  <h1>The compliance layer</h1>
+  <p class="lede">Every page on this site carries a legal and accessibility layer you're not meant to notice. This page points at it.</p>
+
+  <h2>What this site carries</h2>
+  <ul>
+    <li>A <a href="/privacy">privacy policy</a> that describes this site as it actually is (no analytics, no tracking cookies, fonts and images served from this domain) rather than a template's guess.</li>
+    <li>A <a href="/do-not-sell">Do Not Sell or Share</a> page stating California privacy rights plainly.</li>
+    <li><a href="/terms">Terms of use</a> sized to what the site actually does.</li>
+    <li>A privacy notice that guards only what exists. There is nothing here that tracks you, so there is no wall of toggles pretending otherwise.</li>
+    <li>Accessibility tested against WCAG&nbsp;2.2 AA on every page: zero violations, last checked June&nbsp;2026. Keyboard navigation, visible focus, a skip link, honest alt text.</li>
+    <li>Security headers on every response: a content security policy, strict transport security, frame denial.</li>
+  </ul>
+
+  <h2>Why a personal site bothers</h2>
+  <p>It mostly doesn't have to. This site collects nothing, so the law asks very little of it.</p>
+  <p>Business sites are a different story. California's Online Privacy Protection Act requires any website that collects personal information from California residents to post a privacy policy. A contact form or an online ordering page is enough to qualify, and there is no small-business exemption. Separately, a business with a physical location can face accessibility claims tied to its website, and California's Unruh Civil Rights Act sets statutory damages starting at $4,000 per violation. Demand letters built on exactly that arrive at small businesses every week.</p>
+  <p>The layer is cheap to build when it's built honestly, and expensive to ignore. So this site carries it anyway: partly as good manners, mostly as a working example.</p>
+
+  <h2>How it's kept true</h2>
+  <ul>
+    <li>The policies were written to the site, not pasted onto it. When the site changes, the policies change.</li>
+    <li>The privacy policy's claims are enforced by build discipline. "Fonts are served from this domain" stays true because the fonts live in <code>/assets/fonts/</code>, not on someone's CDN.</li>
+    <li>Accessibility is tested against the WCAG&nbsp;2.2 AA standard on every page, then re-checked when anything ships.</li>
+  </ul>
+
+  <p>If you're curious whether a site has this layer, scroll to its footer. Either the links are there, or they aren't.</p>
+
+  <p class="updated">Last updated: June 2026</p>
+</main>
+
+<footer role="contentinfo">
+  <span>&copy; 2010&ndash;2030 sdfkjh.com</span>
+  <span><a href="/privacy">privacy</a> <span class="dot">&middot;</span> <a href="/do-not-sell">do not sell</a> <span class="dot">&middot;</span> <a href="/terms">terms</a></span>
+</footer>
+
+</body>
+</html>
