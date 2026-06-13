@@ -156,6 +156,10 @@
     .consent-actions { justify-content: center; }
   }
 
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation-duration: 0.001ms !important; }
+  }
+
   @media print {
     .skip-link, header nav, .consent-banner { display: none !important; }
     html, body { background: #fff !important; }
