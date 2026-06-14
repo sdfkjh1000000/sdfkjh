@@ -2918,6 +2918,17 @@ html[data-profile="maximal"] footer .foot-row {
   html[data-footer="minimal"] footer .foot-mark { position:static !important; inset:auto !important; transform:none !important; -webkit-text-fill-color:currentColor !important; background:none !important; font-size:22px !important; letter-spacing:.24em !important; line-height:1 !important; text-align:left !important; color:var(--fg-soft) !important; margin:0 0 10px !important; }
   html[data-footer="minimal"] footer .foot-row { position:static !important; padding:0 !important; color:var(--fg-soft) !important; }
 
+
+  #dzTexture { position:fixed; inset:0; z-index:5; pointer-events:none; opacity:0; }
+  html[data-texture="dots"] #dzTexture { opacity:.05; background-image:radial-gradient(var(--fg) 1.1px, transparent 1.1px); background-size:20px 20px; }
+  html[data-texture="grid"] #dzTexture { opacity:.07; background-image:linear-gradient(var(--fg) 1px,transparent 1px),linear-gradient(90deg,var(--fg) 1px,transparent 1px); background-size:34px 34px; }
+  html[data-scale="calm"] .headline { font-size:clamp(32px,4.4vw,52px) !important; }
+  html[data-scale="calm"] .h2 { font-size:clamp(22px,2.8vw,32px) !important; }
+  html[data-scale="dramatic"] .headline { font-size:clamp(50px,8.8vw,112px) !important; }
+  html[data-scale="dramatic"] .h2 { font-size:clamp(32px,5vw,54px) !important; }
+  html[data-space="compact"] { --section-pad:44px !important; --pad:22px !important; }
+  html[data-space="airy"] { --section-pad:130px !important; --pad:56px !important; }
+
 </style>
 </head>
 <body>
@@ -3106,6 +3117,7 @@ html[data-profile="maximal"] footer .foot-row {
     drawWordmark(initial);
   })();
 </script>
+<div id="dzTexture" aria-hidden="true"></div>
 <div class="dz-toggle" id="dzToggle" role="button" tabindex="0" aria-expanded="false" aria-controls="dzPanel" title="Open design console"><span class="dz-toggle-dot"></span>Tune</div>
 <aside class="dz-panel" id="dzPanel" role="dialog" aria-label="Design console" hidden>
   <div class="dz-head"><span>Design console</span><button class="dz-x" id="dzClose" aria-label="Close console">&times;</button></div>
@@ -3124,6 +3136,12 @@ html[data-profile="maximal"] footer .foot-row {
   <p class="dz-note">Hero &amp; footer structure &mdash; applies across every profile.</p>
   <div class="dz-lay"><span class="dz-lay-l">Hero</span><div class="dz-packs" id="dzHero"></div></div>
   <div class="dz-lay" style="margin-top:8px"><span class="dz-lay-l">Footer</span><div class="dz-packs" id="dzFoot"></div></div>
+  <div class="dz-sec-h" style="margin-top:18px">Proportion</div>
+  <p class="dz-note">Golden-ratio type scale &amp; spacing rhythm.</p>
+  <div class="dz-lay"><span class="dz-lay-l">Scale</span><div class="dz-packs" id="dzScale"></div></div>
+  <div class="dz-lay" style="margin-top:8px"><span class="dz-lay-l">Space</span><div class="dz-packs" id="dzSpace"></div></div>
+  <div class="dz-sec-h" style="margin-top:18px">Texture</div>
+  <div class="dz-lay"><span class="dz-lay-l">Surface</span><div class="dz-packs" id="dzTex"></div></div>
 </aside>
 <script>
 (function(){
@@ -3210,6 +3228,15 @@ html[data-profile="maximal"] footer .foot-row {
   function mk(el, opts, attr){ if(!el) return; el.innerHTML=opts.map(function(o,i){ return '<button class="dz-pack'+(i===0?' on':'')+'" type="button" data-v="'+o[0]+'">'+o[1]+'</button>'; }).join(''); el.addEventListener('click', function(e){ var b=e.target.closest('.dz-pack'); if(!b) return; if(b.getAttribute('data-v')) root.setAttribute(attr,b.getAttribute('data-v')); else root.removeAttribute(attr); for(var i=0;i<el.children.length;i++){ el.children[i].classList.toggle('on', el.children[i]===b); } }); }
   mk(document.getElementById('dzHero'), [['','Standard'],['centered','Centered'],['split','Split']], 'data-hero');
   mk(document.getElementById('dzFoot'), [['','Default'],['minimal','Minimal']], 'data-footer');
+})();
+</script>
+<script>
+(function(){
+  var root=document.documentElement;
+  function mk(el,opts,attr){ if(!el) return; el.innerHTML=opts.map(function(o,i){ return '<button class="dz-pack'+(i===0?' on':'')+'" type="button" data-v="'+o[0]+'">'+o[1]+'</button>'; }).join(''); el.addEventListener('click', function(e){ var b=e.target.closest('.dz-pack'); if(!b) return; if(b.getAttribute('data-v')) root.setAttribute(attr,b.getAttribute('data-v')); else root.removeAttribute(attr); for(var i=0;i<el.children.length;i++){ el.children[i].classList.toggle('on', el.children[i]===b); } }); }
+  mk(document.getElementById('dzScale'), [['','Standard'],['calm','Calm'],['dramatic','Dramatic']], 'data-scale');
+  mk(document.getElementById('dzSpace'), [['','Standard'],['compact','Compact'],['airy','Airy']], 'data-space');
+  mk(document.getElementById('dzTex'), [['','None'],['dots','Dots'],['grid','Grid']], 'data-texture');
 })();
 </script>
 </body>
