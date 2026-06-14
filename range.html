@@ -1135,21 +1135,43 @@ html[data-profile="grove"] footer { background:var(--bg); color:var(--fg-soft); 
   html[data-profile="grove"] .sw:hover { transform:translateY(-3px) scale(1.01); }
 }
 
-  /* GIANT FOOTER WORDMARK — full word, single contrasting colour on a solid slab (the glitch/prestige model, standardized). */
-  footer { position:relative; padding:0; border-top:0; min-height:clamp(240px,38vw,400px); background:var(--fslab); overflow:hidden; }
-  html[data-profile] footer { background:var(--fslab); padding:0; border-top:0; min-height:clamp(240px,38vw,400px); }
-  footer .foot-mark { position:absolute; left:0; right:0; bottom:48px; margin:0; text-align:center; white-space:nowrap; line-height:.82; pointer-events:none; user-select:none; font-family:var(--font-head); font-weight:var(--head-weight,800); text-transform:uppercase; letter-spacing:-.02em; font-size:clamp(56px,21vw,300px); color:var(--foot-ink); }
-  footer .foot-row { position:absolute; left:0; right:0; bottom:0; z-index:1; display:flex; justify-content:space-between; gap:14px 28px; flex-wrap:wrap; padding:14px var(--pad); font-family:var(--font-label); font-size:12px; letter-spacing:.04em; color:var(--foot-row); }
-  html[data-profile="editorial"] footer { --fslab:#241B14; --foot-ink:#F3E9DC; --foot-row:#C8B8A6; }
-  html[data-profile="swiss"]     footer { --fslab:#0A0A0A; --foot-ink:#FFFFFF; --foot-row:#CFCFCF; }
+  /* GIANT FOOTER WORDMARK — full word, crests the slab edge (pops above) */
+  footer { position:relative; padding:0; --water:138px; --wm-dip:24px; min-height:340px; background:linear-gradient(to bottom, var(--bg) var(--water), var(--fslab) var(--water)); }
+  html[data-profile] footer { background:linear-gradient(to bottom, var(--bg) var(--water), var(--fslab) var(--water)); padding:0; border-top:0; min-height:340px; }
+  footer .foot-mark { position:absolute; left:0; right:0; top:var(--water); transform:translateY(var(--wm-stand,-50%)); margin:0; text-align:center; white-space:nowrap; line-height:.9; pointer-events:none; user-select:none; font-family:var(--font-head); font-weight:var(--head-weight,800); text-transform:uppercase; letter-spacing:-.02em; font-size:clamp(56px,20vw,280px); color:var(--foot-ink); }
+  footer .foot-row { position:relative; z-index:1; display:flex; justify-content:space-between; gap:14px 28px; flex-wrap:wrap; padding:calc(var(--water) + 150px) var(--pad) 28px; font-family:var(--font-label); font-size:12px; letter-spacing:.04em; color:var(--foot-row); }
+  html[data-profile="editorial"] footer { --fslab:#241B14; --foot-ink:#241B14; --foot-row:#FDFBF7; }
+  html[data-profile="swiss"]     footer { --fslab:#0A0A0A; --foot-ink:#0A0A0A; --foot-row:#CFCFCF; --wm-dip:0px; }
   html[data-profile="glitch"]    footer { --fslab:#17171D; --foot-ink:#00FFCC; --foot-row:#B6F5EA; }
   html[data-profile="glitch"] footer .foot-mark { text-shadow:0 0 22px rgba(0,255,204,.6), 0 0 7px rgba(0,255,204,.5); }
-  html[data-profile="brutal"]    footer { --fslab:#0A0A0A; --foot-ink:#FF3366; --foot-row:#FFFBE6; }
+  html[data-profile="brutal"]    footer { --fslab:#000000; --foot-ink:#000000; --foot-row:#FFFBE6; }
   html[data-profile="prestige"]  footer { --fslab:#1C1C21; --foot-ink:#E8E6E1; --foot-row:#A7A7AC; }
-  html[data-profile="clean"]     footer { --fslab:#1D63D8; --foot-ink:#FFFFFF; --foot-row:#FFFFFF; }
-  html[data-profile="counsel"]   footer { --fslab:#0E2C4B; --foot-ink:#F4F6F8; --foot-row:#AEBFD0; }
-  html[data-profile="grove"]     footer { --fslab:#46583D; --foot-ink:#FBFAF5; --foot-row:#CDD6C2; }
-  html[data-profile="zen"]       footer { --fslab:#3E4A57; --foot-ink:#F1F2F2; --foot-row:#BFC6CC; }
+  html[data-profile="clean"]     footer { --fslab:#1D63D8; --foot-ink:#1D63D8; --foot-row:#FFFFFF; }
+  html[data-profile="counsel"]   footer { --fslab:#0E2C4B; --foot-ink:#0E2C4B; --foot-row:#F4F6F8; }
+  html[data-profile="grove"]     footer { --fslab:#5A6E4F; --foot-ink:#5A6E4F; --foot-row:#FBFAF5; }
+  html[data-profile="zen"]       footer { --fslab:#3E4A57; --foot-ink:#3E4A57; --foot-row:#F1F2F2; }
+  /* Wordmark stands ON the slab, feet dipping --wm-dip below the waterline (per-font baseline offset). */
+  /* Dark profiles (glitch/prestige) get a raised charcoal slab so the footer reads as distinct from the page band. */
+  html[data-profile="editorial"] footer .foot-mark,
+  html[data-profile="counsel"]   footer .foot-mark,
+  html[data-profile="grove"]     footer .foot-mark,
+  html[data-profile="prestige"]  footer .foot-mark,
+  html[data-profile="zen"]       footer .foot-mark { --wm-stand:calc(var(--wm-dip) - 0.686em); }
+  html[data-profile="swiss"]     footer .foot-mark,
+  html[data-profile="glitch"]    footer .foot-mark,
+  html[data-profile="brutal"]    footer .foot-mark { --wm-stand:calc(var(--wm-dip) - 0.843em); }
+  html[data-profile="clean"]     footer .foot-mark { --wm-stand:calc(var(--wm-dip) - 0.864em); }
+  /* Light-page profiles: two-tone wordmark fill flips at the waterline (= -wm-stand within the text box),
+     so the FULL word reads — slab colour where it crests onto the page, page colour where it sits on the slab. */
+  html[data-profile="editorial"] footer .foot-mark,
+  html[data-profile="clean"]     footer .foot-mark,
+  html[data-profile="counsel"]   footer .foot-mark,
+  html[data-profile="grove"]     footer .foot-mark,
+  html[data-profile="zen"]        footer .foot-mark {
+    --wm-cut:calc(-1 * var(--wm-stand));
+    background:linear-gradient(to bottom, var(--fslab) var(--wm-cut), var(--bg) var(--wm-cut));
+    -webkit-background-clip:text; background-clip:text; color:transparent;
+  }
 
 
 </style>
