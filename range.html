@@ -383,7 +383,7 @@ html[data-profile="glitch"] .sw {
 }
 html[data-profile="glitch"] .sw span {
   font-family:var(--font-label); letter-spacing:.12em;
-  background:#0A0A0A; color:var(--accent);
+  background:#0A0A0A !important; color:var(--accent);
   border:1px solid var(--accent); border-radius:0;
 }
 html[data-profile="glitch"] .specimen .big {
@@ -2865,6 +2865,29 @@ html[data-profile="maximal"] footer .foot-row {
   html[data-profile="maximal"] .specimen .label:hover { transform:rotate(0deg) translate(-1px,-1px); box-shadow:6px 6px 0 var(--fg); }
 }
 
+  /* ── design console (tool overlay — its own fixed look, NOT part of any skin) ── */
+  .dz-toggle { position:fixed; right:20px; bottom:20px; z-index:10000; display:inline-flex; align-items:center; gap:8px; font-family:'JetBrains Mono',ui-monospace,monospace; font-size:12px; letter-spacing:.06em; text-transform:uppercase; color:#E9ECF1; background:rgba(18,20,26,.85); border:1px solid rgba(255,255,255,.14); border-radius:999px; padding:10px 16px; cursor:pointer; -webkit-backdrop-filter:blur(10px); backdrop-filter:blur(10px); box-shadow:0 8px 30px -10px rgba(0,0,0,.6); transition:transform .25s cubic-bezier(.2,.8,.2,1), border-color .25s; }
+  .dz-toggle:hover { transform:translateY(-2px); border-color:rgba(255,255,255,.32); }
+  .dz-toggle-dot { width:9px; height:9px; border-radius:50%; background:conic-gradient(from 0deg,#ff5470,#ffd166,#06d6a0,#118ab2,#9b5de5,#ff5470); box-shadow:0 0 8px rgba(255,255,255,.45); }
+  .dz-panel { position:fixed; right:20px; bottom:74px; z-index:10000; width:300px; max-width:calc(100vw - 40px); background:rgba(16,18,24,.94); border:1px solid rgba(255,255,255,.13); border-radius:16px; padding:16px 16px 18px; color:#E9ECF1; font-family:'Inter',system-ui,sans-serif; -webkit-backdrop-filter:blur(16px); backdrop-filter:blur(16px); box-shadow:0 24px 60px -20px rgba(0,0,0,.7); }
+  .dz-panel[hidden] { display:none; }
+  @media (prefers-reduced-motion: no-preference) { .dz-panel { animation:dz-in .26s cubic-bezier(.2,.9,.2,1); } @keyframes dz-in { from { opacity:0; transform:translateY(8px) scale(.985); } } }
+  .dz-head { display:flex; justify-content:space-between; align-items:center; font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:.14em; text-transform:uppercase; color:#9AA3B2; margin-bottom:13px; }
+  .dz-x { background:none; border:0; color:#9AA3B2; font-size:20px; line-height:1; cursor:pointer; padding:0 2px; }
+  .dz-x:hover { color:#fff; }
+  .dz-sec-h { font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:.1em; text-transform:uppercase; color:#cfd5df; margin-bottom:6px; }
+  .dz-note { font-size:12px; line-height:1.5; color:#8b94a3; margin:0 0 12px; }
+  .dz-hue { -webkit-appearance:none; appearance:none; width:100%; height:12px; border-radius:999px; outline:none; cursor:pointer; background:linear-gradient(90deg,hsl(0 80% 55%),hsl(60 80% 55%),hsl(120 80% 55%),hsl(180 80% 55%),hsl(240 80% 55%),hsl(300 80% 55%),hsl(360 80% 55%)); }
+  .dz-hue::-webkit-slider-thumb { -webkit-appearance:none; width:22px; height:22px; border-radius:50%; background:#fff; border:3px solid #14161a; box-shadow:0 2px 8px rgba(0,0,0,.5); cursor:grab; }
+  .dz-hue::-moz-range-thumb { width:22px; height:22px; border-radius:50%; background:#fff; border:3px solid #14161a; cursor:grab; }
+  .dz-sw { display:grid; grid-template-columns:repeat(5,1fr); gap:6px; margin:14px 0; }
+  .dz-sw i { display:block; height:34px; border-radius:7px; border:1px solid rgba(255,255,255,.12); }
+  .dz-row { display:flex; gap:8px; }
+  .dz-btn { flex:1; font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:.08em; text-transform:uppercase; color:#14161a; background:#E9ECF1; border:0; border-radius:8px; padding:9px; cursor:pointer; transition:transform .15s; }
+  .dz-btn:hover { transform:translateY(-1px); }
+  .dz-btn.dz-ghost { background:transparent; color:#cfd5df; border:1px solid rgba(255,255,255,.18); }
+  .dz-toggle:focus-visible, .dz-x:focus-visible, .dz-btn:focus-visible, .dz-hue:focus-visible { outline:2px solid #7cc4ff; outline-offset:2px; }
+
 </style>
 </head>
 <body>
@@ -3053,5 +3076,58 @@ html[data-profile="maximal"] footer .foot-row {
     drawWordmark(initial);
   })();
 </script>
+<div class="dz-toggle" id="dzToggle" role="button" tabindex="0" aria-expanded="false" aria-controls="dzPanel" title="Open design console"><span class="dz-toggle-dot"></span>Tune</div>
+<aside class="dz-panel" id="dzPanel" role="dialog" aria-label="Design console" hidden>
+  <div class="dz-head"><span>Design console</span><button class="dz-x" id="dzClose" aria-label="Close console">&times;</button></div>
+  <div class="dz-sec-h">Color &mdash; Fibonacci</div>
+  <p class="dz-note">Drag the hue. The palette regenerates from one base &mdash; golden-angle accent, Fibonacci tints &mdash; and self-corrects to stay AA-readable on this profile.</p>
+  <input class="dz-hue" id="dzHue" type="range" min="0" max="359" value="210" aria-label="Base hue"/>
+  <div class="dz-sw" id="dzSwatches" aria-hidden="true"></div>
+  <div class="dz-row">
+    <button class="dz-btn" id="dzShuffle">Shuffle</button>
+    <button class="dz-btn dz-ghost" id="dzReset">Reset</button>
+  </div>
+</aside>
+<script>
+(function(){
+  var root=document.documentElement;
+  var toggle=document.getElementById('dzToggle'), panel=document.getElementById('dzPanel');
+  var hue=document.getElementById('dzHue'), sw=document.getElementById('dzSwatches');
+  var OVR=['--accent','--accent-2','--line'];
+  function getVar(n){ return getComputedStyle(root).getPropertyValue(n).trim(); }
+  function toRgb(s){ s=(s||'').trim(); if(s.charAt(0)==='#'){ if(s.length===4) s='#'+s[1]+s[1]+s[2]+s[2]+s[3]+s[3]; return [parseInt(s.substr(1,2),16),parseInt(s.substr(3,2),16),parseInt(s.substr(5,2),16)]; } var m=s.match(/[\d.]+/g); return m?[+m[0],+m[1],+m[2]]:[0,0,0]; }
+  function rgbToHsl(r,g,b){ r/=255;g/=255;b/=255; var mx=Math.max(r,g,b),mn=Math.min(r,g,b),d=mx-mn,l=(mx+mn)/2,h=0,s=0; if(d){ s=l>0.5?d/(2-mx-mn):d/(mx+mn); h=mx===r?(g-b)/d+(g<b?6:0):mx===g?(b-r)/d+2:(r-g)/d+4; h*=60; } return [h,s,l]; }
+  function hslToRgb(h,s,l){ h=((h%360)+360)%360/360; var a=s*Math.min(l,1-l); function f(n){ var k=(n+h*12)%12; return l-a*Math.max(-1,Math.min(k-3,9-k,1)); } return [Math.round(f(0)*255),Math.round(f(8)*255),Math.round(f(4)*255)]; }
+  function lum(c){ var a=c.map(function(v){ v/=255; return v<=0.03928?v/12.92:Math.pow((v+0.055)/1.055,2.4); }); return 0.2126*a[0]+0.7152*a[1]+0.0722*a[2]; }
+  function contrast(a,b){ var l1=lum(a),l2=lum(b); return (Math.max(l1,l2)+0.05)/(Math.min(l1,l2)+0.05); }
+  function rgbStr(c){ return 'rgb('+c[0]+','+c[1]+','+c[2]+')'; }
+  function guard(rgb,bg){ var hsl=rgbToHsl(rgb[0],rgb[1],rgb[2]),bgL=rgbToHsl(bg[0],bg[1],bg[2])[2],step=bgL>0.5?-0.045:0.045,t=0; while(contrast(rgb,bg)<4.5 && t<22){ hsl[2]=Math.max(0,Math.min(1,hsl[2]+step)); rgb=hslToRgb(hsl[0],hsl[1],hsl[2]); t++; } return rgb; }
+  function rehue(name,shift,h){ var base=toRgb(getVar(name)),hsl=rgbToHsl(base[0],base[1],base[2]); return hslToRgb(h+shift,Math.max(hsl[1],0.4),hsl[2]); }
+  function paintSwatches(acc,acc2){ var cols=[getVar('--bg'),getVar('--surface'),acc?rgbStr(acc):getVar('--accent'),acc2?rgbStr(acc2):getVar('--accent-2'),getVar('--fg')]; sw.innerHTML=cols.map(function(c){ return '<i style="background:'+c+'"></i>'; }).join(''); }
+  function recolor(h){
+    OVR.forEach(function(v){ root.style.removeProperty(v); });
+    var bg=toRgb(getVar('--bg'));
+    var acc=guard(rehue('--accent',0,h),bg);
+    var acc2=guard(rehue('--accent-2',137.5,h),bg);
+    root.style.setProperty('--accent',rgbStr(acc));
+    root.style.setProperty('--accent-2',rgbStr(acc2));
+    var lineVal=getVar('--line');
+    if(lineVal.charAt(0)==='#'){ var lh=rgbToHsl.apply(null,toRgb(lineVal)); root.style.setProperty('--line',rgbStr(hslToRgb(h,0.1,lh[2]))); }
+    paintSwatches(acc,acc2);
+  }
+  function reset(){ OVR.forEach(function(v){ root.style.removeProperty(v); }); paintSwatches(); }
+  function open(){ panel.hidden=false; toggle.setAttribute('aria-expanded','true'); }
+  function close(){ panel.hidden=true; toggle.setAttribute('aria-expanded','false'); }
+  toggle.addEventListener('click',function(){ panel.hidden?open():close(); });
+  toggle.addEventListener('keydown',function(e){ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); panel.hidden?open():close(); } });
+  document.getElementById('dzClose').addEventListener('click',close);
+  hue.addEventListener('input',function(){ recolor(+hue.value); });
+  document.getElementById('dzShuffle').addEventListener('click',function(){ var v=Math.floor(Math.random()*360); hue.value=v; recolor(v); });
+  document.getElementById('dzReset').addEventListener('click',reset);
+  new MutationObserver(function(){ OVR.forEach(function(v){ root.style.removeProperty(v); }); if(!panel.hidden) paintSwatches(); }).observe(root,{attributes:true,attributeFilter:['data-profile']});
+  paintSwatches();
+})();
+</script>
+
 </body>
 </html>
