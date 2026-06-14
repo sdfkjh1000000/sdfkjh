@@ -2888,6 +2888,14 @@ html[data-profile="maximal"] footer .foot-row {
   .dz-btn.dz-ghost { background:transparent; color:#cfd5df; border:1px solid rgba(255,255,255,.18); }
   .dz-toggle:focus-visible, .dz-x:focus-visible, .dz-btn:focus-visible, .dz-hue:focus-visible { outline:2px solid #7cc4ff; outline-offset:2px; }
 
+
+  .dz-panel { max-height:calc(100vh - 100px); overflow-y:auto; }
+  .dz-packs { display:flex; flex-wrap:wrap; gap:6px; margin-top:2px; }
+  .dz-pack { font-family:'JetBrains Mono',monospace; font-size:10.5px; letter-spacing:.03em; color:#cfd5df; background:rgba(255,255,255,.05); border:1px solid rgba(255,255,255,.14); border-radius:7px; padding:6px 9px; cursor:pointer; transition:border-color .15s, background-color .15s, color .15s; }
+  .dz-pack:hover { border-color:rgba(255,255,255,.34); color:#fff; }
+  .dz-pack.on { background:#E9ECF1; color:#14161a; border-color:#E9ECF1; }
+  .dz-pack:focus-visible { outline:2px solid #7cc4ff; outline-offset:2px; }
+
 </style>
 </head>
 <body>
@@ -3087,6 +3095,9 @@ html[data-profile="maximal"] footer .foot-row {
     <button class="dz-btn" id="dzShuffle">Shuffle</button>
     <button class="dz-btn dz-ghost" id="dzReset">Reset</button>
   </div>
+  <div class="dz-sec-h" style="margin-top:18px">Fonts</div>
+  <p class="dz-note">Swap the type system live &mdash; curated pairings tuned to this profile.</p>
+  <div class="dz-packs" id="dzPacks"></div>
 </aside>
 <script>
 (function(){
@@ -3129,5 +3140,19 @@ html[data-profile="maximal"] footer .foot-row {
 })();
 </script>
 
+<script>
+(function(){
+  var root=document.documentElement, el=document.getElementById('dzPacks');
+  var FP={"editorial":[{"n":"Default","h":"EB Garamond","b":"EB Garamond","l":"EB Garamond"},{"n":"Editorial classic","h":"Newsreader","b":"Source Serif 4","l":"Newsreader"},{"n":"Modern neutral","h":"Archivo","b":"EB Garamond","l":"Archivo"},{"n":"Mono-forward","h":"JetBrains Mono","b":"EB Garamond","l":"JetBrains Mono"}],"swiss":[{"n":"Default (Archivo syste","h":"Archivo","b":"Archivo","l":"Archivo"},{"n":"Poster grotesk","h":"Anton","b":"Inter","l":"JetBrains Mono"},{"n":"Neutral utility (Inter","h":"Inter","b":"Inter","l":"JetBrains Mono"},{"n":"Mono-forward (technica","h":"Archivo","b":"JetBrains Mono","l":"JetBrains Mono"}],"glitch":[{"n":"Default","h":"Chakra Petch","b":"JetBrains Mono","l":"JetBrains Mono"},{"n":"Brutalist marquee","h":"Anton","b":"JetBrains Mono","l":"JetBrains Mono"},{"n":"Mono-forward terminal","h":"JetBrains Mono","b":"JetBrains Mono","l":"JetBrains Mono"},{"n":"Industrial utility","h":"Archivo","b":"JetBrains Mono","l":"JetBrains Mono"}],"zen":[{"n":"Default","h":"Newsreader","b":"Source Serif 4","l":"JetBrains Mono"},{"n":"Editorial classic","h":"EB Garamond","b":"Source Serif 4","l":"JetBrains Mono"},{"n":"Humanist utility","h":"Newsreader","b":"Inter","l":"JetBrains Mono"},{"n":"Mono-forward contrast","h":"Newsreader","b":"JetBrains Mono","l":"JetBrains Mono"}],"brutal":[{"n":"Default","h":"Archivo","b":"JetBrains Mono","l":"JetBrains Mono"},{"n":"Display-max (Anton)","h":"Anton","b":"JetBrains Mono","l":"JetBrains Mono"},{"n":"Techno-brutal (Chakra ","h":"Chakra Petch","b":"Chakra Petch","l":"JetBrains Mono"},{"n":"Stark-grotesque (Archi","h":"Archivo","b":"Inter","l":"Inter"}],"clean":[{"n":"Default","h":"Inter","b":"Inter","l":"JetBrains Mono"},{"n":"Friendly modern","h":"Plus Jakarta Sans","b":"Inter","l":"JetBrains Mono"},{"n":"Utility neutral","h":"Archivo","b":"Inter","l":"JetBrains Mono"},{"n":"Mono-forward","h":"Chakra Petch","b":"Inter","l":"JetBrains Mono"}],"prestige":[{"n":"Default","h":"Newsreader","b":"Source Serif 4","l":"Source Serif 4"},{"n":"Editorial classic","h":"EB Garamond","b":"EB Garamond","l":"EB Garamond"},{"n":"Mono-forward contrast","h":"Newsreader","b":"JetBrains Mono","l":"JetBrains Mono"},{"n":"Quiet money (neutral)","h":"EB Garamond","b":"Inter","l":"Inter"}],"counsel":[{"n":"Default","h":"Newsreader","b":"Source Serif 4","l":"JetBrains Mono"},{"n":"Editorial classic","h":"EB Garamond","b":"Source Serif 4","l":"JetBrains Mono"},{"n":"Neutral / utility","h":"Newsreader","b":"Inter","l":"JetBrains Mono"},{"n":"Mono-forward (data roo","h":"EB Garamond","b":"Source Serif 4","l":"JetBrains Mono"}],"grove":[{"n":"Default (Newsreader / ","h":"Newsreader","b":"Source Serif 4","l":"JetBrains Mono"},{"n":"Apothecary (EB Garamon","h":"EB Garamond","b":"Source Serif 4","l":"JetBrains Mono"},{"n":"Soft sans (Newsreader ","h":"Newsreader","b":"Plus Jakarta Sans","l":"JetBrains Mono"},{"n":"Quiet utility (Archivo","h":"Archivo","b":"Inter","l":"JetBrains Mono"}],"cinematic":[{"n":"Default","h":"Inter","b":"Inter","l":"JetBrains Mono"},{"n":"Warm neutral","h":"Plus Jakarta Sans","b":"Plus Jakarta Sans","l":"JetBrains Mono"},{"n":"Architectural","h":"Archivo","b":"Inter","l":"JetBrains Mono"},{"n":"HUD / cyber","h":"Chakra Petch","b":"Inter","l":"JetBrains Mono"}],"terminal":[{"n":"Default","h":"JetBrains Mono","b":"Inter","l":"JetBrains Mono"},{"n":"HUD / expressive","h":"Chakra Petch","b":"Inter","l":"JetBrains Mono"},{"n":"Utility / industrial","h":"JetBrains Mono","b":"Archivo","l":"JetBrains Mono"},{"n":"Mono-forward","h":"JetBrains Mono","b":"JetBrains Mono","l":"JetBrains Mono"}],"soft":[{"n":"Default","h":"Plus Jakarta Sans","b":"Inter","l":"JetBrains Mono"},{"n":"Rounded (single-family","h":"Plus Jakarta Sans","b":"Plus Jakarta Sans","l":"JetBrains Mono"},{"n":"Neutral utility","h":"Inter","b":"Inter","l":"JetBrains Mono"},{"n":"Soft contrast","h":"Archivo","b":"Inter","l":"JetBrains Mono"}],"academic":[{"n":"Default","h":"EB Garamond","b":"EB Garamond","l":"EB Garamond"},{"n":"Journal masthead","h":"EB Garamond","b":"Source Serif 4","l":"JetBrains Mono"},{"n":"Reading-first","h":"Newsreader","b":"Source Serif 4","l":"JetBrains Mono"},{"n":"Figures & data","h":"EB Garamond","b":"Source Serif 4","l":"JetBrains Mono"}],"fintech":[{"n":"Default","h":"Archivo","b":"Inter","l":"JetBrains Mono"},{"n":"Display-max (Anton)","h":"Anton","b":"Inter","l":"JetBrains Mono"},{"n":"Mono-forward (Chakra P","h":"Chakra Petch","b":"Inter","l":"JetBrains Mono"},{"n":"Utility-neutral (Inter","h":"Inter","b":"Inter","l":"JetBrains Mono"}],"maximal":[{"n":"Default (Anton / Garam","h":"Anton","b":"EB Garamond","l":"JetBrains Mono"},{"n":"Editorial maximal (Ant","h":"Anton","b":"Newsreader","l":"JetBrains Mono"},{"n":"Engineered maximal (An","h":"Anton","b":"Chakra Petch","l":"JetBrains Mono"},{"n":"Mono-forward maximal (","h":"Archivo","b":"EB Garamond","l":"JetBrains Mono"}]};
+  var SERIF=["EB Garamond","Newsreader","Source Serif 4"], MONO=["JetBrains Mono"];
+  function fb(f){ return MONO.indexOf(f)>=0?'monospace':(SERIF.indexOf(f)>=0?'serif':'sans-serif'); }
+  function stack(f){ return "'"+f+"', "+fb(f); }
+  var VARS=['--font-head','--font-body','--font-label'];
+  function render(){ var p=root.getAttribute('data-profile'), list=FP[p]||[]; el.innerHTML=list.map(function(pk,i){ return '<button class="dz-pack" type="button" data-i="'+i+'">'+pk.n+'</button>'; }).join(''); }
+  el.addEventListener('click',function(e){ var b=e.target.closest('.dz-pack'); if(!b)return; var p=root.getAttribute('data-profile'), pk=(FP[p]||[])[+b.dataset.i]; if(!pk)return; root.style.setProperty('--font-head',stack(pk.h)); root.style.setProperty('--font-body',stack(pk.b)); root.style.setProperty('--font-label',stack(pk.l)); [].forEach.call(el.children,function(c){ c.classList.toggle('on',c===b); }); });
+  new MutationObserver(function(){ VARS.forEach(function(v){ root.style.removeProperty(v); }); render(); }).observe(root,{attributes:true,attributeFilter:['data-profile']});
+  render();
+})();
+</script>
 </body>
 </html>
