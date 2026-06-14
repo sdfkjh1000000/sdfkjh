@@ -2896,6 +2896,14 @@ html[data-profile="maximal"] footer .foot-row {
   .dz-pack.on { background:#E9ECF1; color:#14161a; border-color:#E9ECF1; }
   .dz-pack:focus-visible { outline:2px solid #7cc4ff; outline-offset:2px; }
 
+
+  .dz-presets { display:flex; gap:6px; margin:0 0 12px; }
+  .dz-preset { flex:1; height:26px; border-radius:6px; border:1px solid rgba(255,255,255,.18); cursor:pointer; padding:0; transition:transform .12s; }
+  .dz-preset:hover { transform:translateY(-1px); }
+  .dz-preset:focus-visible { outline:2px solid #7cc4ff; outline-offset:2px; }
+  .dz-meter { font-family:'JetBrains Mono',monospace; font-size:10.5px; letter-spacing:.03em; color:#9fe6c0; margin:10px 0 2px; }
+  .dz-meter.bad { color:#ff9a9a; }
+
 </style>
 </head>
 <body>
@@ -3152,6 +3160,30 @@ html[data-profile="maximal"] footer .foot-row {
   el.addEventListener('click',function(e){ var b=e.target.closest('.dz-pack'); if(!b)return; var p=root.getAttribute('data-profile'), pk=(FP[p]||[])[+b.dataset.i]; if(!pk)return; root.style.setProperty('--font-head',stack(pk.h)); root.style.setProperty('--font-body',stack(pk.b)); root.style.setProperty('--font-label',stack(pk.l)); [].forEach.call(el.children,function(c){ c.classList.toggle('on',c===b); }); });
   new MutationObserver(function(){ VARS.forEach(function(v){ root.style.removeProperty(v); }); render(); }).observe(root,{attributes:true,attributeFilter:['data-profile']});
   render();
+})();
+</script>
+<script>
+(function(){
+  var root=document.documentElement, hue=document.getElementById('dzHue'); if(!hue) return;
+  function rgb(s){ s=(s||'').trim(); if(s.charAt(0)==='#'){ if(s.length===4) s='#'+s[1]+s[1]+s[2]+s[2]+s[3]+s[3]; return [parseInt(s.substr(1,2),16),parseInt(s.substr(3,2),16),parseInt(s.substr(5,2),16)]; } var m=s.match(/[0-9.]+/g); return m?[+m[0],+m[1],+m[2]]:[0,0,0]; }
+  function lum(c){ var a=c.map(function(v){ v/=255; return v<=0.03928?v/12.92:Math.pow((v+0.055)/1.055,2.4); }); return 0.2126*a[0]+0.7152*a[1]+0.0722*a[2]; }
+  function ct(a,b){ var l1=lum(a),l2=lum(b); return (Math.max(l1,l2)+0.05)/(Math.min(l1,l2)+0.05); }
+  function gv(n){ return getComputedStyle(root).getPropertyValue(n).trim(); }
+  function toHsl(r,g,b){ r/=255;g/=255;b/=255; var mx=Math.max(r,g,b),mn=Math.min(r,g,b),d=mx-mn,l=(mx+mn)/2,h=0,s=0; if(d){ s=l>0.5?d/(2-mx-mn):d/(mx+mn); h=mx===r?(g-b)/d+(g<b?6:0):mx===g?(b-r)/d+2:(r-g)/d+4; h*=60; } return [h,s,l]; }
+  function toRgb(h,s,l){ h=((h%360)+360)%360/360; var a=s*Math.min(l,1-l); function f(n){ var k=(n+h*12)%12; return l-a*Math.max(-1,Math.min(k-3,9-k,1)); } return [Math.round(f(0)*255),Math.round(f(8)*255),Math.round(f(4)*255)]; }
+  function preview(hv){ var base=rgb(gv('--accent')), hsl=toHsl(base[0],base[1],base[2]); return toRgb(hv, Math.max(hsl[1],0.4), hsl[2]); }
+  var HUES=[8,42,92,140,175,205,250,292,330];
+  var pr=document.createElement('div'); pr.className='dz-presets';
+  HUES.forEach(function(hv){ var b=document.createElement('button'); b.type='button'; b.className='dz-preset'; b.setAttribute('data-h',hv); b.setAttribute('aria-label','Accent hue '+hv); pr.appendChild(b); });
+  hue.parentNode.insertBefore(pr, hue);
+  var meter=document.createElement('div'); meter.className='dz-meter'; meter.id='dzMeter';
+  hue.parentNode.insertBefore(meter, hue.nextSibling);
+  function paint(){ for(var i=0;i<pr.children.length;i++){ var c=preview(+pr.children[i].getAttribute('data-h')); pr.children[i].style.background='rgb('+c[0]+','+c[1]+','+c[2]+')'; } }
+  function meterUp(){ var r=ct(rgb(gv('--accent')),rgb(gv('--bg'))); var lvl=r>=7?'AAA':(r>=4.5?'AA':(r>=3?'AA large':'low')); meter.textContent='accent / bg  '+r.toFixed(2)+':1  '+(r<4.5?'⚠ '+lvl:'✓ '+lvl); meter.className='dz-meter'+(r<4.5?' bad':''); }
+  pr.addEventListener('click', function(e){ var b=e.target.closest('.dz-preset'); if(!b) return; hue.value=b.getAttribute('data-h'); hue.dispatchEvent(new Event('input')); });
+  hue.addEventListener('input', meterUp);
+  new MutationObserver(function(){ setTimeout(function(){ paint(); meterUp(); }, 0); }).observe(root,{attributes:true,attributeFilter:['data-profile']});
+  paint(); meterUp();
 })();
 </script>
 </body>
