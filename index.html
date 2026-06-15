@@ -229,6 +229,10 @@
 
   /* ── thesis: live markdown ─────────────────────────────────── */
   .thesis { padding: var(--gap, 52px) 0; }
+  .range { padding: var(--gap, 52px) 0; text-align: center; }
+  .range .range-h { font-family: var(--serif); font-weight: 500; font-size: calc(28px * var(--type-scale, 1)); margin: 0 0 10px; }
+  .range .range-h a { color: var(--amber-dim); }
+  .range .range-p { font-size: calc(17px * var(--type-scale, 1)); color: var(--ink-soft); max-width: 56ch; margin: 0 auto; }
   .thesis .panes { display: grid; grid-template-columns: 1fr 1fr; gap: 0; border: 1px solid var(--border); border-radius: calc(3px * var(--radius-scale, 1)); overflow: hidden; }
   .thesis .src {
     background: var(--surface); border-right: 1px solid var(--border);
@@ -1513,12 +1517,21 @@ Brand and web are two hands on one keyboard.
     </div>
   </section>
 
+  <section class="range">
+    <div class="wrap">
+      <h2 class="eyebrow">design range &middot; one page, fifteen ways</h2>
+      <p class="range-h">This page tunes one design. <a href="/range">See the full range &rsaquo;</a></p>
+      <p class="range-p">Fifteen complete designs on a single markup &mdash; switch the whole look live, then tune color, type, and layout in the browser.</p>
+    </div>
+  </section>
+
 </main>
 
 <footer role="contentinfo">
   <span>&copy; 2010&ndash;2030 sdfkjh.com</span>
   <span><a href="https://tanktalks.sdfkjh.com/">tanktalks</a></span>
   <span><a href="https://businessinternetsearch.sdfkjh.com/">business internet search</a></span>
+  <span><a href="/range">design range</a></span>
   <span><a href="/privacy">privacy</a> <span class="dot">&middot;</span> <a href="/do-not-sell">do not sell</a> <span class="dot">&middot;</span> <a href="/terms">terms</a> <span class="dot">&middot;</span> <a href="/accessibility">accessibility</a> <span class="dot">&middot;</span> <a href="/compliance">compliance</a></span>
 </footer>
 

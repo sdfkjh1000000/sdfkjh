@@ -1,4 +1,14 @@
 <!doctype html>
+<!--
+  ███████╗██████╗ ███████╗██╗  ██╗     ██╗██╗  ██╗
+  ██╔════╝██╔══██╗██╔════╝██║ ██╔╝     ██║██║  ██║
+  ███████╗██║  ██║█████╗  █████╔╝      ██║███████║
+  ╚════██║██║  ██║██╔══╝  ██╔═██╗ ██   ██║██╔══██║
+  ███████║██████╔╝██║     ██║  ██╗╚█████╔╝██║  ██║
+  ╚══════╝╚═════╝ ╚═╝     ╚═╝  ╚═╝ ╚════╝ ╚═╝  ╚═╝
+
+  Designed & built by sdfkjh.com
+-->
 <html lang="en" data-profile="editorial">
 <head>
 <meta charset="utf-8"/>
@@ -6,12 +16,27 @@
 <title>sdfkjh — design range</title>
 <meta name="robots" content="noindex, nofollow"/>
 <meta name="color-scheme" content="light"/>
+<meta name="description" content="One markup, fifteen complete design systems — switch the whole look live, then tune color, type, and layout in the browser."/>
+<link rel="canonical" href="https://sdfkjh.com/range"/>
+<meta name="theme-color" content="#FDFBF7"/>
+<link rel="icon" href="/favicon.svg" type="image/svg+xml"/>
+<link rel="apple-touch-icon" href="/apple-touch-icon.png"/>
+<meta property="og:type" content="website"/>
+<meta property="og:site_name" content="sdfkjh.com"/>
+<meta property="og:url" content="https://sdfkjh.com/range"/>
+<meta property="og:title" content="sdfkjh — design range"/>
+<meta property="og:description" content="One markup, fifteen complete design systems — switch the whole look live, then tune color, type, and layout in the browser."/>
+<meta property="og:image" content="https://sdfkjh.com/og-range.png"/>
+<meta property="og:image:width" content="1200"/>
+<meta property="og:image:height" content="630"/>
+<meta property="og:image:alt" content="sdfkjh — one markup shown in eight design styles"/>
+<meta name="twitter:card" content="summary_large_image"/>
+<meta name="twitter:title" content="sdfkjh — design range"/>
+<meta name="twitter:description" content="One markup, fifteen complete design systems — switch the whole look live, then tune color, type, and layout in the browser."/>
+<meta name="twitter:image" content="https://sdfkjh.com/og-range.png"/>
 
 <style>
-  /* ═══════════════════════════════════════════════════════════════
-     SHARED SHELL — one markup, token-driven. Every design lives in a
-     [data-profile] block below; nothing in the HTML changes between them.
-     ═══════════════════════════════════════════════════════════════ */
+  
 
   @font-face { font-family:'Newsreader'; font-style:normal; font-weight:500; font-display:swap; src:url('/assets/fonts/newsreader-500.woff2') format('woff2'); }
   @font-face { font-family:'Newsreader'; font-style:italic; font-weight:500; font-display:swap; src:url('/assets/fonts/newsreader-500-italic.woff2') format('woff2'); }
@@ -36,7 +61,7 @@
     --radius:3px; --maxw:1080px; --pad:32px; --section-pad:72px;
     --head-weight:500; --head-tracking:-0.02em; --head-leading:1.06; --head-transform:none;
     --label-tracking:0.12em; --label-transform:uppercase;
-    /* wordmark self-draw timing — overridden per profile for distinct draw character */
+    
     --wm-base:.45s; --wm-step:.16s; --wm-ldur:.42s; --wm-brdur:.55s; --wm-ease:cubic-bezier(.2,.7,.2,1);
   }
 
@@ -55,7 +80,7 @@
   a:focus-visible, button:focus-visible, [tabindex]:focus-visible { outline:2px solid var(--accent); outline-offset:2px; border-radius:1px; }
   html[data-profile="glitch"] .switch button:focus-visible { outline-color:var(--accent-2); position:relative; z-index:9999; }
 
-  /* header + the switcher (itself re-skins) */
+  
   .site-head {
     display:flex; justify-content:space-between; align-items:center; gap:18px;
     padding:20px var(--pad); border-bottom:1px solid var(--line); flex-wrap:wrap;
@@ -110,7 +135,7 @@
   @media (max-width:760px) { .cards,.tokens { grid-template-columns:1fr; } }
   @media (prefers-reduced-motion:reduce) { *,*::before,*::after { transition-duration:.001ms !important; } }
 
-  /* hero self-drawing wordmark — strokes + keys adopt the active profile's tokens */
+  
   .hero .wordmark { display:block; width:min(72%,300px); height:auto; overflow:visible; margin:0 0 16px; }
   .hero .wm-br { stroke:var(--accent); }
   .hero .wm-letters { stroke:var(--fg); }
@@ -118,8 +143,7 @@
   .hero .wordmark path { filter:none; }
   html[data-profile="glitch"] .hero .wordmark path { filter:drop-shadow(0 0 5px color-mix(in srgb, var(--accent) 30%, transparent)); }
   html[data-profile="brutal"] .hero .wordmark path { filter:drop-shadow(3px 3px 0 #000); }
-  /* line-draw via CSS stroke-dashoffset — robust and self-contained (anime drives only cards/headline).
-     Default (no .wm-armed): strokes fully visible, so no-JS / reduced-motion shows the finished mark. */
+  
   @keyframes wm-draw { to { stroke-dashoffset:0; } }
   @media (prefers-reduced-motion: no-preference) {
     html.wm-armed .hero .wm-br,
@@ -136,19 +160,13 @@
   .hero .wm-cursor.on { animation:wm-blink 1.05s steps(1,end) infinite; }
   @media (prefers-reduced-motion:reduce) { .hero .wm-cursor.on { animation:none; } }
 
-  /* ═══════════════════════════════════════════════════════════════
-     PROFILE: EDITORIAL  (sdfkjh's home base — cream / Newsreader)
-     Tokens are the :root defaults; only the distinctive flourishes here.
-     ═══════════════════════════════════════════════════════════════ */
+  
   html[data-profile="editorial"] .hero .sub { font-style:italic; }
   html[data-profile="editorial"] .hero::after {
     content:""; display:block; width:64px; height:2px; background:var(--accent); margin-top:30px;
   }
 
-  /* ═══════════════════════════════════════════════════════════════
-     PROFILE: SWISS  (swiss-grid — Helvetica, hard grid, one red accent)
-     Maximally different from editorial: no serif, no warmth, no radius.
-     ═══════════════════════════════════════════════════════════════ */
+  
   html[data-profile="swiss"] {
     --bg:#FFFFFF; --surface:#FFFFFF; --fg:#0A0A0A; --fg-soft:#444444;
     --line:#0A0A0A; --accent:#D11A12; --accent-2:#E5231B;
@@ -173,17 +191,14 @@
   html[data-profile="swiss"] .sw { border:1px solid var(--fg); border-radius:0; }
   html[data-profile="swiss"] .candor { border-left:4px solid var(--accent); font-weight:400; }
   html[data-profile="swiss"] footer { border-top:2px solid var(--fg); }
-  /* asymmetric grid: heading in a narrow left column, content in the wide right (classic Swiss 1:2) */
+  
   html[data-profile="swiss"] .work .wrap, html[data-profile="swiss"] .system .wrap { display:grid; grid-template-columns:minmax(0,4fr) minmax(0,8fr); gap:0 48px; align-items:start; }
   html[data-profile="swiss"] .work .wrap > .eyebrow, html[data-profile="swiss"] .system .wrap > .eyebrow { grid-column:1; grid-row:1; }
   html[data-profile="swiss"] .work .wrap > .h2, html[data-profile="swiss"] .system .wrap > .h2 { grid-column:1; grid-row:2; }
   html[data-profile="swiss"] .work .wrap > .cards, html[data-profile="swiss"] .system .wrap > .tokens { grid-column:2; grid-row:1 / span 2; }
   @media (max-width:760px){ html[data-profile="swiss"] .work .wrap, html[data-profile="swiss"] .system .wrap { grid-template-columns:1fr; } html[data-profile="swiss"] .work .wrap > *, html[data-profile="swiss"] .system .wrap > * { grid-column:1; grid-row:auto; } }
 
-/* ═══════════════════════════════════════════════════════════════
-   PROFILE: GLITCH  (cyberpunk — broken, digital, dystopian)
-   Near-black bg, cyan/magenta neon, scanlines, CRT framing, offset grid.
-   ═══════════════════════════════════════════════════════════════ */
+
 html[data-profile="glitch"] {
   --bg:#0A0A0A; --surface:#0E0E12; --fg:#FFFFFF; --fg-soft:#B6F5EA;
   --line:#00FFCC; --accent:#00FFCC; --accent-2:#FF00FF;
@@ -209,7 +224,7 @@ html[data-profile="glitch"] body {
   text-shadow:0 0 1px rgba(0,255,204,.25);
 }
 
-/* CRT scanline overlay across the whole page */
+
 html[data-profile="glitch"] body::before {
   content:"";
   position:fixed; inset:0; z-index:9998; pointer-events:none;
@@ -220,7 +235,7 @@ html[data-profile="glitch"] body::before {
   );
   mix-blend-mode:screen;
 }
-/* CRT vignette + curvature darkening at the edges */
+
 html[data-profile="glitch"] body::after {
   content:"";
   position:fixed; inset:0; z-index:9997; pointer-events:none;
@@ -229,7 +244,7 @@ html[data-profile="glitch"] body::after {
     linear-gradient(90deg, rgba(255,0,255,.05), transparent 12%, transparent 88%, rgba(0,255,204,.05));
 }
 
-/* section divider: a single clean neon rule */
+
 html[data-profile="glitch"] section {
   border-top:1px solid var(--accent);
   position:relative;
@@ -239,7 +254,7 @@ html[data-profile="glitch"] section {
 html[data-profile="glitch"] .hero { border-top:0; }
 html[data-profile="glitch"] .hero::before { display:none; }
 
-/* ── header / watermark / switcher ─────────────────────────────── */
+
 html[data-profile="glitch"] .site-head {
   border-bottom:1px solid var(--accent);
   background:linear-gradient(180deg, rgba(0,255,204,.05), transparent);
@@ -276,7 +291,7 @@ html[data-profile="glitch"] .switch button[aria-checked="true"] {
   box-shadow:0 0 14px rgba(255,0,255,.6);
 }
 
-/* ── hero ──────────────────────────────────────────────────────── */
+
 html[data-profile="glitch"] .eyebrow {
   font-family:var(--font-label);
   color:var(--accent-2);
@@ -325,7 +340,7 @@ html[data-profile="glitch"] .hero::after {
   text-shadow:0 0 8px rgba(0,255,204,.6);
 }
 
-/* ── section headings ──────────────────────────────────────────── */
+
 html[data-profile="glitch"] h2.h2 {
   font-family:var(--font-head);
   font-weight:900; text-transform:uppercase; letter-spacing:.03em;
@@ -337,7 +352,7 @@ html[data-profile="glitch"] h2.h2 em {
   text-shadow:0 0 10px rgba(255,0,255,.6);
 }
 
-/* ── cards: broken / offset grid with disconnected corner brackets ─ */
+
 html[data-profile="glitch"] .cards { gap:26px; }
 html[data-profile="glitch"] .card {
   border:1px solid rgba(0,255,204,.35);
@@ -346,10 +361,10 @@ html[data-profile="glitch"] .card {
   padding:30px 24px 26px;
   position:relative;
 }
-/* offset the grid so it reads broken, not tidy */
+
 html[data-profile="glitch"] .card:nth-child(2) { transform:translateY(20px); }
 html[data-profile="glitch"] .card:nth-child(3) { transform:translateY(-12px); }
-/* corner brackets that don't connect */
+
 html[data-profile="glitch"] .card::before,
 html[data-profile="glitch"] .card::after {
   content:""; position:absolute; width:16px; height:16px; pointer-events:none;
@@ -374,7 +389,7 @@ html[data-profile="glitch"] .card h3 {
 }
 html[data-profile="glitch"] .card p { color:var(--fg-soft); font-family:var(--font-body); }
 
-/* ── tokens / swatches / specimen ──────────────────────────────── */
+
 html[data-profile="glitch"] .swatches { gap:12px; }
 html[data-profile="glitch"] .sw {
   border:1px solid var(--accent);
@@ -398,7 +413,7 @@ html[data-profile="glitch"] .specimen .label {
   text-shadow:0 0 8px rgba(0,255,204,.55);
 }
 
-/* ── candor block ──────────────────────────────────────────────── */
+
 html[data-profile="glitch"] .candor {
   font-family:var(--font-label);
   color:var(--fg-soft);
@@ -411,7 +426,7 @@ html[data-profile="glitch"] .candor b {
   text-shadow:0 0 8px rgba(0,255,204,.5);
 }
 
-/* ── footer ────────────────────────────────────────────────────── */
+
 html[data-profile="glitch"] footer {
   border-top:1px solid var(--accent);
   font-family:var(--font-label);
@@ -427,9 +442,9 @@ html[data-profile="glitch"] footer::after {
   font-weight:700;
 }
 
-/* ── MOTION: gated behind reduced-motion preference ────────────── */
+
 @media (prefers-reduced-motion: no-preference) {
-  /* CRT scanline drift */
+  
   html[data-profile="glitch"] body::before {
     animation:glitch-scan 8s linear infinite;
   }
@@ -438,7 +453,7 @@ html[data-profile="glitch"] footer::after {
     100% { background-position:0 6px; }
   }
 
-  /* blinking terminal cursor in hero + footer */
+  
   html[data-profile="glitch"] .hero::after { animation:glitch-blink 1.05s steps(1) infinite; }
   html[data-profile="glitch"] footer::after { animation:glitch-blink 1.05s steps(1) infinite; }
   @keyframes glitch-blink {
@@ -446,7 +461,7 @@ html[data-profile="glitch"] footer::after {
     50%,100% { opacity:.15; }
   }
 
-  /* headline RGB-split jitter on a random-feeling interval */
+  
   html[data-profile="glitch"] h1.headline { animation:glitch-shift 5.5s steps(1) infinite; }
   @keyframes glitch-shift {
     0%,92%,100% { text-shadow:2px 0 var(--accent-2), -2px 0 var(--accent), 0 0 18px rgba(0,255,204,.35); transform:translate(0,0); }
@@ -455,7 +470,7 @@ html[data-profile="glitch"] footer::after {
     97% { text-shadow:3px 0 var(--accent-2), -3px 0 var(--accent), 0 0 18px rgba(0,255,204,.35); transform:translate(-1px,0) skewX(-1deg); }
   }
 
-  /* glitch-on-hover: skew + color-channel shift for cards and buttons */
+  
   html[data-profile="glitch"] .card { transition:transform .12s steps(2), box-shadow .2s ease, border-color .2s ease; }
   html[data-profile="glitch"] .card:hover {
     border-color:var(--accent-2);
@@ -473,7 +488,7 @@ html[data-profile="glitch"] footer::after {
   html[data-profile="glitch"] .switch button { transition:transform .1s steps(2), border-color .1s steps(2); }
   html[data-profile="glitch"] .switch button:hover { animation:glitch-jolt .26s steps(2) 1; }
 
-  /* h2 occasional clip/shift */
+  
   html[data-profile="glitch"] h2.h2 em { animation:glitch-microshift 6.5s steps(1) infinite; }
   @keyframes glitch-microshift {
     0%,90%,100% { transform:translate(0,0); }
@@ -483,9 +498,7 @@ html[data-profile="glitch"] footer::after {
   }
 }
 
-/* keep the offset-grid transforms intact when motion IS reduced
-   (they're structural, not animation) by re-asserting after the
-   animation media block — nth-child rules above already hold. */
+
 @media (max-width:760px) {
   html[data-profile="glitch"] .card:nth-child(2),
   html[data-profile="glitch"] .card:nth-child(3) { transform:none; }
@@ -650,11 +663,7 @@ html[data-profile="zen"] .hero .wordmark path{ filter:none; }
   }
 }
 
-/* ═══════════════════════════════════════════════════════════════
-   PROFILE: BRUTAL (neo-brutalism — ugly on purpose, loud, memorable)
-   Warm paper, hot pink + neon green + yellow, hard black shadows,
-   heavy black borders, Impact display, JetBrains Mono body.
-   ═══════════════════════════════════════════════════════════════ */
+
 html[data-profile="brutal"] {
   --bg:#FFFBE6; --surface:#FFFFFF; --fg:#000000; --fg-soft:#1A1A1A;
   --line:#000000; --accent:#FF3366; --accent-2:#00C400;
@@ -667,7 +676,7 @@ html[data-profile="brutal"] {
   --wm-base:.2s; --wm-step:.085s; --wm-ldur:.14s; --wm-brdur:.18s; --wm-ease:steps(2,end);
 }
 
-/* ---- canvas: warm paper + a flat dot grid, no gradients ---- */
+
 html[data-profile="brutal"] body {
   font-size:15px; line-height:1.55; font-weight:500;
   -webkit-font-smoothing:auto;
@@ -687,7 +696,7 @@ html[data-profile="brutal"] body::before {
 }
 html[data-profile="brutal"] a { color:#000; background:var(--accent-2); padding:0 3px; text-decoration:none; font-weight:700; box-shadow:2px 2px 0 #000; }
 
-/* ---- header: a fat black bar that overlaps the page ---- */
+
 html[data-profile="brutal"] .site-head {
   border-bottom:4px solid #000;
   background:var(--accent);
@@ -719,14 +728,14 @@ html[data-profile="brutal"] .switch button[aria-checked="true"] {
   transform:translate(4px,4px); box-shadow:0 0 0 #000;
 }
 
-/* ---- sections: hard rules, generous offset blocks ---- */
+
 html[data-profile="brutal"] section {
   border-top:4px solid #000;
   position:relative;
 }
 html[data-profile="brutal"] .hero { border-top:0; padding-top:54px; }
 
-/* eyebrow as a slapped-on sticker tag */
+
 html[data-profile="brutal"] .eyebrow {
   display:inline-block; font-family:var(--font-label); font-weight:700;
   font-size:12px; letter-spacing:.06em; text-transform:uppercase;
@@ -735,7 +744,7 @@ html[data-profile="brutal"] .eyebrow {
   transform:rotate(-1.5deg);
 }
 
-/* headline: huge, tight, uppercase, with a hot-pink highlight slab */
+
 html[data-profile="brutal"] h1.headline {
   font-family:var(--font-head); font-weight:900;
   font-size:clamp(48px,9vw,110px); line-height:.84;
@@ -756,7 +765,7 @@ html[data-profile="brutal"] .sub {
   padding:14px 16px; margin:8px 0 0;
 }
 
-/* H2: stacked uppercase with accent-2 underline slab */
+
 html[data-profile="brutal"] h2.h2 {
   font-family:var(--font-head); font-weight:900;
   font-size:clamp(30px,4.4vw,52px); line-height:.9;
@@ -769,7 +778,7 @@ html[data-profile="brutal"] h2.h2 em {
   padding:0 .1em; display:inline-block;
 }
 
-/* ---- cards: off-grid, overlapping, each one rotated a touch ---- */
+
 html[data-profile="brutal"] .cards { gap:26px 22px; }
 html[data-profile="brutal"] .card {
   border:4px solid #000; border-radius:0; background:#FFFFFF;
@@ -800,7 +809,7 @@ html[data-profile="brutal"] .card p {
   color:#000; font-weight:500;
 }
 
-/* ---- tokens / swatches: chunky bordered chips ---- */
+
 html[data-profile="brutal"] .tokens { gap:34px; }
 html[data-profile="brutal"] .swatches { gap:0; box-shadow:8px 8px 0 #000; border:4px solid #000; }
 html[data-profile="brutal"] .sw {
@@ -830,7 +839,7 @@ html[data-profile="brutal"] .specimen .label {
   box-shadow:3px 3px 0 #000; padding:4px 9px; margin-top:14px;
 }
 
-/* ---- candor: a loud warning-tape block ---- */
+
 html[data-profile="brutal"] .candor {
   font-family:var(--font-body); font-size:14px; line-height:1.65;
   color:#000; font-weight:500; max-width:62ch;
@@ -843,7 +852,7 @@ html[data-profile="brutal"] .candor b {
   padding:1px 6px; text-transform:uppercase;
 }
 
-/* ---- footer: solid black slab ---- */
+
 html[data-profile="brutal"] footer {
   border-top:4px solid #000; background:#000; color:#FFFBE6;
   font-family:var(--font-label); font-weight:700; font-size:12px;
@@ -851,7 +860,7 @@ html[data-profile="brutal"] footer {
   box-shadow:0 -6px 0 var(--accent-2);
 }
 
-/* ---- motion: steps only, press-shift, no smooth easing ---- */
+
 @media (prefers-reduced-motion: no-preference) {
   html[data-profile="brutal"] .switch button,
   html[data-profile="brutal"] .card {
@@ -1137,7 +1146,7 @@ html[data-profile="grove"] footer { background:var(--bg); color:var(--fg-soft); 
   html[data-profile="grove"] .sw:hover { transform:translateY(-3px) scale(1.01); }
 }
 
-  /* GIANT FOOTER WORDMARK — full word, crests the slab edge (pops above) */
+  
   footer { position:relative; padding:0; --water:138px; --wm-dip:24px; min-height:340px; background:linear-gradient(to bottom, var(--bg) var(--water), var(--fslab) var(--water)); }
   html[data-profile] footer { background:linear-gradient(to bottom, var(--bg) var(--water), var(--fslab) var(--water)); padding:0; border-top:0; min-height:340px; }
   footer .foot-mark { position:absolute; left:0; right:0; top:var(--water); transform:translateY(var(--wm-stand,-50%)); margin:0; text-align:center; white-space:nowrap; line-height:.9; pointer-events:none; user-select:none; font-family:var(--font-head); font-weight:var(--head-weight,800); text-transform:uppercase; letter-spacing:-.02em; font-size:clamp(56px,20vw,280px); color:var(--foot-ink); }
@@ -1152,8 +1161,8 @@ html[data-profile="grove"] footer { background:var(--bg); color:var(--fg-soft); 
   html[data-profile="counsel"]   footer { --fslab:#0E2C4B; --foot-ink:#0E2C4B; --foot-row:#F4F6F8; }
   html[data-profile="grove"]     footer { --fslab:#5A6E4F; --foot-ink:#5A6E4F; --foot-row:#FBFAF5; }
   html[data-profile="zen"]       footer { --fslab:#3E4A57; --foot-ink:#3E4A57; --foot-row:#F1F2F2; }
-  /* Wordmark stands ON the slab, feet dipping --wm-dip below the waterline (per-font baseline offset). */
-  /* Dark profiles (glitch/prestige) get a raised charcoal slab so the footer reads as distinct from the page band. */
+  
+  
   html[data-profile="editorial"] footer .foot-mark,
   html[data-profile="counsel"]   footer .foot-mark,
   html[data-profile="grove"]     footer .foot-mark,
@@ -1163,8 +1172,7 @@ html[data-profile="grove"] footer { background:var(--bg); color:var(--fg-soft); 
   html[data-profile="glitch"]    footer .foot-mark,
   html[data-profile="brutal"]    footer .foot-mark { --wm-stand:calc(var(--wm-dip) - 0.843em); }
   html[data-profile="clean"]     footer .foot-mark { --wm-stand:calc(var(--wm-dip) - 0.864em); }
-  /* Light-page profiles: two-tone wordmark fill flips at the waterline (= -wm-stand within the text box),
-     so the FULL word reads — slab colour where it crests onto the page, page colour where it sits on the slab. */
+  
   html[data-profile="editorial"] footer .foot-mark,
   html[data-profile="clean"]     footer .foot-mark,
   html[data-profile="counsel"]   footer .foot-mark,
@@ -1177,12 +1185,7 @@ html[data-profile="grove"] footer { background:var(--bg); color:var(--fg-soft); 
 
 
 
-/* ═══════════════════════════════════════════════════════════════
-   PROFILE: CINEMATIC  (dark-cinematic-saas — near-black, glass, data)
-   Near-black gradient canvas, subtle glass surfaces, blue primary +
-   cyan data accent, Inter throughout, mono for labels & numbers.
-   Signature: the card index and specimen read as data / a big stat.
-   ═══════════════════════════════════════════════════════════════ */
+
 html[data-profile="cinematic"] {
   --bg:#08080B; --surface:#14141A; --fg:#FFFFFF; --fg-soft:#9CA3AF;
   --line:rgba(255,255,255,0.08); --accent:#3B82F6; --accent-2:#22D3EE;
@@ -1193,13 +1196,13 @@ html[data-profile="cinematic"] {
   --head-weight:700; --head-tracking:-0.022em; --head-leading:1.04; --head-transform:none;
   --label-tracking:0.18em; --label-transform:uppercase;
   --wm-base:.30s; --wm-step:.11s; --wm-ldur:.52s; --wm-brdur:.62s; --wm-ease:cubic-bezier(.22,.61,.18,1);
-  /* glass + glow primitives reused across the profile */
+  
   --glass:rgba(255,255,255,0.025);
   --glass-line:rgba(255,255,255,0.09);
   --glass-top:rgba(255,255,255,0.10);
 }
 
-/* ── canvas: layered near-black gradient + two soft radial glows ── */
+
 html[data-profile="cinematic"] body {
   background:var(--bg);
   color:var(--fg);
@@ -1218,7 +1221,7 @@ html[data-profile="cinematic"] .site-head,
 html[data-profile="cinematic"] main,
 html[data-profile="cinematic"] footer { position:relative; z-index:1; }
 
-/* ── section dividers: a single hairline of white at low opacity ── */
+
 html[data-profile="cinematic"] section {
   border-top:1px solid var(--line);
   padding:var(--section-pad) 0;
@@ -1227,7 +1230,7 @@ html[data-profile="cinematic"] .hero {
   border-top:0; padding-top:128px; padding-bottom:112px;
 }
 
-/* ── header: glass bar, hairline base, blue dial ────────────────── */
+
 html[data-profile="cinematic"] .site-head {
   border-bottom:1px solid var(--line);
   background:rgba(8,8,11,0.55);
@@ -1261,7 +1264,7 @@ html[data-profile="cinematic"] .switch button[aria-checked="true"] {
   box-shadow:0 0 0 1px rgba(59,130,246,0.35), 0 6px 22px -8px rgba(59,130,246,0.7);
 }
 
-/* ── hero ───────────────────────────────────────────────────────── */
+
 html[data-profile="cinematic"] .eyebrow {
   font-family:var(--font-label); font-weight:500; font-size:11px;
   letter-spacing:var(--label-tracking); text-transform:uppercase;
@@ -1290,7 +1293,7 @@ html[data-profile="cinematic"] .sub {
   font-size:clamp(17px,1.6vw,20px); line-height:1.65; max-width:54ch; margin:0;
 }
 
-/* ── section headings ───────────────────────────────────────────── */
+
 html[data-profile="cinematic"] h2.h2 {
   font-family:var(--font-head); font-weight:700;
   font-size:clamp(30px,3.8vw,46px); line-height:1.08;
@@ -1300,7 +1303,7 @@ html[data-profile="cinematic"] h2.h2 em {
   font-style:normal; color:var(--accent-2);
 }
 
-/* ── cards: glass panels, mono index as a data figure ───────────── */
+
 html[data-profile="cinematic"] .cards { gap:22px; }
 html[data-profile="cinematic"] .card {
   border:1px solid var(--glass-line);
@@ -1314,7 +1317,7 @@ html[data-profile="cinematic"] .card {
   position:relative; overflow:hidden;
   transition:border-color .5s cubic-bezier(.22,.61,.18,1), transform .5s cubic-bezier(.22,.61,.18,1), background-color .5s cubic-bezier(.22,.61,.18,1);
 }
-/* a thin top accent hairline that lights up on the leading edge */
+
 html[data-profile="cinematic"] .card::before {
   content:""; position:absolute; left:0; right:0; top:0; height:1px;
   background:linear-gradient(90deg, transparent, rgba(59,130,246,0.55) 30%, rgba(34,211,238,0.55) 70%, transparent);
@@ -1340,7 +1343,7 @@ html[data-profile="cinematic"] .card p {
   color:var(--fg-soft); margin:0;
 }
 
-/* ── tokens: swatches + specimen on glass ───────────────────────── */
+
 html[data-profile="cinematic"] .tokens {
   grid-template-columns:1fr 1fr; gap:48px; align-items:start;
 }
@@ -1359,7 +1362,7 @@ html[data-profile="cinematic"] .sw span {
   padding:3px 6px; border-radius:5px;
   backdrop-filter:blur(4px); -webkit-backdrop-filter:blur(4px);
 }
-/* the inline white pill on the "ink" swatch — keep its dark text readable */
+
 html[data-profile="cinematic"] .sw span[style] {
   background:rgba(255,255,255,0.9) !important; color:#08080B; border-color:transparent;
 }
@@ -1378,7 +1381,7 @@ html[data-profile="cinematic"] .specimen .label {
   color:var(--accent-2);
 }
 
-/* ── candor: quiet glass note, blue rule ────────────────────────── */
+
 html[data-profile="cinematic"] .candor {
   font-family:var(--font-label); font-size:12.5px; line-height:1.95;
   color:var(--fg-soft); border-left:2px solid var(--accent);
@@ -1386,7 +1389,7 @@ html[data-profile="cinematic"] .candor {
 }
 html[data-profile="cinematic"] .candor b { color:var(--accent-2); font-weight:600; }
 
-/* ── FOOTER: flat dark-glass panel (reset the base cresting layout) ─ */
+
 html[data-profile="cinematic"] footer {
   position:relative; min-height:auto;
   padding:56px var(--pad) 48px;
@@ -1414,10 +1417,10 @@ html[data-profile="cinematic"] footer .foot-row {
   font-family:var(--font-label); font-size:12px; letter-spacing:.04em;
   color:var(--fg-soft);
 }
-/* the tagline span reads one step quieter than the copyright — still AA (5.6:1 on #0A0A0E) */
+
 html[data-profile="cinematic"] footer .foot-row span:last-child { color:#828995; }
 
-/* ── hero wordmark tuned for the dark field ─────────────────────── */
+
 html[data-profile="cinematic"] .hero .wm-br { stroke:var(--accent); }
 html[data-profile="cinematic"] .hero .wm-letters { stroke:var(--fg); }
 html[data-profile="cinematic"] .hero .wm-cursor { fill:var(--accent-2); }
@@ -1425,7 +1428,7 @@ html[data-profile="cinematic"] .hero .wordmark path {
   filter:drop-shadow(0 0 7px rgba(59,130,246,0.28));
 }
 
-/* ── motion: fade-up reveal, calm ease; reduced-motion = static ─── */
+
 @media (prefers-reduced-motion: no-preference) {
   html[data-profile="cinematic"] .hero .eyebrow,
   html[data-profile="cinematic"] h1.headline,
@@ -1483,13 +1486,13 @@ html[data-profile="terminal"] body{
   -webkit-font-smoothing:antialiased;
 }
 
-/* ---------- selection ---------- */
+
 html[data-profile="terminal"] ::selection{
   background:var(--accent);
   color:#000;
 }
 
-/* ---------- header ---------- */
+
 html[data-profile="terminal"] .site-head{
   background:rgba(0,0,0,.85);
   backdrop-filter:saturate(120%) blur(6px);
@@ -1548,12 +1551,12 @@ html[data-profile="terminal"] .switch button[aria-checked="true"]{
   background:var(--accent);
 }
 
-/* ---------- generic section ---------- */
+
 html[data-profile="terminal"] section{ padding:var(--section-pad) 0; }
 html[data-profile="terminal"] section + section{ border-top:1px solid var(--line); }
 html[data-profile="terminal"] .hero{ border-top:0; }
 
-/* ---------- eyebrow as terminal comment ---------- */
+
 html[data-profile="terminal"] .eyebrow{
   font-family:var(--font-label);
   font-size:12px;
@@ -1569,7 +1572,7 @@ html[data-profile="terminal"] .eyebrow::before{
   color:var(--fg-soft);
 }
 
-/* ---------- headings ---------- */
+
 html[data-profile="terminal"] h1.headline,
 html[data-profile="terminal"] h2.h2{
   font-family:var(--font-head);
@@ -1588,7 +1591,7 @@ html[data-profile="terminal"] h2.h2 em{
   color:var(--accent);
 }
 
-/* ---------- hero ---------- */
+
 html[data-profile="terminal"] .hero{
   padding-top:84px;
   padding-bottom:84px;
@@ -1612,7 +1615,7 @@ html[data-profile="terminal"] .hero .sub{
   margin:22px 0 0;
 }
 
-/* ---------- work / cards ---------- */
+
 html[data-profile="terminal"] .cards{
   display:grid;
   grid-template-columns:repeat(3,1fr);
@@ -1656,7 +1659,7 @@ html[data-profile="terminal"] .card p{
   margin:0;
 }
 
-/* ---------- system / tokens ---------- */
+
 html[data-profile="terminal"] .tokens{
   display:grid;
   grid-template-columns:1fr 1fr;
@@ -1695,8 +1698,7 @@ html[data-profile="terminal"] .sw span{
   padding:0;
   border-radius:0;
 }
-/* swatch markup order: bg, surface, ink(#FAFAFA), accent(#10B981) — inline bg wins,
-   so colour the labels to clear AA against the swatch they actually sit on */
+
 html[data-profile="terminal"] .sw:nth-child(3) span{ color:#000; background:transparent; }
 html[data-profile="terminal"] .sw:nth-child(4) span{ color:#000; }
 
@@ -1732,7 +1734,7 @@ html[data-profile="terminal"] .specimen .label{
   margin:0;
 }
 
-/* ---------- candor ---------- */
+
 html[data-profile="terminal"] section.candor{
   background:var(--surface);
 }
@@ -1754,7 +1756,7 @@ html[data-profile="terminal"] p.candor b{
   font-weight:600;
 }
 
-/* ---------- footer: terminal / CLI ---------- */
+
 html[data-profile="terminal"] footer{
   position:relative;
   min-height:auto;
@@ -1815,8 +1817,7 @@ html[data-profile="terminal"] footer .foot-row span{
   50.01%,100%{ opacity:0; }
 }
 
-/* ---------- hero wordmark: drop base glow, keep shell's stroke setup;
-   the per-letter draw is driven by the shared shell via the --wm-* tokens ---------- */
+
 html[data-profile="terminal"] .hero .wordmark path{ filter:none; }
 
 @media (prefers-reduced-motion:reduce){
@@ -1861,7 +1862,7 @@ html[data-profile="soft"]{
   -webkit-font-smoothing:antialiased;
 }
 
-/* ---------- shared rhythm ---------- */
+
 html[data-profile="soft"] body{font-size:17px;line-height:1.6;}
 html[data-profile="soft"] .wrap{max-width:var(--maxw);margin:0 auto;padding:0 var(--pad);}
 html[data-profile="soft"] main#main{padding-top:8px;}
@@ -1885,7 +1886,7 @@ html[data-profile="soft"] h2.h2 em{
   color:var(--accent);
 }
 
-/* ---------- header ---------- */
+
 html[data-profile="soft"] .site-head{
   position:sticky;top:0;z-index:50;
   display:flex;align-items:center;justify-content:space-between;
@@ -1940,7 +1941,7 @@ html[data-profile="soft"] .switch button[aria-checked="true"]{
 }
 html[data-profile="soft"] .switch button:focus-visible{outline:2px solid var(--accent);outline-offset:2px;}
 
-/* ---------- hero ---------- */
+
 html[data-profile="soft"] .hero{
   position:relative;
   text-align:center;
@@ -1982,7 +1983,7 @@ html[data-profile="soft"] .hero .sub{
   margin:0 auto;
 }
 
-/* ---------- work / cards ---------- */
+
 html[data-profile="soft"] .work .h2,
 html[data-profile="soft"] .system .h2{
   font-family:var(--font-head);
@@ -2042,7 +2043,7 @@ html[data-profile="soft"] .card h3{
 }
 html[data-profile="soft"] .card p{font-size:15.5px;color:var(--fg-soft);line-height:1.62;margin:0;}
 
-/* ---------- system / tokens ---------- */
+
 html[data-profile="soft"] .tokens{
   display:grid;
   grid-template-columns:1fr 1fr;
@@ -2096,7 +2097,7 @@ html[data-profile="soft"] .specimen .label{
   color:var(--accent);margin:0;
 }
 
-/* ---------- candor ---------- */
+
 html[data-profile="soft"] .candor{padding-top:24px;}
 html[data-profile="soft"] .candor .wrap{
   max-width:760px;
@@ -2112,7 +2113,7 @@ html[data-profile="soft"] p.candor{
 }
 html[data-profile="soft"] p.candor b{color:var(--fg);font-weight:600;}
 
-/* ---------- footer (soft rounded gradient panel) ---------- */
+
 html[data-profile="soft"] footer{
   position:relative;
   min-height:auto;
@@ -2162,7 +2163,7 @@ html[data-profile="soft"] footer .foot-row span{
   border-radius:999px;
 }
 
-/* ---------- responsive ---------- */
+
 html[data-profile="soft"] .hero .wordmark{will-change:transform;}
 @media(max-width:880px){
   html[data-profile="soft"] .cards{grid-template-columns:1fr;}
@@ -2174,7 +2175,7 @@ html[data-profile="soft"] .hero .wordmark{will-change:transform;}
   html[data-profile="soft"] .switch button{padding:7px 12px;font-size:12px;}
 }
 
-/* ---------- reduced motion ---------- */
+
 @media(prefers-reduced-motion:reduce){
   html[data-profile="soft"] .wm,
   html[data-profile="soft"] .switch button,
@@ -2188,12 +2189,7 @@ html[data-profile="soft"] .hero .wordmark{will-change:transform;}
   }
 }
 
-/* ═══════════════════════════════════════════════════════════════
-   PROFILE: ACADEMIC  (scholarly research paper — cream, EB Garamond)
-   Clarity over beauty. Citations, footnotes, figure numbers.
-   Deep-red accent, navy secondary. NO hero/cards/CTA chrome:
-   masthead title + plain reference entries. Motion: none (print).
-   ═══════════════════════════════════════════════════════════════ */
+
 html[data-profile="academic"] {
   --bg:#FFFFF0; --surface:#FFFFF0; --fg:#1A1A1A; --fg-soft:#403B33;
   --line:#D9D2BF; --accent:#8B0000; --accent-2:#2E5090;
@@ -2203,11 +2199,11 @@ html[data-profile="academic"] {
   --radius:0; --maxw:920px; --pad:40px; --section-pad:56px;
   --head-weight:600; --head-tracking:0; --head-leading:1.12; --head-transform:none;
   --label-tracking:0.1em; --label-transform:uppercase;
-  /* printing metaphor: the mark sets at once, no animated draw */
+  
   --wm-base:0s; --wm-step:0s; --wm-ldur:.01s; --wm-brdur:.01s; --wm-ease:linear;
 }
 
-/* ---- paper canvas ---- */
+
 html[data-profile="academic"] body {
   font-size:16px; line-height:1.62; -webkit-font-smoothing:auto;
   background:var(--bg); color:var(--fg);
@@ -2215,7 +2211,7 @@ html[data-profile="academic"] body {
 html[data-profile="academic"] a { color:var(--accent-2); text-underline-offset:2px; }
 html[data-profile="academic"] .wrap { max-width:var(--maxw); }
 
-/* ── header: a thin running-head / journal masthead ───────────── */
+
 html[data-profile="academic"] .site-head {
   border-bottom:1px solid var(--fg);
   padding:16px var(--pad) 14px;
@@ -2243,20 +2239,20 @@ html[data-profile="academic"] .switch button[aria-checked="true"] {
   border-color:var(--accent); border-bottom-width:2px; font-weight:700;
 }
 
-/* ── sections: thin rules, like paper section breaks ──────────── */
+
 html[data-profile="academic"] section {
   border-top:1px solid var(--line); padding:var(--section-pad) 0;
 }
 html[data-profile="academic"] .hero { border-top:0; }
 
-/* eyebrow = a small-caps editorial kicker, deep red */
+
 html[data-profile="academic"] .eyebrow {
   font-family:var(--font-label); font-weight:600; font-size:14px;
   font-variant:small-caps; letter-spacing:.08em; text-transform:none;
   color:var(--accent); margin:0 0 10px;
 }
 
-/* ── HERO restyled as a TITLE / MASTHEAD block (no hero chrome) ── */
+
 html[data-profile="academic"] .hero .wordmark {
   width:min(46%,210px); margin:0 0 26px;
 }
@@ -2269,14 +2265,14 @@ html[data-profile="academic"] h1.headline {
   text-transform:none; color:var(--fg); max-width:24ch; margin:0 0 16px;
 }
 html[data-profile="academic"] h1.headline em { font-style:italic; color:var(--accent); }
-/* abstract-style lede: justified, narrow measure, navy left rule */
+
 html[data-profile="academic"] .hero .sub {
   font-family:var(--font-body); font-size:17px; line-height:1.6;
   color:var(--fg); max-width:60ch; margin:0;
   border-left:2px solid var(--accent-2); padding-left:16px;
   text-align:justify; hyphens:auto;
 }
-/* author–date / received line under the abstract */
+
 html[data-profile="academic"] .hero::after {
   content:"sdfkjh.com · Received 2026 · Vol. 1, No. 9";
   display:block; margin-top:22px;
@@ -2284,7 +2280,7 @@ html[data-profile="academic"] .hero::after {
   letter-spacing:.06em; color:var(--fg-soft);
 }
 
-/* ── section headings: numbered like paper sections ───────────── */
+
 html[data-profile="academic"] h2.h2 {
   font-family:var(--font-head); font-weight:600;
   font-size:clamp(24px,3vw,32px); line-height:1.15; letter-spacing:0;
@@ -2292,9 +2288,7 @@ html[data-profile="academic"] h2.h2 {
 }
 html[data-profile="academic"] h2.h2 em { font-style:italic; color:var(--accent); }
 
-/* ── CARDS → plain numbered REFERENCE entries (no chrome) ─
-   two-column flow with hanging deep-red numbers; no borders,
-   no surface, no radius. Reads like a references list. */
+
 html[data-profile="academic"] .cards {
   display:block; columns:2; column-gap:48px;
   column-rule:1px solid var(--line);
@@ -2323,7 +2317,7 @@ html[data-profile="academic"] .card p {
   color:var(--fg-soft); margin:0; text-align:justify; hyphens:auto;
 }
 
-/* ── tokens / specimen: a labelled figure with a caption ──────── */
+
 html[data-profile="academic"] .tokens {
   grid-template-columns:0.9fr 1.1fr; gap:44px; align-items:start;
 }
@@ -2340,8 +2334,7 @@ html[data-profile="academic"] .sw span {
   letter-spacing:.04em; background:rgba(255,255,240,.9); color:#1A1A1A;
   border-radius:0; padding:1px 5px;
 }
-/* figure caption: forced onto its own full-width row beneath the strip
-   (the swatch strip is a flexbox, so the ::after must basis:100% to wrap) */
+
 html[data-profile="academic"] .swatches::after {
   content:"Figure 1. Four tokens drive the entire palette.";
   flex:0 0 100%; display:block; margin-top:10px;
@@ -2363,7 +2356,7 @@ html[data-profile="academic"] .specimen .label {
   letter-spacing:.06em; text-transform:none; color:var(--accent);
 }
 
-/* ── candor block: a footnote ─────────────────────────────────── */
+
 html[data-profile="academic"] .candor {
   font-family:var(--font-body); font-size:14px; line-height:1.65;
   color:var(--fg-soft); border-left:0; padding-left:24px; max-width:68ch;
@@ -2376,7 +2369,7 @@ html[data-profile="academic"] .candor::before {
 }
 html[data-profile="academic"] .candor b { color:var(--accent); font-weight:600; font-style:italic; }
 
-/* ── FOOTER: scholarly colophon (reset off the cresting slab) ──── */
+
 html[data-profile="academic"] footer {
   position:relative; min-height:auto; padding:40px var(--pad) 48px;
   background:var(--bg); border-top:1px solid var(--fg);
@@ -2398,7 +2391,7 @@ html[data-profile="academic"] footer .foot-row {
 }
 html[data-profile="academic"] footer .foot-row span:last-child { color:var(--fg-soft); }
 
-/* ── motion: none. clean static end-state under any preference. ─ */
+
 html[data-profile="academic"] .hero .wm-cursor.on { animation:none; opacity:0; }
 html[data-profile="academic"] .hero .wordmark path { filter:none; }
 @media (max-width:760px){
@@ -2406,11 +2399,7 @@ html[data-profile="academic"] .hero .wordmark path { filter:none; }
   html[data-profile="academic"] .hero .sub { text-align:left; }
 }
 
-/* ═══════════════════════════════════════════════════════════════
-   PROFILE: FINTECH  (Ramp-style edgy financial — near-black, single
-   amber accent used sparingly, 2px brutalist borders, 0 radius,
-   condensed-gothic heads, serif-italic pull-quotes. Sharp, expensive.)
-   ═══════════════════════════════════════════════════════════════ */
+
 html[data-profile="fintech"] {
   --bg:#0A0A0A; --surface:#111111; --fg:#FFFFFF; --fg-soft:#A3A3A3;
   --line:#262626; --accent:#F59E0B; --accent-2:#FFFFFF;
@@ -2431,7 +2420,7 @@ html[data-profile="fintech"] .wrap { max-width:var(--maxw); padding:0 var(--pad)
 html[data-profile="fintech"] a { color:var(--accent); }
 html[data-profile="fintech"] .hero .wordmark path { filter:none; }
 
-/* ── header / wordmark / dial ─────────────────────────────────── */
+
 html[data-profile="fintech"] .site-head {
   border-bottom:2px solid var(--line); background:var(--bg);
   padding:22px var(--pad);
@@ -2459,11 +2448,11 @@ html[data-profile="fintech"] .switch button[aria-checked="true"] {
   html[data-profile="fintech"] .switch button { border-bottom:2px solid var(--line); }
 }
 
-/* ── sections: heavy 2px rules, deliberate spacing ────────────── */
+
 html[data-profile="fintech"] section { border-top:2px solid var(--line); }
 html[data-profile="fintech"] .hero { border-top:0; padding-top:84px; }
 
-/* eyebrow: mono, amber, with a short amber tick — the sparing accent */
+
 html[data-profile="fintech"] .eyebrow {
   font-family:var(--font-label); font-weight:500; font-size:12px;
   letter-spacing:var(--label-tracking); text-transform:uppercase;
@@ -2474,7 +2463,7 @@ html[data-profile="fintech"] .eyebrow::before {
   content:""; width:24px; height:2px; background:var(--accent); flex:none;
 }
 
-/* headline: condensed gothic, tight, uppercase. <em> stays amber (sparing). */
+
 html[data-profile="fintech"] h1.headline {
   font-family:var(--font-head); font-weight:800;
   font-size:clamp(48px,8.4vw,104px); line-height:.94;
@@ -2490,7 +2479,7 @@ html[data-profile="fintech"] .sub {
   line-height:1.6; color:var(--fg-soft); max-width:50ch; font-weight:400;
 }
 
-/* H2: same condensed gothic; em white, not amber (keeps amber rare) */
+
 html[data-profile="fintech"] h2.h2 {
   font-family:var(--font-head); font-weight:800;
   font-size:clamp(32px,4.6vw,56px); line-height:.98;
@@ -2499,7 +2488,7 @@ html[data-profile="fintech"] h2.h2 {
 }
 html[data-profile="fintech"] h2.h2 em { font-style:normal; color:var(--accent-2); }
 
-/* 60/40 asymmetric split: heads in the narrow left rail, content right */
+
 html[data-profile="fintech"] .work .wrap,
 html[data-profile="fintech"] .system .wrap {
   display:grid; grid-template-columns:minmax(0,4fr) minmax(0,6fr);
@@ -2520,7 +2509,7 @@ html[data-profile="fintech"] .system .wrap > .tokens { grid-column:2; grid-row:1
   html[data-profile="fintech"] .system .wrap > .h2 { margin-bottom:36px; }
 }
 
-/* cards: brutalist single-column stack, 2px borders, amber index, 0 radius */
+
 html[data-profile="fintech"] .cards { display:flex; flex-direction:column; gap:0; border:2px solid var(--line); }
 html[data-profile="fintech"] .card {
   border:0; border-top:2px solid var(--line); border-radius:0;
@@ -2539,7 +2528,7 @@ html[data-profile="fintech"] .card h3 {
 }
 html[data-profile="fintech"] .card p { font-family:var(--font-body); font-size:15px; color:var(--fg-soft); margin:0; }
 
-/* tokens / swatches / specimen */
+
 html[data-profile="fintech"] .tokens { display:block; }
 html[data-profile="fintech"] .swatches { gap:0; border:2px solid var(--line); margin-bottom:36px; }
 html[data-profile="fintech"] .sw {
@@ -2551,8 +2540,7 @@ html[data-profile="fintech"] .sw span {
   font-family:var(--font-label); font-size:10px; letter-spacing:.12em; text-transform:uppercase;
   background:#0A0A0A; color:#FFFFFF; border:1px solid var(--line); border-radius:0; padding:2px 6px;
 }
-/* the "ink" swatch carries an inline near-white chip bg in the shared HTML —
-   force it back to the near-black chip so the label stays legible (white-on-white bug) */
+
 html[data-profile="fintech"] .sw span[style] { background:#0A0A0A !important; color:#FFFFFF !important; }
 html[data-profile="fintech"] .sw:nth-child(4) span { background:#0A0A0A; color:var(--accent); }
 html[data-profile="fintech"] .specimen .big {
@@ -2565,7 +2553,7 @@ html[data-profile="fintech"] .specimen .label {
   text-transform:uppercase; color:var(--accent);
 }
 
-/* candor: serif italic pull-quote — the one warm, literary note */
+
 html[data-profile="fintech"] .candor {
   font-family:"EB Garamond",Georgia,serif; font-style:italic; font-weight:400;
   font-size:clamp(22px,2.8vw,30px); line-height:1.45; color:var(--fg);
@@ -2574,8 +2562,7 @@ html[data-profile="fintech"] .candor {
 }
 html[data-profile="fintech"] .candor b { font-style:italic; font-weight:600; color:var(--accent); }
 
-/* ── footer: black slab, 2px amber top border, outlined amber mark ─
-   Full reset of the base cresting/waterline layout so nothing leaks. */
+
 html[data-profile="fintech"] footer {
   position:relative; min-height:auto; padding:64px var(--pad) 56px;
   background:#0A0A0A; border-top:2px solid var(--accent);
@@ -2596,20 +2583,13 @@ html[data-profile="fintech"] footer .foot-row {
   text-transform:uppercase; color:#A3A3A3;
 }
 
-/* ── motion: slow, deliberate scroll-reveal; NO hover scaling, ─────
-   border-to-amber only. Static-first under reduced-motion. ─────── */
+
 @media (prefers-reduced-motion: no-preference) {
   html[data-profile="fintech"] .card:hover { border-color:var(--accent); background:#161310; }
   html[data-profile="fintech"] .card:first-child:hover { border-top-color:var(--accent); }
 }
 
-/* ═══════════════════════════════════════════════════════════════
-   PROFILE: MAXIMAL  (maximalist-postmodern — the deliberate LOUD anchor)
-   Controlled maximalism: bold clashing colour fields + FOUR real fonts in
-   one view (Anton display / EB Garamond italic / Archivo UI / JetBrains
-   labels) + checker pattern + double/dashed/bevel borders + composed
-   asymmetry. Authored, not chaotic — no marquee, no blink, no gif junk.
-   ═══════════════════════════════════════════════════════════════ */
+
 html[data-profile="maximal"] {
   --bg:#FFE600; --surface:#FFFFFF; --fg:#16140A; --fg-soft:#3A3520;
   --line:#16140A; --accent:#2B2BE0; --accent-2:#D6006E;
@@ -2625,7 +2605,7 @@ html[data-profile="maximal"] {
   --wm-base:.24s; --wm-step:.075s; --wm-ldur:.26s; --wm-brdur:.34s; --wm-ease:cubic-bezier(.34,1.56,.5,1);
 }
 
-/* ── canvas: bold yellow + a quiet checker so it reads patterned, not flat ── */
+
 html[data-profile="maximal"] body {
   font-family:var(--font-body); font-size:16px; line-height:1.6; font-weight:500;
   -webkit-font-smoothing:auto;
@@ -2639,7 +2619,7 @@ html[data-profile="maximal"] body {
 html[data-profile="maximal"] .wrap { max-width:var(--maxw); padding:0 var(--pad); }
 html[data-profile="maximal"] a { color:#0A0A8C; }
 
-/* ── header: a fat black-ruled bar over the yellow ── */
+
 html[data-profile="maximal"] .site-head {
   border-bottom:5px double var(--fg);
   background:var(--surface);
@@ -2653,7 +2633,7 @@ html[data-profile="maximal"] .wm {
 }
 html[data-profile="maximal"] .wm .br { color:var(--accent-2); }
 
-/* dial: clashing pill buttons, each a different fill — still legible ink-on-bright */
+
 html[data-profile="maximal"] .switch { gap:7px; }
 html[data-profile="maximal"] .switch button {
   font-family:var(--font-label); font-size:11px; font-weight:700;
@@ -2671,11 +2651,11 @@ html[data-profile="maximal"] .switch button[aria-checked="true"] {
   box-shadow:3px 3px 0 var(--accent-2); transform:none;
 }
 
-/* ── sections: heavy black rules ── */
+
 html[data-profile="maximal"] section { border-top:5px solid var(--fg); }
 html[data-profile="maximal"] .hero { border-top:0; padding-top:60px; }
 
-/* eyebrow: a slapped, slightly-tilted mono sticker on a clashing fill */
+
 html[data-profile="maximal"] .eyebrow {
   display:inline-block; font-family:var(--font-label); font-weight:700;
   font-size:12px; letter-spacing:.12em; text-transform:uppercase;
@@ -2686,8 +2666,7 @@ html[data-profile="maximal"] .eyebrow {
 html[data-profile="maximal"] .work .eyebrow   { background:var(--c-lilac); }
 html[data-profile="maximal"] .system .eyebrow { background:var(--c-orange); }
 
-/* headline: ANTON, huge + tight + uppercase, with an EB-Garamond italic em
-   for the clash — two fonts inside one line, the maximalist signature move */
+
 html[data-profile="maximal"] h1.headline {
   font-family:var(--font-head); font-weight:400;
   font-size:clamp(52px,9.2vw,118px); line-height:.86;
@@ -2703,7 +2682,7 @@ html[data-profile="maximal"] h1.headline em {
   display:inline-block; transform:rotate(-2.5deg); margin:0 .06em;
   text-shadow:none;
 }
-/* sub: EB Garamond — the serif voice against the Anton/Archivo, on a card */
+
 html[data-profile="maximal"] .sub {
   font-family:var(--font-serif); font-size:clamp(18px,2.1vw,23px);
   font-style:italic; line-height:1.4; color:var(--fg); font-weight:500;
@@ -2717,7 +2696,7 @@ html[data-profile="maximal"] .hero::after {
   border:2px solid var(--fg);
 }
 
-/* H2: Anton with an EB-Garamond italic em on a cyan slab */
+
 html[data-profile="maximal"] h2.h2 {
   font-family:var(--font-head); font-weight:400;
   font-size:clamp(34px,5.2vw,62px); line-height:.92;
@@ -2731,8 +2710,7 @@ html[data-profile="maximal"] h2.h2 em {
   padding:0 .12em; display:inline-block;
 }
 
-/* ── cards: composed asymmetry — each a clashing block, retro bevel,
-   different border treatment, gently rotated, overlapping idx badge ── */
+
 html[data-profile="maximal"] .cards { gap:30px 26px; }
 html[data-profile="maximal"] .card {
   border:3px solid var(--fg); border-radius:0; background:var(--surface);
@@ -2742,7 +2720,7 @@ html[data-profile="maximal"] .card:nth-child(1) { background:var(--c-lilac); box
 html[data-profile="maximal"] .card:nth-child(2) { background:var(--surface); box-shadow:8px 8px 0 var(--accent-2); border-style:dashed; transform:rotate(.9deg) translateY(16px); z-index:2; }
 html[data-profile="maximal"] .card:nth-child(3) { background:var(--c-lime); box-shadow:8px 8px 0 var(--fg); transform:rotate(-.5deg); }
 html[data-profile="maximal"] .card:hover { transform:translate(-2px,-2px) rotate(0deg); box-shadow:11px 11px 0 var(--fg); }
-/* idx as a round mono badge crashing the top-left corner */
+
 html[data-profile="maximal"] .card .idx {
   font-family:var(--font-label); font-weight:700; font-size:14px; letter-spacing:.04em;
   color:#FFFFFF; background:var(--accent); border:2px solid var(--fg);
@@ -2762,7 +2740,7 @@ html[data-profile="maximal"] .card p {
   color:var(--fg); font-weight:500;
 }
 
-/* ── tokens / swatches: chunky bevelled chips in a double-ruled frame ── */
+
 html[data-profile="maximal"] .tokens { gap:40px; }
 html[data-profile="maximal"] .swatches {
   gap:0; border:3px double var(--fg); box-shadow:7px 7px 0 var(--accent-2);
@@ -2778,7 +2756,7 @@ html[data-profile="maximal"] .sw span {
   background:var(--fg); color:#FFFFFF; border-radius:0; padding:3px 6px;
 }
 html[data-profile="maximal"] .sw span[style] { background:var(--fg) !important; color:#FFFFFF !important; }
-/* specimen: every font in one stack — Anton head, Garamond body, mono label */
+
 html[data-profile="maximal"] .specimen .big {
   font-family:var(--font-head); font-weight:400; font-size:clamp(38px,5.4vw,64px);
   line-height:.9; letter-spacing:.01em; text-transform:uppercase;
@@ -2797,7 +2775,7 @@ html[data-profile="maximal"] .specimen .label {
   box-shadow:3px 3px 0 var(--fg); padding:4px 9px; margin-top:16px;
 }
 
-/* ── candor: a loud bordered notice with a clashing left bar ── */
+
 html[data-profile="maximal"] .candor {
   font-family:var(--font-body); font-size:15px; line-height:1.65;
   color:var(--fg); font-weight:500; max-width:62ch;
@@ -2810,14 +2788,10 @@ html[data-profile="maximal"] .candor b {
   font-weight:700; padding:1px 7px; text-transform:uppercase;
 }
 
-/* ── hero wordmark: a flat coloured drop, no glow ── */
+
 html[data-profile="maximal"] .hero .wordmark path { filter:drop-shadow(4px 4px 0 var(--accent-2)); }
 
-/* ═══════════════════════════════════════════════════════════════
-   FOOTER — colour-blocked, clashing blocks; SDFKJH huge with a thick
-   contrasting OUTLINE; double/dashed borders; foot-row in a cobalt block.
-   Reset the base cresting-slab layout entirely.
-   ═══════════════════════════════════════════════════════════════ */
+
 html[data-profile="maximal"] footer {
   position:relative; min-height:auto; padding:0; overflow:hidden;
   background:var(--c-cyan); border-top:5px double var(--fg);
@@ -2846,7 +2820,7 @@ html[data-profile="maximal"] footer .foot-row {
   letter-spacing:.06em; text-transform:uppercase; color:#FFFFFF;
 }
 
-/* ── responsive ── */
+
 @media (max-width:760px) {
   html[data-profile="maximal"] .cards,
   html[data-profile="maximal"] .tokens { grid-template-columns:1fr; }
@@ -2854,8 +2828,7 @@ html[data-profile="maximal"] footer .foot-row {
   html[data-profile="maximal"] .swatches { flex-wrap:nowrap; }
 }
 
-/* ── motion: a springy pop on the cards + a tilt-settle on hover.
-   No marquee, no blink. Reduced-motion falls back to the static end-state. ── */
+
 @media (prefers-reduced-motion: no-preference) {
   html[data-profile="maximal"] h1.headline em { transition:transform .18s cubic-bezier(.34,1.56,.5,1); }
   html[data-profile="maximal"] h1.headline:hover em { transform:rotate(0deg) scale(1.04); }
@@ -2865,7 +2838,7 @@ html[data-profile="maximal"] footer .foot-row {
   html[data-profile="maximal"] .specimen .label:hover { transform:rotate(0deg) translate(-1px,-1px); box-shadow:6px 6px 0 var(--fg); }
 }
 
-  /* ── design console (tool overlay — its own fixed look, NOT part of any skin) ── */
+  
   .dz-toggle { position:fixed; right:20px; bottom:20px; z-index:10000; display:inline-flex; align-items:center; gap:8px; font-family:'JetBrains Mono',ui-monospace,monospace; font-size:12px; letter-spacing:.06em; text-transform:uppercase; color:#E9ECF1; background:rgba(18,20,26,.85); border:1px solid rgba(255,255,255,.14); border-radius:999px; padding:10px 16px; cursor:pointer; -webkit-backdrop-filter:blur(10px); backdrop-filter:blur(10px); box-shadow:0 8px 30px -10px rgba(0,0,0,.6); transition:transform .25s cubic-bezier(.2,.8,.2,1), border-color .25s; }
   .dz-toggle:hover { transform:translateY(-2px); border-color:rgba(255,255,255,.32); }
   .dz-toggle-dot { width:9px; height:9px; border-radius:50%; background:conic-gradient(from 0deg,#ff5470,#ffd166,#06d6a0,#118ab2,#9b5de5,#ff5470); box-shadow:0 0 8px rgba(255,255,255,.45); }
@@ -2915,8 +2888,10 @@ html[data-profile="maximal"] footer .foot-row {
   html[data-hero="split"] .hero .eyebrow, html[data-hero="split"] .hero .headline, html[data-hero="split"] .hero .sub { grid-column:1; }
   @media(max-width:760px){ html[data-hero="split"] .hero .wrap { display:block; } html[data-hero="split"] .hero .wordmark { max-width:240px; } }
   html[data-footer="minimal"] footer { min-height:0 !important; background:var(--bg) !important; border-top:1px solid var(--line) !important; padding:40px var(--pad) !important; }
-  html[data-footer="minimal"] footer .foot-mark { position:static !important; inset:auto !important; transform:none !important; -webkit-text-fill-color:currentColor !important; background:none !important; font-size:22px !important; letter-spacing:.24em !important; line-height:1 !important; text-align:left !important; color:var(--fg-soft) !important; margin:0 0 10px !important; }
-  html[data-footer="minimal"] footer .foot-row { position:static !important; padding:0 !important; color:var(--fg-soft) !important; }
+  html[data-footer="minimal"] footer .foot-mark { position:static !important; inset:auto !important; transform:none !important; -webkit-text-fill-color:currentColor !important; -webkit-text-stroke:0 !important; text-shadow:none !important; background:none !important; font-size:22px !important; letter-spacing:.24em !important; line-height:1 !important; text-align:left !important; color:var(--fg-soft) !important; margin:0 0 10px !important; }
+  html[data-footer="minimal"] footer .foot-row { position:static !important; padding:0 !important; color:var(--fg-soft) !important; background:none !important; }
+  html[data-footer="minimal"] footer::before, html[data-footer="minimal"] footer::after,
+  html[data-footer="minimal"] footer .foot-mark::before, html[data-footer="minimal"] footer .foot-mark::after { display:none !important; content:none !important; }
 
 
   #dzTexture { position:fixed; inset:0; z-index:5; pointer-events:none; opacity:0; }
@@ -2936,7 +2911,7 @@ html[data-profile="maximal"] footer .foot-row {
 <a class="skip-link" href="#main">Skip to content</a>
 
 <header class="site-head">
-  <a href="#" class="wm" aria-label="sdfkjh — home"><span class="br">[</span>&nbsp;sdfkjh&nbsp;<span class="br">]</span></a>
+  <a href="/" class="wm" aria-label="sdfkjh — home"><span class="br">[</span>&nbsp;sdfkjh&nbsp;<span class="br">]</span></a>
   <div class="switch" role="radiogroup" aria-label="Design profile">
     <button type="button" role="radio" data-set="editorial" aria-checked="true" tabindex="0">Editorial</button>
     <button type="button" role="radio" data-set="swiss" aria-checked="false" tabindex="-1">Swiss</button>
@@ -3029,10 +3004,7 @@ html[data-profile="maximal"] footer .foot-row {
 
 <script src="/assets/js/anime.iife.min.js"></script>
 <script>
-  /* Motion = anime.js v4, using the vocabulary extracted from animejs.com:
-     stagger() as the workhorse, the power easings out(n)/inOut(n), createSpring
-     only where a profile wants life. Each profile gets its own motion character
-     from the same library. All gated on prefers-reduced-motion (static-first). */
+  
   (function(){
     var root = document.documentElement;
     var btns = [].slice.call(document.querySelectorAll('.switch button'));
@@ -3066,7 +3038,7 @@ html[data-profile="maximal"] footer .foot-row {
       if (m.spring) A.animate('.headline', { scale:[0.984,1], ease:m.spring, duration:620 });
     }
 
-    /* the wordmark writes itself, restyled per profile, redrawn on every switch */
+    
     var wmTimers = [];
     function cursorEl(){ return document.querySelector('.wm-cursor'); }
     function drawWordmark(){
@@ -3076,12 +3048,12 @@ html[data-profile="maximal"] footer .foot-row {
       if (reduce){
         c.setAttribute('opacity','1'); c.classList.add('on'); return;
       }
-      // arm (hide strokes) + re-trigger the CSS keyframe draw via a reflow
+      
       root.classList.add('wm-armed');
       root.classList.remove('wm-draw');
       void document.body.offsetWidth;
       root.classList.add('wm-draw');
-      // cursor blinks once the final letter has finished — timed off this profile's CSS draw vars
+      
       var cs = getComputedStyle(root);
       var base = (parseFloat(cs.getPropertyValue('--wm-base')) || 0.45) * 1000;
       var step = (parseFloat(cs.getPropertyValue('--wm-step')) || 0.16) * 1000;
@@ -3121,8 +3093,8 @@ html[data-profile="maximal"] footer .foot-row {
 <div class="dz-toggle" id="dzToggle" role="button" tabindex="0" aria-expanded="false" aria-controls="dzPanel" title="Open design console"><span class="dz-toggle-dot"></span>Tune</div>
 <aside class="dz-panel" id="dzPanel" role="dialog" aria-label="Design console" hidden>
   <div class="dz-head"><span>Design console</span><button class="dz-x" id="dzClose" aria-label="Close console">&times;</button></div>
-  <div class="dz-sec-h">Color &mdash; Fibonacci</div>
-  <p class="dz-note">Drag the hue. The palette regenerates from one base &mdash; golden-angle accent, Fibonacci tints &mdash; and self-corrects to stay AA-readable on this profile.</p>
+  <div class="dz-sec-h">Color &mdash; golden-angle</div>
+  <p class="dz-note">Drag the hue. The palette regenerates from one base &mdash; a golden-angle companion accent &mdash; and self-corrects to stay AA-readable on this profile.</p>
   <input class="dz-hue" id="dzHue" type="range" min="0" max="359" value="210" aria-label="Base hue"/>
   <div class="dz-sw" id="dzSwatches" aria-hidden="true"></div>
   <div class="dz-row">
@@ -3137,7 +3109,7 @@ html[data-profile="maximal"] footer .foot-row {
   <div class="dz-lay"><span class="dz-lay-l">Hero</span><div class="dz-packs" id="dzHero"></div></div>
   <div class="dz-lay" style="margin-top:8px"><span class="dz-lay-l">Footer</span><div class="dz-packs" id="dzFoot"></div></div>
   <div class="dz-sec-h" style="margin-top:18px">Proportion</div>
-  <p class="dz-note">Golden-ratio type scale &amp; spacing rhythm.</p>
+  <p class="dz-note">A three-step type scale &amp; spacing rhythm.</p>
   <div class="dz-lay"><span class="dz-lay-l">Scale</span><div class="dz-packs" id="dzScale"></div></div>
   <div class="dz-lay" style="margin-top:8px"><span class="dz-lay-l">Space</span><div class="dz-packs" id="dzSpace"></div></div>
   <div class="dz-sec-h" style="margin-top:18px">Texture</div>
@@ -3171,10 +3143,11 @@ html[data-profile="maximal"] footer .foot-row {
     paintSwatches(acc,acc2);
   }
   function reset(){ OVR.forEach(function(v){ root.style.removeProperty(v); }); paintSwatches(); }
-  function open(){ panel.hidden=false; toggle.setAttribute('aria-expanded','true'); }
-  function close(){ panel.hidden=true; toggle.setAttribute('aria-expanded','false'); }
+  function open(){ panel.hidden=false; toggle.setAttribute('aria-expanded','true'); var c=document.getElementById('dzClose'); if(c) c.focus(); }
+  function close(){ panel.hidden=true; toggle.setAttribute('aria-expanded','false'); toggle.focus(); }
   toggle.addEventListener('click',function(){ panel.hidden?open():close(); });
   toggle.addEventListener('keydown',function(e){ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); panel.hidden?open():close(); } });
+  panel.addEventListener('keydown',function(e){ if(e.key==='Escape'){ e.preventDefault(); close(); } });
   document.getElementById('dzClose').addEventListener('click',close);
   hue.addEventListener('input',function(){ recolor(+hue.value); });
   document.getElementById('dzShuffle').addEventListener('click',function(){ var v=Math.floor(Math.random()*360); hue.value=v; recolor(v); });
@@ -3212,7 +3185,7 @@ html[data-profile="maximal"] footer .foot-row {
   var pr=document.createElement('div'); pr.className='dz-presets';
   HUES.forEach(function(hv){ var b=document.createElement('button'); b.type='button'; b.className='dz-preset'; b.setAttribute('data-h',hv); b.setAttribute('aria-label','Accent hue '+hv); pr.appendChild(b); });
   hue.parentNode.insertBefore(pr, hue);
-  var meter=document.createElement('div'); meter.className='dz-meter'; meter.id='dzMeter';
+  var meter=document.createElement('div'); meter.className='dz-meter'; meter.id='dzMeter'; meter.setAttribute('aria-live','polite');
   hue.parentNode.insertBefore(meter, hue.nextSibling);
   function paint(){ for(var i=0;i<pr.children.length;i++){ var c=preview(+pr.children[i].getAttribute('data-h')); pr.children[i].style.background='rgb('+c[0]+','+c[1]+','+c[2]+')'; } }
   function meterUp(){ var r=ct(rgb(gv('--accent')),rgb(gv('--bg'))); var lvl=r>=7?'AAA':(r>=4.5?'AA':(r>=3?'AA large':'low')); meter.textContent='accent / bg  '+r.toFixed(2)+':1  '+(r<4.5?'⚠ '+lvl:'✓ '+lvl); meter.className='dz-meter'+(r<4.5?' bad':''); }
