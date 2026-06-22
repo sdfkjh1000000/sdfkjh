@@ -5,6 +5,7 @@
 ## Pages
 
 - [Home](https://sdfkjh.com/): the showcase itself — interactive REPL, per-section design editor, effects lab, self-hosted fonts and imagery, no third-party trackers.
+- [Design range](https://sdfkjh.com/range): one markup rendered in fifteen complete design systems — switch the whole look live, then tune color, type, and layout in the browser.
 - [Privacy](https://sdfkjh.com/privacy): what the site does and does not collect (no analytics, no tracking cookies).
 - [Do Not Sell or Share](https://sdfkjh.com/do-not-sell): voluntary CCPA/CPRA stance.
 - [Terms](https://sdfkjh.com/terms): terms of use.
