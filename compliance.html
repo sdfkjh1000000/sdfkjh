@@ -135,10 +135,15 @@
 
   /* footer */
   footer[role="contentinfo"] {
-    padding: 26px 32px; font-family: var(--mono); font-size: 12px; color: var(--ink-soft);
-    letter-spacing: 0.04em; border-top: 1px solid var(--border);
-    display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap;
+    padding: 48px 32px; text-align: center; border-top: 1px solid var(--border);
   }
+  .foot-mast { font-family: var(--serif); font-weight: 500; font-size: clamp(52px, 10vw, 116px); line-height: 0.95; letter-spacing: 0.01em; color: var(--ink); display: inline-flex; align-items: baseline; gap: 0.1em; justify-content: center; }
+  .foot-mast .br { color: var(--amber-dim); font-family: var(--mono); font-size: 0.46em; }
+  .foot-rule { height: 2px; width: 64px; background: var(--amber); border: 0; margin: 20px auto 18px; }
+  .foot-cp { font-family: var(--mono); font-size: calc(12px * var(--type-scale, 1)); color: var(--ink-soft); letter-spacing: 0.04em; margin: 0; }
+  .foot-rows { margin-top: 20px; display: flex; flex-direction: column; gap: 12px; font-family: var(--mono); font-size: calc(12.5px * var(--type-scale, 1)); }
+  .foot-r { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; align-items: baseline; margin: 0; }
+  .foot-lbl { font-family: var(--mono); font-size: 10px; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; color: var(--amber-dim); align-self: center; }
   footer a { color: var(--ink-soft); text-decoration: none; border: 0; }
   footer a:hover { color: var(--amber-dim); }
   footer .dot { color: var(--amber-dim); }
@@ -243,8 +248,12 @@
 </main>
 
 <footer role="contentinfo">
-  <span>&copy; 2010&ndash;2030 sdfkjh.com</span>
-  <span><a href="/privacy">privacy</a> <span class="dot">&middot;</span> <a href="/do-not-sell">do not sell</a> <span class="dot">&middot;</span> <a href="/terms">terms</a> <span class="dot">&middot;</span> <a href="/accessibility">accessibility</a> <span class="dot">&middot;</span> <a href="/compliance">compliance</a></span>
+  <div class="foot-mast"><span class="br">[</span>sdfkjh<span class="br">]</span></div>
+  <hr class="foot-rule">
+  <p class="foot-cp">&copy; 2010&ndash;2030 sdfkjh.com</p>
+  <div class="foot-rows">
+    <p class="foot-r"><span class="foot-lbl">Legal</span> <a href="/privacy">privacy</a> <span class="dot">&middot;</span> <a href="/do-not-sell">do not sell</a> <span class="dot">&middot;</span> <a href="/terms">terms</a> <span class="dot">&middot;</span> <a href="/accessibility">accessibility</a> <span class="dot">&middot;</span> <a href="/compliance">compliance</a></p>
+  </div>
 </footer>
 
 </body>
