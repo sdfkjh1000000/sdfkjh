@@ -24,6 +24,10 @@ Left hand: **sdf**. Right hand: **kjh**. Brand and web are two hands on one keyb
 
 One page renders in five formats — html · markdown · json · css · javascript.
 
+## Design range
+
+One markup, fifteen complete design systems — switch the whole look live, then tune color, type, and layout in the browser: [sdfkjh.com/range](https://sdfkjh.com/range).
+
 ## The console
 
 The homepage includes a working JavaScript REPL. Commands:
