@@ -551,7 +551,7 @@
   }
 
   /* ── playground · cursor follower (toggle: // effects → cursor) ──
-     award-winning micro-interaction: an eased ring lags an instant dot,
+     cursor micro-interaction: an eased ring lags an instant dot,
      and the ring swells over interactive targets. */
   html.fx-cursor, html.fx-cursor * { cursor: none !important; }
   .cursor-ring, .cursor-dot {
@@ -619,7 +619,7 @@
     }
   }
 
-  /* ── effects-lab · award-winning presets ───────────────────────
+  /* ── effects-lab · studio-inspired presets ───────────────────────
      each preset button snaps the whole lab to a curated state. */
   .lab .lab-rov { margin-top: 2px; }
   .lab .lab-presets { display: flex; flex-direction: column; gap: 6px; margin-bottom: 14px; }
@@ -1209,7 +1209,7 @@ Brand and web are two hands on one keyboard.
               <button type="button" class="lab-btn" data-lab-clear>all off</button>
             </div>
             <label class="toggle lab-rov"><input type="checkbox" data-lab-rov/><span>random on visit</span></label>
-            <div class="lab-presets" role="group" aria-label="award-winning presets">
+            <div class="lab-presets" role="group" aria-label="studio-inspired presets">
               <button type="button" class="lab-preset" data-lab-preset="locomotive" aria-pressed="false">
                 <span class="nm">locomotive</span><span class="fl">smooth scroll &middot; scroll-driven storytelling</span>
               </button>
@@ -1538,7 +1538,7 @@ Brand and web are two hands on one keyboard.
   <p class="foot-cp">&copy; 2010&ndash;2030 sdfkjh.com</p>
   <div class="foot-rows">
     <p class="foot-r"><span class="foot-lbl">Elsewhere</span> <a href="https://tanktalks.sdfkjh.com/">tanktalks</a> <span class="dot">&middot;</span> <a href="https://businessinternetsearch.sdfkjh.com/">business internet search</a> <span class="dot">&middot;</span> <a href="/range">design range</a></p>
-    <p class="foot-r"><span class="foot-lbl">Legal</span> <a href="/privacy">privacy</a> <span class="dot">&middot;</span> <a href="/do-not-sell">do not sell</a> <span class="dot">&middot;</span> <a href="/terms">terms</a> <span class="dot">&middot;</span> <a href="/accessibility">accessibility</a> <span class="dot">&middot;</span> <a href="/compliance">compliance</a></span>
+    <p class="foot-r"><span class="foot-lbl">Legal</span> <a href="/privacy">privacy</a> <span class="dot">&middot;</span> <a href="/do-not-sell">do not sell</a> <span class="dot">&middot;</span> <a href="/terms">terms</a> <span class="dot">&middot;</span> <a href="/accessibility">accessibility</a> <span class="dot">&middot;</span> <a href="/compliance">compliance</a></p>
   </div>
 </footer>
 
@@ -2886,7 +2886,7 @@ ${c.web.items.map(i=>'- '+i).join('\n')}
   /* ── initial paint: readouts reflect the 50/100% defaults ── */
   toggles.forEach(t => updateReadout(t.dataset.lab));
 
-  /* ── award-winning presets ─────────────────────────────────────
+  /* ── studio-inspired presets ─────────────────────────────────────
      each preset names the effects to switch ON with a curated 0..100
      intensity; every other effect is switched OFF. disabled toggles
      (reduced-motion / coarse-pointer gated) are skipped. ── */
