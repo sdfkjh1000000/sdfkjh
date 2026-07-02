@@ -11,7 +11,7 @@
     banner.setAttribute('aria-label', 'Privacy notice');
     banner.innerHTML =
       '<div class="consent-inner">' +
-        '<p class="consent-text">This site is hosted on Cloudflare and uses its cookieless, privacy-first Web Analytics. No tracking cookies are set; fonts and images are served from this domain. <a href="/privacy">Privacy</a> &middot; <a href="/do-not-sell">Do Not Sell</a></p>' +
+        '<p class="consent-text">This site runs no analytics scripts and sets no tracking cookies. Fonts and images are served from this domain; hosting is on Cloudflare. <a href="/privacy">Privacy</a> &middot; <a href="/do-not-sell">Do Not Sell</a></p>' +
         '<div class="consent-actions">' +
           '<button type="button" class="consent-btn consent-decline" data-consent="reject">Decline</button>' +
           '<button type="button" class="consent-btn consent-accept" data-consent="accept">Accept</button>' +

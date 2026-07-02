@@ -14,7 +14,7 @@ This site does not collect personal information. There is no contact form, no an
 
 We don't use analytics software or tracking cookies on this site.
 
-Our hosting provider, Cloudflare, processes web requests as part of delivering the site. Cloudflare may log request metadata such as IP addresses as part of their standard infrastructure operation. See [Cloudflare's privacy policy](https://www.cloudflare.com/privacypolicy/) for details.
+Our hosting provider, Cloudflare, processes and logs web requests as part of delivering the site — standard request metadata such as IP address. Cloudflare also derives aggregate, server-side traffic statistics from that activity (for example, page views and visitor country), computed at its edge with no script added to the page and no cookies set. See [Cloudflare's privacy policy](https://www.cloudflare.com/privacypolicy/) for details.
 
 ## Third-party services
 
