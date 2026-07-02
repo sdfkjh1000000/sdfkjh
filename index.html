@@ -638,15 +638,6 @@
   .lab .lab-preset .fl { color: #8a857a; font-size: calc(10px * var(--type-scale, 1)); }
   .lab .lab-preset[aria-pressed="true"] { border-color: var(--amber); background: #322a1f; }
 
-  /* ── effects-lab · mic status indicator ────────────────────────── */
-  .lab .lab-mic-status {
-    margin: 7px 0 0; font-family: var(--mono); letter-spacing: 0.04em;
-    font-size: calc(10px * var(--type-scale, 1)); color: #8a857a;
-  }
-  .lab .lab-mic-status[hidden] { display: none; }
-  .lab .lab-mic-status::before { content: '\25CF\00A0'; }
-  .lab .lab-mic-status[data-state="ok"]  { color: #67c98a; }
-  .lab .lab-mic-status[data-state="err"] { color: #ef6b6b; }
 </style>
 <style>
   /* ════════════════════════════════════════════════════════════════
@@ -924,16 +915,6 @@
       60% { transform: translateX(calc(var(--lab-wobble, 9px) * -0.5)); }
       80% { transform: translateX(calc(var(--lab-wobble, 9px) * 0.3)); }
     }
-  }
-
-  /* ── ADVANCED ──────────────────────────────────────────────────── */
-  html.lab-audio-reactive .hero .wm-lg {
-    scale: calc(1 + var(--lab-audio, 0) * 0.16);
-    transition: scale 0.06s linear;
-  }
-  html.lab-audio-reactive .hero .rule {
-    width: calc(64px + var(--lab-audio, 0) * 220px);
-    transition: width 0.06s linear;
   }
 
   /* ── effects-lab panel chrome ──────────────────────────────────── */
@@ -1475,12 +1456,6 @@ Brand and web are two hands on one keyboard.
                   <label class="toggle"><input type="checkbox" data-lab="video-scrub"/><span>scroll image scrub</span><em>js</em></label>
                   <div class="knob param"><label><span>scrub sensitivity</span><span class="val" data-labval="video-scrub">50</span></label>
                     <input type="range" min="0" max="100" value="50" data-labp="video-scrub" disabled aria-label="scrub sensitivity"/></div>
-                </div>
-                <div class="feat">
-                  <label class="toggle"><input type="checkbox" data-lab="audio-reactive"/><span>audio-reactive (mic)</span><em>js</em></label>
-                  <p class="lab-mic-status" data-mic-status hidden></p>
-                  <div class="knob param"><label><span>sensitivity</span><span class="val" data-labval="audio-reactive">50</span></label>
-                    <input type="range" min="0" max="100" value="50" data-labp="audio-reactive" disabled aria-label="audio sensitivity"/></div>
                 </div>
               </div>
             </details>
@@ -2574,52 +2549,6 @@ ${c.web.items.map(i=>'- '+i).join('\n')}
     if (!glRAF) glRAF = requestAnimationFrame(glFrame);
   }
 
-  /* ── audio-reactive (microphone, opt-in) ── */
-  let audioCtx, analyser, audioBuf, audioRAF = null, audioStream = null;
-  const micStatus = lab.querySelector('[data-mic-status]');
-  function setMicStatus(text, state){
-    if (!micStatus) return;
-    micStatus.textContent = text || '';
-    micStatus.dataset.state = state || '';
-    micStatus.hidden = !text;
-  }
-  async function audioStart(){
-    if (audioCtx) return;
-    setMicStatus('requesting mic…', 'pending');
-    try {
-      if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia)
-        throw new Error('getUserMedia unsupported');
-      audioStream = await navigator.mediaDevices.getUserMedia({ audio: true });
-      audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-      analyser = audioCtx.createAnalyser(); analyser.fftSize = 256;
-      audioCtx.createMediaStreamSource(audioStream).connect(analyser);
-      audioBuf = new Uint8Array(analyser.frequencyBinCount);
-      audioRAF = requestAnimationFrame(audioFrame);
-      setMicStatus('active', 'ok');
-    } catch (e){
-      const t = $tog('audio-reactive');
-      if (t) t.checked = false;
-      html.classList.remove('lab-audio-reactive');
-      const s = $sld('audio-reactive');
-      if (s) s.disabled = true;
-      audioCtx = null;
-      setMicStatus('Mic unavailable', 'err');
-    }
-  }
-  function audioFrame(){
-    if (!isOn('audio-reactive')){ audioRAF = null; return; }
-    analyser.getByteFrequencyData(audioBuf);
-    let sum = 0; for (let i = 0; i < audioBuf.length; i++) sum += audioBuf[i];
-    const avg = sum / audioBuf.length / 255;
-    html.style.setProperty('--lab-audio', Math.min(1, avg * eff('audio-reactive') * 2.4).toFixed(3));
-    audioRAF = requestAnimationFrame(audioFrame);
-  }
-  function audioStop(){
-    if (audioStream){ audioStream.getTracks().forEach(t => t.stop()); audioStream = null; }
-    if (audioCtx){ audioCtx.close(); audioCtx = null; }
-    html.style.setProperty('--lab-audio', '0');
-    setMicStatus('', 'off');
-  }
 
   /* ── typewriter / split-text ── */
   const TW_SEL = '.system .canvas h3, .both .closing';
@@ -2724,7 +2653,6 @@ ${c.web.items.map(i=>'- '+i).join('\n')}
     'video-scrub': { on: updateScrub, off(){
         const img = document.querySelector('.both .keys-strip img'); if (img) img.style.objectPosition = ''; } },
     'scene-3d':    { off: sceneClear },
-    'audio-reactive': { on: audioStart, off: audioStop },
     'wobble-load': { on: wobbleGo, set(){ if (isOn('wobble-load')) wobbleGo(); } }
   };
 
@@ -2786,7 +2714,7 @@ ${c.web.items.map(i=>'- '+i).join('\n')}
   lab.querySelector('[data-lab-randomize]').addEventListener('click', () => {
     toggles.forEach(t => {
       const id = t.dataset.lab;
-      t.checked = !t.disabled && id !== 'audio-reactive' && Math.random() < 0.32;
+      t.checked = !t.disabled && Math.random() < 0.32;
       const s = $sld(id);
       if (s) s.value = 20 + Math.round(Math.random() * 70);
     });
