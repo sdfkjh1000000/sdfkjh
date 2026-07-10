@@ -13,6 +13,14 @@ const SITES = [
     stack: "static HTML, vanilla JS, Cloudflare Pages",
   },
   {
+    name: "BYOB",
+    url: "https://byob.sdfkjh.com",
+    summary:
+      "Be Your Own Broker. A car-buying advocacy site that walks shoppers through purchasing without the dealership F&I middleman, keeping the deal in the buyer's hands.",
+    tags: ["advocacy", "cars", "guide"],
+    stack: "static HTML, Cloudflare Pages",
+  },
+  {
     name: "Tank Talks",
     url: "https://tanktalks.sdfkjh.com",
     summary:

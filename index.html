@@ -233,6 +233,12 @@
   .range .range-h { font-family: var(--serif); font-weight: 500; font-size: calc(28px * var(--type-scale, 1)); margin: 0 0 10px; }
   .range .range-h a { color: var(--amber-dim); }
   .range .range-p { font-size: calc(17px * var(--type-scale, 1)); color: var(--ink-soft); max-width: 56ch; margin: 0 auto; }
+  .elsewhere { padding: var(--gap, 52px) 0; text-align: center; }
+  .elsewhere .range-p { font-size: calc(17px * var(--type-scale, 1)); color: var(--ink-soft); max-width: 56ch; margin: 0 auto 28px; }
+  .elsewhere .site-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 18px; }
+  .elsewhere .site-list li { margin: 0; }
+  .elsewhere .site-list a { font-family: var(--mono); color: var(--amber-dim); font-size: calc(16px * var(--type-scale, 1)); }
+  .elsewhere .site-list .site-desc { display: block; font-size: calc(15px * var(--type-scale, 1)); color: var(--ink-soft); margin-top: 4px; }
   .take .panes { display: grid; grid-template-columns: 1fr 1fr; gap: 0; border: 1px solid var(--border); border-radius: calc(3px * var(--radius-scale, 1)); overflow: hidden; }
   .take .src {
     background: var(--surface); border-right: 1px solid var(--border);
@@ -1497,6 +1503,18 @@ Brand and web are two hands on one keyboard.
     </div>
   </section>
 
+  <section class="elsewhere">
+    <div class="wrap">
+      <h2 class="eyebrow">elsewhere &middot; built on the home keys</h2>
+      <p class="range-p">The same hand and stack, pointed at three other problems.</p>
+      <ul class="site-list">
+        <li><a href="https://byob.sdfkjh.com/">byob</a> <span class="site-desc">Be Your Own Broker. Car buying without the F&amp;I middleman.</span></li>
+        <li><a href="https://tanktalks.sdfkjh.com/">tanktalks</a> <span class="site-desc">Freshwater aquarium keeping, explained plainly.</span></li>
+        <li><a href="https://businessinternetsearch.sdfkjh.com/">business internet search</a> <span class="site-desc">B2B connectivity, sourced without the runaround.</span></li>
+      </ul>
+    </div>
+  </section>
+
   <section class="range">
     <div class="wrap">
       <h2 class="eyebrow">design range &middot; one page, fifteen ways</h2>
@@ -1512,7 +1530,7 @@ Brand and web are two hands on one keyboard.
   <hr class="foot-rule">
   <p class="foot-cp">&copy; 2010&ndash;2030 sdfkjh.com</p>
   <div class="foot-rows">
-    <p class="foot-r"><span class="foot-lbl">Elsewhere</span> <a href="https://tanktalks.sdfkjh.com/">tanktalks</a> <span class="dot">&middot;</span> <a href="https://businessinternetsearch.sdfkjh.com/">business internet search</a> <span class="dot">&middot;</span> <a href="/range">design range</a></p>
+    <p class="foot-r"><span class="foot-lbl">Elsewhere</span> <a href="https://byob.sdfkjh.com/">byob</a> <span class="dot">&middot;</span> <a href="https://tanktalks.sdfkjh.com/">tanktalks</a> <span class="dot">&middot;</span> <a href="https://businessinternetsearch.sdfkjh.com/">business internet search</a> <span class="dot">&middot;</span> <a href="/range">design range</a></p>
     <p class="foot-r"><span class="foot-lbl">Legal</span> <a href="/privacy">privacy</a> <span class="dot">&middot;</span> <a href="/do-not-sell">do not sell</a> <span class="dot">&middot;</span> <a href="/terms">terms</a> <span class="dot">&middot;</span> <a href="/accessibility">accessibility</a> <span class="dot">&middot;</span> <a href="/compliance">compliance</a></p>
   </div>
 </footer>
