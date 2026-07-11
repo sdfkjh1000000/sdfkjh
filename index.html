@@ -1500,7 +1500,7 @@ Brand and web are two hands on one keyboard.
           <input type="text" autocomplete="off" spellcheck="false" aria-label="command input" placeholder="try: help"/>
         </div>
       </div>
-      <p class="hint">commands: <b>help</b> &middot; <b>whoami</b> &middot; <b>brand</b> &middot; <b>web</b> &middot; <b>both</b> &middot; <b>contact</b> &middot; <b>time</b> &middot; <b>weather</b> &middot; <b>news</b> &middot; <b>cve</b> &middot; <b>ping</b> &middot; <b>audit</b> &middot; <b>data</b> &middot; <b>privacy</b> &middot; <b>clear</b></p>
+      <p class="hint">commands: <b>help</b> &middot; <b>whoami</b> &middot; <b>brand</b> &middot; <b>web</b> &middot; <b>both</b> &middot; <b>contact</b> &middot; <b>time</b> &middot; <b>weather</b> &middot; <b>news</b> &middot; <b>cve</b> &middot; <b>ping</b> &middot; <b>audit</b> &middot; <b>data</b> &middot; <b>privacy</b> &middot; <b>commentary</b> &middot; <b>clear</b></p>
       <figure class="keys-strip" aria-hidden="true">
         <picture>
           <source srcset="/assets/img/keys.avif" type="image/avif"/>
@@ -2039,6 +2039,7 @@ ${c.web.items.map(i=>'- '+i).join('\n')}
              '  audit             · grade this page, live',
              '  data              · what this site keeps on you',
              '  privacy [on|off]  · view or set third-party lookups',
+             '  commentary        · why the page is built this way',
              '  clear             · wipe the screen']);
     },
     whoami(){ line('sdfkjh', 'head'); line(c.kicker); },
@@ -2266,8 +2267,55 @@ ${c.web.items.map(i=>'- '+i).join('\n')}
       line('  third-party lookups: ' + (on ? 'ALLOWED' : 'BLOCKED') + '. weather, news, cve reach out only when you run them.', 'sys');
       line('    type \'privacy\' for the toggle and the full disclosure.');
     },
+    commentary(){
+      /* director's commentary: the WHY behind the page's key decisions, in the
+         site's own voice. every reason here is a real, checkable choice, drawn
+         from how the page is actually built. no invented rationale. */
+      line('Director\'s commentary · why the page is built this way', 'head');
+      line('  seven decisions, in the page\'s own voice:', 'amber');
+      line('');
+      line('the italic on "and"', 'amber');
+      line('  the H1 reads: Brand and web. the single italic on "and" is');
+      line('  deliberate, not decoration. italic lengthens the word as you read');
+      line('  it, so "brand and web" lands as one joined idea: the hinge of the');
+      line('  two hands, one keyboard thesis.');
+      line('');
+      line('the console is the nav', 'amber');
+      line('  this input is the navigation. the homepage header carries no menu');
+      line('  because contact and the rest live here. type a command, or just');
+      line('  scroll: every section is reachable both ways.');
+      line('');
+      line('ping is fake, on purpose', 'amber');
+      line('  the ping command prints a canned round-trip. it never touches the');
+      line('  network. a real client-side ping is a probe vector open to abuse,');
+      line('  so it stays play, not plumbing.');
+      line('');
+      line('no build step, no framework', 'amber');
+      line('  one static index.html, hand-written vanilla JS. no bundler, no');
+      line('  SSG, no template rendered to disk. the page makes that claim on');
+      line('  its face, so the claim has to stay literally true.');
+      line('');
+      line('the wordmark is the home row', 'amber');
+      line('  sdf is the left hand, kjh is the right: six letters your fingers');
+      line('  rest on. brand and web are those two hands typing one page. the');
+      line('  letters are sdf / kjh, never jkl. L is not in the wordmark.');
+      line('');
+      line('self-hosted, no third party', 'amber');
+      line('  every font and image is a file served from this domain. no CDN');
+      line('  font, no external script, no hotlink. run \'audit\' to watch that');
+      line('  verified live, in your browser.');
+      line('');
+      line('honest about privacy', 'amber');
+      line('  no cookies, no analytics script, no per-visitor profile. counts');
+      line('  are aggregate and server-side only. the two saved prefs are');
+      line('  localStorage, and are named as localStorage, not cookies.');
+      line('  run \'data\' or \'privacy\' for the whole list.');
+      line('');
+      line('  every line above is something you can check on this page.', 'sys');
+    },
     clear(){ scroll.innerHTML = ''; }
   };
+  cmds.why = cmds.commentary;
   async function exec(raw){
     const trimmed = raw.trim();
     if (!trimmed) return;
