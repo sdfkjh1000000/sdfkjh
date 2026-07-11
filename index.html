@@ -3091,5 +3091,71 @@ ${c.web.items.map(i=>'- '+i).join('\n')}
   }
 })();
 </script>
+<script>
+/* ── specimen: the page reads its own typography ─────────────────
+   hover (or focus, where an element is focusable) a piece of text and a
+   small mono readout reports the type it is set in: family, size,
+   line-height, and where that size sits on a golden-ratio scale from the
+   17px body base. it is a passive, aria-hidden enhancement: it changes no
+   layout and adds no transform or tabindex, so it composes with the
+   effects-lab hovers and the design editor instead of fighting them, and
+   it stays silent to assistive tech. fine-pointer only. */
+(function(){
+  if (!matchMedia('(pointer:fine)').matches) return;
+  const SPEC = 'h1, h2, h3, .kicker, .lead, .closing, .code-caption, .range-h, .range-p';
+  const PHI = 1.618, BASE = 17;
+
+  const style = document.createElement('style');
+  style.textContent =
+    '.specimen-tip{position:fixed;z-index:8600;pointer-events:none;opacity:0;' +
+    'font-family:var(--mono);font-size:11px;line-height:1.55;letter-spacing:0.02em;' +
+    'background:var(--surface);color:var(--ink);border:1px solid var(--amber);' +
+    'border-radius:calc(2px * var(--radius-scale,1));padding:7px 10px;max-width:300px;' +
+    'box-shadow:0 12px 32px -18px rgba(28,25,23,0.6);transition:opacity 0.12s ease;}' +
+    '.specimen-tip .k{color:var(--amber-dim);}' +
+    '.specimen-tip .t{color:var(--ink-soft);}' +
+    '@media (prefers-reduced-motion: reduce){.specimen-tip{transition:none;}}';
+  document.head.appendChild(style);
+
+  const tip = document.createElement('div');
+  tip.className = 'specimen-tip';
+  tip.setAttribute('aria-hidden', 'true');
+  document.body.appendChild(tip);
+
+  let active = false;
+  const fam = ff => (ff.split(',')[0] || '').replace(/["']/g, '').trim();
+  function fill(el){
+    const cs = getComputedStyle(el);
+    const size = parseFloat(cs.fontSize);
+    const lh = cs.lineHeight === 'normal' ? 'normal'
+             : (parseFloat(cs.lineHeight) / size).toFixed(2);
+    const tag = el.tagName.toLowerCase();
+    const step = Math.round(Math.log(size / BASE) / Math.log(PHI));
+    const stepTxt = step === 0 ? 'at body base'
+      : 'base ×' + Math.pow(PHI, step).toFixed(2) + ' (φ step ' + (step > 0 ? '+' : '') + step + ')';
+    tip.innerHTML =
+      '<span class="k">' + tag + '</span> · ' + fam(cs.fontFamily) + '<br>' +
+      size.toFixed(1) + 'px <span class="t">/</span> line-height ' + lh + '<br>' +
+      '<span class="t">φ-scale: </span>' + stepTxt;
+  }
+  function place(x, y){
+    const pad = 16, w = tip.offsetWidth, h = tip.offsetHeight;
+    let nx = x + pad, ny = y + pad;
+    if (nx + w > innerWidth - 8)  nx = x - pad - w;
+    if (ny + h > innerHeight - 8) ny = y - pad - h;
+    tip.style.left = Math.max(8, nx) + 'px';
+    tip.style.top  = Math.max(8, ny) + 'px';
+  }
+  function show(el, x, y){ fill(el); place(x, y); tip.style.opacity = '1'; active = true; }
+  function hide(){ if (active){ tip.style.opacity = '0'; active = false; } }
+  const target = e => { const el = e.target.closest && e.target.closest(SPEC); return (el && !el.closest('.panel')) ? el : null; };
+
+  document.addEventListener('mouseover', e => { const el = target(e); if (el) show(el, e.clientX, e.clientY); else hide(); }, { passive: true });
+  document.addEventListener('mousemove', e => { if (!active) return; const el = target(e); if (el) place(e.clientX, e.clientY); else hide(); }, { passive: true });
+  document.addEventListener('mouseout', e => { if (!e.relatedTarget) hide(); }, { passive: true });
+  document.addEventListener('focusin', e => { const el = target(e); if (el){ const r = el.getBoundingClientRect(); show(el, r.left, r.bottom); } });
+  document.addEventListener('focusout', hide);
+})();
+</script>
 </body>
 </html>
