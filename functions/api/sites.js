@@ -8,7 +8,7 @@ const SITES = [
     name: "sdfkjh",
     url: "https://sdfkjh.com",
     summary:
-      "Single-page craft showcase: a live Markdown renderer, format switcher, design-token editor, effects lab, and JavaScript REPL — every section a working artifact. The page is the portfolio.",
+      "Single-page craft showcase: a live Markdown renderer, format switcher, design-token editor, effects lab, and JavaScript REPL. Every section a working artifact. The page is the portfolio.",
     tags: ["showcase", "brand", "web"],
     stack: "static HTML, vanilla JS, Cloudflare Pages",
   },
@@ -24,7 +24,7 @@ const SITES = [
     name: "Tank Talks",
     url: "https://tanktalks.sdfkjh.com",
     summary:
-      "Freshwater aquarium editorial site — how-to and troubleshooting articles on fish, shrimp, plants, and water chemistry, with disclosed Amazon affiliate gear roundups.",
+      "Freshwater aquarium editorial site: how-to and troubleshooting articles on fish, shrimp, plants, and water chemistry, with disclosed Amazon affiliate gear roundups.",
     tags: ["editorial", "aquariums", "affiliate"],
     stack: "static HTML, Cloudflare Pages",
   },
