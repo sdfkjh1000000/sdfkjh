@@ -1500,7 +1500,7 @@ Brand and web are two hands on one keyboard.
           <input type="text" autocomplete="off" spellcheck="false" aria-label="command input" placeholder="try: help"/>
         </div>
       </div>
-      <p class="hint">commands: <b>help</b> &middot; <b>whoami</b> &middot; <b>brand</b> &middot; <b>web</b> &middot; <b>both</b> &middot; <b>contact</b> &middot; <b>time</b> &middot; <b>weather</b> &middot; <b>news</b> &middot; <b>cve</b> &middot; <b>ping</b> &middot; <b>audit</b> &middot; <b>data</b> &middot; <b>privacy</b> &middot; <b>commentary</b> &middot; <b>clear</b></p>
+      <p class="hint">commands: <b>help</b> &middot; <b>whoami</b> &middot; <b>brand</b> &middot; <b>web</b> &middot; <b>both</b> &middot; <b>contact</b> &middot; <b>time</b> &middot; <b>weather</b> &middot; <b>news</b> &middot; <b>cve</b> &middot; <b>ping</b> &middot; <b>audit</b> &middot; <b>data</b> &middot; <b>privacy</b> &middot; <b>commentary</b> &middot; <b>manifesto</b> &middot; <b>clear</b></p>
       <figure class="keys-strip" aria-hidden="true">
         <picture>
           <source srcset="/assets/img/keys.avif" type="image/avif"/>
@@ -2040,6 +2040,7 @@ ${c.web.items.map(i=>'- '+i).join('\n')}
              '  data              · what this site keeps on you',
              '  privacy [on|off]  · view or set third-party lookups',
              '  commentary        · why the page is built this way',
+             '  manifesto         · what this page refuses to do',
              '  clear             · wipe the screen']);
     },
     whoami(){ line('sdfkjh', 'head'); line(c.kicker); },
@@ -2313,9 +2314,25 @@ ${c.web.items.map(i=>'- '+i).join('\n')}
       line('');
       line('  every line above is something you can check on this page.', 'sys');
     },
+    manifesto(){
+      /* the negative space of the choices: what the site deliberately will not
+         do. every refusal here is verifiable on this page (see audit / data);
+         nothing is claimed that the page cannot back up. */
+      line('What this page refuses', 'head');
+      line('  the negative space of the choices, stated flat:', 'amber');
+      line('  · no framework      one static index.html, vanilla JS. no React, no Vue.');
+      line('  · no build step     what ships is what is in the repo. nothing compiles.');
+      line('  · no analytics      no tag manager, no pixel, no beacon, no RUM script.');
+      line('  · no cookies        nothing is written to document.cookie, on any path.');
+      line('  · no third party    every font and image is a file served from this domain.');
+      line('  · no tracking       no per-visitor profile. nothing trails you in or out.');
+      line('  · no dark patterns  no fake urgency, no buried opt-out, no consent theater.');
+      line('  each line is checkable: run \'audit\' to measure it, or \'data\' for the list.', 'sys');
+    },
     clear(){ scroll.innerHTML = ''; }
   };
   cmds.why = cmds.commentary;
+  cmds.refuses = cmds.manifesto;
   async function exec(raw){
     const trimmed = raw.trim();
     if (!trimmed) return;
