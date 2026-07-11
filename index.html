@@ -986,6 +986,31 @@
     html.lab-clip-reveal main section:not(.lab-seen) { opacity: 1; translate: 0; scale: 1; clip-path: none; }
   }
   @media print { .lab-progress-bar, .lab-fixed, .lab-cur, .lab-spotlight, .lab-blob { display: none !important; } }
+
+  /* ── home-row easter egg ──────────────────────────────────────────
+     typing the wordmark anywhere (see the egg script) ripples the lit
+     home keys amber in sequence and flashes the wordmark brackets. the
+     motion is gated on no-preference; under reduce the watcher gives a
+     static acknowledgement instead (a console line + a brief highlight). */
+  @keyframes egg-lit {
+    45% { color: var(--amber); transform: translateY(-4px) scale(1.16);
+          text-shadow: 0 0 12px color-mix(in srgb, var(--amber) 55%, transparent); }
+  }
+  @keyframes egg-br {
+    50% { color: var(--amber); text-shadow: 0 0 12px color-mix(in srgb, var(--amber) 60%, transparent); }
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    html.egg-go .hero .home-row .lit { animation: egg-lit 0.52s ease; }
+    html.egg-go .hero .home-row .lit:nth-of-type(1) { animation-delay: 0s; }
+    html.egg-go .hero .home-row .lit:nth-of-type(2) { animation-delay: 0.08s; }
+    html.egg-go .hero .home-row .lit:nth-of-type(3) { animation-delay: 0.16s; }
+    html.egg-go .hero .home-row .lit:nth-of-type(4) { animation-delay: 0.24s; }
+    html.egg-go .hero .home-row .lit:nth-of-type(5) { animation-delay: 0.32s; }
+    html.egg-go .hero .home-row .lit:nth-of-type(6) { animation-delay: 0.40s; }
+    html.egg-go .hero .wm-lg .br { animation: egg-br 0.9s ease; }
+  }
+  /* static acknowledgement (reduced-motion / fallback): a brief amber lift, no motion */
+  html.egg-static .hero .home-row .lit { color: var(--amber); }
 </style>
 </head>
 <body>
@@ -2383,6 +2408,10 @@ ${c.web.items.map(i=>'- '+i).join('\n')}
   line("type 'help' to look around, or just scroll the page.");
   line('');
 
+  /* let the home-row easter egg print a static acknowledgement in this console
+     (used only under prefers-reduced-motion, where the ripple is suppressed) */
+  window.__sdfkjhEcho = function(text, cls){ line(text, cls); };
+
   /* let the shared privacy banner route "Privacy options" into this control */
   window.__sdfkjhPrivacy = function(){
     if (root && root.scrollIntoView) root.scrollIntoView({ behavior: 'smooth', block: 'center' });
@@ -3174,6 +3203,59 @@ ${c.web.items.map(i=>'- '+i).join('\n')}
   document.addEventListener('mouseout', e => { if (!e.relatedTarget) hide(); }, { passive: true });
   document.addEventListener('focusin', e => { const el = target(e); if (el){ const r = el.getBoundingClientRect(); show(el, r.left, r.bottom); } });
   document.addEventListener('focusout', hide);
+})();
+</script>
+<script>
+/* ── home-row easter egg ──────────────────────────────────────────────
+   a document-level keydown watcher: type the wordmark "sdfkjh" anywhere
+   on the page and the lit home keys ripple amber in sequence while the
+   wordmark brackets flash (see the egg-* CSS). keystrokes are ignored
+   while focus is in a field so the REPL input and any form keep working
+   untouched. under prefers-reduced-motion the ripple is suppressed and
+   the console prints a static acknowledgement instead. */
+(function(){
+  const WORD = 'sdfkjh';
+  const el = document.documentElement;
+  const reduce = () => matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let buf = '';
+  let busy = false;
+
+  function typingInField(t){
+    if (!t) return false;
+    const tag = t.tagName;
+    return tag === 'INPUT' || tag === 'TEXTAREA' || tag === 'SELECT' || t.isContentEditable;
+  }
+
+  function fire(){
+    if (busy) return;
+    busy = true;
+    if (reduce()){
+      // no motion: a brief static highlight plus an honest console line
+      el.classList.add('egg-static');
+      if (typeof window.__sdfkjhEcho === 'function'){
+        window.__sdfkjhEcho('you found it: sdf and kjh, the home keys.', 'amber');
+      }
+      setTimeout(() => { el.classList.remove('egg-static'); busy = false; }, 1200);
+      return;
+    }
+    // restart the ripple cleanly if it was still settling
+    el.classList.remove('egg-go');
+    void el.offsetWidth;
+    el.classList.add('egg-go');
+    setTimeout(() => { el.classList.remove('egg-go'); busy = false; }, 1100);
+  }
+
+  document.addEventListener('keydown', e => {
+    if (e.ctrlKey || e.metaKey || e.altKey) { buf = ''; return; }
+    if (typingInField(e.target)) { buf = ''; return; }
+    const k = e.key;
+    if (k && k.length === 1 && /[a-z]/i.test(k)){
+      buf = (buf + k.toLowerCase()).slice(-WORD.length);
+      if (buf === WORD){ buf = ''; fire(); }
+    } else {
+      buf = '';
+    }
+  }, { passive: true });
 })();
 </script>
 </body>
