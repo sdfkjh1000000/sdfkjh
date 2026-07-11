@@ -38,4 +38,4 @@ We do not sell or share personal information as defined by California law. For a
 
 Questions about this policy: [info@sdfkjh.com](mailto:info@sdfkjh.com)
 
-Last updated: May 2026
+Last updated: July 2026

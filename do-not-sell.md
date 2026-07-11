@@ -33,4 +33,4 @@ California residents have the right to:
 
 To exercise your rights or ask questions about our data practices: [info@sdfkjh.com](mailto:info@sdfkjh.com)
 
-Last updated: May 2026
+Last updated: July 2026

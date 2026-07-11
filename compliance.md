@@ -12,7 +12,7 @@ Every page on this site carries a legal and accessibility layer you're not meant
 -   A [Do Not Sell or Share](/do-not-sell) page stating California privacy rights plainly.
 -   [Terms of use](/terms) sized to what the site actually does.
 -   A privacy notice that guards only what exists. There is nothing here that tracks you, so there is no wall of toggles pretending otherwise.
--   Accessibility tested against WCAG 2.2 AA on every page: zero violations, last checked June 2026. Keyboard navigation, visible focus, a skip link, honest alt text.
+-   Accessibility tested against WCAG 2.2 AA on every page: zero violations, last checked July 2026. Keyboard navigation, visible focus, a skip link, honest alt text.
 -   Security headers on every response: a content security policy, strict transport security, frame denial.
 
 ## Why a personal site bothers
@@ -31,4 +31,4 @@ The layer is cheap to build when it's built honestly, and expensive to ignore. S
 
 If you're curious whether a site has this layer, scroll to its footer. Either the links are there, or they aren't.
 
-Last updated: June 2026
+Last updated: July 2026
