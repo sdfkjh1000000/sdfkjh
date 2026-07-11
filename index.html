@@ -17,8 +17,8 @@
   /* default reveal effect on; the fade CSS is itself gated on reduced-motion */
   document.documentElement.classList.add('fx-fade');
 </script>
-<title>sdfkjh — brand and web, built on the home keys</title>
-<meta name="description" content="sdfkjh is six letters off the home row. The page is the portfolio — every section runs."/>
+<title>sdfkjh · brand and web, built on the home keys</title>
+<meta name="description" content="sdfkjh is six letters off the home row. The page is the portfolio. Every section runs."/>
 <meta name="color-scheme" content="light"/>
 <meta name="theme-color" content="#FDFBF7" media="(prefers-color-scheme: light)"/>
 <meta name="theme-color" content="#1C1917" media="(prefers-color-scheme: dark)"/>
@@ -29,19 +29,19 @@
 <meta property="og:type" content="website"/>
 <meta property="og:site_name" content="sdfkjh"/>
 <meta property="og:url" content="https://sdfkjh.com/"/>
-<meta property="og:title" content="sdfkjh — brand and web, built on the home keys"/>
-<meta property="og:description" content="sdfkjh is six letters off the home row. The page is the portfolio — every section runs."/>
+<meta property="og:title" content="sdfkjh · brand and web, built on the home keys"/>
+<meta property="og:description" content="sdfkjh is six letters off the home row. The page is the portfolio. Every section runs."/>
 <meta property="og:image" content="https://sdfkjh.com/og-image.png"/>
 <meta property="og:image:width" content="1200"/>
 <meta property="og:image:height" content="630"/>
-<meta property="og:image:alt" content="sdfkjh — brand and web, built on the home keys."/>
+<meta property="og:image:alt" content="sdfkjh · brand and web, built on the home keys."/>
 <meta property="og:locale" content="en_US"/>
 
 <meta name="twitter:card" content="summary_large_image"/>
-<meta name="twitter:title" content="sdfkjh — brand and web, built on the home keys"/>
-<meta name="twitter:description" content="sdfkjh is six letters off the home row. The page is the portfolio — every section runs."/>
+<meta name="twitter:title" content="sdfkjh · brand and web, built on the home keys"/>
+<meta name="twitter:description" content="sdfkjh is six letters off the home row. The page is the portfolio. Every section runs."/>
 <meta name="twitter:image" content="https://sdfkjh.com/og-image.png"/>
-<meta name="twitter:image:alt" content="sdfkjh — brand and web, built on the home keys."/>
+<meta name="twitter:image:alt" content="sdfkjh · brand and web, built on the home keys."/>
 
 <link rel="icon" href="/favicon.svg" type="image/svg+xml"/>
 <link rel="apple-touch-icon" href="/apple-touch-icon.png"/>
@@ -64,7 +64,7 @@
       "@id": "https://sdfkjh.com/#website",
       "url": "https://sdfkjh.com/",
       "name": "sdfkjh",
-      "description": "sdfkjh is six letters off the home row. The page is the portfolio — every section runs.",
+      "description": "sdfkjh is six letters off the home row. The page is the portfolio. Every section runs.",
       "inLanguage": "en"
     },
     {
@@ -287,7 +287,7 @@
   .source .render-html .e { font-family: var(--mono); font-size: calc(11px * var(--type-scale, 1)); color: var(--amber-dim); letter-spacing: 0.1em; text-transform: uppercase; margin: 0 0 10px; }
   .source .render-html p { margin: 0 0 14px; font-size: calc(15px * var(--type-scale, 1)); }
   .source .render-html ul { margin: 0; padding: 0; list-style: none; font-size: calc(14px * var(--type-scale, 1)); color: var(--ink-soft); }
-  .source .render-html li::before { content: "— "; color: var(--amber-dim); }
+  .source .render-html li::before { content: "· "; color: var(--amber-dim); }
   .source .render-html .strip { font-family: var(--mono); font-size: calc(11px * var(--type-scale, 1)); color: var(--amber-dim); margin-top: 14px; padding-top: 12px; border-top: 1px solid var(--border); }
   .source pre {
     margin: 0; padding: 28px 32px; font-family: var(--mono); font-size: calc(13px * var(--type-scale, 1));
@@ -311,7 +311,7 @@
   .system .canvas .rule { height: 3px; width: 60px; background: var(--amber); border: 0; margin: 0 0 18px; border-radius: calc(2px * var(--radius-scale, 1)); }
   .system .canvas .swatches { display: flex; gap: 8px; margin-top: 22px; }
   .system .canvas .sw { width: 38px; height: 24px; border-radius: calc(2px * var(--radius-scale, 1)); }
-  /* panel is tool chrome — pinned dark in both themes so its controls stay legible */
+  /* panel is tool chrome - pinned dark in both themes so its controls stay legible */
   .system .panel { background: #1C1917; color: #FDFBF7; padding: 28px 26px; border-top: 1px solid #3a3631; font-family: var(--mono); font-size: calc(12px * var(--type-scale, 1)); }
   .system .panel h4 { font-family: var(--mono); font-size: calc(11px * var(--type-scale, 1)); color: var(--amber); letter-spacing: 0.1em; margin: 0 0 18px; text-transform: uppercase; }
   .system .field { margin-bottom: 22px; }
@@ -527,9 +527,9 @@
   body { transition: --amber 0.15s ease; }
   body.amber-pulse { --amber: #ffaa44; }
 
-  /* ── scroll effects — toggled from the section editor ──────────── */
+  /* ── scroll effects - toggled from the section editor ──────────── */
   /* fade + slide reveal on entry: JS adds .fx-in when a section scrolls
-     into view. fade animates opacity, slide animates translate — separate
+     into view. fade animates opacity, slide animates translate - separate
      properties, so the two compose. zoom is pure CSS (scroll-driven). */
   @media (prefers-reduced-motion: no-preference) {
     html.fx-fade  section                   { opacity: 0; }
@@ -546,7 +546,7 @@
       @keyframes fx-zoom-in { from { scale: var(--fx-zoom-scale, 0.61); } to { scale: 1; } }
     }
   }
-  /* html-tags overlay — reveals the semantic markup; no motion, always available */
+  /* html-tags overlay - reveals the semantic markup; no motion, always available */
   html.fx-tags section { position: relative; outline: 1px dashed var(--amber-dim); outline-offset: -1px; }
   html.fx-tags section::before {
     content: '<section class="' attr(class) '">';
@@ -647,7 +647,7 @@
 </style>
 <style>
   /* ════════════════════════════════════════════════════════════════
-     EFFECTS LAB — award-style interactions, every one opt-in from the
+     EFFECTS LAB - award-style interactions, every one opt-in from the
      panel. Each effect is gated on an html.lab-<id> class and tuned by
      a CSS custom property the controller sets; with no lab- class on
      <html> the page renders exactly as before. All names are lab-*.
@@ -834,7 +834,7 @@
   html.lab-particle-network .lab-particles { opacity: 1; }
   html.lab-webgl-bg .lab-webgl { opacity: 0.85; }
   /* behind-the-page layers (z-index -2/-3) only show once every opaque
-     paper surface above them is cleared — body included, since the body
+     paper surface above them is cleared - body included, since the body
      background paints over negative-z children */
   html.lab-bg-show body,
   html.lab-bg-show main section,
@@ -872,7 +872,7 @@
     background-size: var(--lab-grid, 48px) var(--lab-grid, 48px);
   }
   html.lab-grid-overlay .lab-grid { opacity: 1; }
-  /* element class is deliberately NOT "lab-vignette" — that is the <html>
+  /* element class is deliberately NOT "lab-vignette" - that is the <html>
      toggle class, and a bare .lab-vignette rule would then also style <html> */
   .lab-vig-layer {
     z-index: 8200; opacity: 0; transition: opacity 0.4s ease;
@@ -985,7 +985,7 @@
 <a href="#main" class="skip-link">Skip to content</a>
 
 <header role="banner">
-  <a href="/" class="wm" aria-label="sdfkjh — home"><span class="br">[</span>&nbsp;sdfkjh&nbsp;<span class="br">]</span></a>
+  <a href="/" class="wm" aria-label="sdfkjh, home"><span class="br">[</span>&nbsp;sdfkjh&nbsp;<span class="br">]</span></a>
 </header>
 
 <main id="main">
@@ -1013,7 +1013,7 @@
   <section class="take">
     <div class="wrap">
       <h2 class="eyebrow">The take &middot; markdown</h2>
-      <p class="code-caption"><span class="t">rendered live from</span> take.md <span class="t">— a tiny parser, ~25 lines</span></p>
+      <p class="code-caption"><span class="t">rendered live from</span> take.md <span class="t">· a tiny parser, ~25 lines</span></p>
       <div class="panes">
         <div class="src" aria-hidden="true"><span class="h">## The take</span>
 
@@ -1047,7 +1047,7 @@ Brand and web are two hands on one keyboard.
           <div>
             <p class="e">Right hand &middot; kjh</p><h3>Web.</h3>
             <ul><li>Markup: one static index.html</li><li>Stack: vanilla JS, no framework</li><li>Hosting: Cloudflare Pages, edge-served</li></ul>
-            <p class="strip">html · markdown · json · css · javascript — one page, all five</p>
+            <p class="strip">html · markdown · json · css · javascript: one page, all five</p>
           </div>
         </div>
       </div>
@@ -1110,8 +1110,8 @@ Brand and web are two hands on one keyboard.
           <div class="field">
             <label for="ed-type">type</label>
             <select id="ed-type" data-type>
-              <option value="editorial">editorial — Newsreader</option>
-              <option value="mono">monospace — JetBrains</option>
+              <option value="editorial">editorial · Newsreader</option>
+              <option value="mono">monospace · JetBrains</option>
               <option value="sans">system sans</option>
               <option value="serif">system serif</option>
             </select>
@@ -1477,13 +1477,13 @@ Brand and web are two hands on one keyboard.
   <section class="both">
     <div class="wrap">
       <h2 class="eyebrow">javascript &middot; live</h2>
-      <p class="code-caption"><span class="t">the console is the nav — also reachable by scrolling</span></p>
+      <p class="code-caption"><span class="t">the console is the nav, also reachable by scrolling</span></p>
       <p class="closing">sdf meets kjh.</p>
       <p class="lead">type a command. or just email.</p>
       <div class="frame">
-        <div class="bar"><span class="dot a"></span><span class="dot"></span><span class="dot"></span><span class="title">sdfkjh — type a command</span></div>
+        <div class="bar"><span class="dot a"></span><span class="dot"></span><span class="dot"></span><span class="title">sdfkjh · type a command</span></div>
         <div class="scroll" aria-live="polite">
-          <div class="ln amber">[ sdfkjh ] — ready.</div>
+          <div class="ln amber">[ sdfkjh ] · ready.</div>
           <div class="ln sys">type 'help' to look around, or just scroll the page.</div>
           <div class="ln sys"></div>
         </div>
@@ -1565,14 +1565,14 @@ const CONTENT = {
   web: {
     title: "Web",
     items: ["Markup: one static index.html", "Stack: vanilla JS, no framework", "Hosting: Cloudflare Pages, edge-served"],
-    strip: "html · markdown · json · css · javascript — one page, all five"
+    strip: "html · markdown · json · css · javascript: one page, all five"
   },
   closing: "The page is what they type together.",
   contact: "info@sdfkjh.com"
 };
 const esc = s => s.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
 
-/* ── TAKE — live markdown ─────────────────────────────────── */
+/* ── TAKE - live markdown ─────────────────────────────────── */
 (function(){
   const root = document.querySelector('.take');
   const srcEl = root.querySelector('.src');
@@ -1638,7 +1638,7 @@ Brand and web are two hands on one keyboard.
   }
 })();
 
-/* ── SOURCE — format switcher ───────────────────────────────── */
+/* ── SOURCE - format switcher ───────────────────────────────── */
 (function(){
   const root = document.querySelector('.source');
   const stage = root.querySelector('.stage');
@@ -1704,7 +1704,7 @@ ${c.web.items.map(i=>'- '+i).join('\n')}
   btns.forEach(b => b.setAttribute('aria-pressed', String(b.dataset.fmt === 'html')));
 })();
 
-/* ── SYSTEM — per-section design editor ─────────────────────── */
+/* ── SYSTEM - per-section design editor ─────────────────────── */
 (function(){
   const root      = document.querySelector('.system');
   const sel       = root.querySelector('select[data-target]');
@@ -1736,7 +1736,7 @@ ${c.web.items.map(i=>'- '+i).join('\n')}
                  body:  'system-ui, -apple-system, "Segoe UI", Roboto, sans-serif' },
     serif:     { serif: 'Georgia, "Times New Roman", serif', body: 'Georgia, "Times New Roman", serif' }
   };
-  /* in-memory only — overrides survive scrolling and section switches,
+  /* in-memory only - overrides survive scrolling and section switches,
      but a reload ("leaving and coming back") starts fresh, by design */
   const DEFAULTS = { accent: '#ff7a1a', paper: '#FDFBF7', type: 'editorial', size: 1, radius: 1, track: 0, lead: 1.7, pad: 32, gap: 52 };
   const overrides = {};
@@ -1763,7 +1763,7 @@ ${c.web.items.map(i=>'- '+i).join('\n')}
     }
     return dim;
   }
-  /* lighten the accent until small text clears WCAG-AA on a dark paper —
+  /* lighten the accent until small text clears WCAG-AA on a dark paper -
      the dark-mode counterpart of aaDim (darkening would only hurt here) */
   function aaLight(accent, paper){
     let [r,g,b] = rgb(accent), lit = accent, guard = 0;
@@ -1911,7 +1911,7 @@ ${c.web.items.map(i=>'- '+i).join('\n')}
 
   function onReset(){
     if (sel.value === 'page'){
-      /* entire-page reset is a full clean slate — clear every section too */
+      /* entire-page reset is a full clean slate - clear every section too */
       Object.keys(overrides).forEach(k => { delete overrides[k]; strip(TARGETS[k]); });
       setFx(FX_DEFAULT);
       setParams(FXP_DEFAULT);
@@ -1924,7 +1924,7 @@ ${c.web.items.map(i=>'- '+i).join('\n')}
     show(DEFAULTS);
   }
 
-  /* ── dark mode — coexists with the section editor: a page override is
+  /* ── dark mode - coexists with the section editor: a page override is
      re-painted so its colours follow the theme while its type, spacing
      and accent choices are preserved, instead of being discarded ── */
   function setDark(on){
@@ -1965,7 +1965,7 @@ ${c.web.items.map(i=>'- '+i).join('\n')}
   onSwitch();
 })();
 
-/* ── BOTH — js repl ─────────────────────────────────────────── */
+/* ── BOTH - js repl ─────────────────────────────────────────── */
 (function(){
   const root = document.querySelector('.both');
   const scroll = root.querySelector('.scroll');
@@ -2004,23 +2004,23 @@ ${c.web.items.map(i=>'- '+i).join('\n')}
   const cmds = {
     help(){
       line('Available commands:', 'amber');
-      lines(['  whoami            — show the wordmark',
-             '  brand             — show the brand',
-             '  web               — show the web',
-             '  both              — show both',
-             '  contact           — show the email',
-             '  time              — local time',
-             '  weather [city]    — current weather (wttr.in)',
-             '  news              — top stories (Hacker News)',
-             '  cve               — recent CVEs (NVD / NIST)',
-             '  ping <host>       — round-trip to anywhere, instantly',
-             '  clear             — wipe the screen']);
+      lines(['  whoami            · show the wordmark',
+             '  brand             · show the brand',
+             '  web               · show the web',
+             '  both              · show both',
+             '  contact           · show the email',
+             '  time              · local time',
+             '  weather [city]    · current weather (wttr.in)',
+             '  news              · top stories (Hacker News)',
+             '  cve               · recent CVEs (NVD / NIST)',
+             '  ping <host>       · round-trip to anywhere, instantly',
+             '  clear             · wipe the screen']);
     },
     whoami(){ line('sdfkjh', 'head'); line(c.kicker); },
-    brand(){ line(c.brand.title + '.', 'head'); lines(c.brand.items.map(i => '  — ' + i)); },
+    brand(){ line(c.brand.title + '.', 'head'); lines(c.brand.items.map(i => '  · ' + i)); },
     web(){
       line(c.web.title + '.', 'head');
-      lines(c.web.items.map(i => '  — ' + i));
+      lines(c.web.items.map(i => '  · ' + i));
       line('  ' + c.web.strip, 'amber');
     },
     both(){ line(c.closing, 'head'); },
@@ -2051,7 +2051,7 @@ ${c.web.items.map(i=>'- '+i).join('\n')}
           if (term) txt = term.textContent.trim();
         }
         ph.remove();
-        line(loc ? ('Weather — ' + loc) : 'Weather — your location', 'amber');
+        line(loc ? ('Weather · ' + loc) : 'Weather · your location', 'amber');
         line('  ' + txt);
         line('  source: wttr.in', 'sys');
       } catch (e) {
@@ -2067,7 +2067,7 @@ ${c.web.items.map(i=>'- '+i).join('\n')}
         const items = await Promise.all(ids.slice(0, n).map(id =>
           fetchJSON('https://hacker-news.firebaseio.com/v0/item/' + id + '.json')));
         ph.remove();
-        line('Hacker News — top ' + n, 'amber');
+        line('Hacker News · top ' + n, 'amber');
         items.forEach((it, i) => {
           const title = (it && it.title) || '(untitled)';
           const score = (it && it.score) || 0;
@@ -2096,7 +2096,7 @@ ${c.web.items.map(i=>'- '+i).join('\n')}
           .sort((a,b) => (b.published || '').localeCompare(a.published || ''))
           .slice(0, n);
         ph.remove();
-        line('Recent CVEs — last ' + items.length + ' (7d)', 'amber');
+        line('Recent CVEs · last ' + items.length + ' (7d)', 'amber');
         items.forEach(cve => {
           const id = cve.id || '(unknown)';
           const summary = cve.descriptions?.find(d => d.lang === 'en')?.value || '(no summary)';
@@ -2171,7 +2171,7 @@ ${c.web.items.map(i=>'- '+i).join('\n')}
   });
 
   scroll.innerHTML = '';
-  line('[ sdfkjh ] — ready.', 'amber');
+  line('[ sdfkjh ] · ready.', 'amber');
   line("type 'help' to look around, or just scroll the page.");
   line('');
 })();
@@ -2186,12 +2186,12 @@ ${c.web.items.map(i=>'- '+i).join('\n')}
     const r = s.getBoundingClientRect();
     return r.top < window.innerHeight && r.bottom > 0;
   };
-  /* sync first pass — reveal whatever is on screen now, so nothing flashes */
+  /* sync first pass - reveal whatever is on screen now, so nothing flashes */
   sections.forEach(s => s.classList.toggle('fx-in', inView(s)));
 
   if ('IntersectionObserver' in window) {
     /* continuous: a section carries .fx-in whenever any part is on screen,
-       and is re-armed once it scrolls fully out — so fade / slide replay
+       and is re-armed once it scrolls fully out - so fade / slide replay
        on every pass instead of firing only once (and the page can never
        get stuck invisible if the observer is slow to deliver). */
     const revealObs = new IntersectionObserver((entries) => {
@@ -2230,7 +2230,7 @@ ${c.web.items.map(i=>'- '+i).join('\n')}
     mx = e.clientX; my = e.clientY;
     dot.style.transform = 'translate(' + mx + 'px,' + my + 'px)';
   }, { passive: true });
-  // the ring lags the dot with an eased follow — the classic playful detail
+  // the ring lags the dot with an eased follow - the classic playful detail
   (function frame(){
     rx += (mx - rx) * 0.16; ry += (my - ry) * 0.16;
     ring.style.transform = 'translate(' + rx + 'px,' + ry + 'px)';
@@ -2266,7 +2266,7 @@ ${c.web.items.map(i=>'- '+i).join('\n')}
 })();
 </script>
 <script>
-/* ── EFFECTS LAB — controller ──────────────────────────────────────
+/* ── EFFECTS LAB - controller ──────────────────────────────────────
    One source of truth for every opt-in effect. Each effect has:
      · a checkbox  data-lab="<id>"  → toggles html.lab-<id>
      · a slider    data-labp="<id>" → an intensity, 0..100
@@ -2295,7 +2295,7 @@ ${c.web.items.map(i=>'- '+i).join('\n')}
   const sections = [...document.querySelectorAll('main section')];
   let mx = innerWidth / 2, my = innerHeight / 2;
 
-  /* ── MAP — pure CSS-variable effects: fn(eff 0..1) → {prop:value} ── */
+  /* ── MAP - pure CSS-variable effects: fn(eff 0..1) → {prop:value} ── */
   const MAP = {
     'scroll-scale':     e => ({ '--lab-scroll-scale': (1 - e * 0.55).toFixed(3) }),
     'clip-reveal':      e => ({ '--lab-clip': (e * 70).toFixed(1) + '%' }),
@@ -2323,7 +2323,7 @@ ${c.web.items.map(i=>'- '+i).join('\n')}
     'wobble-load':      e => ({ '--lab-wobble': Math.round(lerp(2, 26, e)) + 'px' })
   };
 
-  /* ── reveal observer — toggles .lab-seen for the scroll effects ── */
+  /* ── reveal observer - toggles .lab-seen for the scroll effects ── */
   let revealIO = null;
   function buildReveal(){
     if (revealIO) revealIO.disconnect();
@@ -2339,7 +2339,7 @@ ${c.web.items.map(i=>'- '+i).join('\n')}
   });
   buildReveal();
 
-  /* ── .wrap transform manager — parallax + tilt + asymmetry compose
+  /* ── .wrap transform manager - parallax + tilt + asymmetry compose
      into one transform string per section so they never clobber ── */
   const WRAP_IDS = ['parallax-depth', 'tilt-card', 'asymmetry'];
   function wrapTick(){
@@ -2370,7 +2370,7 @@ ${c.web.items.map(i=>'- '+i).join('\n')}
   const BG_BEHIND = ['animated-gradient', 'particle-network', 'webgl-bg', 'blob-morph'];
   const syncBgShow = () => html.classList.toggle('lab-bg-show', BG_BEHIND.some(isOn));
 
-  /* ── cursor subsystem — ring / trail / text / magnetic ── */
+  /* ── cursor subsystem - ring / trail / text / magnetic ── */
   const ring = document.querySelector('.lab-cur-ring');
   const trailBox = document.querySelector('.lab-cur-trail');
   const curText  = document.querySelector('.lab-cur-text');
@@ -2644,7 +2644,7 @@ ${c.web.items.map(i=>'- '+i).join('\n')}
     setTimeout(() => html.classList.remove('lab-wobble-go'), 1000);
   }
 
-  /* ── BEHAVIOR — JS lifecycle hooks. on()/off() fire on toggle,
+  /* ── BEHAVIOR - JS lifecycle hooks. on()/off() fire on toggle,
      set() fires on toggle + every intensity / master change ── */
   const BEHAVIOR = {
     'scroll-fade':  { set: buildReveal },
@@ -2877,7 +2877,7 @@ ${c.web.items.map(i=>'- '+i).join('\n')}
   }
   presetBtns.forEach(b => b.addEventListener('click', () => applyLabPreset(b.dataset.labPreset)));
 
-  /* ── random on visit — persisted in localStorage; when on, one of the
+  /* ── random on visit - persisted in localStorage; when on, one of the
      three presets is applied at load. off = page loads with effects off. ── */
   const ROV_KEY = 'sdfkjh:lab-random-on-visit';
   const rovBox = lab.querySelector('input[data-lab-rov]');

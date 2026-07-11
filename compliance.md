@@ -1,4 +1,4 @@
-# The Compliance Layer — sdfkjh
+# The Compliance Layer · sdfkjh
 
 Source: https://sdfkjh.com/compliance
 

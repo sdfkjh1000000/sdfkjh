@@ -3,7 +3,7 @@
 // representation of the page (built by scripts/build-md.js) instead of HTML.
 // Self-syncing: derives the slug from the request path and probes for a sibling
 // .md asset. Any non-markdown request, unknown path, missing .md, or error falls
-// through to normal HTML serving — so there is no page list to keep in sync.
+// through to normal HTML serving, so there is no page list to keep in sync.
 
 export async function onRequest(context) {
   const { request, env, next } = context;
@@ -22,7 +22,7 @@ export async function onRequest(context) {
       p = p.replace(/^\/+/, "");
       slug = p.endsWith("/") ? p + "index" : p.replace(/\.html$/, "");
     }
-    // Defensive: simple path segments only — no dots (blocks traversal + non-.html assets).
+    // Defensive: simple path segments only - no dots (blocks traversal + non-.html assets).
     if (!/^[A-Za-z0-9/_-]+$/.test(slug)) return next();
 
     const asset = await env.ASSETS.fetch(new Request(new URL(`/${slug}.md`, url.origin)));

@@ -7,7 +7,7 @@
     "title": "sdfkjh",
     "version": "1.0.0"
   },
-  "description": "Read-only information about sdfkjh.com — a single-page craft showcase (the page is the portfolio) and the small family of hand-built sites published under it: what sdfkjh is, the live sites, and the homepage console commands.",
+  "description": "Read-only information about sdfkjh.com: a single-page craft showcase (the page is the portfolio) and the small family of hand-built sites published under it: what sdfkjh is, the live sites, and the homepage console commands.",
   "iconUrl": "https://sdfkjh.com/favicon.svg",
   "documentationUrl": "https://sdfkjh.com",
   "transport": {

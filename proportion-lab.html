@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>proportion lab — math-driven color &amp; type</title>
+<title>proportion lab · math-driven color &amp; type</title>
 <meta name="description" content="Internal test page: Fibonacci hue palettes, golden-ratio accent/support, and golden-ratio type scales, generated live."/>
 <meta name="robots" content="noindex, nofollow"/>
 <meta name="color-scheme" content="light dark"/>
@@ -111,8 +111,8 @@
 <main>
   <div class="wrap intro">
     <h1>Math-driven <em>color &amp; type</em></h1>
-    <p>Three formulas for generating palettes and scales from a single input. Every swatch and size below is computed live from the formula — change the input on the right and watch it regenerate.</p>
-    <p class="note">Test page. Not linked from the site, marked <code>noindex</code>. These formulas set a defensible floor, not a finished design — contrast and rhythm still get adjusted by eye afterward.</p>
+    <p>Three formulas for generating palettes and scales from a single input. Every swatch and size below is computed live from the formula. Change the input on the right and watch it regenerate.</p>
+    <p class="note">Test page. Not linked from the site, marked <code>noindex</code>. These formulas set a defensible floor, not a finished design. Contrast and rhythm still get adjusted by eye afterward.</p>
   </div>
 
   <section>
@@ -175,7 +175,7 @@
     <div class="wrap">
       <p class="eyebrow">Formula 03</p>
       <h2>Golden-ratio <em>type scale</em></h2>
-      <p class="lede">Multiply up from body size by a fixed ratio for each step in the hierarchy. 1.618 is dramatic — good for hero and landing; switch to a calmer ratio to see why dense UI usually wants one.</p>
+      <p class="lede">Multiply up from body size by a fixed ratio for each step in the hierarchy. 1.618 is dramatic, good for hero and landing; switch to a calmer ratio to see why dense UI usually wants one.</p>
       <div class="demo">
         <div class="stage"><div id="scaleStage"></div></div>
         <div class="panel">
@@ -187,18 +187,18 @@
           <div class="field">
             <label>Ratio</label>
             <select id="scaleRatio">
-              <option value="1.618">1.618 — golden (dramatic)</option>
-              <option value="1.5">1.5 — perfect fifth</option>
-              <option value="1.333">1.333 — perfect fourth</option>
-              <option value="1.25">1.25 — major third</option>
-              <option value="1.2">1.2 — minor third (calm, dense UI)</option>
+              <option value="1.618">1.618 · golden (dramatic)</option>
+              <option value="1.5">1.5 · perfect fifth</option>
+              <option value="1.333">1.333 · perfect fourth</option>
+              <option value="1.25">1.25 · major third</option>
+              <option value="1.2">1.2 · minor third (calm, dense UI)</option>
             </select>
           </div>
           <div class="readout" id="scaleReadout"></div>
         </div>
       </div>
       <div class="caveat">
-        <b>Where these break:</b> the golden-angle accent lands near a split-complement and can feel jarring at full chroma — the support desaturation is what keeps the pair usable. A 1.618 type scale grows fast (16→26→42→68): fine for a hero, often too aggressive for dense UI, where 1.2–1.333 reads calmer. And all three ignore contrast — every generated pair still needs a WCAG check.
+        <b>Where these break:</b> the golden-angle accent lands near a split-complement and can feel jarring at full chroma. The support desaturation is what keeps the pair usable. A 1.618 type scale grows fast (16→26→42→68): fine for a hero, often too aggressive for dense UI, where 1.2–1.333 reads calmer. And all three ignore contrast. Every generated pair still needs a WCAG check.
       </div>
     </div>
   </section>

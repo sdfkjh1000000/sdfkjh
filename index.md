@@ -1,4 +1,4 @@
-# sdfkjh — brand and web, built on the home keys
+# sdfkjh · brand and web, built on the home keys
 
 Source: https://sdfkjh.com/
 
@@ -40,17 +40,17 @@ One markup, fifteen complete design systems. Switch the whole look live, then tu
 
 The homepage includes a working JavaScript REPL. Commands:
 
-- `whoami` — show the wordmark.
-- `brand` — show the brand.
-- `web` — show the web.
-- `both` — show both.
-- `contact` — show the email.
-- `time` — local time.
-- `weather [city]` — current weather (via wttr.in).
-- `news` — top stories (Hacker News).
-- `cve` — recent CVEs (NVD / NIST).
-- `ping <host>` — simulated round-trip.
-- `clear` — wipe the screen.
+- `whoami`: show the wordmark.
+- `brand`: show the brand.
+- `web`: show the web.
+- `both`: show both.
+- `contact`: show the email.
+- `time`: local time.
+- `weather [city]`: current weather (via wttr.in).
+- `news`: top stories (Hacker News).
+- `cve`: recent CVEs (NVD / NIST).
+- `ping <host>`: simulated round-trip.
+- `clear`: wipe the screen.
 
 ## Facts
 

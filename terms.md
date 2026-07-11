@@ -1,4 +1,4 @@
-# Terms and Conditions — sdfkjh
+# Terms and Conditions · sdfkjh
 
 Source: https://sdfkjh.com/terms
 
@@ -12,7 +12,7 @@ This website is provided for informational purposes only. You may browse the sit
 
 ## Intellectual property
 
-All content on this site — including text, design, graphics, logos, and code — is the property of sdfkjh.com and is protected by applicable intellectual property laws. You may not reproduce, distribute, or create derivative works from this content without prior written permission.
+All content on this site, including text, design, graphics, logos, and code, is the property of sdfkjh.com and is protected by applicable intellectual property laws. You may not reproduce, distribute, or create derivative works from this content without prior written permission.
 
 ## No warranties
 

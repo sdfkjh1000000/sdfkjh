@@ -1,4 +1,4 @@
-# Accessibility Statement — sdfkjh
+# Accessibility Statement · sdfkjh
 
 Source: https://sdfkjh.com/accessibility
 
