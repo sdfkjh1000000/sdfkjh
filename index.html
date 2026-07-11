@@ -417,10 +417,13 @@
     border: 1px solid #3a3631; border-radius: calc(2px * var(--radius-scale, 1)); padding: 7px 16px;
     cursor: pointer; letter-spacing: 0.03em; transition: all 0.12s;
   }
-  .consent-decline { background: none; color: #cfcbc2; }
-  .consent-decline:hover { border-color: #8a857a; color: var(--paper); }
-  .consent-accept { background: var(--amber); color: var(--ink); border-color: var(--amber); }
-  .consent-accept:hover { background: #ff8c33; }
+  .consent-dismiss { background: var(--amber); color: var(--ink); border-color: var(--amber); }
+  .consent-dismiss:hover { background: #ff8c33; }
+  .consent-link {
+    font-family: var(--mono); font-size: calc(12px * var(--type-scale, 1)); color: #cfcbc2;
+    text-decoration: underline; letter-spacing: 0.03em; align-self: center; background: none; border: 0; cursor: pointer;
+  }
+  .consent-link:hover { color: var(--paper); }
 
   /* ── footer ────────────────────────────────────────────────── */
   footer[role="contentinfo"] {
@@ -1497,7 +1500,7 @@ Brand and web are two hands on one keyboard.
           <input type="text" autocomplete="off" spellcheck="false" aria-label="command input" placeholder="try: help"/>
         </div>
       </div>
-      <p class="hint">commands: <b>help</b> &middot; <b>whoami</b> &middot; <b>brand</b> &middot; <b>web</b> &middot; <b>both</b> &middot; <b>contact</b> &middot; <b>time</b> &middot; <b>weather</b> &middot; <b>news</b> &middot; <b>cve</b> &middot; <b>ping</b> &middot; <b>clear</b></p>
+      <p class="hint">commands: <b>help</b> &middot; <b>whoami</b> &middot; <b>brand</b> &middot; <b>web</b> &middot; <b>both</b> &middot; <b>contact</b> &middot; <b>time</b> &middot; <b>weather</b> &middot; <b>news</b> &middot; <b>cve</b> &middot; <b>ping</b> &middot; <b>privacy</b> &middot; <b>clear</b></p>
       <figure class="keys-strip" aria-hidden="true">
         <picture>
           <source srcset="/assets/img/keys.avif" type="image/avif"/>
@@ -1977,6 +1980,20 @@ ${c.web.items.map(i=>'- '+i).join('\n')}
   const input = root.querySelector('input');
   const c = CONTENT;
 
+  /* third-party lookup preference: weather/news/cve reach public APIs and
+     expose the visitor's IP. Default 'allow'; 'block' turns those off.
+     Stored as one value in localStorage (not a cookie). */
+  const TP_KEY = 'sdfkjh:thirdparty';
+  function tpAllowed(){
+    try { return localStorage.getItem(TP_KEY) !== 'block'; } catch (e) { return true; }
+  }
+  function tpSet(v){
+    try { localStorage.setItem(TP_KEY, v); } catch (e) {}
+  }
+  function tpBlockedNotice(){
+    line('Third-party lookups are turned off in your privacy options. Type \'privacy\' to change.', 'sys');
+  }
+
   function line(text, cls){
     const d = document.createElement('div');
     d.className = 'ln ' + (cls || 'sys');
@@ -2019,6 +2036,7 @@ ${c.web.items.map(i=>'- '+i).join('\n')}
              '  news              · top stories (Hacker News)',
              '  cve               · recent CVEs (NVD / NIST)',
              '  ping <host>       · round-trip to anywhere, instantly',
+             '  privacy [on|off]  · view or set third-party lookups',
              '  clear             · wipe the screen']);
     },
     whoami(){ line('sdfkjh', 'head'); line(c.kicker); },
@@ -2043,6 +2061,7 @@ ${c.web.items.map(i=>'- '+i).join('\n')}
       line('  ' + utc);
     },
     async weather(args){
+      if (!tpAllowed()) { tpBlockedNotice(); return; }
       const loc = args.join(' ').trim();
       const url = 'https://wttr.in/' + encodeURIComponent(loc) + '?format=%l:+%C+%t+%w+%h';
       const ph = pending('  fetching weather…');
@@ -2065,6 +2084,7 @@ ${c.web.items.map(i=>'- '+i).join('\n')}
       }
     },
     async news(args){
+      if (!tpAllowed()) { tpBlockedNotice(); return; }
       const n = Math.min(parseInt(args[0], 10) || 5, 10);
       const ph = pending('  fetching top stories…');
       try {
@@ -2085,6 +2105,7 @@ ${c.web.items.map(i=>'- '+i).join('\n')}
       }
     },
     async cve(args){
+      if (!tpAllowed()) { tpBlockedNotice(); return; }
       const n = Math.min(parseInt(args[0], 10) || 5, 10);
       const ph = pending('  fetching recent CVEs…');
       try {
@@ -2129,6 +2150,30 @@ ${c.web.items.map(i=>'- '+i).join('\n')}
       line('--- ' + host + ' ping statistics ---', 'amber');
       line('4 packets transmitted, 4 packets received, 0.0% packet loss');
       line('round-trip min/avg/max/stddev = 1.000/1.000/1.000/0.000 ms');
+    },
+    privacy(args){
+      const arg = (args[0] || '').toLowerCase();
+      if (arg === 'off' || arg === 'block' || arg === 'no' || arg === 'deny'){
+        tpSet('block');
+        line('Third-party lookups: OFF.', 'amber');
+        line('  weather, news, and cve will not reach out. Nothing else changes.');
+        return;
+      }
+      if (arg === 'on' || arg === 'allow' || arg === 'yes'){
+        tpSet('allow');
+        line('Third-party lookups: ON.', 'amber');
+        line('  weather, news, and cve may fetch from their public APIs when you run them.');
+        return;
+      }
+      if (arg){ line('usage: privacy [on|off]', 'err'); return; }
+      const on = tpAllowed();
+      line('Privacy · third-party lookups', 'amber');
+      line('  status: ' + (on ? 'ON (allowed)' : 'OFF (blocked)'));
+      line('  weather, news, and cve fetch from public APIs (wttr.in, Hacker News, NVD),');
+      line('  and only when you run them. Those requests expose your IP to that endpoint,');
+      line('  the same as visiting any website. Nothing else on this page phones out.');
+      line('  the choice is one value in this browser\'s localStorage, not a cookie.');
+      line('  type \'privacy off\' to block, \'privacy on\' to allow.');
     },
     clear(){ scroll.innerHTML = ''; }
   };
@@ -2179,6 +2224,13 @@ ${c.web.items.map(i=>'- '+i).join('\n')}
   line('[ sdfkjh ] · ready.', 'amber');
   line("type 'help' to look around, or just scroll the page.");
   line('');
+
+  /* let the shared privacy banner route "Privacy options" into this control */
+  window.__sdfkjhPrivacy = function(){
+    if (root && root.scrollIntoView) root.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    try { input.focus({ preventScroll: true }); } catch (e) { input.focus(); }
+    exec('privacy');
+  };
 })();
 </script>
 <script>
