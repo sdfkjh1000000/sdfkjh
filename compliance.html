@@ -169,10 +169,13 @@
     border: 1px solid #3a3631; border-radius: 2px; padding: 7px 16px;
     cursor: pointer; letter-spacing: 0.03em; transition: all 0.12s;
   }
-  .consent-decline { background: none; color: #cfcbc2; }
-  .consent-decline:hover { border-color: #8a857a; color: var(--paper); }
-  .consent-accept { background: var(--amber); color: var(--ink); border-color: var(--amber); }
-  .consent-accept:hover { background: #ff8c33; }
+  .consent-dismiss { background: var(--amber); color: var(--ink); border-color: var(--amber); }
+  .consent-dismiss:hover { background: #ff8c33; }
+  .consent-link {
+    font-family: var(--mono); font-size: 12px; color: #cfcbc2;
+    text-decoration: underline; letter-spacing: 0.03em; align-self: center; background: none; border: 0; cursor: pointer;
+  }
+  .consent-link:hover { color: var(--paper); }
 
   @media (max-width: 560px) {
     header[role="banner"] { padding: 18px 20px; }
@@ -230,7 +233,7 @@
     <li>A <a href="/privacy">privacy policy</a> that describes this site as it actually is (no analytics scripts, no tracking cookies, fonts and images served from this domain) rather than a template's guess.</li>
     <li>A <a href="/do-not-sell">Do Not Sell or Share</a> page stating California privacy rights plainly.</li>
     <li><a href="/terms">Terms of use</a> sized to what the site actually does.</li>
-    <li>A privacy notice that guards only what exists. There is nothing here that tracks you, so there is no wall of toggles pretending otherwise.</li>
+    <li>An informational privacy notice, not a consent wall. Normal browsing sets no cookies and needs no permission, so the banner asks for none. The one thing worth a choice, whether the optional <code>weather</code>, <code>news</code>, and <code>cve</code> lookups may reach their third-party APIs, is a single real preference stored in your browser, not a row of toggles pretending to gate nothing.</li>
     <li>Accessibility tested against WCAG&nbsp;2.2 AA on every page: zero violations, last checked July&nbsp;2026. Keyboard navigation, visible focus, a skip link, honest alt text.</li>
     <li>Security headers on every response: a content security policy, strict transport security, frame denial.</li>
   </ul>

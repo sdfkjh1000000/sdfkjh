@@ -20,11 +20,11 @@ Our hosting provider, Cloudflare, processes and logs web requests as part of del
 
 This site loads no third-party scripts, fonts, analytics, or tracking resources on its own. Fonts and images are served from this domain; only Cloudflare's infrastructure is involved, for hosting and delivery.
 
-The on-page command console includes optional commands (`weather`, `news`, `cve`) that fetch from public third-party APIs only when you type them: [wttr.in](https://wttr.in), [Hacker News](https://news.ycombinator.com), and [NVD (nvd.nist.gov)](https://nvd.nist.gov). Those endpoints see your IP address as part of the request, like any other website you visit. No request is made until you run the command.
+The on-page command console includes optional commands (`weather`, `news`, `cve`) that fetch from public third-party APIs only when you type them: [wttr.in](https://wttr.in), [Hacker News](https://news.ycombinator.com), and [NVD (nvd.nist.gov)](https://nvd.nist.gov). Those endpoints see your IP address as part of the request, like any other website you visit. No request is made until you run the command, and you can turn these lookups off from the on-page privacy option (the console's `privacy` command), after which those commands make no request at all.
 
 ## Cookies and local storage
 
-This site stores a single value in your browser's localStorage to remember your privacy notice preference (accept or decline). No cookies are used.
+This site sets no cookies. It stores small preferences in your browser's localStorage instead: one value remembers that you dismissed the privacy notice, and one records whether the optional third-party lookups (`weather`, `news`, `cve`) are allowed or blocked. Allowed is the default. You can change it any time from the on-page privacy option. These values stay in your browser and are never sent to us; localStorage is not a cookie and does not track you across sites.
 
 ## Data retention
 

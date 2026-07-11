@@ -11,7 +11,7 @@ Every page on this site carries a legal and accessibility layer you're not meant
 -   A [privacy policy](/privacy) that describes this site as it actually is (no analytics, no tracking cookies, fonts and images served from this domain) rather than a template's guess.
 -   A [Do Not Sell or Share](/do-not-sell) page stating California privacy rights plainly.
 -   [Terms of use](/terms) sized to what the site actually does.
--   A privacy notice that guards only what exists. There is nothing here that tracks you, so there is no wall of toggles pretending otherwise.
+-   An informational privacy notice, not a consent wall. Normal browsing sets no cookies and needs no permission, so the banner asks for none. The one thing worth a choice, whether the optional `weather`, `news`, and `cve` lookups may reach their third-party APIs, is a single real preference stored in your browser, not a row of toggles pretending to gate nothing.
 -   Accessibility tested against WCAG 2.2 AA on every page: zero violations, last checked July 2026. Keyboard navigation, visible focus, a skip link, honest alt text.
 -   Security headers on every response: a content security policy, strict transport security, frame denial.
 

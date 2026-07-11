@@ -148,10 +148,13 @@
     border: 1px solid #3a3631; border-radius: 2px; padding: 7px 16px;
     cursor: pointer; letter-spacing: 0.03em; transition: all 0.12s;
   }
-  .consent-decline { background: none; color: #cfcbc2; }
-  .consent-decline:hover { border-color: #8a857a; color: var(--paper); }
-  .consent-accept { background: var(--amber); color: var(--ink); border-color: var(--amber); }
-  .consent-accept:hover { background: #ff8c33; }
+  .consent-dismiss { background: var(--amber); color: var(--ink); border-color: var(--amber); }
+  .consent-dismiss:hover { background: #ff8c33; }
+  .consent-link {
+    font-family: var(--mono); font-size: 12px; color: #cfcbc2;
+    text-decoration: underline; letter-spacing: 0.03em; align-self: center; background: none; border: 0; cursor: pointer;
+  }
+  .consent-link:hover { color: var(--paper); }
 
   @media (max-width: 560px) {
     header[role="banner"] { padding: 18px 20px; }

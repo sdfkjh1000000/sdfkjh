@@ -165,10 +165,13 @@
     border: 1px solid #3a3631; border-radius: 2px; padding: 7px 16px;
     cursor: pointer; letter-spacing: 0.03em; transition: all 0.12s;
   }
-  .consent-decline { background: none; color: #cfcbc2; }
-  .consent-decline:hover { border-color: #8a857a; color: var(--paper); }
-  .consent-accept { background: var(--amber); color: var(--ink); border-color: var(--amber); }
-  .consent-accept:hover { background: #ff8c33; }
+  .consent-dismiss { background: var(--amber); color: var(--ink); border-color: var(--amber); }
+  .consent-dismiss:hover { background: #ff8c33; }
+  .consent-link {
+    font-family: var(--mono); font-size: 12px; color: #cfcbc2;
+    text-decoration: underline; letter-spacing: 0.03em; align-self: center; background: none; border: 0; cursor: pointer;
+  }
+  .consent-link:hover { color: var(--paper); }
 
   @media (max-width: 560px) {
     header[role="banner"] { padding: 18px 20px; }
@@ -230,10 +233,10 @@
 
   <h2>Third-party services</h2>
   <p>This site loads no third-party scripts, fonts, advertising, analytics, or tracking resources on its own. Fonts and images are served from this domain; only Cloudflare's infrastructure is involved, for hosting and delivery.</p>
-  <p>The on-page command console includes optional commands (<code>weather</code>, <code>news</code>, <code>cve</code>) that fetch from public third-party APIs only when you type them: <a href="https://wttr.in" rel="noopener">wttr.in</a>, <a href="https://news.ycombinator.com" rel="noopener">Hacker News</a>, and <a href="https://nvd.nist.gov" rel="noopener">NVD (nvd.nist.gov)</a>. Those endpoints see your IP address as part of the request, like any other website you visit. No request is made until you run the command.</p>
+  <p>The on-page command console includes optional commands (<code>weather</code>, <code>news</code>, <code>cve</code>) that fetch from public third-party APIs only when you type them: <a href="https://wttr.in" rel="noopener">wttr.in</a>, <a href="https://news.ycombinator.com" rel="noopener">Hacker News</a>, and <a href="https://nvd.nist.gov" rel="noopener">NVD (nvd.nist.gov)</a>. Those endpoints see your IP address as part of the request, like any other website you visit. No request is made until you run the command, and you can turn these lookups off from the on-page privacy option (the console's <code>privacy</code> command), after which those commands make no request at all.</p>
 
   <h2>Cookies and local storage</h2>
-  <p>This site stores a single value in your browser's localStorage to remember your privacy notice preference (accept or decline). No cookies are used.</p>
+  <p>This site sets no cookies. It stores small preferences in your browser's localStorage instead: one value remembers that you dismissed the privacy notice, and one records whether the optional third-party lookups (<code>weather</code>, <code>news</code>, <code>cve</code>) are allowed or blocked. Allowed is the default. You can change it any time from the on-page privacy option. These values stay in your browser and are never sent to us; localStorage is not a cookie and does not track you across sites.</p>
 
   <h2>Data retention</h2>
   <p>No user data is collected or stored by this site. If you email us directly, that correspondence is retained only as long as needed to respond.</p>
