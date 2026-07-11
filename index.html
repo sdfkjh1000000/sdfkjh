@@ -2186,7 +2186,9 @@ ${c.web.items.map(i=>'- '+i).join('\n')}
          writing the checks by hand is the point: it keeps the "vanilla JS,
          no third-party" claim true instead of importing something to grade it. */
       const same = location.origin;
-      const originOf = u => { try { return new URL(u, location.href).origin; } catch (e) { return null; } };
+      /* data:/blob:/about: are inline, not third-party; treat as same-origin so
+         self-contained SVG textures and the like are not miscounted as cross-origin. */
+      const originOf = u => { if (/^(data|blob|about):/i.test(u)) return same; try { return new URL(u, location.href).origin; } catch (e) { return null; } };
       const kb = n => (n / 1024).toFixed(1) + ' KB';
       const pad = (s, n) => (s + ' '.repeat(n)).slice(0, n);
       const chk = (label, ok, detail) => line('  ' + pad(label, 12) + (ok ? 'ok' : '!!') + '  ' + detail, ok ? 'sys' : 'err');
