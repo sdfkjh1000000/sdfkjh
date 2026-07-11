@@ -1011,6 +1011,47 @@
   }
   /* static acknowledgement (reduced-motion / fallback): a brief amber lift, no motion */
   html.egg-static .hero .home-row .lit { color: var(--amber); }
+
+  /* ── boring mode ──────────────────────────────────────────────────
+     the `boring` REPL command toggles html.boring to strip the playful
+     layer to a plain, fast, readable document: the fundamentals stand
+     without the flash. it OVERRIDES every playground / lab- decoration
+     while active (placed last so equal-specificity !important wins) and
+     restores cleanly when toggled off. session-only, nothing persisted. */
+  html.boring .cursor-ring,
+  html.boring .cursor-dot,
+  html.boring .grain,
+  html.boring .lab-fixed,
+  html.boring .lab-cur,
+  html.boring .lab-spotlight,
+  html.boring .lab-blob,
+  html.boring .lab-progress-bar { display: none !important; }
+  html.boring, html.boring * { cursor: auto !important; }
+  html.boring *, html.boring *::before, html.boring *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+  html.boring main { filter: none !important; }
+  html.boring main section,
+  html.boring main section > .wrap,
+  html.boring main section .eyebrow,
+  html.boring .hero .image img,
+  html.boring .both .keys-strip img {
+    transform: none !important; translate: none !important; scale: none !important;
+    rotate: none !important; filter: none !important; clip-path: none !important;
+    opacity: 1 !important; box-shadow: none !important; outline: none !important;
+  }
+  html.boring body,
+  html.boring main section,
+  html.boring header[role="banner"],
+  html.boring footer[role="contentinfo"] { background-color: var(--paper) !important; }
+  html.boring main section .eyebrow { position: static !important; }
+  /* undo lab text effects so nothing renders transparent or distorted while plain */
+  html.boring h1, html.boring h2, html.boring h3, html.boring h4,
+  html.boring .closing, html.boring .wm, html.boring .wm-lg, html.boring .code-caption {
+    -webkit-text-fill-color: currentColor !important;
+    background: none !important; font-variation-settings: normal !important;
+  }
 </style>
 </head>
 <body>
@@ -1525,7 +1566,7 @@ Brand and web are two hands on one keyboard.
           <input type="text" autocomplete="off" spellcheck="false" aria-label="command input" placeholder="try: help"/>
         </div>
       </div>
-      <p class="hint">commands: <b>help</b> &middot; <b>whoami</b> &middot; <b>brand</b> &middot; <b>web</b> &middot; <b>both</b> &middot; <b>contact</b> &middot; <b>time</b> &middot; <b>weather</b> &middot; <b>news</b> &middot; <b>cve</b> &middot; <b>ping</b> &middot; <b>audit</b> &middot; <b>data</b> &middot; <b>privacy</b> &middot; <b>commentary</b> &middot; <b>manifesto</b> &middot; <b>clear</b></p>
+      <p class="hint">commands: <b>help</b> &middot; <b>whoami</b> &middot; <b>brand</b> &middot; <b>web</b> &middot; <b>both</b> &middot; <b>contact</b> &middot; <b>time</b> &middot; <b>weather</b> &middot; <b>news</b> &middot; <b>cve</b> &middot; <b>ping</b> &middot; <b>audit</b> &middot; <b>data</b> &middot; <b>privacy</b> &middot; <b>commentary</b> &middot; <b>manifesto</b> &middot; <b>boring</b> &middot; <b>clear</b></p>
       <figure class="keys-strip" aria-hidden="true">
         <picture>
           <source srcset="/assets/img/keys.avif" type="image/avif"/>
@@ -2066,6 +2107,7 @@ ${c.web.items.map(i=>'- '+i).join('\n')}
              '  privacy [on|off]  · view or set third-party lookups',
              '  commentary        · why the page is built this way',
              '  manifesto         · what this page refuses to do',
+             '  boring [on|off]   · strip the flash to a plain document',
              '  clear             · wipe the screen']);
     },
     whoami(){ line('sdfkjh', 'head'); line(c.kicker); },
@@ -2355,6 +2397,29 @@ ${c.web.items.map(i=>'- '+i).join('\n')}
       line('  · no tracking       no per-visitor profile. nothing trails you in or out.');
       line('  · no dark patterns  no fake urgency, no buried opt-out, no consent theater.');
       line('  each line is checkable: run \'audit\' to measure it, or \'data\' for the list.', 'sys');
+    },
+    boring(args){
+      /* strip the playful layer to a plain, fast, readable document, proving
+         the fundamentals stand without the flash. toggles html.boring, which
+         OVERRIDES the playground / effects-lab decoration while active and
+         restores it cleanly on the next toggle. session-only: no localStorage,
+         nothing persisted, so there is nothing to disclose. */
+      const arg = (args[0] || '').toLowerCase();
+      const el = document.documentElement;
+      let on;
+      if (arg === 'off' || arg === 'no') on = false;
+      else if (arg === 'on' || arg === 'yes') on = true;
+      else if (arg) { line('usage: boring [on|off]', 'err'); return; }
+      else on = !el.classList.contains('boring');
+      el.classList.toggle('boring', on);
+      if (on) {
+        line('Boring mode ON.', 'amber');
+        line('  stripped to the plain document. the content stands on its own.');
+        line("  type 'boring' again to bring the craft back.");
+      } else {
+        line('Boring mode OFF.', 'amber');
+        line('  the craft is back. every effect was overridden, never removed.');
+      }
     },
     clear(){ scroll.innerHTML = ''; }
   };
