@@ -2,7 +2,7 @@
 
 Source: https://sdfkjh.com/
 
-sdfkjh is six letters off the home row of a keyboard (sdf + kjh). The site is a single-page craft showcase: every section is a working artifact built by hand — a live Markdown renderer, a format switcher, an in-page design-token editor, an effects lab, and a JavaScript REPL — not a description of one. The page is the portfolio.
+sdfkjh is six letters off the home row of a keyboard (sdf + kjh). The site is a single-page craft showcase: every section is a working artifact built by hand (a live Markdown renderer, a format switcher, an in-page design-token editor, an effects lab, and a JavaScript REPL), not a description of one. The page is the portfolio.
 
 ## The take
 
@@ -22,11 +22,19 @@ Left hand: **sdf**. Right hand: **kjh**. Brand and web are two hands on one keyb
 - Stack: vanilla JS, no framework.
 - Hosting: Cloudflare Pages, edge-served.
 
-One page renders in five formats — html · markdown · json · css · javascript.
+One page renders in five formats: html · markdown · json · css · javascript.
+
+## Elsewhere
+
+The same hand and stack, pointed at three other problems:
+
+- [byob](https://byob.sdfkjh.com/): Be Your Own Broker. Car buying without the F&I middleman.
+- [tanktalks](https://tanktalks.sdfkjh.com/): freshwater aquarium keeping, explained plainly.
+- [business internet search](https://businessinternetsearch.sdfkjh.com/): B2B connectivity, sourced without the runaround.
 
 ## Design range
 
-One markup, fifteen complete design systems — switch the whole look live, then tune color, type, and layout in the browser: [sdfkjh.com/range](https://sdfkjh.com/range).
+One markup, fifteen complete design systems. Switch the whole look live, then tune color, type, and layout in the browser: [sdfkjh.com/range](https://sdfkjh.com/range).
 
 ## The console
 

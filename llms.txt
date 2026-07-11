@@ -1,11 +1,11 @@
 # sdfkjh.com
 
-> sdfkjh is six letters off the home row of a keyboard (sdf + kjh). The site is a single-page craft showcase: every section is a working artifact built by hand — a live Markdown renderer, a format switcher, an in-page design-token editor, an effects lab, and a JavaScript REPL — not a description of one. Brand work decides how a thing sounds and looks; web work decides whether it loads, ranks, and lasts. The page is the portfolio.
+> sdfkjh is six letters off the home row of a keyboard (sdf + kjh). The site is a single-page craft showcase: every section is a working artifact built by hand (a live Markdown renderer, a format switcher, an in-page design-token editor, an effects lab, and a JavaScript REPL), not a description of one. Brand work decides how a thing sounds and looks; web work decides whether it loads, ranks, and lasts. The page is the portfolio.
 
 ## Pages
 
-- [Home](https://sdfkjh.com/): the showcase itself — interactive REPL, per-section design editor, effects lab, self-hosted fonts and imagery, no third-party trackers.
-- [Design range](https://sdfkjh.com/range): one markup rendered in fifteen complete design systems — switch the whole look live, then tune color, type, and layout in the browser.
+- [Home](https://sdfkjh.com/): the showcase itself. Interactive REPL, per-section design editor, effects lab, self-hosted fonts and imagery, no third-party trackers.
+- [Design range](https://sdfkjh.com/range): one markup rendered in fifteen complete design systems. Switch the whole look live, then tune color, type, and layout in the browser.
 - [Privacy](https://sdfkjh.com/privacy): what the site does and does not collect (no analytics, no tracking cookies).
 - [Do Not Sell or Share](https://sdfkjh.com/do-not-sell): voluntary CCPA/CPRA stance.
 - [Terms](https://sdfkjh.com/terms): terms of use.
@@ -15,5 +15,6 @@
 ## Notes
 
 - Static site, hand-built, no framework. Hosted on Cloudflare Pages.
+- sdfkjh.com is the parent of a small family of hand-built sites: byob (car buying), tanktalks (freshwater aquariums), business internet search (B2B connectivity). Machine-readable directory: https://sdfkjh.com/api/sites
 - Fonts and images are self-hosted; the page loads no third-party resources on page load.
 - The in-page console (REPL) makes on-demand calls to public APIs (weather, Hacker News, NVD) only when a visitor types those commands.
