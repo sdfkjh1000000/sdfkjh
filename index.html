@@ -108,6 +108,11 @@
     font-family: 'JetBrains Mono'; font-style: normal; font-weight: 400 700;
     font-display: swap; src: url('/assets/fonts/jetbrains-mono.woff2') format('woff2');
   }
+  /* Archivo (variable 100-900, already shipped for /range) drives the live hero canvas */
+  @font-face {
+    font-family: 'Archivo'; font-style: normal; font-weight: 100 900;
+    font-display: swap; src: url('/assets/fonts/archivo-400.woff2') format('woff2');
+  }
 
   :root {
     --paper:     #FDFBF7;
@@ -194,10 +199,13 @@
   }
   .hero .text { max-width: 560px; }
   .hero .image {
-    aspect-ratio: 4 / 5; overflow: hidden;
+    aspect-ratio: 4 / 5; overflow: hidden; position: relative;
     background: #0d0d0d; border-radius: calc(2px * var(--radius-scale, 1));
   }
   .hero .image img { width: 100%; height: 100%; object-fit: cover; }
+  /* live canvas sits over the static image (which is the no-JS / reduced-motion fallback) */
+  .hero-canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+  html.boring .hero-canvas { display: none; }
   .hero .wm-lg {
     font-family: var(--mono); font-weight: 500; font-size: calc(clamp(30px, 4.4vw, 44px) * var(--type-scale, 1));
     letter-spacing: 0.02em; color: var(--ink); display: inline-block; margin-bottom: 6px;
@@ -3379,6 +3387,77 @@ ${c.web.items.map(i=>'- '+i).join('\n')}
   t.addEventListener('keydown', function(e){ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); p.hidden?open():close(); } });
   p.addEventListener('keydown', function(e){ if(e.key==='Escape'){ e.preventDefault(); close(); } });
   if(x) x.addEventListener('click', close);
+})();
+</script>
+<script>
+/* live hero: contour-mark scanning outline drawn over the static fallback image.
+   Skipped under reduced-motion / no-canvas (the <img> shows instead); paused when
+   the tab is hidden or the hero scrolls out of view; backing size capped for a smooth loop. */
+(function(){
+  var box = document.querySelector('.hero .image');
+  if(!box) return;
+  if(matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  var cv = document.createElement('canvas'); cv.className='hero-canvas'; cv.setAttribute('aria-hidden','true');
+  var ctx = cv.getContext('2d', { alpha:false });
+  if(!ctx) return;
+
+  var BG='#0d0b0a', ACCENT='#ff8a36', DIM='154,143,124', WORD='sdfkjh', SPEED=0.6, DOTA=0.07;
+  var W,H, mask, layer, lctx, fontSize, cx, cy, dotSpacing, spacing;
+  function hash(n){ n=(n^61)^(n>>>16); n=(n+(n<<3))|0; n=n^(n>>>4); n=Math.imul(n,0x27d4eb2d); n=n^(n>>>15); return n>>>0; }
+
+  function build(){
+    var r = box.getBoundingClientRect();
+    var dpr = Math.min(2, window.devicePixelRatio||1);
+    var sc = Math.max(1, Math.min(dpr, 900/Math.max(r.width, r.height, 1)));
+    W = Math.max(2, Math.round(r.width*sc)); H = Math.max(2, Math.round(r.height*sc));
+    cv.width=W; cv.height=H;
+    mask = document.createElement('canvas'); mask.width=W; mask.height=H;
+    var m = mask.getContext('2d'); m.textAlign='center'; m.textBaseline='middle';
+    var fs = H*0.5; m.font='900 '+fs+'px "Archivo"'; var w=m.measureText(WORD).width;
+    if(w > W*0.86) fs = fs*(W*0.86)/w; fs=Math.floor(fs);
+    m.font='900 '+fs+'px "Archivo"'; m.fillStyle='#fff'; m.fillText(WORD, W/2, H*0.5);
+    fontSize=fs; cx=W/2; cy=H*0.5;
+    layer = document.createElement('canvas'); layer.width=W; layer.height=H; lctx=layer.getContext('2d');
+    dotSpacing = Math.max(30, Math.round(W/30));
+    spacing = Math.max(9, Math.round(H/46));
+  }
+
+  function draw(t){
+    ctx.fillStyle=BG; ctx.fillRect(0,0,W,H);
+    var ds=dotSpacing;
+    for(var y=ds/2;y<H;y+=ds){ for(var x=ds/2;x<W;x+=ds){
+      var hv=hash(Math.round(x)*131+Math.round(y)*977);
+      var a=DOTA*(0.3+0.7*(0.5+0.5*Math.sin(t*0.4+(hv%628)/100)));
+      if(a<=0.003) continue;
+      ctx.fillStyle='rgba('+DIM+','+a.toFixed(3)+')';
+      ctx.beginPath(); ctx.arc(x,y,1.6,0,6.2832); ctx.fill();
+    }}
+    lctx.clearRect(0,0,W,H);
+    var bandY=((t*SPEED*140)%(H+300))-150;
+    for(var yy=-spacing;yy<H+spacing;yy+=spacing){
+      lctx.beginPath();
+      for(var xx=0;xx<=W;xx+=10){ var py=yy+Math.sin(xx*0.018+yy*0.05+t*0.6)*(spacing*0.35); if(xx===0)lctx.moveTo(xx,py); else lctx.lineTo(xx,py); }
+      var glow=Math.max(0,1-Math.abs(yy-bandY)/220), al=(0.18+glow*0.75).toFixed(3);
+      lctx.strokeStyle = glow>0.5 ? 'rgba(255,138,54,'+al+')' : 'rgba('+DIM+','+al+')';
+      lctx.lineWidth=1.4+glow*2.2; lctx.stroke();
+    }
+    lctx.globalCompositeOperation='destination-in'; lctx.drawImage(mask,0,0); lctx.globalCompositeOperation='source-over';
+    ctx.drawImage(layer,0,0);
+    ctx.textAlign='center'; ctx.textBaseline='middle'; ctx.font='900 '+fontSize+'px "Archivo"';
+    ctx.lineWidth=Math.max(2,fontSize*0.018); ctx.strokeStyle=ACCENT; ctx.strokeText(WORD,cx,cy);
+  }
+
+  var raf, t0=0, running=false, ready=false;
+  function loop(now){ if(!t0)t0=now; draw((now-t0)/1000); raf=requestAnimationFrame(loop); }
+  function play(){ if(running||!ready)return; running=true; t0=0; raf=requestAnimationFrame(loop); }
+  function stop(){ running=false; cancelAnimationFrame(raf); }
+
+  document.fonts.load('900 40px "Archivo"').then(function(){ return document.fonts.ready; }).then(function(){
+    box.appendChild(cv); build(); ready=true; draw(0); play();
+  });
+  document.addEventListener('visibilitychange', function(){ document.hidden?stop():play(); });
+  if('IntersectionObserver' in window){ new IntersectionObserver(function(es){ es.forEach(function(e){ e.isIntersecting?play():stop(); }); },{threshold:0.02}).observe(box); }
+  var rt; window.addEventListener('resize', function(){ if(!ready)return; clearTimeout(rt); rt=setTimeout(function(){ build(); draw(0); },150); });
 })();
 </script>
 </body>
