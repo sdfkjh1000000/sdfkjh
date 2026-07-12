@@ -2887,11 +2887,11 @@ html[data-profile] section.candor { transform: none; }
 }
 
 
-/* template: the generic "most popular template" look. Every landing page, 2015 to 2025.
-   Presented honestly as the one you would never ship. System sans (no webfont),
-   purple-to-blue SaaS gradient, everything centered, big radius, drop shadows,
-   accent-bar-on-rounded-card, generic bright blue. Tasteless but legible. */
-html[data-profile="template"] {
+/* basic: the competent, generic default. The clean SaaS look every landing page
+   reaches for, 2015 to 2025. System sans (no webfont), purple-to-blue gradient,
+   everything centered, big radius, drop shadows, accent-bar-on-rounded-card,
+   generic bright blue. Competent and legible, just not distinctive. */
+html[data-profile="basic"] {
   --bg:#F8FAFC; --surface:#FFFFFF; --fg:#1E293B; --fg-soft:#475569;
   --line:#E2E8F0; --accent:#2563EB; --accent-2:#7C3AED;
   --font-head:system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
@@ -2902,91 +2902,91 @@ html[data-profile="template"] {
   --label-tracking:0.06em; --label-transform:uppercase;
   --wm-base:.3s; --wm-step:.05s; --wm-ldur:.5s; --wm-brdur:.3s; --wm-ease:cubic-bezier(.4,0,.2,1);
 }
-html[data-profile="template"] body { font-size:16px; line-height:1.6; }
-html[data-profile="template"] main { text-align:center; }
-html[data-profile="template"] section { border-top:1px solid var(--line); }
-html[data-profile="template"] .site-head { border-bottom:1px solid var(--line); background:var(--surface); }
+html[data-profile="basic"] body { font-size:16px; line-height:1.6; }
+html[data-profile="basic"] main { text-align:center; }
+html[data-profile="basic"] section { border-top:1px solid var(--line); }
+html[data-profile="basic"] .site-head { border-bottom:1px solid var(--line); background:var(--surface); }
 
 /* switcher: rounded pills, generic bright-blue active state */
-html[data-profile="template"] .switch button {
+html[data-profile="basic"] .switch button {
   border:1px solid var(--line); border-radius:9px; background:var(--surface);
   color:var(--fg-soft); font-family:var(--font-label); font-size:12px; letter-spacing:.02em;
 }
-html[data-profile="template"] .switch button:hover { border-color:var(--accent); color:var(--accent); }
-html[data-profile="template"] .switch button[aria-checked="true"] {
+html[data-profile="basic"] .switch button:hover { border-color:var(--accent); color:var(--accent); }
+html[data-profile="basic"] .switch button[aria-checked="true"] {
   background:var(--accent); color:#FFFFFF; border-color:var(--accent);
 }
 
 /* the purple-to-blue hero gradient, centered white copy. Solid fallback stays AA under the gradient. */
-html[data-profile="template"] .hero {
+html[data-profile="basic"] .hero {
   background:#4F46E5;
   background:linear-gradient(135deg,#7C3AED 0%,#2563EB 100%);
   border-radius:0;
 }
-html[data-profile="template"] .hero .wrap { text-align:center; }
-html[data-profile="template"] .hero .wordmark { margin-left:auto; margin-right:auto; }
-html[data-profile="template"] .hero .wm-letters { stroke:#FFFFFF; }
-html[data-profile="template"] .hero .wm-br { stroke:#FFFFFF; }
-html[data-profile="template"] .hero .wm-cursor { fill:#FFFFFF; }
-html[data-profile="template"] .hero .eyebrow {
+html[data-profile="basic"] .hero .wrap { text-align:center; }
+html[data-profile="basic"] .hero .wordmark { margin-left:auto; margin-right:auto; }
+html[data-profile="basic"] .hero .wm-letters { stroke:#FFFFFF; }
+html[data-profile="basic"] .hero .wm-br { stroke:#FFFFFF; }
+html[data-profile="basic"] .hero .wm-cursor { fill:#FFFFFF; }
+html[data-profile="basic"] .hero .eyebrow {
   color:#FFFFFF; background:transparent; border:0; box-shadow:none;
   display:inline-block; letter-spacing:.14em;
 }
-html[data-profile="template"] .hero h1.headline {
+html[data-profile="basic"] .hero h1.headline {
   color:#FFFFFF; margin-left:auto; margin-right:auto; max-width:20ch;
 }
-html[data-profile="template"] .hero h1.headline em {
+html[data-profile="basic"] .hero h1.headline em {
   font-style:normal; color:#FFFFFF;
   text-decoration:underline; text-decoration-color:rgba(255,255,255,.55); text-underline-offset:5px;
 }
-html[data-profile="template"] .hero .sub {
+html[data-profile="basic"] .hero .sub {
   color:#EEF2FF; margin-left:auto; margin-right:auto; max-width:52ch;
 }
 
 /* everything centered */
-html[data-profile="template"] .eyebrow {
+html[data-profile="basic"] .eyebrow {
   display:inline-block; color:var(--accent); background:#EFF6FF;
   border-radius:999px; padding:5px 14px; margin:0 auto 18px; font-weight:600;
   letter-spacing:.04em;
 }
-html[data-profile="template"] h1.headline { max-width:20ch; margin:0 auto 18px; }
-html[data-profile="template"] h1.headline em { font-style:normal; color:var(--accent); }
-html[data-profile="template"] .sub { margin:0 auto; max-width:56ch; color:var(--fg-soft); }
-html[data-profile="template"] h2.h2 { max-width:22ch; margin:0 auto 28px; color:var(--fg); }
-html[data-profile="template"] h2.h2 em { font-style:normal; color:var(--accent-2); }
+html[data-profile="basic"] h1.headline { max-width:20ch; margin:0 auto 18px; }
+html[data-profile="basic"] h1.headline em { font-style:normal; color:var(--accent); }
+html[data-profile="basic"] .sub { margin:0 auto; max-width:56ch; color:var(--fg-soft); }
+html[data-profile="basic"] h2.h2 { max-width:22ch; margin:0 auto 28px; color:var(--fg); }
+html[data-profile="basic"] h2.h2 em { font-style:normal; color:var(--accent-2); }
 
 /* cards: big radius, drop shadow, accent bar on top of a rounded card */
-html[data-profile="template"] .cards { gap:24px; }
-html[data-profile="template"] .card {
+html[data-profile="basic"] .cards { gap:24px; }
+html[data-profile="basic"] .card {
   border:1px solid var(--line); border-top:3px solid var(--accent);
   border-radius:16px; background:var(--surface); padding:30px 26px; text-align:center;
   box-shadow:0 10px 24px rgba(15,23,42,.08);
 }
-html[data-profile="template"] .card .idx {
+html[data-profile="basic"] .card .idx {
   display:block; margin:0 auto 12px; font-weight:700; color:var(--accent); letter-spacing:.04em;
 }
-html[data-profile="template"] .card h3 { font-weight:700; color:var(--fg); letter-spacing:-.01em; }
-html[data-profile="template"] .card p { color:var(--fg-soft); }
+html[data-profile="basic"] .card h3 { font-weight:700; color:var(--fg); letter-spacing:-.01em; }
+html[data-profile="basic"] .card p { color:var(--fg-soft); }
 
 /* tokens */
-html[data-profile="template"] .tokens { align-items:center; }
-html[data-profile="template"] .swatches { gap:12px; }
-html[data-profile="template"] .sw { border-radius:12px; }
-html[data-profile="template"] .specimen { text-align:center; }
-html[data-profile="template"] .specimen .big { font-weight:800; color:var(--fg); letter-spacing:-.02em; }
-html[data-profile="template"] .specimen .body { color:var(--fg-soft); margin-left:auto; margin-right:auto; }
-html[data-profile="template"] .specimen .label { color:var(--accent); }
+html[data-profile="basic"] .tokens { align-items:center; }
+html[data-profile="basic"] .swatches { gap:12px; }
+html[data-profile="basic"] .sw { border-radius:12px; }
+html[data-profile="basic"] .specimen { text-align:center; }
+html[data-profile="basic"] .specimen .big { font-weight:800; color:var(--fg); letter-spacing:-.02em; }
+html[data-profile="basic"] .specimen .body { color:var(--fg-soft); margin-left:auto; margin-right:auto; }
+html[data-profile="basic"] .specimen .label { color:var(--accent); }
 
 /* candor: a rounded, centered card instead of the ruled quote */
-html[data-profile="template"] .candor {
+html[data-profile="basic"] .candor {
   border:0; border-top:3px solid var(--accent); border-radius:16px;
   background:var(--surface); box-shadow:0 10px 24px rgba(15,23,42,.08);
   padding:26px 30px; max-width:70ch; margin:0 auto; text-align:center; color:var(--fg-soft);
 }
-html[data-profile="template"] .candor b { color:var(--accent); }
+html[data-profile="basic"] .candor b { color:var(--accent); }
 
 @media (max-width:760px) {
-  html[data-profile="template"] .card { text-align:center; }
+  html[data-profile="basic"] .card { text-align:center; }
 }
 
 </style>
@@ -3013,7 +3013,7 @@ html[data-profile="template"] .candor b { color:var(--accent); }
     <button type="button" role="radio" data-set="academic" aria-checked="false" tabindex="-1">Academic</button>
     <button type="button" role="radio" data-set="fintech" aria-checked="false" tabindex="-1">Fintech</button>
     <button type="button" role="radio" data-set="maximal" aria-checked="false" tabindex="-1">Maximal</button>
-    <button type="button" role="radio" data-set="template" aria-checked="false" tabindex="-1" title="every landing page, 2015 to 2025, the one you would never ship">Template</button>
+    <button type="button" role="radio" data-set="basic" aria-checked="false" tabindex="-1" title="the competent, generic default">Basic</button>
   </div>
 </header>
 
@@ -3136,7 +3136,7 @@ html[data-profile="template"] .candor b { color:var(--accent); }
       academic: { ease:'linear', dur:1, stag:0, cards:false, spring:null },
       fintech: { ease:'out(2)', dur:760, stag:150, cards:true, spring:null },
       maximal: { ease:'out(2)', dur:460, stag:60, cards:true, spring:A && A.createSpring({ stiffness:220, damping:11 }) },
-      template: { ease:'out(2)', dur:500, stag:60, cards:true, spring:null }
+      basic: { ease:'out(2)', dur:500, stag:60, cards:true, spring:null }
     };
 
     function play(profile){
@@ -3271,7 +3271,7 @@ html[data-profile="template"] .candor b { color:var(--accent); }
 <script>
 (function(){
   var root=document.documentElement, el=document.getElementById('dzPacks');
-  var FP={"editorial":[{"n":"Default","h":"EB Garamond","b":"EB Garamond","l":"EB Garamond"},{"n":"Editorial classic","h":"Newsreader","b":"Source Serif 4","l":"Newsreader"},{"n":"Modern neutral","h":"Archivo","b":"EB Garamond","l":"Archivo"},{"n":"Mono-forward","h":"JetBrains Mono","b":"EB Garamond","l":"JetBrains Mono"}],"swiss":[{"n":"Default (Archivo system)","h":"Archivo","b":"Archivo","l":"Archivo"},{"n":"Poster grotesk","h":"Anton","b":"Inter","l":"JetBrains Mono"},{"n":"Neutral utility (Inter)","h":"Inter","b":"Inter","l":"JetBrains Mono"},{"n":"Mono-forward (technical)","h":"Archivo","b":"JetBrains Mono","l":"JetBrains Mono"}],"glitch":[{"n":"Default","h":"Chakra Petch","b":"JetBrains Mono","l":"JetBrains Mono"},{"n":"Brutalist marquee","h":"Anton","b":"JetBrains Mono","l":"JetBrains Mono"},{"n":"Mono-forward terminal","h":"JetBrains Mono","b":"JetBrains Mono","l":"JetBrains Mono"},{"n":"Industrial utility","h":"Archivo","b":"JetBrains Mono","l":"JetBrains Mono"}],"zen":[{"n":"Default","h":"Newsreader","b":"Source Serif 4","l":"JetBrains Mono"},{"n":"Editorial classic","h":"EB Garamond","b":"Source Serif 4","l":"JetBrains Mono"},{"n":"Humanist utility","h":"Newsreader","b":"Inter","l":"JetBrains Mono"},{"n":"Mono-forward contrast","h":"Newsreader","b":"JetBrains Mono","l":"JetBrains Mono"}],"brutal":[{"n":"Default","h":"Archivo","b":"JetBrains Mono","l":"JetBrains Mono"},{"n":"Display-max (Anton)","h":"Anton","b":"JetBrains Mono","l":"JetBrains Mono"},{"n":"Techno-brutal (Chakra Petch)","h":"Chakra Petch","b":"Chakra Petch","l":"JetBrains Mono"},{"n":"Stark-grotesque (Archivo)","h":"Archivo","b":"Inter","l":"Inter"}],"clean":[{"n":"Default","h":"Inter","b":"Inter","l":"JetBrains Mono"},{"n":"Friendly modern","h":"Plus Jakarta Sans","b":"Inter","l":"JetBrains Mono"},{"n":"Utility neutral","h":"Archivo","b":"Inter","l":"JetBrains Mono"},{"n":"Mono-forward","h":"Chakra Petch","b":"Inter","l":"JetBrains Mono"}],"prestige":[{"n":"Default","h":"Newsreader","b":"Source Serif 4","l":"Source Serif 4"},{"n":"Editorial classic","h":"EB Garamond","b":"EB Garamond","l":"EB Garamond"},{"n":"Mono-forward contrast","h":"Newsreader","b":"JetBrains Mono","l":"JetBrains Mono"},{"n":"Quiet money (neutral)","h":"EB Garamond","b":"Inter","l":"Inter"}],"counsel":[{"n":"Default","h":"Newsreader","b":"Source Serif 4","l":"JetBrains Mono"},{"n":"Editorial classic","h":"EB Garamond","b":"Source Serif 4","l":"JetBrains Mono"},{"n":"Neutral / utility","h":"Newsreader","b":"Inter","l":"JetBrains Mono"},{"n":"Mono-forward (data room)","h":"EB Garamond","b":"Source Serif 4","l":"JetBrains Mono"}],"grove":[{"n":"Default (Newsreader / Source Serif)","h":"Newsreader","b":"Source Serif 4","l":"JetBrains Mono"},{"n":"Apothecary (EB Garamond)","h":"EB Garamond","b":"Source Serif 4","l":"JetBrains Mono"},{"n":"Soft sans (Newsreader)","h":"Newsreader","b":"Plus Jakarta Sans","l":"JetBrains Mono"},{"n":"Quiet utility (Archivo)","h":"Archivo","b":"Inter","l":"JetBrains Mono"}],"cinematic":[{"n":"Default","h":"Inter","b":"Inter","l":"JetBrains Mono"},{"n":"Warm neutral","h":"Plus Jakarta Sans","b":"Plus Jakarta Sans","l":"JetBrains Mono"},{"n":"Architectural","h":"Archivo","b":"Inter","l":"JetBrains Mono"},{"n":"HUD / cyber","h":"Chakra Petch","b":"Inter","l":"JetBrains Mono"}],"terminal":[{"n":"Default","h":"JetBrains Mono","b":"Inter","l":"JetBrains Mono"},{"n":"HUD / expressive","h":"Chakra Petch","b":"Inter","l":"JetBrains Mono"},{"n":"Utility / industrial","h":"JetBrains Mono","b":"Archivo","l":"JetBrains Mono"},{"n":"Mono-forward","h":"JetBrains Mono","b":"JetBrains Mono","l":"JetBrains Mono"}],"soft":[{"n":"Default","h":"Plus Jakarta Sans","b":"Inter","l":"JetBrains Mono"},{"n":"Rounded (single-family)","h":"Plus Jakarta Sans","b":"Plus Jakarta Sans","l":"JetBrains Mono"},{"n":"Neutral utility","h":"Inter","b":"Inter","l":"JetBrains Mono"},{"n":"Soft contrast","h":"Archivo","b":"Inter","l":"JetBrains Mono"}],"academic":[{"n":"Default","h":"EB Garamond","b":"EB Garamond","l":"EB Garamond"},{"n":"Journal masthead","h":"EB Garamond","b":"Source Serif 4","l":"JetBrains Mono"},{"n":"Reading-first","h":"Newsreader","b":"Source Serif 4","l":"JetBrains Mono"},{"n":"Figures & data","h":"EB Garamond","b":"Source Serif 4","l":"JetBrains Mono"}],"fintech":[{"n":"Default","h":"Archivo","b":"Inter","l":"JetBrains Mono"},{"n":"Display-max (Anton)","h":"Anton","b":"Inter","l":"JetBrains Mono"},{"n":"Mono-forward (Chakra Petch)","h":"Chakra Petch","b":"Inter","l":"JetBrains Mono"},{"n":"Utility-neutral (Inter)","h":"Inter","b":"Inter","l":"JetBrains Mono"}],"maximal":[{"n":"Default (Anton / Garamond)","h":"Anton","b":"EB Garamond","l":"JetBrains Mono"},{"n":"Editorial maximal (Anton)","h":"Anton","b":"Newsreader","l":"JetBrains Mono"},{"n":"Engineered maximal (Anton)","h":"Anton","b":"Chakra Petch","l":"JetBrains Mono"},{"n":"Mono-forward maximal (Archivo)","h":"Archivo","b":"EB Garamond","l":"JetBrains Mono"}],"template":[{"n":"Default (system sans)","h":"system-ui","b":"system-ui","l":"system-ui"},{"n":"Friendly modern","h":"Plus Jakarta Sans","b":"Inter","l":"Inter"},{"n":"Neutral utility (Inter)","h":"Inter","b":"Inter","l":"Inter"},{"n":"Grotesk-forward (Archivo)","h":"Archivo","b":"Inter","l":"Inter"}]};
+  var FP={"editorial":[{"n":"Default","h":"EB Garamond","b":"EB Garamond","l":"EB Garamond"},{"n":"Editorial classic","h":"Newsreader","b":"Source Serif 4","l":"Newsreader"},{"n":"Modern neutral","h":"Archivo","b":"EB Garamond","l":"Archivo"},{"n":"Mono-forward","h":"JetBrains Mono","b":"EB Garamond","l":"JetBrains Mono"}],"swiss":[{"n":"Default (Archivo system)","h":"Archivo","b":"Archivo","l":"Archivo"},{"n":"Poster grotesk","h":"Anton","b":"Inter","l":"JetBrains Mono"},{"n":"Neutral utility (Inter)","h":"Inter","b":"Inter","l":"JetBrains Mono"},{"n":"Mono-forward (technical)","h":"Archivo","b":"JetBrains Mono","l":"JetBrains Mono"}],"glitch":[{"n":"Default","h":"Chakra Petch","b":"JetBrains Mono","l":"JetBrains Mono"},{"n":"Brutalist marquee","h":"Anton","b":"JetBrains Mono","l":"JetBrains Mono"},{"n":"Mono-forward terminal","h":"JetBrains Mono","b":"JetBrains Mono","l":"JetBrains Mono"},{"n":"Industrial utility","h":"Archivo","b":"JetBrains Mono","l":"JetBrains Mono"}],"zen":[{"n":"Default","h":"Newsreader","b":"Source Serif 4","l":"JetBrains Mono"},{"n":"Editorial classic","h":"EB Garamond","b":"Source Serif 4","l":"JetBrains Mono"},{"n":"Humanist utility","h":"Newsreader","b":"Inter","l":"JetBrains Mono"},{"n":"Mono-forward contrast","h":"Newsreader","b":"JetBrains Mono","l":"JetBrains Mono"}],"brutal":[{"n":"Default","h":"Archivo","b":"JetBrains Mono","l":"JetBrains Mono"},{"n":"Display-max (Anton)","h":"Anton","b":"JetBrains Mono","l":"JetBrains Mono"},{"n":"Techno-brutal (Chakra Petch)","h":"Chakra Petch","b":"Chakra Petch","l":"JetBrains Mono"},{"n":"Stark-grotesque (Archivo)","h":"Archivo","b":"Inter","l":"Inter"}],"clean":[{"n":"Default","h":"Inter","b":"Inter","l":"JetBrains Mono"},{"n":"Friendly modern","h":"Plus Jakarta Sans","b":"Inter","l":"JetBrains Mono"},{"n":"Utility neutral","h":"Archivo","b":"Inter","l":"JetBrains Mono"},{"n":"Mono-forward","h":"Chakra Petch","b":"Inter","l":"JetBrains Mono"}],"prestige":[{"n":"Default","h":"Newsreader","b":"Source Serif 4","l":"Source Serif 4"},{"n":"Editorial classic","h":"EB Garamond","b":"EB Garamond","l":"EB Garamond"},{"n":"Mono-forward contrast","h":"Newsreader","b":"JetBrains Mono","l":"JetBrains Mono"},{"n":"Quiet money (neutral)","h":"EB Garamond","b":"Inter","l":"Inter"}],"counsel":[{"n":"Default","h":"Newsreader","b":"Source Serif 4","l":"JetBrains Mono"},{"n":"Editorial classic","h":"EB Garamond","b":"Source Serif 4","l":"JetBrains Mono"},{"n":"Neutral / utility","h":"Newsreader","b":"Inter","l":"JetBrains Mono"},{"n":"Mono-forward (data room)","h":"EB Garamond","b":"Source Serif 4","l":"JetBrains Mono"}],"grove":[{"n":"Default (Newsreader / Source Serif)","h":"Newsreader","b":"Source Serif 4","l":"JetBrains Mono"},{"n":"Apothecary (EB Garamond)","h":"EB Garamond","b":"Source Serif 4","l":"JetBrains Mono"},{"n":"Soft sans (Newsreader)","h":"Newsreader","b":"Plus Jakarta Sans","l":"JetBrains Mono"},{"n":"Quiet utility (Archivo)","h":"Archivo","b":"Inter","l":"JetBrains Mono"}],"cinematic":[{"n":"Default","h":"Inter","b":"Inter","l":"JetBrains Mono"},{"n":"Warm neutral","h":"Plus Jakarta Sans","b":"Plus Jakarta Sans","l":"JetBrains Mono"},{"n":"Architectural","h":"Archivo","b":"Inter","l":"JetBrains Mono"},{"n":"HUD / cyber","h":"Chakra Petch","b":"Inter","l":"JetBrains Mono"}],"terminal":[{"n":"Default","h":"JetBrains Mono","b":"Inter","l":"JetBrains Mono"},{"n":"HUD / expressive","h":"Chakra Petch","b":"Inter","l":"JetBrains Mono"},{"n":"Utility / industrial","h":"JetBrains Mono","b":"Archivo","l":"JetBrains Mono"},{"n":"Mono-forward","h":"JetBrains Mono","b":"JetBrains Mono","l":"JetBrains Mono"}],"soft":[{"n":"Default","h":"Plus Jakarta Sans","b":"Inter","l":"JetBrains Mono"},{"n":"Rounded (single-family)","h":"Plus Jakarta Sans","b":"Plus Jakarta Sans","l":"JetBrains Mono"},{"n":"Neutral utility","h":"Inter","b":"Inter","l":"JetBrains Mono"},{"n":"Soft contrast","h":"Archivo","b":"Inter","l":"JetBrains Mono"}],"academic":[{"n":"Default","h":"EB Garamond","b":"EB Garamond","l":"EB Garamond"},{"n":"Journal masthead","h":"EB Garamond","b":"Source Serif 4","l":"JetBrains Mono"},{"n":"Reading-first","h":"Newsreader","b":"Source Serif 4","l":"JetBrains Mono"},{"n":"Figures & data","h":"EB Garamond","b":"Source Serif 4","l":"JetBrains Mono"}],"fintech":[{"n":"Default","h":"Archivo","b":"Inter","l":"JetBrains Mono"},{"n":"Display-max (Anton)","h":"Anton","b":"Inter","l":"JetBrains Mono"},{"n":"Mono-forward (Chakra Petch)","h":"Chakra Petch","b":"Inter","l":"JetBrains Mono"},{"n":"Utility-neutral (Inter)","h":"Inter","b":"Inter","l":"JetBrains Mono"}],"maximal":[{"n":"Default (Anton / Garamond)","h":"Anton","b":"EB Garamond","l":"JetBrains Mono"},{"n":"Editorial maximal (Anton)","h":"Anton","b":"Newsreader","l":"JetBrains Mono"},{"n":"Engineered maximal (Anton)","h":"Anton","b":"Chakra Petch","l":"JetBrains Mono"},{"n":"Mono-forward maximal (Archivo)","h":"Archivo","b":"EB Garamond","l":"JetBrains Mono"}],"basic":[{"n":"Default (system sans)","h":"system-ui","b":"system-ui","l":"system-ui"},{"n":"Friendly modern","h":"Plus Jakarta Sans","b":"Inter","l":"Inter"},{"n":"Neutral utility (Inter)","h":"Inter","b":"Inter","l":"Inter"},{"n":"Grotesk-forward (Archivo)","h":"Archivo","b":"Inter","l":"Inter"}]};
   var SERIF=["EB Garamond","Newsreader","Source Serif 4"], MONO=["JetBrains Mono"];
   function fb(f){ return MONO.indexOf(f)>=0?'monospace':(SERIF.indexOf(f)>=0?'serif':'sans-serif'); }
   function stack(f){ return "'"+f+"', "+fb(f); }
@@ -3326,7 +3326,7 @@ html[data-profile="template"] .candor b { color:var(--accent); }
 <script>
 (function(){
   var root=document.documentElement;
-  var DEF={editorial:'space',swiss:'silhouette',glitch:'silhouette',zen:'space',brutal:'silhouette',clean:'space',prestige:'silhouette',counsel:'space',grove:'space',cinematic:'silhouette',terminal:'space',soft:'space',academic:'space',fintech:'silhouette',maximal:'silhouette',template:'space'};
+  var DEF={editorial:'space',swiss:'silhouette',glitch:'silhouette',zen:'space',brutal:'silhouette',clean:'space',prestige:'silhouette',counsel:'space',grove:'space',cinematic:'silhouette',terminal:'space',soft:'space',academic:'space',fintech:'silhouette',maximal:'silhouette',basic:'space'};
   var userPicked=false;
   var foot=document.getElementById('dzFoot');
   if(foot) foot.addEventListener('click',function(e){ if(e.target.closest('.dz-pack')) userPicked=true; });
