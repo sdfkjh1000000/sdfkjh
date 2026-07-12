@@ -361,6 +361,50 @@
   .system .fx .knob.param { margin: 2px 0 14px 4px; padding-left: 14px; border-left: 1px solid #3a3631; }
   .system .knob:has(input:disabled) { opacity: 0.4; }
 
+  /* ── tune drawer: brand-system console, collapsed by default ── */
+  .tune-toggle {
+    position: fixed; right: 20px; bottom: 20px; z-index: 60;
+    display: inline-flex; align-items: center; gap: 8px;
+    background: #1C1917; color: #FDFBF7; border: 1px solid var(--amber-dim);
+    border-radius: calc(7px * var(--radius-scale, 1)); padding: 10px 16px;
+    font-family: var(--mono); font-size: 13px; letter-spacing: 0.04em; cursor: pointer;
+    box-shadow: 0 6px 22px rgba(0,0,0,0.22);
+  }
+  .tune-toggle:hover { border-color: var(--amber); }
+  .tune-toggle:focus-visible { outline: 2px solid var(--amber); outline-offset: 2px; }
+  .tune-toggle .tune-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--amber); flex: none; }
+  .system.tune-panel {
+    position: fixed; top: 0; right: 0; left: auto; z-index: 70;
+    width: min(94vw, 424px); height: 100vh; height: 100dvh;
+    overflow-y: auto; padding: 0; margin: 0;
+    background: #1C1917; border-left: 1px solid #3a3631;
+    box-shadow: -12px 0 40px rgba(0,0,0,0.28);
+  }
+  .system.tune-panel[hidden] { display: none; }
+  .system.tune-panel .wrap { max-width: none; margin: 0; padding: 0; }
+  .system.tune-panel .eyebrow, .system.tune-panel .code-caption, .system.tune-panel .canvas { display: none; }
+  .system.tune-panel .grid { display: block; border: 0; border-radius: 0; overflow: visible; }
+  .system.tune-panel .panel { border-top: 0; }
+  /* the panel's desktop multi-column grid is viewport-triggered; force a single
+     readable column inside the narrow drawer so nothing truncates. */
+  .system.tune-panel .panel,
+  .system.tune-panel .fx,
+  .system.tune-panel .lab,
+  .system.tune-panel .lab-groups { display: block; }
+  .system.tune-panel .lab-presets { flex-direction: column; }
+  .system.tune-panel .lab-groups > details { margin-bottom: 6px; }
+  .system.tune-panel .readout { margin-top: 8px; border-top: 0; padding-top: 0; overflow-x: auto; }
+  .tune-head {
+    position: sticky; top: 0; z-index: 1;
+    display: flex; align-items: center; justify-content: space-between;
+    margin: -28px -26px 20px; padding: 15px 26px;
+    background: #1C1917; border-bottom: 1px solid #3a3631;
+  }
+  .tune-title { font-family: var(--mono); color: var(--amber); font-size: calc(11px * var(--type-scale, 1)); letter-spacing: 0.12em; text-transform: uppercase; }
+  .tune-x { background: none; border: 0; color: #cfcbc2; font-size: 22px; line-height: 1; cursor: pointer; padding: 0 4px; }
+  .tune-x:hover { color: var(--amber); }
+  .tune-x:focus-visible { outline: 2px solid var(--amber); outline-offset: 2px; }
+
   /* ── both: js repl ─────────────────────────────────────────── */
   .both { padding: var(--gap, 52px) 0; }
   .both .closing {
@@ -372,7 +416,7 @@
   .both .keys-strip { margin: 32px 0 0; }
   .both .keys-strip img {
     width: 100%; height: 220px; object-fit: cover;
-    border-radius: calc(2px * var(--radius-scale, 1)); filter: grayscale(1) contrast(1.02);
+    border-radius: calc(2px * var(--radius-scale, 1)); filter: none;
   }
   .both .frame {
     max-width: 680px; border: 1px solid var(--border); border-radius: calc(4px * var(--radius-scale, 1)); overflow: hidden;
@@ -1128,7 +1172,7 @@ Brand and web are two hands on one keyboard.
     </div>
   </section>
 
-  <section class="system">
+  <section class="system tune-panel" id="tunePanel" role="dialog" aria-label="the brand system console" aria-modal="false" hidden>
     <div class="wrap">
       <h2 class="eyebrow">The brand system &middot; css</h2>
       <p class="code-caption"><span class="t">turn the</span> knobs<span class="t">. the page moves.</span></p>
@@ -1145,6 +1189,7 @@ Brand and web are two hands on one keyboard.
           </div>
         </div>
         <div class="panel">
+          <div class="tune-head"><span class="tune-title">the brand system</span><button type="button" class="tune-x" id="tuneClose" aria-label="Close console">&times;</button></div>
           <h4>// section editor</h4>
           <label class="toggle" style="margin-bottom:20px"><input type="checkbox" data-theme/><span>dark mode</span><em>css</em></label>
           <div class="field">
@@ -1154,7 +1199,6 @@ Brand and web are two hands on one keyboard.
               <option value="hero">hero</option>
               <option value="take">the take</option>
               <option value="source">one source</option>
-              <option value="system">the brand system</option>
               <option value="both">console</option>
             </select>
           </div>
@@ -1214,6 +1258,8 @@ Brand and web are two hands on one keyboard.
             <label><span>gap</span><span class="val" data-val="gap">52px</span></label>
             <input type="range" min="16" max="120" step="4" value="52" data-knob="gap" aria-label="section gap"/>
           </div>
+          <h4>// live values</h4>
+          <div class="readout" aria-live="polite"></div>
           <div class="fx" role="group" aria-label="scroll effects">
             <h4>// effects</h4>
             <label class="toggle"><input type="checkbox" data-fx="fade" checked/><span>fade in</span><em>js</em></label>
@@ -1541,7 +1587,6 @@ Brand and web are two hands on one keyboard.
             </details>
             </div>
           </div>
-          <div class="readout" aria-live="polite"></div>
           <button type="button" class="reset" data-reset>reset entire page</button>
         </div>
       </div>
@@ -1569,9 +1614,9 @@ Brand and web are two hands on one keyboard.
       <p class="hint">commands: <b>help</b> &middot; <b>whoami</b> &middot; <b>brand</b> &middot; <b>web</b> &middot; <b>both</b> &middot; <b>contact</b> &middot; <b>time</b> &middot; <b>weather</b> &middot; <b>news</b> &middot; <b>cve</b> &middot; <b>ping</b> &middot; <b>audit</b> &middot; <b>data</b> &middot; <b>privacy</b> &middot; <b>commentary</b> &middot; <b>manifesto</b> &middot; <b>boring</b> &middot; <b>clear</b></p>
       <figure class="keys-strip" aria-hidden="true">
         <picture>
-          <source srcset="/assets/img/keys.avif" type="image/avif"/>
-          <source srcset="/assets/img/keys.webp" type="image/webp"/>
-          <img src="/assets/img/keys.jpg" alt="" width="2000" height="600" loading="lazy" decoding="async"/>
+          <source srcset="/assets/img/homerow.avif" type="image/avif"/>
+          <source srcset="/assets/img/homerow.webp" type="image/webp"/>
+          <img src="/assets/img/homerow.jpg" alt="" width="2000" height="600" loading="lazy" decoding="async"/>
         </picture>
       </figure>
     </div>
@@ -3321,6 +3366,19 @@ ${c.web.items.map(i=>'- '+i).join('\n')}
       buf = '';
     }
   }, { passive: true });
+})();
+</script>
+<div class="tune-toggle" id="tuneToggle" role="button" tabindex="0" aria-expanded="false" aria-controls="tunePanel" title="Open the brand-system console"><span class="tune-dot" aria-hidden="true"></span>Tune</div>
+<script>
+(function(){
+  var t=document.getElementById('tuneToggle'), p=document.getElementById('tunePanel'), x=document.getElementById('tuneClose');
+  if(!t||!p) return;
+  function open(){ p.hidden=false; t.setAttribute('aria-expanded','true'); if(x) x.focus(); }
+  function close(){ p.hidden=true; t.setAttribute('aria-expanded','false'); t.focus(); }
+  t.addEventListener('click', function(){ p.hidden?open():close(); });
+  t.addEventListener('keydown', function(e){ if(e.key==='Enter'||e.key===' '){ e.preventDefault(); p.hidden?open():close(); } });
+  p.addEventListener('keydown', function(e){ if(e.key==='Escape'){ e.preventDefault(); close(); } });
+  if(x) x.addEventListener('click', close);
 })();
 </script>
 </body>
