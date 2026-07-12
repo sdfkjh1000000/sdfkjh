@@ -2989,6 +2989,381 @@ html[data-profile="basic"] .candor b { color:var(--accent); }
   html[data-profile="basic"] .card { text-align:center; }
 }
 
+
+  /* ---- enriched content sections (2026-07-11) ---- */
+.metrics {
+  padding: var(--section-pad) var(--pad);
+  border-top: 1px solid var(--line);
+}
+
+.metrics .wrap {
+  max-width: var(--maxw);
+  margin: 0 auto;
+}
+
+.metrics .eyebrow {
+  margin: 0 0 0.6em;
+}
+
+.metrics .h2 {
+  margin: 0 0 1.75em;
+  max-width: 40ch;
+}
+
+.metrics__row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem 3rem;
+  margin: 0;
+  padding: 0;
+}
+
+.metrics__item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35em;
+  flex: 1 1 8rem;
+  min-width: 6rem;
+  border-left: 2px solid var(--line);
+  padding-left: 1.25rem;
+}
+
+.metrics__num {
+  font-family: var(--font-head);
+  font-weight: var(--head-weight);
+  font-size: clamp(2.25rem, 5vw, 3.75rem);
+  line-height: var(--head-leading, 1);
+  letter-spacing: var(--head-tracking);
+  color: var(--fg);
+  margin: 0;
+}
+
+.metrics__label {
+  font-family: var(--font-label);
+  font-size: 0.75rem;
+  letter-spacing: var(--label-tracking);
+  text-transform: var(--label-transform);
+  color: var(--fg-soft);
+  margin: 0;
+}
+
+@media (max-width: 30rem) {
+  .metrics__row {
+    gap: 1.5rem 2rem;
+  }
+
+  .metrics__item {
+    flex: 1 1 40%;
+  }
+}
+
+.markup-proof {
+  padding: var(--section-pad) 0;
+  background: var(--bg);
+  color: var(--fg);
+}
+
+.markup-proof .mp-intro {
+  max-width: 62ch;
+  margin: 0.75rem 0 0;
+  font-family: var(--font-body);
+  color: var(--fg-soft);
+  line-height: 1.6;
+}
+
+.markup-proof .mp-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+  margin-top: 2rem;
+  align-items: stretch;
+}
+
+.markup-proof .mp-pane {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: var(--pad);
+}
+
+.markup-proof .mp-label {
+  margin: 0 0 0.85rem;
+  font-family: var(--font-label);
+  font-size: 0.75rem;
+  letter-spacing: var(--label-tracking);
+  text-transform: var(--label-transform);
+  color: var(--fg);
+}
+
+.markup-proof .mp-code {
+  margin: 0;
+  padding: 0;
+  background: transparent;
+  font-family: var(--font-label);
+  font-size: 0.85rem;
+  line-height: 1.65;
+  color: var(--fg-soft);
+  white-space: pre-wrap;
+  word-break: break-word;
+  overflow-x: auto;
+}
+
+.markup-proof .mp-code code {
+  font-family: inherit;
+  background: transparent;
+}
+
+.markup-proof .mp-pane--render {
+  border-color: var(--accent);
+}
+
+.markup-proof .mp-output {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  flex: 1;
+}
+
+.markup-proof .mp-output-head {
+  margin: 0 0 0.6rem;
+  font-family: var(--font-head);
+  font-weight: var(--head-weight);
+  letter-spacing: var(--head-tracking);
+  line-height: var(--head-leading);
+  text-transform: var(--head-transform);
+  color: var(--fg);
+  font-size: 1.5rem;
+}
+
+.markup-proof .mp-output-body {
+  margin: 0;
+  font-family: var(--font-body);
+  color: var(--fg-soft);
+  line-height: 1.6;
+}
+
+@media (max-width: 720px) {
+  .markup-proof .mp-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.range-quote {
+  padding: var(--section-pad) var(--pad);
+  background: var(--bg);
+}
+
+.range-quote .wrap {
+  max-width: var(--maxw);
+  margin: 0 auto;
+  text-align: center;
+}
+
+.range-quote .eyebrow {
+  margin: 0 0 1.25em;
+  letter-spacing: var(--label-tracking);
+  text-transform: var(--label-transform);
+  font-family: var(--font-label);
+  color: var(--fg-soft);
+}
+
+.range-quote__line {
+  margin: 0;
+  padding: 0;
+  border: none;
+}
+
+.range-quote__line p {
+  margin: 0 auto;
+  max-width: 20ch;
+  font-family: var(--font-head);
+  font-weight: var(--head-weight);
+  letter-spacing: var(--head-tracking);
+  line-height: var(--head-leading);
+  text-transform: var(--head-transform);
+  color: var(--fg);
+  font-size: clamp(1.75rem, 1.1rem + 3vw, 3.25rem);
+}
+
+.range-quote__mark {
+  width: 56px;
+  height: 3px;
+  margin: 1.75em auto 0;
+  background: var(--accent);
+  border-radius: var(--radius);
+}
+
+.tier-compare {
+  padding-block: var(--section-pad);
+}
+
+.tier-compare__note {
+  margin: 0.5em 0 0;
+  max-width: 60ch;
+  font-family: var(--font-label);
+  font-size: 0.85rem;
+  color: var(--fg-soft);
+  letter-spacing: var(--label-tracking);
+}
+
+.tier-compare__scroll {
+  margin-top: 2em;
+  overflow-x: auto;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+}
+
+.tier-compare__table {
+  width: 100%;
+  min-width: 640px;
+  border-collapse: collapse;
+  font-family: var(--font-body);
+  color: var(--fg);
+  background: var(--surface);
+}
+
+.tier-compare__sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.tier-compare__table caption {
+  caption-side: top;
+}
+
+.tier-compare__table th,
+.tier-compare__table td {
+  padding: 0.9em 1.1em;
+  text-align: left;
+  border-bottom: 1px solid var(--line);
+  vertical-align: top;
+}
+
+.tier-compare__table thead th {
+  font-family: var(--font-label);
+  font-size: 0.8rem;
+  font-weight: var(--head-weight);
+  letter-spacing: var(--label-tracking);
+  text-transform: var(--label-transform);
+  color: var(--fg);
+  border-bottom: 1px solid var(--line);
+  background: var(--bg);
+}
+
+.tier-compare__table thead th.tier-compare__corner {
+  background: var(--bg);
+}
+
+.tier-compare__table thead th + th {
+  border-left: 1px solid var(--line);
+}
+
+.tier-compare__table tbody th[scope="row"] {
+  font-family: var(--font-label);
+  font-size: 0.9rem;
+  font-weight: var(--head-weight);
+  letter-spacing: var(--label-tracking);
+  color: var(--fg);
+  background: var(--bg);
+  white-space: nowrap;
+}
+
+.tier-compare__table tbody td {
+  font-size: 0.95rem;
+  color: var(--fg-soft);
+  border-left: 1px solid var(--line);
+}
+
+.tier-compare__table tbody tr:last-child th,
+.tier-compare__table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.tier-compare__table thead tr th:nth-child(3) {
+  color: var(--fg);
+}
+
+.tier-compare__table tbody tr td:nth-child(3) {
+  box-shadow: inset 1px 0 0 var(--accent), inset -1px 0 0 var(--accent);
+}
+
+.tier-compare__table thead tr th:nth-child(3) {
+  box-shadow: inset 1px 0 0 var(--accent), inset -1px 0 0 var(--accent), inset 0 -1px 0 var(--accent);
+}
+
+.elsewhere {
+  padding: var(--section-pad) 0;
+}
+
+.elsewhere .wrap {
+  max-width: var(--maxw);
+  padding-left: var(--pad);
+  padding-right: var(--pad);
+}
+
+.elsewhere .h2 {
+  margin-bottom: calc(var(--section-pad) * 0.5);
+}
+
+.elsewhere-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.elsewhere-item {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  column-gap: 0.9em;
+  row-gap: 0.2em;
+  padding: 0.9em 0;
+  border-bottom: 1px solid var(--line);
+}
+
+.elsewhere-item:first-child {
+  border-top: 1px solid var(--line);
+}
+
+.elsewhere-link {
+  font-family: var(--font-head);
+  font-weight: var(--head-weight);
+  color: var(--accent);
+  text-decoration: none;
+  border-bottom: 1px solid currentColor;
+  letter-spacing: var(--head-tracking);
+  transition: color 0.15s ease;
+  flex-shrink: 0;
+}
+
+.elsewhere-link:hover,
+.elsewhere-link:focus-visible {
+  color: var(--accent-2);
+}
+
+.elsewhere-link:focus-visible {
+  outline: 2px solid var(--accent-2);
+  outline-offset: 3px;
+}
+
+.elsewhere-desc {
+  font-family: var(--font-body);
+  color: var(--fg-soft);
+  font-size: 0.95em;
+}
+
 </style>
 </head>
 <body>
@@ -3053,6 +3428,63 @@ html[data-profile="basic"] .candor b { color:var(--accent); }
     </div>
   </section>
 
+<section class="metrics">
+  <div class="wrap">
+    <p class="eyebrow">By the numbers</p>
+    <h2 class="h2">One markup, sixteen looks</h2>
+    <dl class="metrics__row">
+      <div class="metrics__item">
+        <dt class="metrics__num">16</dt>
+        <dd class="metrics__label">design profiles</dd>
+      </div>
+      <div class="metrics__item">
+        <dt class="metrics__num">1</dt>
+        <dd class="metrics__label">HTML file</dd>
+      </div>
+      <div class="metrics__item">
+        <dt class="metrics__num">0</dt>
+        <dd class="metrics__label">mockups</dd>
+      </div>
+      <div class="metrics__item">
+        <dt class="metrics__num">13</dt>
+        <dd class="metrics__label">typefaces</dd>
+      </div>
+    </dl>
+  </div>
+</section>
+
+<section class="markup-proof">
+  <div class="wrap">
+    <p class="eyebrow">Same markup</p>
+    <h2 class="h2">One HTML, sixteen looks</h2>
+    <p class="mp-intro">
+      The block on the left is real, unstyled HTML, shown here as literal text. The panel on the right
+      renders that exact same markup using this profile&rsquo;s type, color, and spacing tokens. The
+      structure never changes between profiles, only the CSS variables attached to it.
+    </p>
+    <div class="mp-grid">
+      <div class="mp-pane mp-pane--code">
+        <p class="mp-label">Markup</p>
+        <pre class="mp-code"><code>&lt;h3&gt;Built for clarity&lt;/h3&gt;
+&lt;p&gt;
+  Plain content, no inline
+  styles, no special classes,
+  no per-profile markup.
+&lt;/p&gt;</code></pre>
+      </div>
+      <div class="mp-pane mp-pane--render">
+        <p class="mp-label">Rendered</p>
+        <div class="mp-output">
+          <h3 class="mp-output-head">Built for clarity</h3>
+          <p class="mp-output-body">
+            Plain content, no inline styles, no special classes, no per-profile markup.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
   <section class="system">
     <div class="wrap">
       <p class="eyebrow">Under the skin</p>
@@ -3072,6 +3504,85 @@ html[data-profile="basic"] .candor b { color:var(--accent); }
       </div>
     </div>
   </section>
+
+<section class="range-quote">
+  <div class="wrap">
+    <p class="eyebrow">on range</p>
+    <blockquote class="range-quote__line">
+      <p>This page never changes its mind. It just puts on a different one, sixteen times, on purpose.</p>
+    </blockquote>
+    <div class="range-quote__mark" aria-hidden="true"></div>
+  </div>
+</section>
+
+<section class="tier-compare">
+  <div class="wrap">
+    <p class="eyebrow">Scope, compared</p>
+    <h2 class="h2">Three ways to scope a rebuild</h2>
+    <p class="tier-compare__note">Illustrative. Not a real price sheet.</p>
+    <div class="tier-compare__scroll">
+      <table class="tier-compare__table">
+        <caption class="tier-compare__sr-only">Comparison of what is included across three rebuild tiers: Wordmark, Brand and site, and The works</caption>
+        <thead>
+          <tr>
+            <th scope="col" class="tier-compare__corner"><span class="tier-compare__sr-only">Included</span></th>
+            <th scope="col">Wordmark</th>
+            <th scope="col">Brand and site</th>
+            <th scope="col">The works</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th scope="row">Identity</th>
+            <td>Logo mark and a type pairing</td>
+            <td>Full identity: logo, palette, type</td>
+            <td>Full identity plus a documented token system</td>
+          </tr>
+          <tr>
+            <th scope="row">Site</th>
+            <td>Not included</td>
+            <td>One responsive site, one look</td>
+            <td>One site, sixteen swappable looks, like this page</td>
+          </tr>
+          <tr>
+            <th scope="row">Copy</th>
+            <td>Not included</td>
+            <td>Light pass on existing text</td>
+            <td>Full section-by-section copy pass</td>
+          </tr>
+          <tr>
+            <th scope="row">Handoff</th>
+            <td>Source files</td>
+            <td>Source files plus a style sheet</td>
+            <td>Source files, style sheet, and this token reference</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+<section class="elsewhere">
+  <div class="wrap">
+    <p class="eyebrow">elsewhere</p>
+    <h2 class="h2">The same hand, other problems</h2>
+    <ul class="elsewhere-list">
+      <li class="elsewhere-item">
+        <a class="elsewhere-link" href="https://byob.sdfkjh.com/">byob</a>
+        <span class="elsewhere-desc">Be Your Own Broker. Car buying without the F and I middleman.</span>
+      </li>
+      <li class="elsewhere-item">
+        <a class="elsewhere-link" href="https://tanktalks.sdfkjh.com/">tanktalks</a>
+        <span class="elsewhere-desc">Freshwater aquarium keeping, explained plainly.</span>
+      </li>
+      <li class="elsewhere-item">
+        <a class="elsewhere-link" href="https://businessinternetsearch.sdfkjh.com/">business internet search</a>
+        <span class="elsewhere-desc">B2B connectivity, sourced without the runaround.</span>
+      </li>
+    </ul>
+  </div>
+</section>
+
 
   <section class="candor">
     <div class="wrap">
