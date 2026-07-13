@@ -1,0 +1,163 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>swiss grid · a design study · sdfkjh</title>
+<meta name="description" content="Internal design study: the International Typographic Style. A visible modular grid, flush-left grotesque type, one accent, and a giant folio number."/>
+<meta name="robots" content="noindex, nofollow"/>
+<meta name="color-scheme" content="light"/>
+<meta name="theme-color" content="#f5f3ee"/>
+
+<link rel="icon" href="/favicon.svg" type="image/svg+xml"/>
+
+<style>
+  @font-face { font-family:'Archivo'; font-style:normal; font-weight:100 900; font-display:swap; src:url('/assets/fonts/archivo-400.woff2') format('woff2'); }
+  @font-face { font-family:'JetBrains Mono'; font-style:normal; font-weight:400 700; font-display:swap; src:url('/assets/fonts/jetbrains-mono.woff2') format('woff2'); }
+
+  :root {
+    --paper:#f5f3ee; --ink:#161616; --ink-soft:#54514a; --amber:#ff7a1a; --amber-text:#b8551a; --grid:#e0dccf;
+    --sans:"Archivo","Helvetica Neue",Arial,sans-serif; --mono:"JetBrains Mono","Consolas",monospace;
+  }
+  *,*::before,*::after { box-sizing:border-box; }
+  html,body { margin:0; padding:0; background:var(--paper); color:var(--ink); font-family:var(--sans); }
+  body { font-size:16px; line-height:1.5; -webkit-font-smoothing:antialiased; }
+  a { color:var(--ink); text-decoration:underline; text-underline-offset:2px; }
+  a:hover { color:var(--amber-text); }
+
+  .wrap { max-width:1120px; margin:0 auto; padding:0 clamp(20px,4vw,48px); }
+  .mono { font-family:var(--mono); }
+
+  /* chrome (constant wordmark, own layout) */
+  header { display:flex; justify-content:space-between; align-items:baseline; gap:16px;
+    max-width:1120px; margin:0 auto; padding:20px clamp(20px,4vw,48px); border-bottom:2px solid var(--ink); }
+  header .wm { font-family:var(--mono); font-weight:700; font-size:15px; letter-spacing:.04em; color:var(--ink); text-decoration:none; }
+  header .tag { font-family:var(--mono); font-size:11px; letter-spacing:.14em; text-transform:uppercase; color:var(--ink-soft); }
+
+  /* intro */
+  .intro { padding:clamp(32px,6vw,64px) 0 clamp(20px,3vw,32px); }
+  .intro .eyebrow { font-family:var(--mono); font-size:12px; font-weight:700; letter-spacing:.18em; text-transform:uppercase; color:var(--ink-soft); margin:0 0 18px; }
+  .intro h1 { font-family:var(--sans); font-weight:800; font-size:clamp(44px,9vw,104px); line-height:.92; letter-spacing:-.03em; margin:0; max-width:16ch; }
+  .intro h1 em { font-style:normal; color:var(--amber-text); }
+  .intro .lede { font-size:clamp(17px,2vw,21px); line-height:1.45; color:var(--ink-soft); max-width:44ch; margin:24px 0 0; }
+  .intro .note { font-family:var(--mono); font-size:12px; line-height:1.65; color:var(--ink-soft); border-left:3px solid var(--amber); padding-left:12px; margin:24px 0 0; max-width:62ch; }
+
+  /* the visible grid (signature) */
+  .grid-demo { position:relative; border-top:2px solid var(--ink); margin-top:clamp(20px,3vw,32px); padding:14px 0 clamp(40px,6vw,72px); }
+  .grid-demo .coord { display:flex; justify-content:space-between; font-family:var(--mono); font-size:10.5px; letter-spacing:.14em; text-transform:uppercase; color:var(--ink-soft); margin-bottom:clamp(20px,4vw,40px); }
+  .guides { position:absolute; left:0; right:0; top:0; bottom:0; display:grid; grid-template-columns:repeat(12,1fr); pointer-events:none; z-index:0; }
+  .guides span { border-left:1px solid var(--grid); }
+  .guides span:last-child { border-right:1px solid var(--grid); }
+  .content { position:relative; z-index:1; display:grid; grid-template-columns:repeat(12,1fr); column-gap:clamp(12px,2vw,26px); row-gap:clamp(28px,4vw,44px); align-items:start; }
+
+  .g-head { grid-column:1 / span 8; }
+  .g-head h2 { font-family:var(--sans); font-weight:800; font-size:clamp(30px,5.4vw,62px); line-height:.95; letter-spacing:-.02em; margin:0; }
+  .g-head p { font-size:clamp(15px,1.6vw,18px); color:var(--ink-soft); max-width:38ch; margin:16px 0 0; }
+  .g-folio { grid-column:9 / span 4; justify-self:end; text-align:right; }
+  .g-folio .n { font-family:var(--sans); font-weight:900; font-size:clamp(96px,20vw,220px); line-height:.8; letter-spacing:-.04em; color:var(--amber-text); display:block; }
+  .g-folio .l { font-family:var(--mono); font-size:11px; letter-spacing:.16em; text-transform:uppercase; color:var(--ink-soft); display:block; margin-top:6px; }
+
+  .bar { grid-column:1 / -1; height:10px; background:var(--amber); }
+
+  .spec { grid-column:span 3; }
+  .spec dt { font-family:var(--mono); font-size:10.5px; font-weight:700; letter-spacing:.14em; text-transform:uppercase; color:var(--ink); margin:0 0 7px; padding-bottom:7px; border-bottom:1px solid var(--ink); }
+  .spec dd { margin:0; font-size:15px; line-height:1.4; color:var(--ink); }
+  .spec dd + dd { margin-top:5px; color:var(--ink-soft); }
+
+  /* the system */
+  .system { padding:clamp(40px,6vw,64px) 0; }
+  .system .eyebrow { font-family:var(--mono); font-size:12px; font-weight:700; letter-spacing:.18em; text-transform:uppercase; color:var(--ink-soft); margin:0 0 26px; }
+  .system ol { list-style:none; counter-reset:s; margin:0; padding:0; display:grid; grid-template-columns:repeat(2,1fr); column-gap:clamp(24px,4vw,56px); row-gap:22px; }
+  .system li { counter-increment:s; display:grid; grid-template-columns:38px 1fr; gap:0; align-items:baseline; border-top:1px solid var(--ink); padding-top:12px; }
+  .system li::before { content:counter(s,decimal-leading-zero); font-family:var(--mono); font-weight:700; font-size:13px; color:var(--amber-text); }
+  .system li b { grid-column:2; font-weight:700; font-size:17px; }
+  .system li span { grid-column:2; display:block; font-size:15px; color:var(--ink-soft); line-height:1.45; margin-top:4px; }
+
+  footer { border-top:2px solid var(--ink); margin-top:clamp(20px,3vw,32px);
+    font-family:var(--mono); font-size:12px; color:var(--ink-soft);
+    max-width:1120px; margin-left:auto; margin-right:auto; padding:24px clamp(20px,4vw,48px) 44px; }
+
+  @media (max-width:720px) {
+    .guides { grid-template-columns:repeat(6,1fr); }
+    .content { grid-template-columns:repeat(6,1fr); }
+    .g-head { grid-column:1 / -1; }
+    .g-folio { grid-column:1 / -1; justify-self:start; text-align:left; }
+    .g-folio .n { font-size:clamp(90px,32vw,150px); }
+    .spec { grid-column:span 3; }
+    .system ol { grid-template-columns:1fr; }
+  }
+  @media (max-width:420px) { .spec { grid-column:1 / -1; } }
+</style>
+</head>
+<body>
+
+<header>
+  <a class="wm" href="/">sdfkjh</a>
+  <span class="tag">internal · swiss grid study</span>
+</header>
+
+<main>
+  <div class="wrap intro">
+    <p class="eyebrow">sdfkjh · design study</p>
+    <h1>The <em>Swiss</em> grid</h1>
+    <p class="lede">The International Typographic Style. A mathematical grid, flush-left grotesque type, one accent colour, and objective information. The grid is not hidden. It is the design.</p>
+    <p class="note">Study page. Noindex, unlinked. After the Swiss school of the 1950s: Muller-Brockmann, the Basel and Zurich programmes.</p>
+  </div>
+
+  <div class="wrap grid-demo">
+    <p class="coord"><span>12 columns · baseline 8px</span><span>flush left · ragged right</span></p>
+    <div class="guides" aria-hidden="true"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></div>
+    <div class="content">
+      <div class="g-head">
+        <h2>The grid,<br>made visible.</h2>
+        <p>Every element lands on a column and a baseline. Nothing floats. The measure is set once, then obeyed.</p>
+      </div>
+      <div class="g-folio">
+        <span class="n">02</span>
+        <span class="l">study</span>
+      </div>
+
+      <div class="bar" aria-hidden="true"></div>
+
+      <dl class="spec">
+        <dt>system</dt>
+        <dd>12-column grid</dd>
+        <dd>8px baseline</dd>
+      </dl>
+      <dl class="spec">
+        <dt>type</dt>
+        <dd>Archivo, grotesque</dd>
+        <dd>flush left, ragged right</dd>
+      </dl>
+      <dl class="spec">
+        <dt>colour</dt>
+        <dd>paper, ink</dd>
+        <dd>amber, one accent</dd>
+      </dl>
+      <dl class="spec">
+        <dt>rule</dt>
+        <dd>objective, not expressive</dd>
+        <dd>the content leads</dd>
+      </dl>
+    </div>
+  </div>
+
+  <div class="wrap system">
+    <p class="eyebrow">the discipline</p>
+    <ol>
+      <li><b>The grid is mathematical.</b><span>A fixed column and baseline system. Every element aligns to it; nothing is placed by eye.</span></li>
+      <li><b>Flush left, ragged right.</b><span>No centring, no justification. The left edge is the constant the reader returns to.</span></li>
+      <li><b>Grotesque type, one or two sizes.</b><span>Neutral sans-serif, set objectively. The type reports; it does not perform.</span></li>
+      <li><b>One accent colour.</b><span>A single strong colour against ink and paper, used as rule, bar, and emphasis. Here, amber.</span></li>
+      <li><b>Whitespace is structural.</b><span>The empty field is part of the composition, measured on the same grid as the type.</span></li>
+      <li><b>Objective, not expressive.</b><span>The design serves the information. Clarity is the whole ambition.</span></li>
+    </ol>
+  </div>
+</main>
+
+<footer>
+  swiss grid study · 12 columns, flush left, one accent · <a href="/">back to sdfkjh.com</a>
+</footer>
+
+</body>
+</html>
