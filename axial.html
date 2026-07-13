@@ -1,0 +1,210 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>axial grid · a design study · sdfkjh</title>
+<meta name="description" content="Internal design study: an axial grid layout. One vertical spine, content hung to one side, the sdfkjh wordmark exploded into stacked material bands."/>
+<meta name="robots" content="noindex, nofollow"/>
+<meta name="color-scheme" content="light"/>
+<meta name="theme-color" content="#f0ece2"/>
+
+<link rel="icon" href="/favicon.svg" type="image/svg+xml"/>
+
+<style>
+  @font-face { font-family:'Newsreader'; font-style:normal; font-weight:500; font-display:swap; src:url('/assets/fonts/newsreader-500.woff2') format('woff2'); }
+  @font-face { font-family:'Newsreader'; font-style:italic; font-weight:500; font-display:swap; src:url('/assets/fonts/newsreader-500-italic.woff2') format('woff2'); }
+  @font-face { font-family:'Source Serif 4'; font-style:normal; font-weight:400; font-display:swap; src:url('/assets/fonts/source-serif-4-400.woff2') format('woff2'); }
+  @font-face { font-family:'JetBrains Mono'; font-style:normal; font-weight:400 700; font-display:swap; src:url('/assets/fonts/jetbrains-mono.woff2') format('woff2'); }
+
+  :root {
+    --paper:#f0ece2; --mat:#d8d2c4; --ink:#17150f; --ink-soft:#4a453b; --ink-mute:#57534e;
+    --amber:#e0530a; --line:#c9c1af;
+    --serif:"Newsreader",Georgia,serif; --body:"Source Serif 4",Georgia,serif; --mono:"JetBrains Mono","Consolas",monospace;
+  }
+  *,*::before,*::after { box-sizing:border-box; }
+  html,body { margin:0; padding:0; }
+  body { background:var(--mat); color:var(--ink); font-family:var(--body); font-size:17px; line-height:1.7; }
+  a { color:var(--ink); text-decoration:underline; text-underline-offset:2px; }
+  a:hover { color:var(--amber); }
+
+  .wrap { max-width:1000px; margin:0 auto; padding:0 clamp(20px,4vw,52px); }
+
+  /* --- chrome (own minimal, not the site bracket chrome) --- */
+  header { display:flex; justify-content:space-between; align-items:center; gap:16px;
+    max-width:1000px; margin:0 auto; padding:20px clamp(20px,4vw,52px); }
+  header .wm { font-family:var(--mono); font-weight:700; font-size:15px; letter-spacing:.04em; color:var(--ink); text-decoration:none; }
+  header .tag { font-family:var(--mono); font-size:11px; letter-spacing:.1em; text-transform:uppercase; color:var(--ink-mute);
+    border:1px solid var(--line); border-radius:2px; padding:3px 9px; }
+
+  /* --- intro framing --- */
+  .intro { padding:clamp(28px,5vw,52px) 0 clamp(24px,4vw,40px); }
+  .intro .eyebrow { font-family:var(--mono); font-size:12px; font-weight:700; letter-spacing:.2em; text-transform:uppercase; color:var(--ink-mute); margin:0 0 12px; }
+  .intro h1 { font-family:var(--serif); font-weight:500; font-size:clamp(38px,6vw,64px); line-height:1.02; letter-spacing:-.02em; margin:0 0 18px; }
+  .intro h1 em { font-style:italic; color:var(--amber); }
+  .intro p { font-size:18px; color:var(--ink-soft); max-width:60ch; margin:0 0 14px; }
+  .intro .note { font-family:var(--mono); font-size:12.5px; line-height:1.7; color:var(--ink-mute);
+    border-left:2px solid var(--amber); padding-left:12px; margin-top:22px; max-width:66ch; }
+
+  /* --- the poster (figure) --- */
+  figure.poster { margin:0 auto clamp(12px,2vw,24px); max-width:1000px; padding:0 clamp(20px,4vw,52px); }
+  .stage { position:relative; background:var(--paper); overflow:hidden;
+    border:1px solid var(--line);
+    --axis:26%; --gap:clamp(40px,5vw,64px); --edge:clamp(24px,4vw,52px); }
+  .spine { position:absolute; top:0; bottom:0; left:var(--axis); width:2px; background:var(--amber); }
+  .vtext { position:absolute; top:0; bottom:0; left:calc(var(--axis) - 21px);
+    writing-mode:vertical-rl; transform:rotate(180deg);
+    display:flex; align-items:flex-start; padding:56px 0;
+    font-family:var(--mono); font-size:12px; font-weight:700; letter-spacing:.42em; text-transform:uppercase; color:var(--ink); }
+
+  .field { margin-left:calc(var(--axis) + var(--gap)); margin-right:var(--edge);
+    padding:clamp(40px,6vw,60px) 0 clamp(52px,8vw,80px); }
+  .band { position:relative; padding-top:clamp(34px,4.6vw,50px); border-top:1px solid var(--line); }
+  .band:first-of-type { border-top:0; padding-top:0; }
+
+  .mark { position:absolute; top:clamp(34px,4.6vw,50px); right:calc(100% + clamp(12px,1.5vw,18px)); text-align:right; width:max-content; }
+  .band:first-of-type .mark { top:0; }
+  .mark .n { display:block; font-family:var(--mono); font-weight:700; font-size:clamp(26px,3.2vw,33px); line-height:1; color:var(--amber); }
+  .mark .t { display:block; margin-top:5px; font-family:var(--mono); font-weight:700; font-size:10px; letter-spacing:.16em; text-transform:uppercase; color:var(--ink-mute); }
+
+  .eyebrow { font-family:var(--mono); font-size:11.5px; font-weight:700; letter-spacing:.22em; text-transform:uppercase; color:var(--ink-mute); margin:0; }
+  .headline { font-family:var(--serif); font-weight:500; font-size:clamp(52px,9vw,96px); line-height:.9; letter-spacing:-.025em; margin:14px 0 0; }
+  .headline em { font-style:italic; color:var(--amber); }
+  .lede { font-size:18px; line-height:1.5; max-width:34ch; color:var(--ink-soft); margin:22px 0 0; }
+
+  /* --- exploded mark: the signature move --- */
+  .stack { display:flex; flex-direction:column; margin:26px 0 0; }
+  .slab { font-family:var(--mono); font-weight:700; font-size:clamp(34px,7.4vw,70px); line-height:1.04; letter-spacing:.01em; }
+  .m-ink { color:var(--ink); }
+  .m-inv { color:var(--paper); background:var(--ink); width:max-content; max-width:100%; padding:2px 12px 6px; }
+  .m-out { color:transparent; -webkit-text-stroke:2.4px var(--amber); }
+  .m-hatch { color:transparent; -webkit-text-fill-color:transparent;
+    background:repeating-linear-gradient(-52deg, var(--ink) 0 2px, transparent 2px 7px);
+    -webkit-background-clip:text; background-clip:text; }
+  .m-fill { color:var(--amber); }
+
+  /* --- colophon --- */
+  .colophon { display:grid; grid-template-columns:1fr 1fr; gap:6px 28px; margin:16px 0 0;
+    font-family:var(--mono); font-size:11.5px; line-height:1.7; color:var(--ink-soft); }
+  .colophon .k { color:var(--ink); font-weight:700; }
+  .colophon b { color:var(--ink); }
+
+  figcaption { font-family:var(--mono); font-size:12px; line-height:1.7; color:var(--ink-mute);
+    max-width:1000px; margin:14px auto 0; padding:0 clamp(20px,4vw,52px); }
+
+  /* --- principles: the study payload --- */
+  .principles { border-top:1px solid var(--line); margin-top:clamp(40px,6vw,64px); padding-top:clamp(36px,5vw,52px); }
+  .principles h2 { font-family:var(--serif); font-weight:500; font-size:clamp(28px,4vw,40px); line-height:1.05; margin:0 0 8px; }
+  .principles h2 em { font-style:italic; color:var(--amber); }
+  .principles .sub { font-size:17px; color:var(--ink-soft); max-width:60ch; margin:0 0 28px; }
+  .principles ol { list-style:none; counter-reset:p; margin:0; padding:0;
+    display:grid; grid-template-columns:1fr 1fr; gap:22px 40px; }
+  .principles li { counter-increment:p; position:relative; padding-left:44px; }
+  .principles li::before { content:counter(p,decimal-leading-zero); position:absolute; left:0; top:1px;
+    font-family:var(--mono); font-weight:700; font-size:15px; color:var(--amber); }
+  .principles li b { display:block; font-family:var(--body); font-weight:700; font-size:16px; color:var(--ink); margin-bottom:3px; }
+  .principles li span { font-size:15px; color:var(--ink-soft); line-height:1.55; }
+  .principles .use { font-family:var(--mono); font-size:12.5px; line-height:1.7; color:var(--ink-mute);
+    border-left:2px solid var(--amber); padding-left:12px; margin-top:32px; max-width:66ch; }
+
+  footer { border-top:1px solid var(--line); margin-top:clamp(44px,7vw,72px);
+    font-family:var(--mono); font-size:12px; color:var(--ink-mute);
+    max-width:1000px; margin-left:auto; margin-right:auto; padding:26px clamp(20px,4vw,52px) 40px; }
+
+  /* --- responsive: axial grids do not reflow trivially --- */
+  @media (max-width:760px) {
+    .stage { --axis:14px; --gap:0; }
+    .vtext { display:none; }
+    .field { margin-left:clamp(24px,7vw,36px); margin-right:clamp(20px,5vw,28px); }
+    .band { padding-top:clamp(30px,7vw,40px); }
+    .mark { position:static; display:flex; align-items:baseline; gap:10px; width:auto;
+      text-align:left; margin-bottom:12px; }
+    .band:first-of-type .mark { margin-top:4px; }
+    .mark .n { font-size:24px; }
+    .mark .t { margin-top:0; }
+    .headline { font-size:clamp(44px,14vw,72px); }
+    .lede { max-width:none; }
+    .colophon { grid-template-columns:1fr; }
+    .principles ol { grid-template-columns:1fr; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <a class="wm" href="/">sdfkjh</a>
+  <span class="tag">internal · axial grid study</span>
+</header>
+
+<main>
+  <div class="wrap intro">
+    <p class="eyebrow">sdfkjh · design study</p>
+    <h1>The axial <em>grid</em></h1>
+    <p>One dominant axis instead of a uniform grid. A single vertical rule becomes the spine of the whole composition, set off centre, and every element hangs off it. The structure stays rigid. The result reads as editorial, not tabular.</p>
+    <p class="note">Study page. Not linked from the site, marked noindex. Built from the technique note after the Musashino Art University "Chairs for All" exhibition poster, and proven here before it goes near client work.</p>
+  </div>
+
+  <figure class="poster">
+    <div class="stage">
+      <div class="spine" aria-hidden="true"></div>
+      <div class="vtext" aria-hidden="true">Brand and web · built on the home keys</div>
+
+      <div class="field">
+        <section class="band">
+          <span class="mark" aria-hidden="true"><span class="n">01</span><span class="t">brand</span></span>
+          <p class="eyebrow">sdfkjh · a demonstration</p>
+          <p class="headline">Brand <em>and</em> web.</p>
+          <p class="lede">One page, built on the home keys. The whole layout is a single axis. Everything else simply hangs off it.</p>
+        </section>
+
+        <section class="band">
+          <span class="mark" aria-hidden="true"><span class="n">02</span><span class="t">the mark</span></span>
+          <p class="eyebrow">the mark, exploded into materials</p>
+          <div class="stack" role="img" aria-label="The sdfkjh wordmark rendered in five materials: solid ink, reversed as paper on an ink block, an amber outline, a diagonal hatch, and a solid amber fill.">
+            <span class="slab m-ink" aria-hidden="true">sdfkjh</span>
+            <span class="slab m-inv" aria-hidden="true">sdfkjh</span>
+            <span class="slab m-out" aria-hidden="true">sdfkjh</span>
+            <span class="slab m-hatch" aria-hidden="true">sdfkjh</span>
+            <span class="slab m-fill" aria-hidden="true">sdfkjh</span>
+          </div>
+          <p class="lede">Six letters, one wordmark, cut into layers: solid, reversed, outline, hatch, and flat. The object, exploded. Here the object is a name.</p>
+        </section>
+
+        <section class="band">
+          <span class="mark" aria-hidden="true"><span class="n">03</span><span class="t">colophon</span></span>
+          <p class="eyebrow">colophon</p>
+          <div class="colophon">
+            <div><span class="k">home row</span> a <b>s d f</b> g <b>h j k</b> l</div>
+            <div><span class="k">type</span> Newsreader / Source Serif / JetBrains Mono</div>
+            <div><span class="k">brand</span> left hand, sdf</div>
+            <div><span class="k">web</span> right hand, kjh</div>
+            <div><span class="k">grid</span> one vertical axis, hung right</div>
+            <div><span class="k">palette</span> paper, ink, amber</div>
+          </div>
+        </section>
+      </div>
+    </div>
+    <figcaption>The sdfkjh wordmark worked as an axial poster: the title rides the axis, the content hangs to the right, and the mark is exploded into five material bands.</figcaption>
+  </figure>
+
+  <section class="wrap principles">
+    <h2>Six <em>moves</em></h2>
+    <p class="sub">What makes an axial grid hold together. Each one is visible in the poster above.</p>
+    <ol>
+      <li><b>One dominant axis</b><span>A single vertical rule in the accent colour is the spine of the whole composition, set about a quarter in from an edge, not centred. Everything aligns to it.</span></li>
+      <li><b>Hung content</b><span>The material sits to one side of the axis, asymmetric but ordered. The negative space on the other side is deliberate, not empty.</span></li>
+      <li><b>Horizontal banding</b><span>Content is sliced into stacked horizontal bands divided by hairline rules, like cutting an object into layers.</span></li>
+      <li><b>The object, exploded</b><span>The subject is cut into stacked material bands: solid, reversed, outline, hatch, and flat. This is the focal point of the whole piece.</span></li>
+      <li><b>Vertical text on the axis</b><span>A label or title set vertically, riding the spine, tying the composition to its one organising line.</span></li>
+      <li><b>Numbered markers and a dense colophon</b><span>Section numbers hung to the axis, and a tight monospace information block anchored low, for editorial rigour.</span></li>
+    </ol>
+    <p class="use">When it fits: editorial, cultural, exhibition, architecture, fashion, and portfolio work. Anywhere a confident, gallery-poster energy belongs. Wrong for warm, friendly, utility brands.</p>
+  </section>
+</main>
+
+<footer>
+  axial grid study · one axis, content hung to one side · <a href="/">back to sdfkjh.com</a>
+</footer>
+
+</body>
+</html>
