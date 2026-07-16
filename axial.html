@@ -1,4 +1,14 @@
 <!doctype html>
+<!--
+  ███████╗██████╗ ███████╗██╗  ██╗     ██╗██╗  ██╗
+  ██╔════╝██╔══██╗██╔════╝██║ ██╔╝     ██║██║  ██║
+  ███████╗██║  ██║█████╗  █████╔╝      ██║███████║
+  ╚════██║██║  ██║██╔══╝  ██╔═██╗ ██   ██║██╔══██║
+  ███████║██████╔╝██║     ██║  ██╗╚█████╔╝██║  ██║
+  ╚══════╝╚═════╝ ╚═╝     ╚═╝  ╚═╝ ╚════╝ ╚═╝  ╚═╝
+
+  Designed & built by sdfkjh.com
+-->
 <html lang="en">
 <head>
 <meta charset="utf-8"/>
@@ -92,6 +102,82 @@
   figcaption { font-family:var(--mono); font-size:12px; line-height:1.7; color:var(--ink-mute);
     max-width:1000px; margin:14px auto 0; padding:0 clamp(20px,4vw,52px); }
 
+  /* --- overlays + controls: the study shows its work --- */
+  .controls { display:flex; flex-wrap:wrap; align-items:center; gap:6px 16px; margin:0 0 10px;
+    font-family:var(--mono); font-size:11.5px; color:var(--ink-soft); }
+  .controls .c-label { font-weight:700; font-size:10.5px; letter-spacing:.14em; text-transform:uppercase; color:var(--ink-mute); }
+  .controls label { cursor:pointer; user-select:none; display:inline-flex; align-items:center; gap:5px; }
+  .controls input { accent-color:var(--amber); margin:0; }
+  .why { font-family:var(--mono); font-size:12px; line-height:1.7; color:var(--ink-mute);
+    margin:14px 0 0; max-width:72ch; }
+
+  .void { position:absolute; top:0; bottom:0; left:0; width:var(--axis);
+    background:rgba(255,122,26,.12); opacity:0; transition:opacity .25s; pointer-events:none; }
+  .void span { position:absolute; left:10px; bottom:10px; font-family:var(--mono); font-size:10.5px;
+    letter-spacing:.08em; color:var(--ink); white-space:nowrap; }
+  .stage.show-void .void { opacity:1; }
+
+  .dims { position:absolute; inset:0; opacity:0; transition:opacity .25s; pointer-events:none; }
+  .stage.show-dims .dims { opacity:1; }
+  .d-axis, .d-gap { position:absolute; border-top:1px dashed var(--ink-soft); }
+  .d-axis { top:18px; left:0; width:var(--axis); }
+  .d-gap { top:44px; left:var(--axis); width:var(--gap); }
+  .d-axis::before, .d-axis::after, .d-gap::before, .d-gap::after { content:""; position:absolute; top:-5px; width:1px; height:9px; background:var(--ink-soft); }
+  .d-axis::before, .d-gap::before { left:0; }
+  .d-axis::after, .d-gap::after { right:0; }
+  .d-axis span, .d-gap span { position:absolute; top:4px; font-family:var(--mono); font-size:10.5px; color:var(--ink); white-space:nowrap; }
+  .d-axis span { right:8px; }
+  .d-gap span { left:-8px; transform:translateX(-100%); }
+
+  @media (min-width:761px) {
+    .stage[data-axis="20"] { --axis:20%; }
+    .stage[data-axis="33"] { --axis:33%; }
+  }
+
+  /* --- stress band: unrelated content, on purpose --- */
+  .prose { font-size:16px; line-height:1.65; color:var(--ink-soft); max-width:58ch; margin:18px 0 0; }
+  .pull { font-family:var(--serif); font-style:italic; font-weight:500; font-size:clamp(24px,3vw,30px); line-height:1.25;
+    color:var(--amber-text); border-left:2px solid var(--amber); margin:24px 0 0; padding-left:16px; max-width:30ch; }
+  .plain { list-style:none; margin:22px 0 0; padding:0; max-width:58ch;
+    font-family:var(--mono); font-size:12.5px; line-height:1.7; color:var(--ink-soft); }
+  .plain li { border-top:1px solid var(--line); padding:7px 0; }
+  .plain li:first-child { border-top:0; }
+  .ph { aspect-ratio:4/3; max-width:400px; margin:22px 0 0; border:1px dashed var(--ink-soft);
+    background:repeating-linear-gradient(-45deg, transparent 0 9px, rgba(23,21,15,.05) 9px 18px);
+    display:grid; place-items:center; }
+  .ph span { font-family:var(--mono); font-size:11px; letter-spacing:.08em; color:var(--ink-mute); }
+  .micro { font-family:var(--mono); font-size:12px; line-height:1.7; color:var(--ink-mute); margin:20px 0 0; max-width:62ch; }
+
+  /* --- the source: a study needs its before --- */
+  .source { border-top:1px solid var(--line); margin-top:clamp(40px,6vw,64px); padding-top:clamp(36px,5vw,52px); }
+  .source h2 { font-family:var(--serif); font-weight:500; font-size:clamp(28px,4vw,40px); line-height:1.05; margin:0 0 8px; }
+  .source h2 em { font-style:italic; color:var(--amber-text); }
+  .source .sub { font-size:17px; color:var(--ink-soft); max-width:62ch; margin:0 0 28px; }
+  .src-row { display:grid; grid-template-columns:minmax(220px,340px) 1fr; gap:32px 44px; align-items:start; }
+  .sketch { position:relative; aspect-ratio:707/1000; background:#f7f4ec; border:1px solid var(--line); overflow:hidden; }
+  .sk-spine { position:absolute; top:0; bottom:0; left:26%; width:2px; background:#b3372b; }
+  .sk-vtext { position:absolute; top:9%; left:calc(26% - 13px); width:3px; height:32%;
+    background:repeating-linear-gradient(to bottom, var(--ink-soft) 0 7px, transparent 7px 11px); }
+  .sk-slab { position:absolute; left:36%; height:6.5%; }
+  .sk-s1 { top:15%; width:44%; background:var(--ink-soft); }
+  .sk-s2 { top:24%; width:38%; background:var(--ink); }
+  .sk-s3 { top:33%; width:48%; border:2px solid #b3372b; background:transparent; }
+  .sk-s4 { top:42%; width:41%; background:repeating-linear-gradient(-52deg, var(--ink-soft) 0 2px, transparent 2px 6px); }
+  .sk-mark { position:absolute; left:calc(26% - 20px); width:9px; height:9px; background:#b3372b; }
+  .sk-m1 { top:15%; } .sk-m2 { top:33%; }
+  .sk-info { position:absolute; left:36%; right:12%; bottom:7%; }
+  .sk-info i { display:block; height:3px; background:var(--line); margin-top:5px; }
+  .sk-info i:nth-child(odd) { width:86%; } .sk-info i:nth-child(even) { width:64%; }
+  .sketch-cap { font-family:var(--mono); font-size:11px; line-height:1.6; color:var(--ink-mute); margin:10px 0 0; }
+  .takeaway h3 { font-family:var(--mono); font-size:11.5px; font-weight:700; letter-spacing:.2em; text-transform:uppercase; color:var(--ink-mute); margin:0 0 10px; }
+  .takeaway ul { list-style:none; margin:0 0 26px; padding:0; font-size:15.5px; color:var(--ink-soft); }
+  .takeaway ul:last-child { margin-bottom:0; }
+  .takeaway li { position:relative; padding:6px 0 6px 18px; border-top:1px solid var(--line); }
+  .takeaway li:first-child { border-top:0; }
+  .takeaway li::before { content:""; position:absolute; left:0; top:15px; width:8px; height:2px; background:var(--amber); }
+
+  code { font-family:var(--mono); font-size:.9em; background:rgba(23,21,15,.05); padding:1px 4px; border-radius:2px; }
+
   /* --- principles: the study payload --- */
   .principles { border-top:1px solid var(--line); margin-top:clamp(40px,6vw,64px); padding-top:clamp(36px,5vw,52px); }
   .principles h2 { font-family:var(--serif); font-weight:500; font-size:clamp(28px,4vw,40px); line-height:1.05; margin:0 0 8px; }
@@ -126,6 +212,9 @@
     .lede { max-width:none; }
     .colophon { grid-template-columns:1fr; }
     .principles ol { grid-template-columns:1fr; }
+    .controls, .why, .dims, .void { display:none; }
+    .src-row { grid-template-columns:1fr; }
+    .sketch { max-width:280px; }
   }
 </style>
 </head>
@@ -145,7 +234,21 @@
   </div>
 
   <figure class="poster">
-    <div class="stage">
+    <div class="controls" role="group" aria-label="Poster overlays, visual annotations only">
+      <span class="c-label">overlays</span>
+      <label><input type="checkbox" data-cls="show-dims"/> measurements</label>
+      <label><input type="checkbox" data-cls="show-void"/> the void</label>
+      <span class="c-label">axis</span>
+      <label><input type="radio" name="axis" value="20"/> 20%</label>
+      <label><input type="radio" name="axis" value="26" checked/> 26%</label>
+      <label><input type="radio" name="axis" value="33"/> 33%</label>
+    </div>
+    <div class="stage" data-axis="26">
+      <div class="void" aria-hidden="true"><span>the void · deliberate, not empty</span></div>
+      <div class="dims" aria-hidden="true">
+        <div class="d-axis"><span id="dim-axis">--axis: 26% of stage width</span></div>
+        <div class="d-gap"><span>--gap: clamp(40px, 5vw, 64px)</span></div>
+      </div>
       <div class="spine" aria-hidden="true"></div>
       <div class="vtext" aria-hidden="true">Brand and web · built on the home keys</div>
 
@@ -171,7 +274,21 @@
         </section>
 
         <section class="band">
-          <span class="mark" aria-hidden="true"><span class="n">03</span><span class="t">colophon</span></span>
+          <span class="mark" aria-hidden="true"><span class="n">03</span><span class="t">stress</span></span>
+          <p class="eyebrow">unrelated content, on purpose</p>
+          <p class="prose">In 1946 Charles and Ray Eames put a molded plywood chair into production, bending thin birch veneers in a heated press until the seat took the shape of the sitter. The trick was not the curve, it was the joint: rubber shock mounts bonded between wood and frame, so the chair could flex with no visible hardware. The press itself was a garage-built rig they nicknamed the Kazam! machine, and it had spent the war forming plywood leg splints for the US Navy before it ever formed a chair.</p>
+          <blockquote class="pull">The material was bent to the sitter, not the sitter to the material.</blockquote>
+          <ul class="plain">
+            <li>molded birch plywood, thin plies pressed to a compound curve</li>
+            <li>rubber shock mounts, no fixings visible from the front</li>
+            <li>two heights, dining and lounge</li>
+          </ul>
+          <div class="ph" aria-hidden="true"><span>figure placeholder · 4:3</span></div>
+          <p class="micro">A grid that only ever carries copy written to flatter it has proven nothing. This band is the test: a long measure, a pull-quote, a list, and an image slot the axis never saw coming. It either holds or it does not.</p>
+        </section>
+
+        <section class="band">
+          <span class="mark" aria-hidden="true"><span class="n">04</span><span class="t">colophon</span></span>
           <p class="eyebrow">colophon</p>
           <div class="colophon">
             <div><span class="k">home row</span> a <b>s d f</b> g <b>h j k</b> l</div>
@@ -184,8 +301,47 @@
         </section>
       </div>
     </div>
-    <figcaption>The sdfkjh wordmark as an axial poster: title on the axis, content set right, the mark exploded into five materials.</figcaption>
+    <p class="why">Why 26: the source sets its spine about a quarter in from the left edge. 26% is that quarter. The alternatives are live above: at 20 the void thins until it stops reading as deliberate, at 33 the column starts crowding the right edge. Look rather than take our word for it.</p>
+    <figcaption>The sdfkjh wordmark as an axial poster: title on the axis, content set right, the mark exploded into five materials. The overlays expose the measurements and the negative space; the axis itself is switchable. Desktop only: on phones the axis collapses, and the controls go with it.</figcaption>
   </figure>
+
+  <section class="wrap source">
+    <h2>The <em>source</em></h2>
+    <p class="sub">Musashino Art University's exhibition poster for "Chairs for All" (Igarashi Design Studio): one red spine set about a quarter in from the left, a chair exploded into stacked material bands, the title climbing the axis, dense information anchored low. The poster is theirs and stays theirs, so what follows is a structural sketch of it, not a copy. A study needs its before.</p>
+    <div class="src-row">
+      <div>
+        <div class="sketch" role="img" aria-label="Structural sketch of the source poster: a vertical red spine about a quarter in from the left, four stacked horizontal bands to its right suggesting an object exploded into materials, a vertical title riding the spine, small markers pinned to the axis, and a dense information block at the bottom.">
+          <div class="sk-spine"></div>
+          <div class="sk-vtext"></div>
+          <div class="sk-mark sk-m1"></div>
+          <div class="sk-mark sk-m2"></div>
+          <div class="sk-slab sk-s1"></div>
+          <div class="sk-slab sk-s2"></div>
+          <div class="sk-slab sk-s3"></div>
+          <div class="sk-slab sk-s4"></div>
+          <div class="sk-info" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div>
+        </div>
+        <p class="sketch-cap">Structure only. The chair, the photography, and the red are Igarashi Design Studio's.</p>
+      </div>
+      <div class="takeaway">
+        <h3>taken</h3>
+        <ul>
+          <li>the off-centre axis, about a quarter in</li>
+          <li>content set to one side, the void left standing</li>
+          <li>the object exploded into material bands</li>
+          <li>the vertical title riding the spine</li>
+          <li>numbered markers and a dense colophon</li>
+        </ul>
+        <h3>invented</h3>
+        <ul>
+          <li>the object is a wordmark, not a chair</li>
+          <li>amber for red</li>
+          <li>a 760px collapse the print original never needed</li>
+          <li>live overlays in place of ink</li>
+        </ul>
+      </div>
+    </div>
+  </section>
 
   <section class="wrap principles">
     <h2>Six <em>moves</em></h2>
@@ -197,12 +353,32 @@
       <li><b>Vertical text on the axis.</b><span>A title set vertically, riding the spine.</span></li>
       <li><b>Markers and colophon.</b><span>Numbers pinned to the axis, dense info low.</span></li>
     </ol>
+    <p class="use">Mobile is a decision, not a breakpoint. Below 760px the axial grid is abandoned rather than shrunk: the spine collapses to a thin rule in the left margin, the vertical title is dropped, the bands stack full width, and the overlays go with it. Scaled proportionally instead, a 26% axis would spend 94 pixels of a 360px screen on deliberate emptiness. On a phone, readability wins; the rule stays as the grid's trace.</p>
+    <p class="use">Caveats: the outline and hatch slabs lean on <code>-webkit-text-stroke</code> and <code>background-clip: text</code>, vendor-prefixed properties every modern engine ships but no standard guarantees. Where they fail they fail invisible, so the exploded stack is one labelled image to assistive tech and every slab inside it is decorative. The vertical title is hidden from screen readers for the same reason: <code>writing-mode</code> rotates geometry, not reading order. Print aesthetics come to the web on the web's terms.</p>
   </section>
 </main>
 
 <footer>
   axial grid study · one axis, content set to one side · <a href="/">back to sdfkjh.com</a>
 </footer>
+
+<script>
+(function () {
+  var stage = document.querySelector('.stage');
+  var dimAxis = document.getElementById('dim-axis');
+  document.querySelectorAll('.controls [data-cls]').forEach(function (cb) {
+    cb.addEventListener('change', function () {
+      stage.classList.toggle(cb.dataset.cls, cb.checked);
+    });
+  });
+  document.querySelectorAll('.controls input[name="axis"]').forEach(function (r) {
+    r.addEventListener('change', function () {
+      stage.dataset.axis = r.value;
+      dimAxis.textContent = '--axis: ' + r.value + '% of stage width';
+    });
+  });
+})();
+</script>
 
 </body>
 </html>
