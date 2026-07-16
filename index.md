@@ -34,7 +34,7 @@ The same hand and stack, pointed at three other problems:
 
 ## Design range
 
-One markup, fifteen complete design systems. Switch the whole look live, then tune color, type, and layout in the browser: [sdfkjh.com/range](https://sdfkjh.com/range).
+One markup, seventeen complete design systems. Switch the whole look live, then tune color, type, and layout in the browser: [sdfkjh.com/range](https://sdfkjh.com/range).
 
 ## The console
 
