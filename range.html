@@ -16,7 +16,7 @@
 <title>sdfkjh · design range</title>
 <meta name="robots" content="index, follow"/>
 <meta name="color-scheme" content="light"/>
-<meta name="description" content="One markup, sixteen complete design systems. Switch the whole look live, then tune color, type, and layout in the browser."/>
+<meta name="description" content="One markup, seventeen complete design systems. Switch the whole look live, then tune color, type, and layout in the browser."/>
 <link rel="canonical" href="https://sdfkjh.com/range"/>
 <meta name="theme-color" content="#FDFBF7"/>
 <link rel="icon" href="/favicon.svg" type="image/svg+xml"/>
@@ -25,14 +25,14 @@
 <meta property="og:site_name" content="sdfkjh.com"/>
 <meta property="og:url" content="https://sdfkjh.com/range"/>
 <meta property="og:title" content="sdfkjh · design range"/>
-<meta property="og:description" content="One markup, sixteen complete design systems. Switch the whole look live, then tune color, type, and layout in the browser."/>
+<meta property="og:description" content="One markup, seventeen complete design systems. Switch the whole look live, then tune color, type, and layout in the browser."/>
 <meta property="og:image" content="https://sdfkjh.com/og-range.png"/>
 <meta property="og:image:width" content="1200"/>
 <meta property="og:image:height" content="630"/>
-<meta property="og:image:alt" content="sdfkjh · one markup shown in sixteen design styles"/>
+<meta property="og:image:alt" content="sdfkjh · one markup shown in seventeen design styles"/>
 <meta name="twitter:card" content="summary_large_image"/>
 <meta name="twitter:title" content="sdfkjh · design range"/>
-<meta name="twitter:description" content="One markup, sixteen complete design systems. Switch the whole look live, then tune color, type, and layout in the browser."/>
+<meta name="twitter:description" content="One markup, seventeen complete design systems. Switch the whole look live, then tune color, type, and layout in the browser."/>
 <meta name="twitter:image" content="https://sdfkjh.com/og-range.png"/>
 
 <style>
@@ -2644,6 +2644,7 @@ html[data-footer="wordmark"][data-profile="brutal"] footer .foot-mark { -webkit-
 html[data-footer="wordmark"][data-profile="swiss"] footer { border-top-width: 2px; }
 html[data-footer="wordmark"][data-profile="maximal"] footer .foot-mark { color: var(--accent); -webkit-text-stroke: 2px var(--fg); }
 html[data-footer="wordmark"][data-profile="fintech"] footer .foot-mark { color: transparent; -webkit-text-stroke: 1.5px var(--fg); }
+html[data-footer="wordmark"][data-profile="constructivist"] footer .foot-mark { color: var(--accent); -webkit-text-stroke: 2px var(--fg); letter-spacing: clamp(-0.02em, -0.3vw, -0.01em); }
 html[data-footer="wordmark"][data-profile="cinematic"] footer .foot-mark { color: transparent; -webkit-text-stroke: 1.5px color-mix(in srgb, var(--fg) 55%, transparent); }
 html[data-footer="wordmark"][data-profile="terminal"] footer .foot-mark { color: var(--accent); }
 html[data-footer="wordmark"][data-profile="prestige"] footer .foot-mark { color: var(--accent-2); }
@@ -2721,6 +2722,7 @@ html[data-footer="silhouette"][data-profile="prestige"] footer { --sil-band: #1C
 html[data-footer="silhouette"][data-profile="cinematic"] footer { --sil-band: #14141A; --sil-mark: var(--accent); --sil-ink: #9CA3AF; }
 html[data-footer="silhouette"][data-profile="terminal"] footer { --sil-band: #0F1A15; --sil-mark: var(--accent); --sil-ink: #9FB3AA; }
 html[data-footer="silhouette"][data-profile="fintech"] footer { --sil-band: #141414; --sil-mark: var(--accent); --sil-ink: #A3A3A3; }
+html[data-footer="silhouette"][data-profile="constructivist"] footer { --sil-band: #141210; --sil-mark: #141210; --sil-ink: #EAE3D5; }
 @media (max-width: 640px) {
   html[data-footer="silhouette"] footer .foot-info { flex-direction: column; align-items: flex-start; gap: 3px; }
   html[data-footer="silhouette"] footer .foot-tag { text-align: left; }
@@ -2987,6 +2989,101 @@ html[data-profile="basic"] .candor b { color:var(--accent); }
 
 @media (max-width:760px) {
   html[data-profile="basic"] .card { text-align:center; }
+}
+
+/* ===================== CONSTRUCTIVIST ===================== */
+html[data-profile="constructivist"] {
+  --bg:#EAE3D5; --surface:#EAE3D5; --fg:#141210; --fg-soft:#4a463f;
+  --line:#141210; --accent:#DE2417; --accent-2:#141210;
+  --font-head:"Anton","Arial Narrow Bold",Impact,sans-serif;
+  --font-body:"Archivo","Helvetica Neue",Arial,sans-serif;
+  --font-label:"Archivo","Helvetica Neue",Arial,sans-serif;
+  --radius:0; --maxw:1180px; --section-pad:60px;
+  --head-weight:400; --head-tracking:-.01em; --head-leading:.84; --head-transform:uppercase;
+  --label-tracking:.16em; --label-transform:uppercase;
+  --wm-base:.2s; --wm-step:.08s; --wm-ldur:.16s; --wm-brdur:.2s; --wm-ease:steps(3,end);
+}
+html[data-profile="constructivist"] body { font-size:15.5px; line-height:1.5; font-weight:500; -webkit-font-smoothing:auto; }
+html[data-profile="constructivist"] section { border-top:5px solid var(--fg); }
+html[data-profile="constructivist"] .hero { border-top:0; }
+
+/* header */
+html[data-profile="constructivist"] .site-head { border-bottom:5px solid var(--fg); background:var(--fg); }
+html[data-profile="constructivist"] .wm { font-family:var(--font-body); font-weight:800; letter-spacing:.06em; text-transform:uppercase; color:var(--bg); }
+html[data-profile="constructivist"] .wm .br { color:var(--accent); }
+html[data-profile="constructivist"] .switch button {
+  font-family:var(--font-body); font-weight:800; font-size:11px; letter-spacing:.1em; text-transform:uppercase;
+  border:2px solid var(--bg); border-radius:0; background:transparent; color:var(--bg);
+}
+html[data-profile="constructivist"] .switch button:hover { background:var(--accent); border-color:var(--accent); color:var(--bg); }
+html[data-profile="constructivist"] .switch button[aria-checked="true"] { background:var(--bg); color:var(--fg); border-color:var(--bg); }
+
+/* hero: a red wedge pinned top-right, kept clear of the text column */
+html[data-profile="constructivist"] .hero { position:relative; overflow:hidden; padding-top:64px; padding-bottom:72px; }
+html[data-profile="constructivist"] .hero::before {
+  content:""; position:absolute; top:-30%; right:-12%; width:62%; height:150%;
+  background:var(--accent); transform:rotate(-20deg); transform-origin:top right; z-index:0; pointer-events:none;
+}
+html[data-profile="constructivist"] .hero .wrap { position:relative; z-index:1; }
+html[data-profile="constructivist"] .hero .wordmark path { filter:drop-shadow(4px 4px 0 var(--accent)); }
+html[data-profile="constructivist"] .eyebrow {
+  font-family:var(--font-body); font-weight:800; letter-spacing:.2em; text-transform:uppercase; font-size:12px;
+  color:var(--fg); background:var(--bg); display:inline-block; padding:5px 11px;
+}
+html[data-profile="constructivist"] h1.headline {
+  font-family:var(--font-head); font-weight:400; font-size:clamp(48px,8.4vw,96px); line-height:.84;
+  letter-spacing:-.01em; text-transform:uppercase; color:var(--fg); max-width:14ch; margin:0 0 44px; transform:skewX(-4deg);
+}
+html[data-profile="constructivist"] h1.headline em { font-style:normal; color:var(--bg); background:var(--fg); padding:0 .08em; }
+html[data-profile="constructivist"] .sub {
+  position:relative; z-index:2;
+  font-family:var(--font-body); font-weight:600; font-size:clamp(16px,1.7vw,19px); line-height:1.5; color:var(--fg);
+  max-width:42ch; border-left:6px solid var(--fg); padding:6px 0 6px 16px; margin:0; background:var(--bg);
+}
+
+/* section headings */
+html[data-profile="constructivist"] h2.h2 {
+  font-family:var(--font-head); font-weight:400; font-size:clamp(34px,5.2vw,64px); line-height:.84;
+  letter-spacing:-.01em; text-transform:uppercase; color:var(--fg); max-width:16ch;
+}
+html[data-profile="constructivist"] h2.h2 em { font-style:normal; color:var(--bg); background:var(--accent); padding:0 .08em; }
+
+/* cards: hard black frame, red middle, skewed slab numerals */
+html[data-profile="constructivist"] .cards { gap:0; border:4px solid var(--fg); }
+html[data-profile="constructivist"] .card { border:0; border-right:4px solid var(--fg); border-radius:0; background:var(--bg); padding:26px 22px; }
+html[data-profile="constructivist"] .card:last-child { border-right:0; }
+html[data-profile="constructivist"] .card:nth-child(2) { background:var(--accent); color:var(--bg); }
+html[data-profile="constructivist"] .card .idx {
+  font-family:var(--font-head); font-weight:400; font-size:54px; line-height:.8; letter-spacing:-.03em;
+  color:inherit; display:block; margin-bottom:14px; transform:skewX(-6deg);
+}
+html[data-profile="constructivist"] .card h3 { font-family:var(--font-body); font-weight:900; font-size:22px; text-transform:uppercase; letter-spacing:-.01em; margin:0 0 8px; }
+html[data-profile="constructivist"] .card p { font-family:var(--font-body); font-weight:500; font-size:14px; line-height:1.5; color:inherit; }
+
+/* system / tokens */
+html[data-profile="constructivist"] .swatches { gap:0; border:3px solid var(--fg); }
+html[data-profile="constructivist"] .sw { border:0; border-right:3px solid var(--fg); border-radius:0; }
+html[data-profile="constructivist"] .swatches .sw:last-child { border-right:0; }
+html[data-profile="constructivist"] .sw span { font-family:var(--font-label); font-weight:700; background:var(--fg); color:var(--bg); border-radius:0; padding:2px 5px; }
+html[data-profile="constructivist"] .sw span[style] { background:var(--fg) !important; }
+html[data-profile="constructivist"] .specimen .big {
+  font-family:var(--font-head); font-weight:400; font-size:clamp(46px,7vw,84px); line-height:.82;
+  text-transform:uppercase; color:var(--accent); transform:skewX(-5deg);
+}
+html[data-profile="constructivist"] .specimen .body { font-family:var(--font-body); font-weight:500; color:var(--fg); }
+html[data-profile="constructivist"] .specimen .label { font-family:var(--font-body); font-weight:800; letter-spacing:.16em; text-transform:uppercase; color:var(--bg); background:var(--accent); display:inline-block; padding:4px 10px; }
+
+/* candor */
+html[data-profile="constructivist"] .candor {
+  font-family:var(--font-body); font-weight:500; font-size:14.5px; line-height:1.6; color:var(--fg);
+  border:4px solid var(--fg); border-left:16px solid var(--accent); padding:16px 18px; max-width:64ch;
+}
+html[data-profile="constructivist"] .candor b { background:var(--fg); color:var(--bg); font-weight:800; text-transform:uppercase; padding:1px 6px; }
+
+@media (max-width:760px) {
+  html[data-profile="constructivist"] .cards { display:grid; grid-template-columns:1fr; }
+  html[data-profile="constructivist"] .card { border-right:0; border-bottom:4px solid var(--fg); }
+  html[data-profile="constructivist"] .card:last-child { border-bottom:0; }
 }
 
 
@@ -3389,6 +3486,7 @@ html[data-profile="basic"] .candor b { color:var(--accent); }
     <button type="button" role="radio" data-set="fintech" aria-checked="false" tabindex="-1">Fintech</button>
     <button type="button" role="radio" data-set="maximal" aria-checked="false" tabindex="-1">Maximal</button>
     <button type="button" role="radio" data-set="basic" aria-checked="false" tabindex="-1" title="the competent, generic default">Basic</button>
+    <button type="button" role="radio" data-set="constructivist" aria-checked="false" tabindex="-1">Constructivist</button>
   </div>
 </header>
 
@@ -3410,7 +3508,7 @@ html[data-profile="basic"] .candor b { color:var(--accent); }
           <rect class="wm-cursor" x="432" y="50" width="7" height="34" rx="1.5" opacity="0"/>
         </g>
       </svg>
-      <p class="eyebrow">Same page, sixteen ways</p>
+      <p class="eyebrow">Same page, seventeen ways</p>
       <h1 class="headline">One markup. Pick the <em>look</em>.</h1>
       <p class="sub">Nothing in the HTML below changes. The buttons flip one attribute and the whole page re-skins: fonts, color, grid, the works. Hit a few and watch.</p>
     </div>
@@ -3423,7 +3521,7 @@ html[data-profile="basic"] .candor b { color:var(--accent); }
       <div class="cards">
         <div class="card"><span class="idx">01</span><h3>Brand</h3><p>Wordmark, palette, type. The part a client points at and calls &ldquo;the look&rdquo;, and the first thing every button on the dial rewrites.</p></div>
         <div class="card"><span class="idx">02</span><h3>Web</h3><p>One static page, themed entirely through CSS variables. The exact same build sits under every design on the dial.</p></div>
-        <div class="card"><span class="idx">03</span><h3>Range</h3><p>Sixteen design systems wired to the dial right now, from a law firm to a cyberpunk terminal to one intentionally generic template. They share a single file; none is a mockup. Each one is the page, fully dressed.</p></div>
+        <div class="card"><span class="idx">03</span><h3>Range</h3><p>Seventeen design systems wired to the dial right now, from a law firm to a cyberpunk terminal to one intentionally generic template. They share a single file; none is a mockup. Each one is the page, fully dressed.</p></div>
       </div>
     </div>
   </section>
@@ -3431,10 +3529,10 @@ html[data-profile="basic"] .candor b { color:var(--accent); }
 <section class="metrics">
   <div class="wrap">
     <p class="eyebrow">By the numbers</p>
-    <h2 class="h2">One markup, sixteen looks</h2>
+    <h2 class="h2">One markup, seventeen looks</h2>
     <dl class="metrics__row">
       <div class="metrics__item">
-        <dt class="metrics__num">16</dt>
+        <dt class="metrics__num">17</dt>
         <dd class="metrics__label">design profiles</dd>
       </div>
       <div class="metrics__item">
@@ -3456,7 +3554,7 @@ html[data-profile="basic"] .candor b { color:var(--accent); }
 <section class="markup-proof">
   <div class="wrap">
     <p class="eyebrow">Same markup</p>
-    <h2 class="h2">One HTML, sixteen looks</h2>
+    <h2 class="h2">One HTML, seventeen looks</h2>
     <p class="mp-intro">
       The block on the left is real, unstyled HTML, shown here as literal text. The panel on the right
       renders that exact same markup using this profile&rsquo;s type, color, and spacing tokens. The
@@ -3509,7 +3607,7 @@ html[data-profile="basic"] .candor b { color:var(--accent); }
   <div class="wrap">
     <p class="eyebrow">on range</p>
     <blockquote class="range-quote__line">
-      <p>This page never changes its mind. It just puts on a different one, sixteen times, on purpose.</p>
+      <p>This page never changes its mind. It just puts on a different one, seventeen times, on purpose.</p>
     </blockquote>
     <div class="range-quote__mark" aria-hidden="true"></div>
   </div>
@@ -3542,7 +3640,7 @@ html[data-profile="basic"] .candor b { color:var(--accent); }
             <th scope="row">Site</th>
             <td>Not included</td>
             <td>One responsive site, one look</td>
-            <td>One site, sixteen swappable looks, like this page</td>
+            <td>One site, seventeen swappable looks, like this page</td>
           </tr>
           <tr>
             <th scope="row">Copy</th>
@@ -3586,7 +3684,7 @@ html[data-profile="basic"] .candor b { color:var(--accent); }
 
   <section class="candor">
     <div class="wrap">
-      <p class="candor"><b>The honest part:</b> every design here is the exact same markup. The hard part was never drawing sixteen of them. It&rsquo;s knowing which one a client actually needs. Usually it&rsquo;s calmer than the one they asked for.</p>
+      <p class="candor"><b>The honest part:</b> every design here is the exact same markup. The hard part was never drawing seventeen of them. It&rsquo;s knowing which one a client actually needs. Usually it&rsquo;s calmer than the one they asked for.</p>
     </div>
   </section>
 </main>
@@ -3596,7 +3694,7 @@ html[data-profile="basic"] .candor b { color:var(--accent); }
   <div class="foot-inner">
     <div class="foot-brand">
       <span class="foot-wm" aria-hidden="true">SDFKJH</span>
-      <p class="foot-blurb">one page, sixteen stylesheets, zero markup changes</p>
+      <p class="foot-blurb">one page, seventeen stylesheets, zero markup changes</p>
     </div>
     <nav class="foot-col" aria-label="Pages">
       <h3 class="foot-col-h">Pages</h3>
@@ -3647,7 +3745,8 @@ html[data-profile="basic"] .candor b { color:var(--accent); }
       academic: { ease:'linear', dur:1, stag:0, cards:false, spring:null },
       fintech: { ease:'out(2)', dur:760, stag:150, cards:true, spring:null },
       maximal: { ease:'out(2)', dur:460, stag:60, cards:true, spring:A && A.createSpring({ stiffness:220, damping:11 }) },
-      basic: { ease:'out(2)', dur:500, stag:60, cards:true, spring:null }
+      basic: { ease:'out(2)', dur:500, stag:60, cards:true, spring:null },
+      constructivist: { ease:'linear', dur:300, stag:28, cards:true, spring:null }
     };
 
     function play(profile){
@@ -3782,7 +3881,7 @@ html[data-profile="basic"] .candor b { color:var(--accent); }
 <script>
 (function(){
   var root=document.documentElement, el=document.getElementById('dzPacks');
-  var FP={"editorial":[{"n":"Default","h":"EB Garamond","b":"EB Garamond","l":"EB Garamond"},{"n":"Editorial classic","h":"Newsreader","b":"Source Serif 4","l":"Newsreader"},{"n":"Modern neutral","h":"Archivo","b":"EB Garamond","l":"Archivo"},{"n":"Mono-forward","h":"JetBrains Mono","b":"EB Garamond","l":"JetBrains Mono"}],"swiss":[{"n":"Default (Archivo system)","h":"Archivo","b":"Archivo","l":"Archivo"},{"n":"Poster grotesk","h":"Anton","b":"Inter","l":"JetBrains Mono"},{"n":"Neutral utility (Inter)","h":"Inter","b":"Inter","l":"JetBrains Mono"},{"n":"Mono-forward (technical)","h":"Archivo","b":"JetBrains Mono","l":"JetBrains Mono"}],"glitch":[{"n":"Default","h":"Chakra Petch","b":"JetBrains Mono","l":"JetBrains Mono"},{"n":"Brutalist marquee","h":"Anton","b":"JetBrains Mono","l":"JetBrains Mono"},{"n":"Mono-forward terminal","h":"JetBrains Mono","b":"JetBrains Mono","l":"JetBrains Mono"},{"n":"Industrial utility","h":"Archivo","b":"JetBrains Mono","l":"JetBrains Mono"}],"zen":[{"n":"Default","h":"Newsreader","b":"Source Serif 4","l":"JetBrains Mono"},{"n":"Editorial classic","h":"EB Garamond","b":"Source Serif 4","l":"JetBrains Mono"},{"n":"Humanist utility","h":"Newsreader","b":"Inter","l":"JetBrains Mono"},{"n":"Mono-forward contrast","h":"Newsreader","b":"JetBrains Mono","l":"JetBrains Mono"}],"brutal":[{"n":"Default","h":"Archivo","b":"JetBrains Mono","l":"JetBrains Mono"},{"n":"Display-max (Anton)","h":"Anton","b":"JetBrains Mono","l":"JetBrains Mono"},{"n":"Techno-brutal (Chakra Petch)","h":"Chakra Petch","b":"Chakra Petch","l":"JetBrains Mono"},{"n":"Stark-grotesque (Archivo)","h":"Archivo","b":"Inter","l":"Inter"}],"clean":[{"n":"Default","h":"Inter","b":"Inter","l":"JetBrains Mono"},{"n":"Friendly modern","h":"Plus Jakarta Sans","b":"Inter","l":"JetBrains Mono"},{"n":"Utility neutral","h":"Archivo","b":"Inter","l":"JetBrains Mono"},{"n":"Mono-forward","h":"Chakra Petch","b":"Inter","l":"JetBrains Mono"}],"prestige":[{"n":"Default","h":"Newsreader","b":"Source Serif 4","l":"Source Serif 4"},{"n":"Editorial classic","h":"EB Garamond","b":"EB Garamond","l":"EB Garamond"},{"n":"Mono-forward contrast","h":"Newsreader","b":"JetBrains Mono","l":"JetBrains Mono"},{"n":"Quiet money (neutral)","h":"EB Garamond","b":"Inter","l":"Inter"}],"counsel":[{"n":"Default","h":"Newsreader","b":"Source Serif 4","l":"JetBrains Mono"},{"n":"Editorial classic","h":"EB Garamond","b":"Source Serif 4","l":"JetBrains Mono"},{"n":"Neutral / utility","h":"Newsreader","b":"Inter","l":"JetBrains Mono"},{"n":"Mono-forward (data room)","h":"EB Garamond","b":"Source Serif 4","l":"JetBrains Mono"}],"grove":[{"n":"Default (Newsreader / Source Serif)","h":"Newsreader","b":"Source Serif 4","l":"JetBrains Mono"},{"n":"Apothecary (EB Garamond)","h":"EB Garamond","b":"Source Serif 4","l":"JetBrains Mono"},{"n":"Soft sans (Newsreader)","h":"Newsreader","b":"Plus Jakarta Sans","l":"JetBrains Mono"},{"n":"Quiet utility (Archivo)","h":"Archivo","b":"Inter","l":"JetBrains Mono"}],"cinematic":[{"n":"Default","h":"Inter","b":"Inter","l":"JetBrains Mono"},{"n":"Warm neutral","h":"Plus Jakarta Sans","b":"Plus Jakarta Sans","l":"JetBrains Mono"},{"n":"Architectural","h":"Archivo","b":"Inter","l":"JetBrains Mono"},{"n":"HUD / cyber","h":"Chakra Petch","b":"Inter","l":"JetBrains Mono"}],"terminal":[{"n":"Default","h":"JetBrains Mono","b":"Inter","l":"JetBrains Mono"},{"n":"HUD / expressive","h":"Chakra Petch","b":"Inter","l":"JetBrains Mono"},{"n":"Utility / industrial","h":"JetBrains Mono","b":"Archivo","l":"JetBrains Mono"},{"n":"Mono-forward","h":"JetBrains Mono","b":"JetBrains Mono","l":"JetBrains Mono"}],"soft":[{"n":"Default","h":"Plus Jakarta Sans","b":"Inter","l":"JetBrains Mono"},{"n":"Rounded (single-family)","h":"Plus Jakarta Sans","b":"Plus Jakarta Sans","l":"JetBrains Mono"},{"n":"Neutral utility","h":"Inter","b":"Inter","l":"JetBrains Mono"},{"n":"Soft contrast","h":"Archivo","b":"Inter","l":"JetBrains Mono"}],"academic":[{"n":"Default","h":"EB Garamond","b":"EB Garamond","l":"EB Garamond"},{"n":"Journal masthead","h":"EB Garamond","b":"Source Serif 4","l":"JetBrains Mono"},{"n":"Reading-first","h":"Newsreader","b":"Source Serif 4","l":"JetBrains Mono"},{"n":"Figures & data","h":"EB Garamond","b":"Source Serif 4","l":"JetBrains Mono"}],"fintech":[{"n":"Default","h":"Archivo","b":"Inter","l":"JetBrains Mono"},{"n":"Display-max (Anton)","h":"Anton","b":"Inter","l":"JetBrains Mono"},{"n":"Mono-forward (Chakra Petch)","h":"Chakra Petch","b":"Inter","l":"JetBrains Mono"},{"n":"Utility-neutral (Inter)","h":"Inter","b":"Inter","l":"JetBrains Mono"}],"maximal":[{"n":"Default (Anton / Garamond)","h":"Anton","b":"EB Garamond","l":"JetBrains Mono"},{"n":"Editorial maximal (Anton)","h":"Anton","b":"Newsreader","l":"JetBrains Mono"},{"n":"Engineered maximal (Anton)","h":"Anton","b":"Chakra Petch","l":"JetBrains Mono"},{"n":"Mono-forward maximal (Archivo)","h":"Archivo","b":"EB Garamond","l":"JetBrains Mono"}],"basic":[{"n":"Default (system sans)","h":"system-ui","b":"system-ui","l":"system-ui"},{"n":"Friendly modern","h":"Plus Jakarta Sans","b":"Inter","l":"Inter"},{"n":"Neutral utility (Inter)","h":"Inter","b":"Inter","l":"Inter"},{"n":"Grotesk-forward (Archivo)","h":"Archivo","b":"Inter","l":"Inter"}]};
+  var FP={"editorial":[{"n":"Default","h":"EB Garamond","b":"EB Garamond","l":"EB Garamond"},{"n":"Editorial classic","h":"Newsreader","b":"Source Serif 4","l":"Newsreader"},{"n":"Modern neutral","h":"Archivo","b":"EB Garamond","l":"Archivo"},{"n":"Mono-forward","h":"JetBrains Mono","b":"EB Garamond","l":"JetBrains Mono"}],"swiss":[{"n":"Default (Archivo system)","h":"Archivo","b":"Archivo","l":"Archivo"},{"n":"Poster grotesk","h":"Anton","b":"Inter","l":"JetBrains Mono"},{"n":"Neutral utility (Inter)","h":"Inter","b":"Inter","l":"JetBrains Mono"},{"n":"Mono-forward (technical)","h":"Archivo","b":"JetBrains Mono","l":"JetBrains Mono"}],"glitch":[{"n":"Default","h":"Chakra Petch","b":"JetBrains Mono","l":"JetBrains Mono"},{"n":"Brutalist marquee","h":"Anton","b":"JetBrains Mono","l":"JetBrains Mono"},{"n":"Mono-forward terminal","h":"JetBrains Mono","b":"JetBrains Mono","l":"JetBrains Mono"},{"n":"Industrial utility","h":"Archivo","b":"JetBrains Mono","l":"JetBrains Mono"}],"zen":[{"n":"Default","h":"Newsreader","b":"Source Serif 4","l":"JetBrains Mono"},{"n":"Editorial classic","h":"EB Garamond","b":"Source Serif 4","l":"JetBrains Mono"},{"n":"Humanist utility","h":"Newsreader","b":"Inter","l":"JetBrains Mono"},{"n":"Mono-forward contrast","h":"Newsreader","b":"JetBrains Mono","l":"JetBrains Mono"}],"brutal":[{"n":"Default","h":"Archivo","b":"JetBrains Mono","l":"JetBrains Mono"},{"n":"Display-max (Anton)","h":"Anton","b":"JetBrains Mono","l":"JetBrains Mono"},{"n":"Techno-brutal (Chakra Petch)","h":"Chakra Petch","b":"Chakra Petch","l":"JetBrains Mono"},{"n":"Stark-grotesque (Archivo)","h":"Archivo","b":"Inter","l":"Inter"}],"clean":[{"n":"Default","h":"Inter","b":"Inter","l":"JetBrains Mono"},{"n":"Friendly modern","h":"Plus Jakarta Sans","b":"Inter","l":"JetBrains Mono"},{"n":"Utility neutral","h":"Archivo","b":"Inter","l":"JetBrains Mono"},{"n":"Mono-forward","h":"Chakra Petch","b":"Inter","l":"JetBrains Mono"}],"prestige":[{"n":"Default","h":"Newsreader","b":"Source Serif 4","l":"Source Serif 4"},{"n":"Editorial classic","h":"EB Garamond","b":"EB Garamond","l":"EB Garamond"},{"n":"Mono-forward contrast","h":"Newsreader","b":"JetBrains Mono","l":"JetBrains Mono"},{"n":"Quiet money (neutral)","h":"EB Garamond","b":"Inter","l":"Inter"}],"counsel":[{"n":"Default","h":"Newsreader","b":"Source Serif 4","l":"JetBrains Mono"},{"n":"Editorial classic","h":"EB Garamond","b":"Source Serif 4","l":"JetBrains Mono"},{"n":"Neutral / utility","h":"Newsreader","b":"Inter","l":"JetBrains Mono"},{"n":"Mono-forward (data room)","h":"EB Garamond","b":"Source Serif 4","l":"JetBrains Mono"}],"grove":[{"n":"Default (Newsreader / Source Serif)","h":"Newsreader","b":"Source Serif 4","l":"JetBrains Mono"},{"n":"Apothecary (EB Garamond)","h":"EB Garamond","b":"Source Serif 4","l":"JetBrains Mono"},{"n":"Soft sans (Newsreader)","h":"Newsreader","b":"Plus Jakarta Sans","l":"JetBrains Mono"},{"n":"Quiet utility (Archivo)","h":"Archivo","b":"Inter","l":"JetBrains Mono"}],"cinematic":[{"n":"Default","h":"Inter","b":"Inter","l":"JetBrains Mono"},{"n":"Warm neutral","h":"Plus Jakarta Sans","b":"Plus Jakarta Sans","l":"JetBrains Mono"},{"n":"Architectural","h":"Archivo","b":"Inter","l":"JetBrains Mono"},{"n":"HUD / cyber","h":"Chakra Petch","b":"Inter","l":"JetBrains Mono"}],"terminal":[{"n":"Default","h":"JetBrains Mono","b":"Inter","l":"JetBrains Mono"},{"n":"HUD / expressive","h":"Chakra Petch","b":"Inter","l":"JetBrains Mono"},{"n":"Utility / industrial","h":"JetBrains Mono","b":"Archivo","l":"JetBrains Mono"},{"n":"Mono-forward","h":"JetBrains Mono","b":"JetBrains Mono","l":"JetBrains Mono"}],"soft":[{"n":"Default","h":"Plus Jakarta Sans","b":"Inter","l":"JetBrains Mono"},{"n":"Rounded (single-family)","h":"Plus Jakarta Sans","b":"Plus Jakarta Sans","l":"JetBrains Mono"},{"n":"Neutral utility","h":"Inter","b":"Inter","l":"JetBrains Mono"},{"n":"Soft contrast","h":"Archivo","b":"Inter","l":"JetBrains Mono"}],"academic":[{"n":"Default","h":"EB Garamond","b":"EB Garamond","l":"EB Garamond"},{"n":"Journal masthead","h":"EB Garamond","b":"Source Serif 4","l":"JetBrains Mono"},{"n":"Reading-first","h":"Newsreader","b":"Source Serif 4","l":"JetBrains Mono"},{"n":"Figures & data","h":"EB Garamond","b":"Source Serif 4","l":"JetBrains Mono"}],"fintech":[{"n":"Default","h":"Archivo","b":"Inter","l":"JetBrains Mono"},{"n":"Display-max (Anton)","h":"Anton","b":"Inter","l":"JetBrains Mono"},{"n":"Mono-forward (Chakra Petch)","h":"Chakra Petch","b":"Inter","l":"JetBrains Mono"},{"n":"Utility-neutral (Inter)","h":"Inter","b":"Inter","l":"JetBrains Mono"}],"maximal":[{"n":"Default (Anton / Garamond)","h":"Anton","b":"EB Garamond","l":"JetBrains Mono"},{"n":"Editorial maximal (Anton)","h":"Anton","b":"Newsreader","l":"JetBrains Mono"},{"n":"Engineered maximal (Anton)","h":"Anton","b":"Chakra Petch","l":"JetBrains Mono"},{"n":"Mono-forward maximal (Archivo)","h":"Archivo","b":"EB Garamond","l":"JetBrains Mono"}],"basic":[{"n":"Default (system sans)","h":"system-ui","b":"system-ui","l":"system-ui"},{"n":"Friendly modern","h":"Plus Jakarta Sans","b":"Inter","l":"Inter"},{"n":"Neutral utility (Inter)","h":"Inter","b":"Inter","l":"Inter"},{"n":"Grotesk-forward (Archivo)","h":"Archivo","b":"Inter","l":"Inter"}],"constructivist":[{"n":"Default (Anton / Archivo)","h":"Anton","b":"Archivo","l":"Archivo"},{"n":"All-grotesk (Archivo)","h":"Archivo","b":"Archivo","l":"JetBrains Mono"},{"n":"Techno (Chakra Petch)","h":"Anton","b":"Chakra Petch","l":"JetBrains Mono"},{"n":"Editorial contrast (EB Garamond)","h":"Anton","b":"EB Garamond","l":"JetBrains Mono"}]};
   var SERIF=["EB Garamond","Newsreader","Source Serif 4"], MONO=["JetBrains Mono"];
   function fb(f){ return MONO.indexOf(f)>=0?'monospace':(SERIF.indexOf(f)>=0?'serif':'sans-serif'); }
   function stack(f){ return "'"+f+"', "+fb(f); }
@@ -3837,7 +3936,7 @@ html[data-profile="basic"] .candor b { color:var(--accent); }
 <script>
 (function(){
   var root=document.documentElement;
-  var DEF={editorial:'space',swiss:'silhouette',glitch:'silhouette',zen:'space',brutal:'silhouette',clean:'space',prestige:'silhouette',counsel:'space',grove:'space',cinematic:'silhouette',terminal:'space',soft:'space',academic:'space',fintech:'silhouette',maximal:'silhouette',basic:'space'};
+  var DEF={editorial:'space',swiss:'silhouette',glitch:'silhouette',zen:'space',brutal:'silhouette',clean:'space',prestige:'silhouette',counsel:'space',grove:'space',cinematic:'silhouette',terminal:'space',soft:'space',academic:'space',fintech:'silhouette',maximal:'silhouette',basic:'space',constructivist:'silhouette'};
   var userPicked=false;
   var foot=document.getElementById('dzFoot');
   if(foot) foot.addEventListener('click',function(e){ if(e.target.closest('.dz-pack')) userPicked=true; });
