@@ -206,6 +206,10 @@
   /* live canvas sits over the static image (which is the no-JS / reduced-motion fallback) */
   .hero-canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
   html.boring .hero-canvas { display: none; }
+  /* boring strips the decorative hero plate entirely so the plain text hero
+     stands on its own, full width, the way a document would. */
+  html.boring .hero .image { display: none; }
+  html.boring .hero .wrap { grid-template-columns: 1fr; }
   .hero .wm-lg {
     font-family: var(--mono); font-weight: 500; font-size: calc(clamp(30px, 4.4vw, 44px) * var(--type-scale, 1));
     letter-spacing: 0.02em; color: var(--ink); display: inline-block; margin-bottom: 6px;
