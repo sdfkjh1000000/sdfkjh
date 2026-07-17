@@ -1,0 +1,429 @@
+<!doctype html>
+<!--
+                                        ███████╗██████╗ ███████╗██╗  ██╗     ██╗██╗  ██╗
+                                        ██╔════╝██╔══██╗██╔════╝██║ ██╔╝     ██║██║  ██║
+                                        ███████╗██║  ██║█████╗  █████╔╝      ██║███████║
+                                        ╚════██║██║  ██║██╔══╝  ██╔═██╗ ██   ██║██╔══██║
+                                        ███████║██████╔╝██║     ██║  ██╗╚█████╔╝██║  ██║
+                                        ╚══════╝╚═════╝ ╚═╝     ╚═╝  ╚═╝ ╚════╝ ╚═╝  ╚═╝
+
+                                                  Designed & built by sdfkjh.com
+-->
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>type specimen · a design study · sdfkjh</title>
+<meta name="description" content="Internal design study: a type specimen of the site's own stack. The five font files sdfkjh.com actually serves, set as a foundry broadside: full-bleed ramp, a live variable-weight axis, pangrams, character grids, and the bill in bytes."/>
+<meta name="robots" content="noindex, nofollow"/>
+<meta name="color-scheme" content="light"/>
+<meta name="theme-color" content="#fbfaf5"/>
+
+<link rel="icon" href="/favicon.svg" type="image/svg+xml"/>
+
+<style>
+  @font-face { font-family:'Newsreader'; font-style:normal; font-weight:500; font-display:swap; src:url('/assets/fonts/newsreader-500.woff2') format('woff2'); }
+  @font-face { font-family:'Newsreader'; font-style:italic; font-weight:500; font-display:swap; src:url('/assets/fonts/newsreader-500-italic.woff2') format('woff2'); }
+  @font-face { font-family:'Source Serif 4'; font-style:normal; font-weight:400; font-display:swap; src:url('/assets/fonts/source-serif-4-400.woff2') format('woff2'); }
+  @font-face { font-family:'Source Serif 4'; font-style:italic; font-weight:400; font-display:swap; src:url('/assets/fonts/source-serif-4-400-italic.woff2') format('woff2'); }
+  @font-face { font-family:'JetBrains Mono'; font-style:normal; font-weight:400 700; font-display:swap; src:url('/assets/fonts/jetbrains-mono.woff2') format('woff2'); }
+
+  :root {
+    --paper:#fbfaf5; --ink:#171511; --ink-soft:#4a463c; --ink-mute:#56524a;
+    --amber:#ff7a1a; --amber-text:#b8551a; --line:#e2ddcf;
+    --serif:"Newsreader",Georgia,serif; --body:"Source Serif 4",Georgia,serif; --mono:"JetBrains Mono","Consolas",monospace;
+  }
+  body.neg {
+    --paper:#171511; --ink:#fbfaf5; --ink-soft:#c9c4b6; --ink-mute:#a6a193;
+    --amber-text:#ff7a1a; --line:#3a362d;
+  }
+  *,*::before,*::after { box-sizing:border-box; }
+  html,body { margin:0; padding:0; }
+  body { background:var(--paper); color:var(--ink); font-family:var(--body); font-size:17px; line-height:1.7; }
+  a { color:var(--ink); text-decoration:underline; text-underline-offset:2px; }
+  a:hover { color:var(--amber-text); }
+
+  .wrap { max-width:1100px; margin:0 auto; padding:0 clamp(20px,4vw,52px); }
+
+  /* --- chrome (own minimal, not the site bracket chrome) --- */
+  header { display:flex; justify-content:space-between; align-items:center; gap:16px;
+    max-width:1100px; margin:0 auto; padding:20px clamp(20px,4vw,52px); }
+  header .wm { font-family:var(--mono); font-weight:700; font-size:15px; letter-spacing:.04em; color:var(--ink); text-decoration:none; }
+  header .tag { font-family:var(--mono); font-size:11px; letter-spacing:.1em; text-transform:uppercase; color:var(--ink-mute);
+    border:1px solid var(--line); border-radius:2px; padding:3px 9px; }
+
+  /* --- intro framing --- */
+  .intro { padding:clamp(28px,5vw,52px) 0 clamp(24px,4vw,40px); }
+  .intro .eyebrow { font-family:var(--mono); font-size:12px; font-weight:700; letter-spacing:.2em; text-transform:uppercase; color:var(--ink-mute); margin:0 0 12px; }
+  .intro h1 { font-family:var(--serif); font-weight:500; font-size:clamp(38px,6vw,64px); line-height:1.02; letter-spacing:-.02em; margin:0 0 18px; }
+  .intro h1 em { font-style:italic; color:var(--amber-text); }
+  .intro p { font-size:18px; color:var(--ink-soft); max-width:62ch; margin:0 0 14px; }
+  .intro .note { font-family:var(--mono); font-size:12.5px; line-height:1.7; color:var(--ink-mute);
+    border-left:2px solid var(--amber); padding-left:12px; margin-top:22px; max-width:66ch; }
+
+  .controls { display:flex; flex-wrap:wrap; align-items:center; gap:6px 16px; margin:6px 0 0;
+    font-family:var(--mono); font-size:11.5px; color:var(--ink-soft);
+    max-width:1100px; margin-left:auto; margin-right:auto; padding:0 clamp(20px,4vw,52px) 14px; }
+  .controls .c-label { font-weight:700; font-size:10.5px; letter-spacing:.14em; text-transform:uppercase; color:var(--ink-mute); }
+  .controls label { cursor:pointer; user-select:none; display:inline-flex; align-items:center; gap:5px; }
+  .controls input { accent-color:var(--amber); margin:0; }
+
+  /* --- sheets: full-bleed specimen sections --- */
+  .sheet { border-top:2px solid var(--ink); padding:clamp(20px,3vw,34px) 0 clamp(28px,4vw,46px); }
+  .sheet-head { display:flex; justify-content:space-between; align-items:baseline; gap:16px; flex-wrap:wrap;
+    max-width:1100px; margin:0 auto 6px; padding:0 clamp(20px,4vw,52px); }
+  .sheet-head h2 { font-family:var(--mono); font-size:11.5px; font-weight:700; letter-spacing:.22em; text-transform:uppercase; color:var(--ink); margin:0; }
+  .sheet-head .m { font-family:var(--mono); font-size:11px; color:var(--ink-mute); }
+  .sheet-head .m b { color:var(--amber-text); font-weight:700; }
+
+  /* sheet 01: the wordmark, cropped full-bleed */
+  .giant { overflow:hidden; line-height:.78; padding:0; margin:0; }
+  .giant span { display:block; font-family:var(--serif); font-weight:500; font-size:clamp(110px,25.5vw,370px);
+    letter-spacing:-.035em; white-space:nowrap; text-align:center; color:var(--ink); }
+  .giant + .sheet-cap { margin-top:8px; }
+  .sheet-cap { font-family:var(--mono); font-size:11.5px; line-height:1.7; color:var(--ink-mute);
+    max-width:1100px; margin:0 auto; padding:0 clamp(20px,4vw,52px); }
+
+  /* sheet 02: the size ramp */
+  .ramp { max-width:1100px; margin:0 auto; padding:0 clamp(20px,4vw,52px); }
+  .ramp .r { display:flex; align-items:baseline; gap:18px; border-top:1px solid var(--line); padding:10px 0; }
+  .ramp .r:first-child { border-top:0; }
+  .ramp .w { font-family:var(--serif); font-weight:500; line-height:1; letter-spacing:-.02em; white-space:nowrap; }
+  .ramp .l { font-family:var(--mono); font-size:10.5px; color:var(--ink-mute); margin-left:auto; text-align:right; flex:none; }
+  .ramp .l b { color:var(--amber-text); }
+
+  /* sheet 03: the weight axis */
+  .axis { max-width:1100px; margin:0 auto; padding:0 clamp(20px,4vw,52px); }
+  .axis .big { font-family:var(--mono); font-size:clamp(30px,6.4vw,84px); line-height:1.08; letter-spacing:-.01em;
+    font-weight:400; margin:6px 0 14px; overflow-wrap:anywhere; }
+  .axis .slider-row { display:flex; align-items:center; gap:14px; font-family:var(--mono); font-size:11.5px; color:var(--ink-soft); max-width:560px; }
+  .axis input[type=range] { flex:1; accent-color:var(--amber); }
+  .axis .wght { font-weight:700; color:var(--amber-text); min-width:9ch; }
+  .axis .steps { display:flex; flex-wrap:wrap; gap:6px 26px; margin:20px 0 0; font-family:var(--mono); font-size:clamp(17px,2.2vw,24px); }
+  .axis .steps span i { display:block; font-style:normal; font-size:10px; color:var(--ink-mute); margin-top:2px; }
+
+  /* sheet 04: the three voices */
+  .voices { max-width:1100px; margin:0 auto; padding:0 clamp(20px,4vw,52px);
+    display:grid; grid-template-columns:repeat(3,1fr); gap:clamp(22px,3vw,44px); }
+  .voice h3 { font-family:var(--mono); font-size:11px; font-weight:700; letter-spacing:.18em; text-transform:uppercase; color:var(--amber-text); margin:0 0 4px; }
+  .voice .fam { font-size:clamp(21px,2.2vw,26px); line-height:1.2; margin:0 0 2px; }
+  .voice.v-news .fam, .voice.v-news .pan { font-family:var(--serif); font-weight:500; }
+  .voice.v-ss .fam, .voice.v-ss .pan { font-family:var(--body); }
+  .voice.v-jbm .fam, .voice.v-jbm .pan { font-family:var(--mono); }
+  .voice .role { font-family:var(--mono); font-size:11px; line-height:1.65; color:var(--ink-mute); margin:0 0 14px; }
+  .voice .pan { font-size:clamp(17px,1.9vw,22px); line-height:1.35; margin:0 0 6px; }
+  .voice .pan.it { font-style:italic; color:var(--ink-soft); }
+  .voice .grid { font-size:14px; line-height:1.9; letter-spacing:.06em; color:var(--ink); overflow-wrap:anywhere; margin:10px 0 0;
+    border-top:1px solid var(--line); padding-top:10px; }
+  .voice.v-news .grid { font-family:var(--serif); font-weight:500; }
+  .voice.v-ss .grid { font-family:var(--body); }
+  .voice.v-jbm .grid { font-family:var(--mono); }
+  .voice .use { font-family:var(--mono); font-size:10.5px; line-height:1.7; color:var(--ink-mute); margin:10px 0 0; }
+
+  /* sheet 05: the bill */
+  .bill { max-width:1100px; margin:0 auto; padding:0 clamp(20px,4vw,52px); }
+  .bill table { border-collapse:collapse; width:100%; max-width:640px; font-family:var(--mono); font-size:12px; }
+  .bill td, .bill th { text-align:left; padding:7px 18px 7px 0; border-top:1px solid var(--line); font-weight:400; color:var(--ink-soft); }
+  .bill th { font-size:10px; font-weight:700; letter-spacing:.16em; text-transform:uppercase; color:var(--ink-mute); border-top:0; }
+  .bill td.n { text-align:right; font-variant-numeric:tabular-nums; color:var(--ink); }
+  .bill tr.tot td { border-top:2px solid var(--ink); color:var(--ink); font-weight:700; }
+  .bill tr.tot td.n { color:var(--amber-text); }
+  .bill .note-b { font-family:var(--mono); font-size:11.5px; line-height:1.7; color:var(--ink-mute); margin:14px 0 0; max-width:66ch; }
+
+  /* --- the source --- */
+  .source { border-top:1px solid var(--line); margin-top:clamp(40px,6vw,64px); padding-top:clamp(36px,5vw,52px); }
+  .source h2 { font-family:var(--serif); font-weight:500; font-size:clamp(28px,4vw,40px); line-height:1.05; margin:0 0 8px; }
+  .source h2 em { font-style:italic; color:var(--amber-text); }
+  .source .sub { font-size:17px; color:var(--ink-soft); max-width:64ch; margin:0 0 28px; }
+  .src-row { display:grid; grid-template-columns:minmax(220px,340px) 1fr; gap:32px 44px; align-items:start; }
+  .sketch { position:relative; aspect-ratio:707/1000; background:#f7f4ec; border:1px solid var(--line); overflow:hidden; }
+  body.neg .sketch { background:#211e18; }
+  .sk-big { position:absolute; top:5%; left:8%; right:8%; height:26%; background:var(--ink-soft); }
+  .sk-r { position:absolute; left:8%; background:var(--ink-soft); }
+  .sk-r1 { top:37%; width:64%; height:8%; }
+  .sk-r2 { top:47%; width:48%; height:6%; }
+  .sk-r3 { top:55%; width:36%; height:4.5%; }
+  .sk-r4 { top:61.5%; width:27%; height:3.5%; }
+  .sk-grid { position:absolute; left:8%; right:8%; top:70%; }
+  .sk-grid i { display:block; height:3px; background:var(--line); margin-top:5px; }
+  .sk-grid i:nth-child(even) { width:88%; }
+  .sk-rule { position:absolute; left:8%; right:8%; top:67.5%; height:2px; background:#b3372b; }
+  .sk-folio { position:absolute; bottom:4%; right:8%; width:10px; height:3px; background:var(--ink-soft); }
+  .sketch-cap { font-family:var(--mono); font-size:11px; line-height:1.6; color:var(--ink-mute); margin:10px 0 0; }
+  .takeaway h3 { font-family:var(--mono); font-size:11.5px; font-weight:700; letter-spacing:.2em; text-transform:uppercase; color:var(--ink-mute); margin:0 0 10px; }
+  .takeaway ul { list-style:none; margin:0 0 26px; padding:0; font-size:15.5px; color:var(--ink-soft); }
+  .takeaway ul:last-child { margin-bottom:0; }
+  .takeaway li { position:relative; padding:6px 0 6px 18px; border-top:1px solid var(--line); }
+  .takeaway li:first-child { border-top:0; }
+  .takeaway li::before { content:""; position:absolute; left:0; top:15px; width:8px; height:2px; background:var(--amber); }
+
+  /* --- principles --- */
+  .principles { border-top:1px solid var(--line); margin-top:clamp(40px,6vw,64px); padding-top:clamp(36px,5vw,52px); }
+  .principles h2 { font-family:var(--serif); font-weight:500; font-size:clamp(28px,4vw,40px); line-height:1.05; margin:0 0 8px; }
+  .principles h2 em { font-style:italic; color:var(--amber-text); }
+  .principles ol { list-style:none; counter-reset:p; margin:0; padding:0;
+    display:grid; grid-template-columns:1fr 1fr; gap:22px 40px; }
+  .principles li { counter-increment:p; position:relative; padding-left:44px; }
+  .principles li::before { content:counter(p,decimal-leading-zero); position:absolute; left:0; top:1px;
+    font-family:var(--mono); font-weight:700; font-size:15px; color:var(--amber-text); }
+  .principles li b { font-family:var(--body); font-weight:700; font-size:15.5px; color:var(--ink); margin-right:.4em; }
+  .principles li span { font-size:15.5px; color:var(--ink-soft); line-height:1.55; }
+  .principles .use { font-family:var(--mono); font-size:12.5px; line-height:1.7; color:var(--ink-mute);
+    border-left:2px solid var(--amber); padding-left:12px; margin-top:32px; max-width:70ch; }
+
+  code { font-family:var(--mono); font-size:.9em; background:rgba(23,21,17,.05); padding:1px 4px; border-radius:2px; }
+  body.neg code { background:rgba(251,250,245,.08); }
+
+  footer { border-top:1px solid var(--line); margin-top:clamp(44px,7vw,72px);
+    font-family:var(--mono); font-size:12px; color:var(--ink-mute);
+    max-width:1100px; margin-left:auto; margin-right:auto; padding:26px clamp(20px,4vw,52px) 40px; }
+
+  @media (prefers-reduced-motion: reduce) {
+    *,*::before,*::after { transition:none !important; }
+  }
+
+  @media (max-width:760px) {
+    .voices { grid-template-columns:1fr; }
+    .src-row { grid-template-columns:1fr; }
+    .sketch { max-width:280px; }
+    .principles ol { grid-template-columns:1fr; }
+    .ramp .l { display:none; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <a class="wm" href="/">sdfkjh</a>
+  <span class="tag">internal · type specimen study</span>
+</header>
+
+<main>
+  <div class="wrap intro">
+    <p class="eyebrow">sdfkjh · design study</p>
+    <h1>The type <em>specimen</em></h1>
+    <p>The letters as the subject. Not a survey of nice fonts: a foundry-style specimen of the stack this site actually serves, all five files of it, with the bill in bytes at the bottom. If the type carries the whole identity, it should be able to stand inspection at every size it works at.</p>
+    <p class="note">Study page. Noindex, unlinked. After the foundry specimen broadside. Every glyph on this page is set in a file served from this domain.</p>
+  </div>
+
+  <div class="controls" role="group" aria-label="Specimen controls, visual only">
+    <span class="c-label">sheet</span>
+    <label><input type="radio" name="pol" value="pos" checked/> positive</label>
+    <label><input type="radio" name="pol" value="neg"/> negative</label>
+  </div>
+
+  <section class="sheet">
+    <div class="sheet-head">
+      <h2>01 · the wordmark</h2>
+      <p class="m">Newsreader 500 · rendering at <b id="giant-px">·</b> right now</p>
+    </div>
+    <div class="giant" role="img" aria-label="The sdfkjh wordmark set at display size"><span id="giant-w" aria-hidden="true">sdfkjh</span></div>
+    <p class="sheet-cap">Six letters off the home row, set as large as the window allows. A wordmark that is only ever seen at 15px is an untested claim; this is the test. The size in the label above is measured from the render, not typed in.</p>
+  </section>
+
+  <section class="sheet">
+    <div class="sheet-head">
+      <h2>02 · the ramp</h2>
+      <p class="m">Newsreader 500 · one word, eight sizes · labels measured live</p>
+    </div>
+    <div class="ramp" id="ramp">
+      <div class="r"><span class="w" style="font-size:min(95px,19.5vw)">homerow</span><span class="l"></span></div>
+      <div class="r"><span class="w" style="font-size:min(76px,15.6vw)">homerow</span><span class="l"></span></div>
+      <div class="r"><span class="w" style="font-size:min(61px,12.5vw)">homerow</span><span class="l"></span></div>
+      <div class="r"><span class="w" style="font-size:min(49px,10vw)">homerow</span><span class="l"></span></div>
+      <div class="r"><span class="w" style="font-size:39px">homerow</span><span class="l"></span></div>
+      <div class="r"><span class="w" style="font-size:31px">homerow</span><span class="l"></span></div>
+      <div class="r"><span class="w" style="font-size:25px">homerow</span><span class="l"></span></div>
+      <div class="r"><span class="w" style="font-size:20px">homerow</span><span class="l"></span></div>
+    </div>
+    <p class="sheet-cap">A 1.25 modular scale, 20px up to 95px where the window allows; narrow screens shrink the top steps to fit, and the labels, where shown, measure the render rather than restate the scale. The convention is the foundry's: the same word repeated down the sheet, so what changes is only the size, and what the size changes is everything: at 95px Newsreader is all contrast and tight joints; at 20px it is quietly getting on with a sentence.</p>
+  </section>
+
+  <section class="sheet">
+    <div class="sheet-head">
+      <h2>03 · the weight axis</h2>
+      <p class="m">JetBrains Mono · variable, 400 to 700, one file</p>
+    </div>
+    <div class="axis">
+      <p class="big" id="axis-sample">asdf &middot; kjh</p>
+      <div class="slider-row">
+        <span>400</span>
+        <input type="range" id="axis-w" min="400" max="700" step="1" value="400" aria-label="JetBrains Mono weight, 400 to 700"/>
+        <span>700</span>
+        <span class="wght" id="axis-out">wght 400</span>
+      </div>
+      <div class="steps" aria-hidden="true">
+        <span style="font-weight:400">regular<i>400</i></span>
+        <span style="font-weight:475">&middot;<i>475</i></span>
+        <span style="font-weight:550">medium<i>550</i></span>
+        <span style="font-weight:625">&middot;<i>625</i></span>
+        <span style="font-weight:700">bold<i>700</i></span>
+      </div>
+      <p class="sheet-cap" style="padding:14px 0 0">The working face is the only variable font in the stack: one 31&nbsp;KB file carries the whole 400-to-700 range. Drag the slider; every weight between the labelled stops is real, drawn from the same axis, not a synthetic in-between.</p>
+    </div>
+  </section>
+
+  <section class="sheet">
+    <div class="sheet-head">
+      <h2>04 · the three voices</h2>
+      <p class="m">what each face does on this site</p>
+    </div>
+    <div class="voices">
+      <div class="voice v-news">
+        <h3>display</h3>
+        <p class="fam">Newsreader</p>
+        <p class="role">500 + italic &middot; two files &middot; the voice that announces</p>
+        <p class="pan">Sphinx of black quartz, judge my vow.</p>
+        <p class="pan it">Sphinx of black quartz, judge my vow.</p>
+        <div class="grid">ABCDEFGHIJKLM NOPQRSTUVWXYZ abcdefghijklm nopqrstuvwxyz 0123456789 .,;:!?&quot;'()[]&middot;</div>
+        <p class="use">in use: the hero, every headline, the footer masthead, the wordmark above. The italic carries the one deliberate emphasis on the home page.</p>
+      </div>
+      <div class="voice v-ss">
+        <h3>text</h3>
+        <p class="fam">Source Serif 4</p>
+        <p class="role">400 + italic &middot; two files &middot; the voice that explains</p>
+        <p class="pan">Pack my box with five dozen liquor jugs.</p>
+        <p class="pan it">Pack my box with five dozen liquor jugs.</p>
+        <div class="grid">ABCDEFGHIJKLM NOPQRSTUVWXYZ abcdefghijklm nopqrstuvwxyz 0123456789 .,;:!?&quot;'()[]&middot;</div>
+        <p class="use">in use: running text at 17px, ledes, the studies' body copy. It reads this paragraph-shaped role all over the site and never asks for attention.</p>
+      </div>
+      <div class="voice v-jbm">
+        <h3>working</h3>
+        <p class="fam">JetBrains Mono</p>
+        <p class="role">variable 400&ndash;700 &middot; one file &middot; the voice that operates</p>
+        <p class="pan">How vexingly quick daft zebras jump!</p>
+        <p class="pan" style="font-weight:700">How vexingly quick daft zebras jump!</p>
+        <div class="grid">ABCDEFGHIJKLM NOPQRSTUVWXYZ abcdefghijklm nopqrstuvwxyz 0123456789 .,;:!?&quot;'()[]&middot;</div>
+        <p class="use">in use: labels, eyebrows, folios, the console strip, the REPL, code, and every measured number on this page, 10px to 13px, tabular where it counts.</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="sheet">
+    <div class="sheet-head">
+      <h2>05 · the bill</h2>
+      <p class="m">five files &middot; <b id="bill-state">sizes measured 2026-07-16</b></p>
+    </div>
+    <div class="bill">
+      <table>
+        <thead><tr><th>file</th><th>role</th><th style="text-align:right">bytes</th></tr></thead>
+        <tbody id="bill-rows">
+          <tr><td>newsreader-500.woff2</td><td>display</td><td class="n" data-f="/assets/fonts/newsreader-500.woff2">60,724</td></tr>
+          <tr><td>newsreader-500-italic.woff2</td><td>display italic</td><td class="n" data-f="/assets/fonts/newsreader-500-italic.woff2">67,240</td></tr>
+          <tr><td>source-serif-4-400.woff2</td><td>text</td><td class="n" data-f="/assets/fonts/source-serif-4-400.woff2">48,596</td></tr>
+          <tr><td>source-serif-4-400-italic.woff2</td><td>text italic</td><td class="n" data-f="/assets/fonts/source-serif-4-400-italic.woff2">50,552</td></tr>
+          <tr><td>jetbrains-mono.woff2</td><td>working, variable</td><td class="n" data-f="/assets/fonts/jetbrains-mono.woff2">31,432</td></tr>
+          <tr class="tot"><td>the whole voice</td><td></td><td class="n" id="bill-total">258,544</td></tr>
+        </tbody>
+      </table>
+      <p class="note-b">About 253&nbsp;KB for the entire typographic identity, latin subsets, served from this domain with everything else. No foundry CDN, no third-party request, no tracking pixel riding along with the letters. The legal pages promise it; this table is the receipt, and when scripts are allowed the byte counts are re-fetched and re-counted by the page itself.</p>
+    </div>
+  </section>
+
+  <section class="wrap source">
+    <h2>The <em>source</em></h2>
+    <p class="sub">The foundry specimen broadside: the sheet a type founder printed to sell a face. One enormous showing to stop the eye, a ramp of sizes to prove the range, the full character set to show there is no weak glyph hiding, and the name of the house at the foot. It is advertising that can only work by being inspectable, which is why it fits here. The sketch is the composite convention, no one foundry's sheet.</p>
+    <div class="src-row">
+      <div>
+        <div class="sketch" role="img" aria-label="Structural sketch of a foundry specimen broadside: one huge dark showing across the top, a ramp of four progressively smaller text bars below it, a thin red rule, then rows of fine lines suggesting a character grid, and a small folio mark at the bottom right.">
+          <div class="sk-big"></div>
+          <div class="sk-r sk-r1"></div>
+          <div class="sk-r sk-r2"></div>
+          <div class="sk-r sk-r3"></div>
+          <div class="sk-r sk-r4"></div>
+          <div class="sk-rule"></div>
+          <div class="sk-grid" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div>
+          <div class="sk-folio"></div>
+        </div>
+        <p class="sketch-cap">Structure only: the broadside convention, centuries of it.</p>
+      </div>
+      <div class="takeaway">
+        <h3>taken</h3>
+        <ul>
+          <li>one huge showing as the stopping power</li>
+          <li>the size ramp as proof of range</li>
+          <li>the pangram and the full character grid</li>
+          <li>metrics printed beside the letters</li>
+          <li>the house name at the foot</li>
+        </ul>
+        <h3>invented</h3>
+        <ul>
+          <li>the subject is the site's own served stack, not a face for sale</li>
+          <li>a live variable-weight axis in place of a row of cast weights</li>
+          <li>labels that measure the render instead of restating the intent</li>
+          <li>the bill in bytes: cost as part of the specimen</li>
+          <li>a negative mode, because a broadside was one ink and this page is not</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="wrap principles">
+    <h2>Six <em>moves</em></h2>
+    <ol>
+      <li><b>One huge showing.</b><span>The face at a size that hides nothing. If it survives 300px it earns 15px.</span></li>
+      <li><b>The ramp.</b><span>Same word, stepped sizes. The variable is isolated, so the change is legible.</span></li>
+      <li><b>The pangram.</b><span>Every letter once, in a sentence, because alphabets are not read in order.</span></li>
+      <li><b>The grid.</b><span>The full set on display. No glyph gets to be a surprise later.</span></li>
+      <li><b>Metrics beside letters.</b><span>Sizes, weights, and bytes printed next to what they describe.</span></li>
+      <li><b>The stack is the subject.</b><span>Specimen what you ship. Anything else is an advertisement for someone else's work.</span></li>
+    </ol>
+    <p class="use">Honesty notes: Newsreader and Source Serif ship in one weight each, by design; the page-weight budget is part of the identity, and where the site sets them heavier the browser synthesizes, so this specimen shows only real, shipped forms. The weight slider is the one exception to the stack's single-weight rule because JetBrains Mono genuinely carries the axis in its file. The byte table is hard-set from a 2026-07-16 measurement and re-verified live by script; if a number ever disagrees with the network tab, believe the network tab and fix the page.</p>
+    <p class="use">Negative mode swaps paper and ink and promotes amber text to the bright graphic amber, the same rule the brand system uses on dark plates. It is a control, and it controls something real: every colour on the sheet, with contrast holding on both grounds.</p>
+  </section>
+</main>
+
+<footer>
+  type specimen study &middot; the stack, inspected &middot; <a href="/">back to sdfkjh.com</a>
+</footer>
+
+<script>
+(function () {
+  /* polarity */
+  document.querySelectorAll('.controls input[name="pol"]').forEach(function (r) {
+    r.addEventListener('change', function () {
+      document.body.classList.toggle('neg', r.value === 'neg');
+    });
+  });
+
+  /* labels measure the render, never restate the intent */
+  function measure() {
+    var g = document.getElementById('giant-w');
+    var out = document.getElementById('giant-px');
+    if (g && out) out.textContent = Math.round(parseFloat(getComputedStyle(g).fontSize)) + 'px';
+    document.querySelectorAll('#ramp .r').forEach(function (row) {
+      var w = row.querySelector('.w'), l = row.querySelector('.l');
+      l.innerHTML = '<b>' + Math.round(parseFloat(getComputedStyle(w).fontSize)) + 'px</b> / ' + Math.round(w.getBoundingClientRect().height) + 'px line';
+    });
+  }
+  measure();
+  var mt; window.addEventListener('resize', function () { clearTimeout(mt); mt = setTimeout(measure, 150); });
+
+  /* the axis is real: one file, every weight */
+  var slider = document.getElementById('axis-w');
+  var sample = document.getElementById('axis-sample');
+  var out = document.getElementById('axis-out');
+  slider.addEventListener('input', function () {
+    sample.style.fontWeight = slider.value;
+    out.textContent = 'wght ' + slider.value;
+  });
+
+  /* the bill re-counts itself */
+  var cells = document.querySelectorAll('.bill td[data-f]');
+  var jobs = [];
+  cells.forEach(function (td) {
+    jobs.push(fetch(td.dataset.f).then(function (r) { return r.arrayBuffer(); }).then(function (b) {
+      td.textContent = b.byteLength.toLocaleString('en-US');
+      return b.byteLength;
+    }));
+  });
+  Promise.all(jobs).then(function (sizes) {
+    var total = sizes.reduce(function (a, b) { return a + b; }, 0);
+    document.getElementById('bill-total').textContent = total.toLocaleString('en-US');
+    document.getElementById('bill-state').textContent = 'bytes re-counted by this page just now';
+  }).catch(function () { /* static 2026-07-16 numbers stand */ });
+})();
+</script>
+
+</body>
+</html>
