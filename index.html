@@ -258,8 +258,10 @@
   .ax-out { color: transparent; -webkit-text-stroke: 2.2px var(--amber); }
   .ax-hatch { color: transparent; -webkit-text-fill-color: transparent; background: repeating-linear-gradient(-52deg, var(--ink) 0 2px, transparent 2px 7px); -webkit-background-clip: text; background-clip: text; }
   .ax-fill { color: var(--amber); }
-  .ax-more { margin: 18px 0 0; font-family: var(--mono); font-size: 12px; }
-  .ax-more a { color: var(--amber-dim); }
+  .axial .study-list { list-style: none; margin: 22px 0 0; padding: 0; display: flex; flex-direction: column; gap: 12px; }
+  .axial .study-list li { margin: 0; }
+  .axial .study-list a { font-family: var(--mono); color: var(--amber-dim); font-size: calc(14px * var(--type-scale, 1)); }
+  .axial .study-list .study-desc { color: var(--ink-soft); font-size: calc(15px * var(--type-scale, 1)); margin-left: 6px; }
   @media (max-width: 640px) {
     .ax-plate { --ax: 14px; }
     .ax-vtext { display: none; }
@@ -1666,9 +1668,9 @@ Brand and web are two hands on one keyboard.
 
   <section class="axial">
     <div class="wrap">
-      <h2 class="eyebrow">axial grid &middot; one spine, everything keys off it</h2>
-      <p class="ax-h">The wordmark, exploded.</p>
-      <p class="ax-p">One axis, the content set to one side, the mark cut into five materials.</p>
+      <h2 class="eyebrow">the studies &middot; one technique per page</h2>
+      <p class="ax-h">Built openly, one lesson at a time.</p>
+      <p class="ax-p">Standalone pages, each proving one device from the printed tradition, live and measured. The plate is from the axial study.</p>
       <div class="ax-plate">
         <div class="ax-spine" aria-hidden="true"></div>
         <div class="ax-vtext" aria-hidden="true">built on the home keys</div>
@@ -1680,7 +1682,12 @@ Brand and web are two hands on one keyboard.
           <span class="ax-slab ax-fill" aria-hidden="true">sdfkjh</span>
         </div>
       </div>
-      <p class="ax-more"><a href="/axial">the full study &rsaquo;</a></p>
+      <ul class="study-list">
+        <li><a href="/axial">axial grid</a> <span class="study-desc">one spine, the wordmark exploded into five materials</span></li>
+        <li><a href="/swiss">swiss grid</a> <span class="study-desc">the International Typographic Style, the grid made visible</span></li>
+        <li><a href="/spread">editorial spread</a> <span class="study-desc">a magazine opening set live: drop cap, measured columns, footnotes</span></li>
+        <li><a href="/type">type specimen</a> <span class="study-desc">the site's own five-file stack inspected, the bill in bytes</span></li>
+      </ul>
     </div>
   </section>
 

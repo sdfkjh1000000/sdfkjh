@@ -32,6 +32,15 @@ The same hand and stack, pointed at three other problems:
 - [tanktalks](https://tanktalks.sdfkjh.com/): freshwater aquarium keeping, explained plainly.
 - [business internet search](https://businessinternetsearch.sdfkjh.com/): B2B connectivity, sourced without the runaround.
 
+## The studies
+
+Standalone design-technique pages: each proves one device from the printed tradition, live and measured. Noindex by choice; linked only from the home page.
+
+- [axial grid](https://sdfkjh.com/axial): one spine, the wordmark exploded into five materials.
+- [swiss grid](https://sdfkjh.com/swiss): the International Typographic Style, the grid made visible.
+- [editorial spread](https://sdfkjh.com/spread): a magazine opening set live: drop cap, measured columns, footnotes.
+- [type specimen](https://sdfkjh.com/type): the site's own five-file font stack inspected, with the bill in bytes.
+
 ## Design range
 
 One markup, seventeen complete design systems. Switch the whole look live, then tune color, type, and layout in the browser: [sdfkjh.com/range](https://sdfkjh.com/range).
