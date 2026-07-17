@@ -1,0 +1,349 @@
+<!doctype html>
+<!--
+                                        ███████╗██████╗ ███████╗██╗  ██╗     ██╗██╗  ██╗
+                                        ██╔════╝██╔══██╗██╔════╝██║ ██╔╝     ██║██║  ██║
+                                        ███████╗██║  ██║█████╗  █████╔╝      ██║███████║
+                                        ╚════██║██║  ██║██╔══╝  ██╔═██╗ ██   ██║██╔══██║
+                                        ███████║██████╔╝██║     ██║  ██╗╚█████╔╝██║  ██║
+                                        ╚══════╝╚═════╝ ╚═╝     ╚═╝  ╚═╝ ╚════╝ ╚═╝  ╚═╝
+
+                                                  Designed & built by sdfkjh.com
+-->
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>raw document · a design study · sdfkjh</title>
+<meta name="description" content="Internal design study: web brutalism. The HTML undisguised, structure showing through, mono and hard borders. A component you can strip to the browser's raw rendering, with its real source printed live from the page's own DOM."/>
+<meta name="robots" content="noindex, nofollow"/>
+<meta name="color-scheme" content="light"/>
+<meta name="theme-color" content="#eae7de"/>
+
+<link rel="icon" href="/favicon.svg" type="image/svg+xml"/>
+
+<style>
+  @font-face { font-family:'Newsreader'; font-style:normal; font-weight:500; font-display:swap; src:url('/assets/fonts/newsreader-500.woff2') format('woff2'); }
+  @font-face { font-family:'Source Serif 4'; font-style:normal; font-weight:400; font-display:swap; src:url('/assets/fonts/source-serif-4-400.woff2') format('woff2'); }
+  @font-face { font-family:'Source Serif 4'; font-style:italic; font-weight:400; font-display:swap; src:url('/assets/fonts/source-serif-4-400-italic.woff2') format('woff2'); }
+  @font-face { font-family:'JetBrains Mono'; font-style:normal; font-weight:400 700; font-display:swap; src:url('/assets/fonts/jetbrains-mono.woff2') format('woff2'); }
+
+  :root {
+    --paper:#eae7de; --slab:#e0dcd0; --ink:#131210; --ink-soft:#45413a; --ink-mute:#524d45;
+    --amber:#ff7a1a; --amber-text:#b8551a; --line:#000;
+    --serif:"Newsreader",Georgia,serif; --body:"Source Serif 4",Georgia,serif; --mono:"JetBrains Mono","Consolas",monospace;
+  }
+  *,*::before,*::after { box-sizing:border-box; }
+  html,body { margin:0; padding:0; }
+  body { background:var(--paper); color:var(--ink); font-family:var(--body); font-size:17px; line-height:1.65; }
+  a { color:var(--ink); text-decoration:underline; text-underline-offset:2px; }
+  a:hover { color:var(--amber-text); }
+
+  .wrap { max-width:1120px; margin:0 auto; padding:0 clamp(18px,4vw,44px); }
+  .mono { font-family:var(--mono); }
+
+  /* --- chrome (own minimal, not the site bracket chrome) --- */
+  header.top { display:flex; justify-content:space-between; align-items:center; gap:16px;
+    max-width:1120px; margin:0 auto; padding:16px clamp(18px,4vw,44px); border-bottom:2px solid var(--line); }
+  header.top .wm { font-family:var(--mono); font-weight:700; font-size:15px; letter-spacing:.04em; color:var(--ink); text-decoration:none; }
+  header.top .tag { font-family:var(--mono); font-size:11px; letter-spacing:.1em; text-transform:uppercase; color:var(--ink-mute);
+    border:1px solid var(--line); padding:3px 9px; }
+
+  /* --- intro framing --- */
+  .intro { padding:clamp(28px,5vw,52px) 0 clamp(20px,3vw,30px); }
+  .intro .eyebrow { font-family:var(--mono); font-size:12px; font-weight:700; letter-spacing:.2em; text-transform:uppercase; color:var(--ink-mute); margin:0 0 12px; }
+  .intro h1 { font-family:var(--mono); font-weight:700; font-size:clamp(38px,7vw,78px); line-height:.98; letter-spacing:-.03em; text-transform:uppercase; margin:0 0 18px; }
+  .intro h1 em { font-style:normal; color:var(--amber-text); }
+  .intro p { font-size:18px; color:var(--ink-soft); max-width:60ch; margin:0 0 14px; }
+  .intro .note { font-family:var(--mono); font-size:12.5px; line-height:1.7; color:var(--ink-mute);
+    border-left:3px solid var(--amber); padding-left:12px; margin-top:22px; max-width:66ch; }
+
+  /* --- the specimen (figure) --- */
+  .rig-h { font-family:var(--mono); font-weight:700; font-size:clamp(24px,3vw,32px); text-transform:uppercase; letter-spacing:-.01em; margin:0 0 14px; }
+  .rig-h em { font-style:normal; color:var(--amber-text); }
+  figure.rig { margin:0 auto clamp(14px,2vw,26px); max-width:1120px; padding:0 clamp(18px,4vw,44px); }
+  .controls { display:flex; flex-wrap:wrap; align-items:center; gap:8px 18px; margin:0 0 0; padding:12px 0;
+    border-top:2px solid var(--line); border-bottom:2px solid var(--line);
+    font-family:var(--mono); font-size:11.5px; color:var(--ink-soft); }
+  .controls .c-label { font-weight:700; font-size:10.5px; letter-spacing:.14em; text-transform:uppercase; color:var(--ink-mute); }
+  .controls label { cursor:pointer; user-select:none; display:inline-flex; align-items:center; gap:6px;
+    border:1px solid var(--line); padding:4px 9px; }
+  .controls input { accent-color:var(--amber); margin:0; }
+
+  .panes { display:grid; grid-template-columns:1fr 1fr; border:2px solid var(--line); border-top:0; }
+  .pane { padding:0; min-width:0; }
+  .pane + .pane { border-left:2px solid var(--line); }
+  .pane-h { font-family:var(--mono); font-size:10.5px; font-weight:700; letter-spacing:.16em; text-transform:uppercase;
+    color:var(--ink); padding:8px 14px; border-bottom:1px solid var(--line); background:var(--slab);
+    display:flex; justify-content:space-between; gap:10px; }
+  .pane-h b { color:var(--ink-mute); font-weight:700; }
+  .pane-body { padding:22px; }
+
+  /* the rendered component: hard brutalist card */
+  .spec-render { }
+  .card { border:2px solid var(--line); background:var(--paper); }
+  .card-h { border-bottom:2px solid var(--line); padding:12px 14px; }
+  .card-k { display:block; font-family:var(--mono); font-size:10px; font-weight:700; letter-spacing:.18em; text-transform:uppercase; color:var(--ink-mute); margin:0 0 4px; }
+  .card-t { font-family:var(--mono); font-weight:700; font-size:22px; letter-spacing:-.01em; text-transform:uppercase; margin:0; color:var(--ink); }
+  .card-rows { margin:0; padding:0; }
+  .card-rows .row { display:grid; grid-template-columns:8ch 1fr; gap:0; border-bottom:1px solid var(--line); }
+  .card-rows dt { font-family:var(--mono); font-size:11px; font-weight:700; letter-spacing:.08em; text-transform:uppercase; color:var(--ink-mute);
+    padding:9px 14px; border-right:1px solid var(--line); }
+  .card-rows dd { font-family:var(--mono); font-size:13px; color:var(--ink); margin:0; padding:9px 14px; }
+  .card-rows dd.amber { background:var(--amber); color:var(--ink); font-weight:700; }
+  .card-note { font-family:var(--body); font-size:14px; line-height:1.5; color:var(--ink-soft); margin:0; padding:12px 14px; border-bottom:2px solid var(--line); }
+  .card-link { display:block; font-family:var(--mono); font-size:11px; font-weight:700; letter-spacing:.08em; text-transform:uppercase;
+    color:var(--ink); padding:11px 14px; text-decoration:none; }
+  .card-link:hover { background:var(--amber); color:var(--ink); }
+
+  /* the source pane */
+  pre.src { margin:0; font-family:var(--mono); font-size:12px; line-height:1.55; color:var(--ink);
+    white-space:pre; overflow-x:auto; }
+  pre.src:focus-visible { outline:2px solid var(--amber); outline-offset:2px; }
+
+  /* raw mode: strip the study's CSS off the component, show the browser's own render */
+  .spec-render.raw .card :where(*) { all:revert; }
+  .spec-render.raw .card { all:revert; font-family:initial; }
+
+  /* structure overlay: the page wireframing itself */
+  .spec-render.struct .card,
+  .spec-render.struct .card * { outline:1px solid var(--amber); outline-offset:-1px; position:relative; }
+  .el-tag { position:absolute; top:0; left:0; transform:translateY(-100%);
+    font-family:var(--mono); font-size:9px; font-weight:700; line-height:1.2; letter-spacing:.04em;
+    background:var(--ink); color:var(--paper); padding:0 3px; pointer-events:none; z-index:5; white-space:nowrap; }
+
+  .why { font-family:var(--mono); font-size:12px; line-height:1.7; color:var(--ink-mute); margin:14px 0 0; max-width:78ch; }
+  figcaption { font-family:var(--mono); font-size:12px; line-height:1.7; color:var(--ink-mute);
+    max-width:1120px; margin:12px auto 0; padding:0; }
+
+  code { font-family:var(--mono); font-size:.9em; background:rgba(19,18,16,.06); padding:1px 4px; }
+
+  /* --- the source (design reference) --- */
+  .source { border-top:2px solid var(--line); margin-top:clamp(40px,6vw,64px); padding-top:clamp(34px,5vw,50px); }
+  .source h2 { font-family:var(--mono); font-weight:700; font-size:clamp(26px,4vw,38px); line-height:1.02; text-transform:uppercase; letter-spacing:-.02em; margin:0 0 8px; }
+  .source h2 em { font-style:normal; color:var(--amber-text); }
+  .source .sub { font-size:17px; color:var(--ink-soft); max-width:64ch; margin:0 0 28px; }
+  .src-row { display:grid; grid-template-columns:minmax(220px,320px) 1fr; gap:32px 44px; align-items:start; }
+  .sketch { position:relative; background:#fff; border:2px solid var(--line); padding:16px 18px; aspect-ratio:707/1000; overflow:hidden; }
+  .sk-h { font-family:"Times New Roman",Times,serif; font-weight:700; font-size:26px; color:#000; margin:6px 0 12px; }
+  .sk-p { font-family:"Times New Roman",Times,serif; font-size:13px; line-height:1.35; color:#000; margin:0 0 12px; }
+  .sk-a { font-family:"Times New Roman",Times,serif; font-size:13px; color:#00e; text-decoration:underline; display:block; margin:0 0 12px; }
+  .sk-ul { font-family:"Times New Roman",Times,serif; font-size:13px; color:#000; margin:0; padding-left:26px; }
+  .sk-ul li { margin:0 0 3px; }
+  .sketch-cap { font-family:var(--mono); font-size:11px; line-height:1.6; color:var(--ink-mute); margin:10px 0 0; }
+  .takeaway h3 { font-family:var(--mono); font-size:11.5px; font-weight:700; letter-spacing:.2em; text-transform:uppercase; color:var(--ink-mute); margin:0 0 10px; }
+  .takeaway ul { list-style:none; margin:0 0 26px; padding:0; font-size:15.5px; color:var(--ink-soft); }
+  .takeaway ul:last-child { margin-bottom:0; }
+  .takeaway li { position:relative; padding:6px 0 6px 18px; border-top:1px solid var(--line); }
+  .takeaway li:first-child { border-top:0; }
+  .takeaway li::before { content:""; position:absolute; left:0; top:14px; width:8px; height:2px; background:var(--amber); }
+
+  /* --- principles --- */
+  .principles { border-top:2px solid var(--line); margin-top:clamp(40px,6vw,64px); padding-top:clamp(34px,5vw,50px); }
+  .principles h2 { font-family:var(--mono); font-weight:700; font-size:clamp(26px,4vw,38px); line-height:1.02; text-transform:uppercase; letter-spacing:-.02em; margin:0 0 8px; }
+  .principles h2 em { font-style:normal; color:var(--amber-text); }
+  .principles ol { list-style:none; counter-reset:p; margin:22px 0 0; padding:0;
+    display:grid; grid-template-columns:1fr 1fr; gap:0; border:2px solid var(--line); }
+  .principles li { counter-increment:p; position:relative; padding:16px 18px 16px 46px; border-bottom:1px solid var(--line); }
+  .principles li:nth-child(odd) { border-right:1px solid var(--line); }
+  .principles li:nth-last-child(-n+2) { border-bottom:0; }
+  .principles li::before { content:counter(p,decimal-leading-zero); position:absolute; left:14px; top:16px;
+    font-family:var(--mono); font-weight:700; font-size:14px; color:var(--ink-mute); }
+  .principles li b { display:block; font-family:var(--mono); font-weight:700; font-size:13px; text-transform:uppercase; letter-spacing:.04em; color:var(--ink); margin-bottom:4px; }
+  .principles li span { font-size:15px; color:var(--ink-soft); line-height:1.5; }
+  .principles .use { font-family:var(--mono); font-size:12.5px; line-height:1.7; color:var(--ink-mute);
+    border-left:3px solid var(--amber); padding-left:12px; margin-top:30px; max-width:72ch; }
+
+  footer { border-top:2px solid var(--line); margin-top:clamp(40px,7vw,68px);
+    font-family:var(--mono); font-size:12px; color:var(--ink-mute);
+    max-width:1120px; margin-left:auto; margin-right:auto; padding:22px clamp(18px,4vw,44px) 40px; }
+
+  @media (prefers-reduced-motion: reduce) { *,*::before,*::after { transition:none !important; } }
+
+  @media (max-width:720px) {
+    .panes { grid-template-columns:1fr; }
+    .pane + .pane { border-left:0; border-top:2px solid var(--line); }
+    .src-row { grid-template-columns:1fr; }
+    .sketch { max-width:300px; }
+    .principles ol { grid-template-columns:1fr; }
+    .principles li:nth-child(odd) { border-right:0; }
+    .principles li:nth-last-child(2) { border-bottom:1px solid var(--line); }
+  }
+</style>
+</head>
+<body>
+
+<header class="top">
+  <a class="wm" href="/">sdfkjh</a>
+  <span class="tag">internal · brutalist study</span>
+</header>
+
+<main>
+  <div class="wrap intro">
+    <p class="eyebrow">sdfkjh · design study</p>
+    <h1>The raw <em>document</em></h1>
+    <p>Web brutalism: the HTML left undisguised, structure showing through instead of clad in ornament. Mono, hard borders, square corners, no shadow. On a site whose whole argument is verify by inspection, the raw document is not a style choice. It is the doctrine, drawn.</p>
+    <p class="note">Study page. Noindex; linked only from the home page. After web brutalism and the material honesty of beton brut: the unstyled document, the browser's own rendering, view-source treated as a surface.</p>
+  </div>
+
+  <div class="wrap"><h2 class="rig-h">The <em>component</em></h2></div>
+  <figure class="rig">
+    <div class="controls" role="group" aria-label="Specimen controls, visual only">
+      <span class="c-label">component</span>
+      <label><input type="checkbox" id="c-raw"/> raw source</label>
+      <label><input type="checkbox" id="c-struct"/> show structure</label>
+    </div>
+    <div class="panes">
+      <div class="pane">
+        <p class="pane-h"><span>rendered</span><b id="mode-tag">styled</b></p>
+        <div class="pane-body">
+          <div class="spec-render" id="render">
+            <article class="card">
+              <header class="card-h">
+                <span class="card-k">component</span>
+                <h3 class="card-t">spec plate</h3>
+              </header>
+              <dl class="card-rows">
+                <div class="row"><dt>status</dt><dd>operational</dd></div>
+                <div class="row"><dt>rev</dt><dd>2026.07</dd></div>
+                <div class="row"><dt>signal</dt><dd class="amber">amber, one</dd></div>
+              </dl>
+              <p class="card-note">A component with nothing to hide: labelled, bordered, and printed at right exactly as it is built.</p>
+              <a class="card-link" href="/">back to sdfkjh.com</a>
+            </article>
+          </div>
+        </div>
+      </div>
+      <div class="pane">
+        <p class="pane-h"><span>source</span><b>read from the live DOM</b></p>
+        <div class="pane-body">
+          <pre class="src" id="src" tabindex="0" aria-label="The rendered component's source, serialized from the page">loading source from the page&hellip;</pre>
+        </div>
+      </div>
+    </div>
+    <p class="why">Both panes are the same eleven elements. The left one is dressed by this page's stylesheet; tick <code>raw source</code> and that stylesheet lets go, dropping the component back to the browser's own default rendering, Times and blue links and all. The markup never changed. The right pane proves it: that source is serialized from the live node at load, not a copy kept by hand, so it cannot drift from what you see. <code>show structure</code> outlines every node and names it, the page wireframing itself.</p>
+    <figcaption>A single component shown three ways at once: rendered, reducible to its raw browser default, and printed as the real HTML behind it. The reveal is the point of the style: nothing here is hidden, because on this site nothing is meant to be.</figcaption>
+  </figure>
+
+  <section class="wrap source">
+    <h2>The <em>source</em></h2>
+    <p class="sub">Two sources, one name. Architectural brutalism left concrete raw, the structure and the material honest and on show, nothing plastered over. Web brutalism borrowed the word for the unstyled HTML document: black Times on white, blue underlined links, the browser's own margins, view-source as the whole truth of the page. The sketch is that raw document, the before every styled page starts from.</p>
+    <div class="src-row">
+      <div>
+        <div class="sketch" role="img" aria-label="Sketch of an unstyled HTML document: a large bold Times heading, two paragraphs of body text, a blue underlined link, and a default bulleted list, all in the browser's default black-on-white with default margins.">
+          <p class="sk-h">Document</p>
+          <p class="sk-p">A page with no stylesheet at all. The browser supplies the type, the sizes, the spacing, the link colour. This is the material every design is laid over.</p>
+          <span class="sk-a">an underlined blue link</span>
+          <ul class="sk-ul">
+            <li>default disc bullets</li>
+            <li>default indentation</li>
+            <li>nothing added</li>
+          </ul>
+        </div>
+        <p class="sketch-cap">The browser's own rendering. Tick <code>raw source</code> above to make the live component look like this.</p>
+      </div>
+      <div class="takeaway">
+        <h3>taken</h3>
+        <ul>
+          <li>material honesty: show the structure, do not clad it</li>
+          <li>the system-document voice, mono and labelled</li>
+          <li>hard edges, square corners, no shadow or gradient</li>
+          <li>view-source as a front surface, not a backstage</li>
+          <li>ornament removed; every mark reports something</li>
+        </ul>
+        <h3>invented</h3>
+        <ul>
+          <li>the raw material is this page's own component, surfaced live</li>
+          <li>amber as the one permitted signal in an ink-and-paper document</li>
+          <li>a <code>raw source</code> toggle that is the real browser default, not an imitation</li>
+          <li>a source pane serialized from the DOM, so it cannot lie</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="wrap principles">
+    <h2>Six <em>moves</em></h2>
+    <ol>
+      <li><b>Material honesty</b><span>Show the structure; do not clad it. The border is the border, the box is the box.</span></li>
+      <li><b>The system document</b><span>Mono, labels, a spec-sheet voice. The page reads like a record, because it is one.</span></li>
+      <li><b>Hard edges</b><span>Square corners, solid rules, no shadow and no gradient. Nothing soft to hide a seam.</span></li>
+      <li><b>One signal</b><span>Ink and paper, with amber as the single permitted alarm. Colour that means something.</span></li>
+      <li><b>The source is the design</b><span>View-source is not backstage; it is the front. What renders and what is written are one thing.</span></li>
+      <li><b>Nothing decorative</b><span>Every element earns its place by reporting. Remove anything that only dresses.</span></li>
+    </ol>
+    <p class="use">Honesty notes: <code>raw source</code> uses <code>all: revert</code>, which hands the component back to the browser's own stylesheet, the genuine default rendering rather than a styled impression of one. What it cannot revert is the markup, which is exactly the argument: same nodes, dressed or bare. The source pane is serialized from the live DOM once at load, so it is the real structure and cannot fall out of step with the render. The structure overlay's tag labels are injected after that capture and are decorative, hidden from assistive tech.</p>
+    <p class="use">Brutalism is a licence for hard, not for careless. Text still meets AA, focus states are kept and visible, and raw mode is a demonstration a visitor opts into, never the reading default. The style is stripped back; the accessibility is not.</p>
+  </section>
+</main>
+
+<footer>
+  brutalist study · the html, undisguised · <a href="/">back to sdfkjh.com</a>
+</footer>
+
+<script>
+(function () {
+  var render = document.getElementById('render');
+  var card = render.querySelector('.card');
+  var srcEl = document.getElementById('src');
+  var modeTag = document.getElementById('mode-tag');
+
+  /* serialize the real DOM node into indented HTML, captured once at load */
+  function serialize(node, depth) {
+    var pad = '  '.repeat(depth);
+    if (node.nodeType === 3) {
+      var t = node.textContent.replace(/\s+/g, ' ').trim();
+      return t ? pad + t + '\n' : '';
+    }
+    if (node.nodeType !== 1) return '';
+    var tag = node.tagName.toLowerCase();
+    var attrs = '';
+    for (var i = 0; i < node.attributes.length; i++) {
+      var a = node.attributes[i];
+      attrs += ' ' + a.name + (a.value ? '="' + a.value + '"' : '');
+    }
+    var open = '<' + tag + attrs + '>';
+    var close = '</' + tag + '>';
+    var kids = node.childNodes;
+    if (kids.length === 1 && kids[0].nodeType === 3) {
+      var tx = kids[0].textContent.replace(/\s+/g, ' ').trim();
+      return pad + open + tx + close + '\n';
+    }
+    var inner = '';
+    for (var j = 0; j < kids.length; j++) inner += serialize(kids[j], depth + 1);
+    if (!inner) return pad + open + close + '\n';
+    return pad + open + '\n' + inner + pad + close + '\n';
+  }
+
+  var SRC = serialize(card, 0).replace(/\n$/, '');
+  srcEl.textContent = SRC;
+
+  /* raw source: strip this page's CSS off the component */
+  document.getElementById('c-raw').addEventListener('change', function () {
+    render.classList.toggle('raw', this.checked);
+    modeTag.textContent = this.checked ? 'browser default' : 'styled';
+  });
+
+  /* show structure: outline every node and name it */
+  var tags = [];
+  document.getElementById('c-struct').addEventListener('change', function () {
+    render.classList.toggle('struct', this.checked);
+    if (this.checked) {
+      var els = [card].concat([].slice.call(card.querySelectorAll('*')));
+      els.forEach(function (el) {
+        var lab = document.createElement('span');
+        lab.className = 'el-tag';
+        lab.setAttribute('aria-hidden', 'true');
+        lab.textContent = el.tagName.toLowerCase();
+        el.appendChild(lab);
+        tags.push(lab);
+      });
+    } else {
+      tags.forEach(function (l) { l.remove(); });
+      tags = [];
+    }
+  });
+})();
+</script>
+
+</body>
+</html>
