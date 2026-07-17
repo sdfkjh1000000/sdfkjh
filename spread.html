@@ -1,0 +1,395 @@
+<!doctype html>
+<!--
+                                        ███████╗██████╗ ███████╗██╗  ██╗     ██╗██╗  ██╗
+                                        ██╔════╝██╔══██╗██╔════╝██║ ██╔╝     ██║██║  ██║
+                                        ███████╗██║  ██║█████╗  █████╔╝      ██║███████║
+                                        ╚════██║██║  ██║██╔══╝  ██╔═██╗ ██   ██║██╔══██║
+                                        ███████║██████╔╝██║     ██║  ██╗╚█████╔╝██║  ██║
+                                        ╚══════╝╚═════╝ ╚═╝     ╚═╝  ╚═╝ ╚════╝ ╚═╝  ╚═╝
+
+                                                  Designed & built by sdfkjh.com
+-->
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>editorial spread · a design study · sdfkjh</title>
+<meta name="description" content="Internal design study: the editorial spread. A two-page magazine opening built from live text: a drop cap, measured justified columns on a baseline, a spanning pull-quote, footnotes, running heads and folios."/>
+<meta name="robots" content="noindex, nofollow"/>
+<meta name="color-scheme" content="light"/>
+<meta name="theme-color" content="#faf7ef"/>
+
+<link rel="icon" href="/favicon.svg" type="image/svg+xml"/>
+
+<style>
+  @font-face { font-family:'Newsreader'; font-style:normal; font-weight:500; font-display:swap; src:url('/assets/fonts/newsreader-500.woff2') format('woff2'); }
+  @font-face { font-family:'Newsreader'; font-style:italic; font-weight:500; font-display:swap; src:url('/assets/fonts/newsreader-500-italic.woff2') format('woff2'); }
+  @font-face { font-family:'Source Serif 4'; font-style:normal; font-weight:400; font-display:swap; src:url('/assets/fonts/source-serif-4-400.woff2') format('woff2'); }
+  @font-face { font-family:'Source Serif 4'; font-style:italic; font-weight:400; font-display:swap; src:url('/assets/fonts/source-serif-4-400-italic.woff2') format('woff2'); }
+  @font-face { font-family:'JetBrains Mono'; font-style:normal; font-weight:400 700; font-display:swap; src:url('/assets/fonts/jetbrains-mono.woff2') format('woff2'); }
+
+  :root {
+    --mat:#d6d0c2; --paper:#faf7ef; --ink:#1a1712; --ink-soft:#4b463c; --ink-mute:#575349;
+    --amber:#ff7a1a; --amber-text:#b8551a; --line:#ddd6c6;
+    --serif:"Newsreader",Georgia,serif; --body:"Source Serif 4",Georgia,serif; --mono:"JetBrains Mono","Consolas",monospace;
+    --bl:22px;
+  }
+  *,*::before,*::after { box-sizing:border-box; }
+  html,body { margin:0; padding:0; }
+  body { background:var(--mat); color:var(--ink); font-family:var(--body); font-size:17px; line-height:1.7; }
+  a { color:var(--ink); text-decoration:underline; text-underline-offset:2px; }
+  a:hover { color:var(--amber-text); }
+
+  .wrap { max-width:1000px; margin:0 auto; padding:0 clamp(20px,4vw,52px); }
+
+  /* --- chrome (own minimal, not the site bracket chrome) --- */
+  header { display:flex; justify-content:space-between; align-items:center; gap:16px;
+    max-width:1000px; margin:0 auto; padding:20px clamp(20px,4vw,52px); }
+  header .wm { font-family:var(--mono); font-weight:700; font-size:15px; letter-spacing:.04em; color:var(--ink); text-decoration:none; }
+  header .tag { font-family:var(--mono); font-size:11px; letter-spacing:.1em; text-transform:uppercase; color:var(--ink-mute);
+    border:1px solid var(--line); border-radius:2px; padding:3px 9px; }
+
+  /* --- intro framing --- */
+  .intro { padding:clamp(28px,5vw,52px) 0 clamp(24px,4vw,40px); }
+  .intro .eyebrow { font-family:var(--mono); font-size:12px; font-weight:700; letter-spacing:.2em; text-transform:uppercase; color:var(--ink-mute); margin:0 0 12px; }
+  .intro h1 { font-family:var(--serif); font-weight:500; font-size:clamp(38px,6vw,64px); line-height:1.02; letter-spacing:-.02em; margin:0 0 18px; }
+  .intro h1 em { font-style:italic; color:var(--amber-text); }
+  .intro p { font-size:18px; color:var(--ink-soft); max-width:60ch; margin:0 0 14px; }
+  .intro .note { font-family:var(--mono); font-size:12.5px; line-height:1.7; color:var(--ink-mute);
+    border-left:2px solid var(--amber); padding-left:12px; margin-top:22px; max-width:66ch; }
+
+  /* --- the spread (figure) --- */
+  figure.spread { margin:0 auto clamp(12px,2vw,24px); max-width:1400px; padding:0 clamp(16px,3vw,40px); }
+
+  .controls { display:flex; flex-wrap:wrap; align-items:center; gap:6px 16px; margin:0 0 10px;
+    font-family:var(--mono); font-size:11.5px; color:var(--ink-soft); }
+  .controls .c-label { font-weight:700; font-size:10.5px; letter-spacing:.14em; text-transform:uppercase; color:var(--ink-mute); }
+  .controls label { cursor:pointer; user-select:none; display:inline-flex; align-items:center; gap:5px; }
+  .controls input { accent-color:var(--amber); margin:0; }
+
+  .stage { position:relative; display:grid; grid-template-columns:1fr 1fr;
+    background:var(--paper); border:1px solid var(--line); }
+  .stage::before { content:""; position:absolute; top:0; bottom:0; left:50%; width:1px; background:var(--line); }
+
+  .page { display:flex; flex-direction:column; padding:30px 40px 26px; min-height:720px; }
+  .page.verso { padding-right:36px; }
+  .page.recto { padding-left:36px; }
+
+  .rh { display:flex; justify-content:space-between; font-family:var(--mono); font-size:10px; font-weight:700;
+    letter-spacing:.18em; text-transform:uppercase; color:var(--ink-mute);
+    border-bottom:1px solid var(--line); padding-bottom:8px; margin:0 0 calc(var(--bl) + 8px); }
+  .pg-body { position:relative; flex:1; }
+  .folio { display:flex; font-family:var(--mono); font-size:11px; font-weight:700; color:var(--ink-mute);
+    border-top:1px solid var(--line); padding-top:8px; margin:calc(var(--bl) + 4px) 0 0; }
+  .verso .folio { justify-content:flex-start; }
+  .recto .folio { justify-content:flex-end; }
+
+  /* opener hierarchy */
+  .kicker { font-family:var(--mono); font-size:11.5px; font-weight:700; letter-spacing:.24em; text-transform:uppercase;
+    color:var(--amber-text); margin:0 0 var(--bl); }
+  .headline { font-family:var(--serif); font-weight:500; font-size:clamp(40px,4.6vw,58px); line-height:.98;
+    letter-spacing:-.02em; margin:0 0 var(--bl); max-width:12ch; }
+  .headline em { font-style:italic; color:var(--amber-text); }
+  .standfirst { font-family:var(--serif); font-style:italic; font-weight:500; font-size:19px; line-height:1.45;
+    color:var(--ink-soft); margin:0 0 calc(var(--bl) + 6px); max-width:40ch; }
+
+  /* the columns: the measure, enforced */
+  .cols { columns:2; column-gap:28px; font-size:14.5px; line-height:var(--bl); }
+  .stage[data-cols="3"] .cols { columns:3; column-gap:22px; }
+  .cols p { margin:0; }
+  .cols p + p { text-indent:1.5em; }
+  .stage[data-set="just"] .cols p { text-align:justify; hyphens:auto; }
+  .stage[data-set="rag"] .cols p { text-align:left; hyphens:auto; }
+
+  /* the drop cap: floated fallback, initial-letter where it exists */
+  p.dc::first-letter { float:left; font-family:var(--serif); font-weight:500; color:var(--amber-text);
+    font-size:62px; line-height:50px; padding:6px 10px 0 0; }
+  @supports (initial-letter:3) or (-webkit-initial-letter:3) {
+    p.dc::first-letter { float:none; font-size:unset; line-height:unset; padding:0 10px 0 0;
+      -webkit-initial-letter:3; initial-letter:3; }
+  }
+
+  /* the pull-quote: breaks the measure it was pulled from */
+  .pq { column-span:all; font-family:var(--serif); font-style:italic; font-weight:500;
+    font-size:clamp(21px,2vw,26px); line-height:1.35; color:var(--amber-text);
+    border-top:2px solid var(--amber); border-bottom:2px solid var(--amber);
+    padding:calc(var(--bl) - 4px) 6px; margin:var(--bl) 0; }
+
+  /* footnote refs + notes */
+  .fnref a { font-family:var(--mono); font-size:.72em; font-weight:700; color:var(--amber-text);
+    text-decoration:none; padding-left:1px; }
+  .fnref a:hover { text-decoration:underline; }
+  .fnotes { margin:calc(var(--bl) + 6px) 0 0; border-top:1px solid var(--ink); padding-top:10px; }
+  .fnotes .fn-label { font-family:var(--mono); font-size:10px; font-weight:700; letter-spacing:.18em;
+    text-transform:uppercase; color:var(--ink-mute); margin:0 0 8px; }
+  .fnotes ol { list-style:none; counter-reset:fn; margin:0; padding:0; }
+  .fnotes li { counter-increment:fn; position:relative; font-family:var(--mono); font-size:11.5px;
+    line-height:1.65; color:var(--ink-soft); padding-left:20px; }
+  .fnotes li + li { margin-top:7px; }
+  .fnotes li::before { content:counter(fn); position:absolute; left:0; top:1px;
+    font-weight:700; color:var(--amber-text); }
+  .fnotes a { color:var(--ink-soft); }
+
+  /* baseline overlay */
+  .pg-body::after { content:""; position:absolute; inset:0; pointer-events:none; opacity:0; transition:opacity .25s;
+    background:repeating-linear-gradient(to bottom, transparent 0 calc(var(--bl) - 1px), rgba(255,122,26,.5) calc(var(--bl) - 1px) var(--bl)); }
+  .stage.show-bl .pg-body::after { opacity:1; }
+
+  .why { font-family:var(--mono); font-size:12px; line-height:1.7; color:var(--ink-mute);
+    margin:14px 0 0; max-width:76ch; }
+  figcaption { font-family:var(--mono); font-size:12px; line-height:1.7; color:var(--ink-mute);
+    max-width:1280px; margin:14px auto 0; padding:0; }
+
+  code { font-family:var(--mono); font-size:.9em; background:rgba(26,23,18,.05); padding:1px 4px; border-radius:2px; }
+
+  /* --- the source: a study needs its before --- */
+  .source { border-top:1px solid var(--line); margin-top:clamp(40px,6vw,64px); padding-top:clamp(36px,5vw,52px); }
+  .source h2 { font-family:var(--serif); font-weight:500; font-size:clamp(28px,4vw,40px); line-height:1.05; margin:0 0 8px; }
+  .source h2 em { font-style:italic; color:var(--amber-text); }
+  .source .sub { font-size:17px; color:var(--ink-soft); max-width:64ch; margin:0 0 28px; }
+  .src-row { display:grid; grid-template-columns:minmax(260px,420px) 1fr; gap:32px 44px; align-items:start; }
+  .sketch { position:relative; aspect-ratio:1414/1000; background:#f7f4ec; border:1px solid var(--line); overflow:hidden; }
+  .sk-gutter { position:absolute; top:0; bottom:0; left:50%; width:1px; background:var(--line); }
+  .sk-rh { position:absolute; top:6%; height:2px; background:var(--line); }
+  .sk-rh.l { left:7%; width:20%; } .sk-rh.r { right:7%; width:20%; }
+  .sk-kick { position:absolute; top:16%; left:7%; width:12%; height:3px; background:#b3372b; }
+  .sk-head { position:absolute; left:7%; background:var(--ink-soft); height:7%; }
+  .sk-h1 { top:22%; width:34%; } .sk-h2 { top:31%; width:26%; }
+  .sk-stand { position:absolute; top:42%; left:7%; width:30%; }
+  .sk-stand i, .sk-col i { display:block; height:2px; background:var(--line); margin-top:4px; }
+  .sk-col { position:absolute; bottom:9%; }
+  .sk-col.c1 { left:7%; width:18%; top:54%; }
+  .sk-col.c2 { left:27%; width:18%; top:54%; }
+  .sk-col.c3 { left:55%; width:18%; top:12%; }
+  .sk-col.c4 { left:75%; width:18%; top:12%; }
+  .sk-quote { position:absolute; top:44%; left:55%; width:38%; height:12%;
+    border-top:2px solid #b3372b; border-bottom:2px solid #b3372b; }
+  .sk-fn { position:absolute; bottom:9%; left:55%; width:38%; border-top:1px solid var(--ink-soft); padding-top:3px; }
+  .sk-fn i { display:block; height:2px; background:var(--line); margin-top:3px; width:80%; }
+  .sk-folio { position:absolute; bottom:4%; width:8px; height:2px; background:var(--ink-soft); }
+  .sk-folio.l { left:7%; } .sk-folio.r { right:7%; }
+  .sketch-cap { font-family:var(--mono); font-size:11px; line-height:1.6; color:var(--ink-mute); margin:10px 0 0; }
+  .takeaway h3 { font-family:var(--mono); font-size:11.5px; font-weight:700; letter-spacing:.2em; text-transform:uppercase; color:var(--ink-mute); margin:0 0 10px; }
+  .takeaway ul { list-style:none; margin:0 0 26px; padding:0; font-size:15.5px; color:var(--ink-soft); }
+  .takeaway ul:last-child { margin-bottom:0; }
+  .takeaway li { position:relative; padding:6px 0 6px 18px; border-top:1px solid var(--line); }
+  .takeaway li:first-child { border-top:0; }
+  .takeaway li::before { content:""; position:absolute; left:0; top:15px; width:8px; height:2px; background:var(--amber); }
+
+  /* --- principles: the study payload --- */
+  .principles { border-top:1px solid var(--line); margin-top:clamp(40px,6vw,64px); padding-top:clamp(36px,5vw,52px); }
+  .principles h2 { font-family:var(--serif); font-weight:500; font-size:clamp(28px,4vw,40px); line-height:1.05; margin:0 0 8px; }
+  .principles h2 em { font-style:italic; color:var(--amber-text); }
+  .principles .sub { font-size:17px; color:var(--ink-soft); max-width:60ch; margin:0 0 28px; }
+  .principles ol { list-style:none; counter-reset:p; margin:0; padding:0;
+    display:grid; grid-template-columns:1fr 1fr; gap:22px 40px; }
+  .principles li { counter-increment:p; position:relative; padding-left:44px; }
+  .principles li::before { content:counter(p,decimal-leading-zero); position:absolute; left:0; top:1px;
+    font-family:var(--mono); font-weight:700; font-size:15px; color:var(--amber-text); }
+  .principles li b { font-family:var(--body); font-weight:700; font-size:15.5px; color:var(--ink); margin-right:.4em; }
+  .principles li span { font-size:15.5px; color:var(--ink-soft); line-height:1.55; }
+  .principles .use { font-family:var(--mono); font-size:12.5px; line-height:1.7; color:var(--ink-mute);
+    border-left:2px solid var(--amber); padding-left:12px; margin-top:32px; max-width:70ch; }
+
+  footer { border-top:1px solid var(--line); margin-top:clamp(44px,7vw,72px);
+    font-family:var(--mono); font-size:12px; color:var(--ink-mute);
+    max-width:1000px; margin-left:auto; margin-right:auto; padding:26px clamp(20px,4vw,52px) 40px; }
+
+  @media (prefers-reduced-motion: reduce) {
+    *,*::before,*::after { transition:none !important; }
+  }
+
+  /* --- responsive: a spread is a decision, not a breakpoint --- */
+  @media (max-width:960px) {
+    .stage { grid-template-columns:1fr; }
+    .stage::before { display:none; }
+    .page { min-height:0; padding:26px clamp(20px,5vw,40px) 22px; }
+    .page.verso .folio { display:none; }
+    .page.recto .rh { display:none; }
+  }
+  @media (max-width:620px) {
+    :root { --bl:26px; }
+    .controls, .why { display:none; }
+    .cols, .stage[data-cols="3"] .cols { columns:1; font-size:16px; }
+    .stage[data-set="just"] .cols p { text-align:left; }
+    .headline { font-size:clamp(34px,10vw,44px); }
+    .src-row { grid-template-columns:1fr; }
+    .sketch { max-width:360px; }
+    .principles ol { grid-template-columns:1fr; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <a class="wm" href="/">sdfkjh</a>
+  <span class="tag">internal · editorial spread study</span>
+</header>
+
+<main>
+  <div class="wrap intro">
+    <p class="eyebrow">sdfkjh · design study</p>
+    <h1>The editorial <em>spread</em></h1>
+    <p>The magazine opening as a working artifact: two facing pages, a drop cap, measured columns on a baseline, a quote that interrupts, footnotes that keep the receipts. Print's reading devices, set live on the web.</p>
+    <p class="note">Study page. Noindex, unlinked. After a convention rather than one artifact: the postwar editorial spread.</p>
+  </div>
+
+  <figure class="spread">
+    <div class="controls" role="group" aria-label="Spread controls, visual only">
+      <span class="c-label">overlays</span>
+      <label><input type="checkbox" data-cls="show-bl"/> baseline grid</label>
+      <span class="c-label">columns</span>
+      <label><input type="radio" name="cols" value="2" checked/> two</label>
+      <label><input type="radio" name="cols" value="3"/> three</label>
+      <span class="c-label">setting</span>
+      <label><input type="radio" name="set" value="just" checked/> justified</label>
+      <label><input type="radio" name="set" value="rag"/> ragged</label>
+    </div>
+
+    <div class="stage" data-cols="2" data-set="just">
+      <section class="page verso">
+        <p class="rh" aria-hidden="true"><span>sdfkjh · design studies</span></p>
+        <div class="pg-body">
+          <article>
+            <p class="kicker">typography · in working order</p>
+            <p class="headline">The devices of the <em>page</em></p>
+            <p class="standfirst">Five centuries of print solved most of what makes long text readable. This spread sets the old devices working on the web, and every claim in it can be checked against the page it sits on.</p>
+            <div class="cols">
+              <p class="dc">Every device on this spread is older than the screen drawing it. The drop cap, the measured column, the pull-quote, the footnote, the folio in the corner: each one is a solved problem, worked out by hand across five centuries of print and then largely left behind when text moved to the web. What follows is a working tour. Each device named here is also in use here, so nothing has to be taken on faith.</p>
+              <p>The spread has already used its loudest device by the time you reach these columns. The opener is a strict hierarchy: the kicker names the territory, the headline makes the claim, the standfirst makes the promise, and only then does the body pick up in a quieter voice. Three sizes, one order. The reader is never left to decide what to read first; the page decided.</p>
+              <p>Start with the letter you could not miss. The drop cap descends from the illuminated initial: before title pages and running heads existed, an oversized letter was how a manuscript said begin here. It still does that job.<sup class="fnref"><a href="#fn1" id="ref1" role="doc-noteref" aria-label="footnote 1">1</a></sup> The eye lands on the big letter first and the paragraph collects you from there. It is an entrance, and a page, like a building, wants one obvious door.</p>
+              <p>The column is the quieter device. Its whole job is to keep the measure short. The old working band is 45 to 75 characters for a single column, and 40 to 50 when columns share a page.<sup class="fnref"><a href="#fn2" id="ref2" role="doc-noteref" aria-label="footnote 2">2</a></sup> Past the band, the eye starts losing the return trip to the next line; well short of it, the setting falls apart. A magazine runs narrow columns at small sizes not as a style but because that is where reading is fastest.</p>
+              <p>Justification is the device you notice least. Print justifies with hand-fit hyphenation and a compositor who sweats the rivers out of the block. The web justifies with whatever the engine ships.<sup class="fnref"><a href="#fn3" id="ref3" role="doc-noteref" aria-label="footnote 3">3</a></sup> These columns default to justified, hyphens on, because the spread should look like what it is quoting. The seams are part of the demonstration: switch the setting to ragged above and watch the grey of the page change.</p>
+            </div>
+          </article>
+        </div>
+        <p class="folio" aria-hidden="true">24</p>
+      </section>
+
+      <section class="page recto">
+        <p class="rh" aria-hidden="true"><span style="margin-left:auto">the editorial spread</span></p>
+        <div class="pg-body">
+          <div class="cols">
+            <p>A pull-quote is theft in plain sight. A line is lifted from the body, set three or four times the size, and dropped back in the reader's path. In print it earns its keep twice over: it gives the scanning eye a hook before any commitment is made, and it gives the reading eye a place to rest. On the web it mostly survives as decoration between blog paragraphs, full width, interrupting nothing. Set properly, it breaks the very measure it was pulled from, the way it does a few lines down.</p>
+            <blockquote class="pq" aria-hidden="true">A pull-quote is theft in plain sight: a line lifted from the body and dropped back in the reader's path.</blockquote>
+            <p>The footnote is the page's original hyperlink. A claim keeps its receipt without breaking the sentence, and the reader decides whether to follow. It also carries a tone the main text cannot: the aside, the concession, the source given straight. The three notes on this page hold the technical caveats, which is the honest modern use. The body makes the claim; the note admits the machinery.</p>
+            <p>The chrome earns a word too. The running head at the top and the folio in the corner are print's navigation: at any opening you know what you are reading and where you are in it. The scroll traded that for a scrollbar, which answers how far but not where. On this spread they are reproduced mostly as furniture, and marked as furniture, so a screen reader is not made to read the wallpaper.</p>
+            <p>None of this is nostalgia. Reading did not change when the medium did. Attention still wants an entrance, a short line, a resting point, and a receipt; the devices are just the names print gave those wants. Whether they hold here is not something to take on trust either. The overlay above exposes the baseline, the column switch bends the measure until it breaks, and the notes below admit what the engine is really doing. Look.</p>
+          </div>
+          <section class="fnotes" aria-label="footnotes">
+            <p class="fn-label">notes</p>
+            <ol>
+              <li id="fn1">Set the old way: a floated first letter sized to the type. Engines that support CSS <code>initial-letter</code> set the cap on the grid itself; the float is the fallback everything else gets. Same look, different machinery. <a href="#ref1" role="doc-backlink" aria-label="back to reference 1">&#8617;</a></li>
+              <li id="fn2">The band is Bringhurst's, from The Elements of Typographic Style: 45 to 75 characters as the satisfactory single-column range, 40 to 50 for multiple columns. <a href="#ref2" role="doc-backlink" aria-label="back to reference 2">&#8617;</a></li>
+              <li id="fn3"><code>hyphens: auto</code> and the browser's line-breaker, which fits one line at a time. Print justification is fit by hand, or paragraph-at-a-time; the web is only beginning to grow that. Any river you can find in these columns is the gap between the two. <a href="#ref3" role="doc-backlink" aria-label="back to reference 3">&#8617;</a></li>
+            </ol>
+          </section>
+        </div>
+        <p class="folio" aria-hidden="true">25</p>
+      </section>
+    </div>
+
+    <p class="why" id="why-cols">Why two columns: measured live at this window width, two columns hold about <span id="m2">40</span> characters to the line, at or near print's 40-to-50 multi-column band; three drops to about <span id="m3">26</span>, far below it, and the justified setting turns to gravel. The numbers in this sentence are computed from the page, not typed into it. The switch above is the rest of the argument: flip it to three and look at the rivers.</p>
+    <figcaption>A two-page editorial spread built from live text: kicker, headline and standfirst on the verso, justified columns on a 22px baseline, a floated drop cap, a pull-quote spanning the measure it interrupts, footnotes with real references, running heads and folios. Desktop only as a spread: on phones the pages stack and the columns give way to one measure.</figcaption>
+  </figure>
+
+  <section class="wrap source">
+    <h2>The <em>source</em></h2>
+    <p class="sub">No single artifact this time. The editorial spread is a convention, worked out across the postwar magazines: the art-director era of Brodovitch's Harper's Bazaar openings, the news weeklies, the literary reviews with their footnoted essays. The sketch is the composite opening everyone recognizes: headline low on the verso, columns marching right, one quote breaking the grid, the notes anchored at the foot.</p>
+    <div class="src-row">
+      <div>
+        <div class="sketch" role="img" aria-label="Structural sketch of a magazine opening spread: two facing pages with a centre gutter, running heads top left and right, a kicker mark and two heavy headline bars low on the left page above a standfirst block, two text columns per page, a wide pull-quote band breaking the right page's columns, a footnote block at the right page's foot, and small folio marks in the bottom outer corners.">
+          <div class="sk-gutter"></div>
+          <div class="sk-rh l"></div><div class="sk-rh r"></div>
+          <div class="sk-kick"></div>
+          <div class="sk-head sk-h1"></div><div class="sk-head sk-h2"></div>
+          <div class="sk-stand" aria-hidden="true"><i></i><i></i><i></i></div>
+          <div class="sk-col c1" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+          <div class="sk-col c2" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+          <div class="sk-col c3" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div>
+          <div class="sk-col c4" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div>
+          <div class="sk-quote"></div>
+          <div class="sk-fn" aria-hidden="true"><i></i><i></i></div>
+          <div class="sk-folio l"></div><div class="sk-folio r"></div>
+        </div>
+        <p class="sketch-cap">Structure only: the composite convention, no one magazine's page.</p>
+      </div>
+      <div class="takeaway">
+        <h3>taken</h3>
+        <ul>
+          <li>the facing-page spread as the unit of composition</li>
+          <li>the kicker, headline, standfirst hierarchy</li>
+          <li>justified narrow columns on a fixed baseline</li>
+          <li>the drop cap as the entrance</li>
+          <li>the pull-quote breaking the measure</li>
+          <li>footnotes, running heads, folios</li>
+        </ul>
+        <h3>invented</h3>
+        <ul>
+          <li>the article is about its own devices, so the page is its own evidence</li>
+          <li>live column, setting, and baseline switches in place of ink</li>
+          <li>note references print never needed: <code>doc-noteref</code> semantics for assistive tech</li>
+          <li>a stacked single-page translation below 960px</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="wrap principles">
+    <h2>Six <em>devices</em></h2>
+    <ol>
+      <li><b>The entrance.</b><span>A drop cap marks begin here; the eye wants one obvious door.</span></li>
+      <li><b>The measure.</b><span>Columns keep the line short: 45 to 75 characters alone, 40 to 50 shared.</span></li>
+      <li><b>The interruption.</b><span>A pull-quote breaks the measure it was lifted from. A hook, then a rest.</span></li>
+      <li><b>The receipt.</b><span>Footnotes hold sources and concessions without breaking the sentence.</span></li>
+      <li><b>The chrome.</b><span>Running heads and folios answer where am I; the scroll never quite does.</span></li>
+      <li><b>The baseline.</b><span>One fixed rhythm under the body; every space a multiple of it.</span></li>
+    </ol>
+    <p class="use">Mobile is a decision, not a breakpoint. Below 960px the spread stops pretending: the pages stack, the duplicate running head and folio drop, and below 620px the columns give way to a single measure at a larger size on a looser baseline. A phone is not a small magazine; it is a different reading surface, and the single column is the honest translation.</p>
+    <p class="use">Caveats: the drop cap is progressive enhancement, a floated first letter with <code>initial-letter</code> layered on where the engine has it. The pull-quote is hidden from assistive tech because it duplicates body text verbatim; hearing the same line twice is print aesthetics leaking into someone's ears. The baseline overlay draws the 22px rhythm the body is set on, not true optical baselines. And multicolumn on the web balances columns automatically, which print never promised: resize the window and watch the columns re-pour.</p>
+  </section>
+</main>
+
+<footer>
+  editorial spread study · the devices of the page, set live · <a href="/">back to sdfkjh.com</a>
+</footer>
+
+<script>
+(function () {
+  var stage = document.querySelector('.stage');
+  document.querySelectorAll('.controls [data-cls]').forEach(function (cb) {
+    cb.addEventListener('change', function () {
+      stage.classList.toggle(cb.dataset.cls, cb.checked);
+    });
+  });
+  document.querySelectorAll('.controls input[name="cols"]').forEach(function (r) {
+    r.addEventListener('change', function () { stage.dataset.cols = r.value; });
+  });
+  document.querySelectorAll('.controls input[name="set"]').forEach(function (r) {
+    r.addEventListener('change', function () { stage.dataset.set = r.value; });
+  });
+
+  /* the why-note measures itself: chars per line, computed, never typed */
+  function measure() {
+    var cols = document.querySelector('.verso .cols');
+    var m2 = document.getElementById('m2'), m3 = document.getElementById('m3');
+    if (!cols || !m2) return;
+    var cs = getComputedStyle(cols);
+    var gap = parseFloat(cs.columnGap) || 0;
+    var probe = document.createElement('span');
+    probe.style.cssText = 'position:absolute;visibility:hidden;white-space:nowrap;font:' + cs.font;
+    probe.textContent = 'The column is the quieter device. Its whole job is';
+    document.body.appendChild(probe);
+    var cw = probe.getBoundingClientRect().width / probe.textContent.length;
+    probe.remove();
+    if (!cw) return;
+    m2.textContent = Math.round(((cols.clientWidth - gap) / 2) / cw);
+    m3.textContent = Math.round(((cols.clientWidth - gap * 2) / 3) / cw);
+  }
+  measure();
+  var mt; window.addEventListener('resize', function () { clearTimeout(mt); mt = setTimeout(measure, 150); });
+})();
+</script>
+
+</body>
+</html>
