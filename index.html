@@ -241,7 +241,22 @@
 
   /* ── take: live markdown ─────────────────────────────────── */
   .take { padding: var(--gap, 52px) 0; }
-  .range { padding: var(--gap, 52px) 0; text-align: center; }
+  /* design range = the tuning bench: a faint blueprint grid on a slightly
+     inked paper, with amber registration marks at two corners. token-derived
+     colours so it adapts to light/dark tuning. */
+  .range { position: relative; padding: var(--gap, 52px) 0; text-align: center;
+    background-color: color-mix(in srgb, var(--paper) 92%, var(--ink) 8%);
+    background-image:
+      repeating-linear-gradient(0deg, color-mix(in srgb, var(--ink) 7%, transparent) 0 1px, transparent 1px 30px),
+      repeating-linear-gradient(90deg, color-mix(in srgb, var(--ink) 7%, transparent) 0 1px, transparent 1px 30px); }
+  .range .wrap { position: relative; }
+  .range .eyebrow { color: var(--ink-mute); }
+  .range::before, .range::after { content: ""; position: absolute; width: 15px; height: 15px; pointer-events: none;
+    background: linear-gradient(var(--amber), var(--amber)) center / 15px 1.6px no-repeat,
+                linear-gradient(var(--amber), var(--amber)) center / 1.6px 15px no-repeat; }
+  .range::before { top: 20px; left: 20px; }
+  .range::after { bottom: 20px; right: 20px; }
+  .range .range-coord { position: absolute; left: 40px; top: 16px; font-family: var(--mono); font-size: 10px; letter-spacing: 0.1em; color: var(--amber-dim); pointer-events: none; }
   .range .range-h { font-family: var(--serif); font-weight: 500; font-size: calc(28px * var(--type-scale, 1)); margin: 0 0 10px; }
   .range .range-h a { color: var(--amber-dim); }
   .range .range-p { font-size: calc(17px * var(--type-scale, 1)); color: var(--ink-soft); max-width: 56ch; margin: 0 auto; }
@@ -1220,6 +1235,7 @@
   </section>
 
   <section class="range">
+    <span class="range-coord" aria-hidden="true">[ 0, 0 ]</span>
     <div class="wrap">
       <h2 class="eyebrow">design range &middot; one page, seventeen ways</h2>
       <p class="range-h">This page tunes one design. <a href="/range">See the full range &rsaquo;</a></p>
