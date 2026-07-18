@@ -538,7 +538,11 @@
     .range .eyebrow { min-height: 2.8em; }
   }
 
-  @media (prefers-reduced-motion: reduce) { .range, .range *, .range-tag { transition: none !important; } }
+  /* modern slide-in: each profile's words enter from the right and settle left on every cycle step
+     (JS toggles .is-reveal). No fade - a clean slide only. Resolves back to the locked layout. */
+  @keyframes range-reveal { from { transform: translateX(42px); } to { transform: translateX(0); } }
+  .range .wrap.is-reveal { animation: range-reveal 0.55s cubic-bezier(0.22, 0.61, 0.36, 1) both; }
+  @media (prefers-reduced-motion: reduce) { .range, .range *, .range-tag { transition: none !important; animation: none !important; } }
   .elsewhere { padding: var(--gap, 52px) 0; text-align: center; }
   .elsewhere .range-p { font-size: calc(17px * var(--type-scale, 1)); color: var(--ink-soft); max-width: 56ch; margin: 0 auto 28px; }
   /* studies section: a uniform card grid, one per study, each with a small
@@ -1552,12 +1556,15 @@
         ' <span class="sw" style="background:' + a1 + '"></span>' +
         '<span class="sw" style="background:' + a2 + '"></span>';
     }
+    var wrap = sec.querySelector('.wrap');
+    function reveal() { wrap.classList.remove('is-reveal'); void wrap.offsetWidth; wrap.classList.add('is-reveal'); }
     var i = 0;
     apply(P[0], 0);
     if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
     setInterval(function () {
       i = (i + 1) % P.length;
       apply(P[i], i);
+      reveal();
     }, 3400);
   })();
   </script>
