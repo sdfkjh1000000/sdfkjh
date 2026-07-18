@@ -251,7 +251,7 @@
      each profile's real bg + fg + accent, transitioned smoothly. text uses the
      profile's own fg-on-bg so contrast is built in. reduced-motion holds one. */
   .range { position: relative; overflow: hidden; text-align: center; padding: clamp(56px, 8vw, 104px) 0;
-    --r-bg: var(--paper); --r-fg: var(--ink); --r-acc: var(--amber-dim);
+    --r-bg: var(--paper); --r-fg: var(--ink); --r-acc: var(--amber-dim); --r-acc2: var(--amber);
     background-color: var(--r-bg); transition: background-color 0.9s ease, opacity 0.6s ease, translate 0.6s ease; }
   .range .eyebrow { color: var(--r-fg); font-family: var(--r-label, var(--mono)); transition: color 0.9s ease; }
   .range .range-h { font-family: var(--r-head, var(--serif)); font-weight: var(--r-head-w, 500); text-transform: var(--r-head-tf, none); letter-spacing: var(--r-head-ls, normal);
@@ -262,6 +262,18 @@
     font-family: var(--mono); font-size: 10.5px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase;
     color: var(--r-fg); transition: color 0.9s ease; }
   .range-tag .sw { width: 9px; height: 9px; border-radius: 50%; display: inline-block; }
+  /* per-profile hero decoration, driven by accent + second accent; content sits above (z-index) */
+  .range .wrap { position: relative; z-index: 2; }
+  .range-fx { position: absolute; inset: 0; z-index: 0; overflow: hidden; pointer-events: none; }
+  .range-fx[data-fx="glow"] { background:
+    radial-gradient(48% 62% at 22% 16%, color-mix(in srgb, var(--r-acc) 26%, transparent), transparent 70%),
+    radial-gradient(44% 56% at 82% 84%, color-mix(in srgb, var(--r-acc2) 18%, transparent), transparent 72%); }
+  .range-fx[data-fx="scan"] { background: repeating-linear-gradient(0deg, color-mix(in srgb, var(--r-acc) 15%, transparent) 0 1px, transparent 1px 5px); }
+  .range-fx[data-fx="frame"]::before { content: ""; position: absolute; inset: clamp(14px, 2vw, 24px); border: 1.5px solid color-mix(in srgb, var(--r-acc) 44%, transparent); }
+  .range-fx[data-fx="wedge"]::before { content: ""; position: absolute; top: -45%; right: -13%; width: 52%; height: 190%;
+    background: var(--r-acc); transform: rotate(-19deg); transform-origin: top right; opacity: 0.13; }
+  .range-fx[data-fx="wedge"]::after { content: ""; position: absolute; bottom: -34%; left: -11%; width: 28%; height: 150%;
+    background: var(--r-acc2); transform: rotate(-19deg); transform-origin: bottom left; opacity: 0.12; }
   @media (prefers-reduced-motion: reduce) { .range, .range *, .range-tag { transition: none !important; } }
   .elsewhere { padding: var(--gap, 52px) 0; text-align: center; }
   .elsewhere .range-p { font-size: calc(17px * var(--type-scale, 1)); color: var(--ink-soft); max-width: 56ch; margin: 0 auto 28px; }
@@ -1239,6 +1251,7 @@
 
   <section class="range">
     <span class="range-tag" aria-hidden="true"></span>
+    <div class="range-fx" aria-hidden="true"></div>
     <div class="wrap">
       <h2 class="eyebrow">design range &middot; one page, seventeen ways</h2>
       <p class="range-h">This page tunes one design. <a href="/range">See the full range &rsaquo;</a></p>
@@ -1255,38 +1268,41 @@
         ARCH = 'Archivo, sans-serif', INTER = 'Inter, sans-serif', EBG = "'EB Garamond', serif",
         PJS = "'Plus Jakarta Sans', sans-serif", CHK = "'Chakra Petch', sans-serif", ANTON = 'Anton, sans-serif',
         SYS = 'system-ui, sans-serif';
-    /* [display-name, bg, fg, accent, accent-2, head, head-weight, transform, letter-spacing, body, label]
-       the FULL type system per /range profile. ORDER + NAMES match the /range switcher exactly,
-       so the "NN . name" tag maps 1:1 to a real profile on the full-range page. */
+    /* [name, bg, fg, accent, accent-2, head, head-weight, transform, letter-spacing, body, label, fx]
+       full type system + a signature hero decoration (fx) per /range profile. ORDER + NAMES match
+       the /range switcher exactly, so the "NN . name" tag maps 1:1 to a real profile there. */
     var P = [
-      ['Editorial', '#FDFBF7', '#1C1917', '#a64a14', '#ff7a1a', SERIF, 500, 'none', 'normal', SS, MONO],
-      ['Swiss', '#FFFFFF', '#0A0A0A', '#D11A12', '#0A0A0A', ARCH, 700, 'none', '-0.02em', ARCH, ARCH],
-      ['Cyberpunk', '#0A0A0A', '#FFFFFF', '#00FFCC', '#FF00FF', CHK, 700, 'uppercase', '0.03em', MONO, MONO],
-      ['Zen', '#F1F2F2', '#1E2124', '#3E4A57', '#3E4A57', SERIF, 500, 'none', '0.02em', SS, MONO],
-      ['Brutalist', '#FFFBE6', '#000000', '#FF3366', '#FF3366', ARCH, 800, 'uppercase', '-0.01em', MONO, MONO],
-      ['Clean SaaS', '#FFFFFF', '#111827', '#1D63D8', '#1D63D8', INTER, 400, 'none', '-0.02em', INTER, MONO],
-      ['Prestige', '#0B0B0C', '#F4F4F2', '#C9A24B', '#C9A24B', SERIF, 500, 'none', '0.01em', SERIF, MONO],
-      ['Counsel', '#FFFFFF', '#15202B', '#0E2C4B', '#0E2C4B', SERIF, 500, 'none', 'normal', SS, MONO],
-      ['Grove', '#F4F1EA', '#2C2724', '#5A6E4F', '#5A6E4F', SERIF, 500, 'none', 'normal', SS, MONO],
-      ['Cinematic', '#08080B', '#FFFFFF', '#3B82F6', '#3B82F6', INTER, 400, 'none', '-0.02em', INTER, MONO],
-      ['Terminal', '#000000', '#FAFAFA', '#10B981', '#10B981', MONO, 700, 'none', 'normal', INTER, MONO],
-      ['Soft', '#FAFAFF', '#1F2937', '#4F46E5', '#4F46E5', PJS, 400, 'none', '-0.01em', INTER, PJS],
-      ['Academic', '#FFFFF0', '#1A1A1A', '#8B0000', '#8B0000', EBG, 400, 'none', 'normal', EBG, EBG],
-      ['Fintech', '#0A0A0A', '#FFFFFF', '#F59E0B', '#F59E0B', ARCH, 700, 'none', '-0.02em', INTER, MONO],
-      ['Maximal', '#FFE600', '#16140A', '#2B2BE0', '#2B2BE0', ANTON, 400, 'uppercase', '0.01em', ARCH, MONO],
-      ['Basic', '#F8FAFC', '#1E293B', '#2563EB', '#2563EB', SYS, 600, 'none', '-0.01em', SYS, SYS],
-      ['Constructivist', '#EAE3D5', '#141210', '#DE2417', '#DE2417', ANTON, 400, 'uppercase', '0.02em', ARCH, ARCH]
+      ['Editorial', '#FDFBF7', '#1C1917', '#a64a14', '#ff7a1a', SERIF, 500, 'none', 'normal', SS, MONO, 'flat'],
+      ['Swiss', '#FFFFFF', '#0A0A0A', '#D11A12', '#0A0A0A', ARCH, 700, 'none', '-0.02em', ARCH, ARCH, 'frame'],
+      ['Cyberpunk', '#0A0A0A', '#FFFFFF', '#00FFCC', '#FF00FF', CHK, 700, 'uppercase', '0.03em', MONO, MONO, 'scan'],
+      ['Zen', '#F1F2F2', '#1E2124', '#3E4A57', '#3E4A57', SERIF, 500, 'none', '0.02em', SS, MONO, 'flat'],
+      ['Brutalist', '#FFFBE6', '#000000', '#FF3366', '#FF3366', ARCH, 800, 'uppercase', '-0.01em', MONO, MONO, 'frame'],
+      ['Clean SaaS', '#FFFFFF', '#111827', '#1D63D8', '#1D63D8', INTER, 400, 'none', '-0.02em', INTER, MONO, 'glow'],
+      ['Prestige', '#0B0B0C', '#F4F4F2', '#C9A24B', '#C9A24B', SERIF, 500, 'none', '0.01em', SERIF, MONO, 'glow'],
+      ['Counsel', '#FFFFFF', '#15202B', '#0E2C4B', '#0E2C4B', SERIF, 500, 'none', 'normal', SS, MONO, 'flat'],
+      ['Grove', '#F4F1EA', '#2C2724', '#5A6E4F', '#5A6E4F', SERIF, 500, 'none', 'normal', SS, MONO, 'glow'],
+      ['Cinematic', '#08080B', '#FFFFFF', '#3B82F6', '#3B82F6', INTER, 400, 'none', '-0.02em', INTER, MONO, 'glow'],
+      ['Terminal', '#000000', '#FAFAFA', '#10B981', '#10B981', MONO, 700, 'none', 'normal', INTER, MONO, 'scan'],
+      ['Soft', '#FAFAFF', '#1F2937', '#4F46E5', '#4F46E5', PJS, 400, 'none', '-0.01em', INTER, PJS, 'glow'],
+      ['Academic', '#FFFFF0', '#1A1A1A', '#8B0000', '#8B0000', EBG, 400, 'none', 'normal', EBG, EBG, 'flat'],
+      ['Fintech', '#0A0A0A', '#FFFFFF', '#F59E0B', '#F59E0B', ARCH, 700, 'none', '-0.02em', INTER, MONO, 'glow'],
+      ['Maximal', '#FFE600', '#16140A', '#2B2BE0', '#2B2BE0', ANTON, 400, 'uppercase', '0.01em', ARCH, MONO, 'wedge'],
+      ['Basic', '#F8FAFC', '#1E293B', '#2563EB', '#2563EB', SYS, 600, 'none', '-0.01em', SYS, SYS, 'flat'],
+      ['Constructivist', '#EAE3D5', '#141210', '#DE2417', '#DE2417', ANTON, 400, 'uppercase', '0.02em', ARCH, ARCH, 'wedge']
     ];
+    var fx = sec.querySelector('.range-fx');
     function apply(p, i) {
       sec.style.setProperty('--r-bg', p[1]);
       sec.style.setProperty('--r-fg', p[2]);
       sec.style.setProperty('--r-acc', p[3]);
+      sec.style.setProperty('--r-acc2', p[4]);
       sec.style.setProperty('--r-head', p[5]);
       sec.style.setProperty('--r-head-w', p[6]);
       sec.style.setProperty('--r-head-tf', p[7]);
       sec.style.setProperty('--r-head-ls', p[8]);
       sec.style.setProperty('--r-body', p[9]);
       sec.style.setProperty('--r-label', p[10]);
+      fx.setAttribute('data-fx', p[11]);
       var n = (i + 1 < 10 ? '0' : '') + (i + 1);
       tag.innerHTML = n + ' &middot; ' + p[0] +
         ' <span class="sw" style="background:' + p[3] + '"></span>' +
