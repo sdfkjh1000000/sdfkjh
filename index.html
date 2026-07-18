@@ -504,8 +504,8 @@
   }
   .both .closing em { font-style: italic; color: var(--amber-dim); }
   .both .lead { font-size: calc(17px * var(--type-scale, 1)); color: var(--ink-soft); max-width: 52ch; margin: 0 0 28px; }
-  .both .keys-strip { margin: 32px 0 0; }
-  .both .keys-strip img {
+  .keys-strip { margin: 32px 0 0; }
+  .keys-strip img {
     width: 100%; height: 220px; object-fit: cover;
     border-radius: calc(2px * var(--radius-scale, 1)); filter: none;
   }
@@ -988,7 +988,7 @@
   html.lab-magnetic-button footer a { transition: transform 0.18s ease; }
   html.lab-scene-3d .hero .text,
   html.lab-scene-3d .hero .image { transition: transform 0.12s ease; }
-  html.lab-video-scrub .both .keys-strip img { transition: object-position 0.1s linear; }
+  html.lab-video-scrub .keys-strip img { transition: object-position 0.1s linear; }
   .lab-caret { animation: blink 1.05s steps(1,end) infinite; }
   .lab-blob {
     position: fixed; z-index: -3; opacity: 0; transition: opacity 0.6s ease;
@@ -1047,7 +1047,7 @@
   }
   @media (prefers-reduced-motion: no-preference) {
     html.lab-floating .hero .image,
-    html.lab-floating .both .keys-strip img {
+    html.lab-floating .keys-strip img {
       animation: lab-float 4.6s ease-in-out infinite;
     }
     @keyframes lab-float {
@@ -1171,7 +1171,7 @@
   html.boring main section > .wrap,
   html.boring main section .eyebrow,
   html.boring .hero .image img,
-  html.boring .both .keys-strip img {
+  html.boring .keys-strip img {
     transform: none !important; translate: none !important; scale: none !important;
     rotate: none !important; filter: none !important; clip-path: none !important;
     opacity: 1 !important; box-shadow: none !important; outline: none !important;
@@ -1703,13 +1703,14 @@ Brand and web are two hands on one keyboard.
         </div>
       </div>
       <p class="hint">commands: <b>help</b> &middot; <b>whoami</b> &middot; <b>brand</b> &middot; <b>web</b> &middot; <b>both</b> &middot; <b>contact</b> &middot; <b>time</b> &middot; <b>weather</b> &middot; <b>news</b> &middot; <b>cve</b> &middot; <b>ping</b> &middot; <b>audit</b> &middot; <b>data</b> &middot; <b>privacy</b> &middot; <b>commentary</b> &middot; <b>manifesto</b> &middot; <b>boring</b> &middot; <b>clear</b></p>
-      <figure class="keys-strip" aria-hidden="true">
-        <picture>
-          <source srcset="/assets/img/homerow.avif" type="image/avif"/>
-          <source srcset="/assets/img/homerow.webp" type="image/webp"/>
-          <img src="/assets/img/homerow.jpg" alt="" width="2000" height="600" loading="lazy" decoding="async"/>
-        </picture>
-      </figure>
+    </div>
+  </section>
+
+  <section class="range">
+    <div class="wrap">
+      <h2 class="eyebrow">design range &middot; one page, seventeen ways</h2>
+      <p class="range-h">This page tunes one design. <a href="/range">See the full range &rsaquo;</a></p>
+      <p class="range-p">Seventeen complete designs on a single markup. Switch the whole look live, then tune color, type, and layout in the browser.</p>
     </div>
   </section>
 
@@ -1740,14 +1741,13 @@ Brand and web are two hands on one keyboard.
           <span class="study-meta"><span class="study-name">raw document</span><span class="study-desc">the HTML, undisguised</span></span>
         </a>
       </div>
-    </div>
-  </section>
-
-  <section class="range">
-    <div class="wrap">
-      <h2 class="eyebrow">design range &middot; one page, seventeen ways</h2>
-      <p class="range-h">This page tunes one design. <a href="/range">See the full range &rsaquo;</a></p>
-      <p class="range-p">Seventeen complete designs on a single markup. Switch the whole look live, then tune color, type, and layout in the browser.</p>
+      <figure class="keys-strip" aria-hidden="true">
+        <picture>
+          <source srcset="/assets/img/homerow.avif" type="image/avif"/>
+          <source srcset="/assets/img/homerow.webp" type="image/webp"/>
+          <img src="/assets/img/homerow.jpg" alt="" width="2000" height="600" loading="lazy" decoding="async"/>
+        </picture>
+      </figure>
     </div>
   </section>
 
@@ -2975,7 +2975,7 @@ ${c.web.items.map(i=>'- '+i).join('\n')}
     progBar.style.width = (max > 0 ? scrollY / max * 100 : 0) + '%';
   }
   function updateScrub(){
-    const img = document.querySelector('.both .keys-strip img'); if (!img) return;
+    const img = document.querySelector('.keys-strip img'); if (!img) return;
     const r = img.getBoundingClientRect();
     const prog = 1 - (r.top + r.height / 2) / innerHeight;
     const pos = 50 + (prog - 0.5) * eff('video-scrub') * 130;
@@ -3175,7 +3175,7 @@ ${c.web.items.map(i=>'- '+i).join('\n')}
                           set(){ if (isOn('particle-network')) pBuild(); } },
     'webgl-bg':    { on: glStart, off(){ if (glRAF){ cancelAnimationFrame(glRAF); glRAF = null; } } },
     'video-scrub': { on: updateScrub, off(){
-        const img = document.querySelector('.both .keys-strip img'); if (img) img.style.objectPosition = ''; } },
+        const img = document.querySelector('.keys-strip img'); if (img) img.style.objectPosition = ''; } },
     'scene-3d':    { off: sceneClear },
     'wobble-load': { on: wobbleGo, set(){ if (isOn('wobble-load')) wobbleGo(); } }
   };
