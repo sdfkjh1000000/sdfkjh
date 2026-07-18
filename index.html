@@ -241,25 +241,21 @@
 
   /* ── take: live markdown ─────────────────────────────────── */
   .take { padding: var(--gap, 52px) 0; }
-  /* design range = the tuning bench: a faint blueprint grid on a slightly
-     inked paper, with amber registration marks at two corners. token-derived
-     colours so it adapts to light/dark tuning. */
-  .range { position: relative; padding: var(--gap, 52px) 0; text-align: center;
-    background-color: color-mix(in srgb, var(--paper) 92%, var(--ink) 8%);
-    background-image:
-      repeating-linear-gradient(0deg, color-mix(in srgb, var(--ink) 7%, transparent) 0 1px, transparent 1px 30px),
-      repeating-linear-gradient(90deg, color-mix(in srgb, var(--ink) 7%, transparent) 0 1px, transparent 1px 30px); }
-  .range .wrap { position: relative; }
-  .range .eyebrow { color: var(--ink-mute); }
-  .range::before, .range::after { content: ""; position: absolute; width: 15px; height: 15px; pointer-events: none;
-    background: linear-gradient(var(--amber), var(--amber)) center / 15px 1.6px no-repeat,
-                linear-gradient(var(--amber), var(--amber)) center / 1.6px 15px no-repeat; }
-  .range::before { top: 20px; left: 20px; }
-  .range::after { bottom: 20px; right: 20px; }
-  .range .range-coord { position: absolute; left: 40px; top: 16px; font-family: var(--mono); font-size: 10px; letter-spacing: 0.1em; color: var(--amber-dim); pointer-events: none; }
-  .range .range-h { font-family: var(--serif); font-weight: 500; font-size: calc(28px * var(--type-scale, 1)); margin: 0 0 10px; }
-  .range .range-h a { color: var(--amber-dim); }
-  .range .range-p { font-size: calc(17px * var(--type-scale, 1)); color: var(--ink-soft); max-width: 56ch; margin: 0 auto; }
+  /* design range = the WHOLE section cycles through the /range profile looks:
+     each profile's real bg + fg + accent, transitioned smoothly. text uses the
+     profile's own fg-on-bg so contrast is built in. reduced-motion holds one. */
+  .range { position: relative; overflow: hidden; text-align: center; padding: clamp(56px, 8vw, 104px) 0;
+    --r-bg: var(--paper); --r-fg: var(--ink); --r-acc: var(--amber-dim);
+    background-color: var(--r-bg); transition: background-color 0.9s ease, opacity 0.6s ease, translate 0.6s ease; }
+  .range .eyebrow { color: var(--r-fg); transition: color 0.9s ease; }
+  .range .range-h { font-family: var(--serif); font-weight: 500; font-size: calc(28px * var(--type-scale, 1)); margin: 0 0 10px; color: var(--r-fg); transition: color 0.9s ease; }
+  .range .range-h a { color: var(--r-acc); transition: color 0.9s ease; }
+  .range .range-p { font-size: calc(17px * var(--type-scale, 1)); color: color-mix(in srgb, var(--r-fg) 80%, var(--r-bg)); max-width: 56ch; margin: 0 auto; transition: color 0.9s ease; }
+  .range-tag { position: absolute; top: 16px; left: 20px; display: flex; align-items: center; gap: 7px;
+    font-family: var(--mono); font-size: 10.5px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--r-fg); transition: color 0.9s ease; }
+  .range-tag .sw { width: 9px; height: 9px; border-radius: 50%; display: inline-block; }
+  @media (prefers-reduced-motion: reduce) { .range, .range *, .range-tag { transition: none !important; } }
   .elsewhere { padding: var(--gap, 52px) 0; text-align: center; }
   .elsewhere .range-p { font-size: calc(17px * var(--type-scale, 1)); color: var(--ink-soft); max-width: 56ch; margin: 0 auto 28px; }
   /* studies section: a uniform card grid, one per study, each with a small
@@ -1235,13 +1231,57 @@
   </section>
 
   <section class="range">
-    <span class="range-coord" aria-hidden="true">[ 0, 0 ]</span>
+    <span class="range-tag" aria-hidden="true"></span>
     <div class="wrap">
       <h2 class="eyebrow">design range &middot; one page, seventeen ways</h2>
       <p class="range-h">This page tunes one design. <a href="/range">See the full range &rsaquo;</a></p>
       <p class="range-p">Seventeen complete designs on a single markup. Switch the whole look live, then tune color, type, and layout in the browser.</p>
     </div>
   </section>
+
+  <script>
+  (function () {
+    var sec = document.querySelector('.range');
+    if (!sec) return;
+    var tag = sec.querySelector('.range-tag');
+    /* [name, bg, fg, accent, accent-2] from the real /range profiles, interleaved light/dark */
+    var P = [
+      ['editorial', '#FDFBF7', '#1C1917', '#a64a14', '#ff7a1a'],
+      ['glitch', '#0A0A0A', '#FFFFFF', '#00FFCC', '#FF00FF'],
+      ['swiss', '#FFFFFF', '#0A0A0A', '#D11A12', '#0A0A0A'],
+      ['prestige', '#0B0B0C', '#F4F4F2', '#C9A24B', '#C9A24B'],
+      ['grove', '#F4F1EA', '#2C2724', '#5A6E4F', '#5A6E4F'],
+      ['cinematic', '#08080B', '#FFFFFF', '#3B82F6', '#3B82F6'],
+      ['soft', '#FAFAFF', '#1F2937', '#4F46E5', '#4F46E5'],
+      ['terminal', '#000000', '#FAFAFA', '#10B981', '#10B981'],
+      ['academic', '#FFFFF0', '#1A1A1A', '#8B0000', '#8B0000'],
+      ['fintech', '#0A0A0A', '#FFFFFF', '#F59E0B', '#F59E0B'],
+      ['clean', '#FFFFFF', '#111827', '#1D63D8', '#1D63D8'],
+      ['maximal', '#FFE600', '#16140A', '#2B2BE0', '#2B2BE0'],
+      ['brutal', '#FFFBE6', '#000000', '#FF3366', '#FF3366'],
+      ['constructivist', '#EAE3D5', '#141210', '#DE2417', '#DE2417'],
+      ['zen', '#F1F2F2', '#1E2124', '#3E4A57', '#3E4A57'],
+      ['counsel', '#FFFFFF', '#15202B', '#0E2C4B', '#0E2C4B'],
+      ['basic', '#F8FAFC', '#1E293B', '#2563EB', '#2563EB']
+    ];
+    function apply(p, i) {
+      sec.style.setProperty('--r-bg', p[1]);
+      sec.style.setProperty('--r-fg', p[2]);
+      sec.style.setProperty('--r-acc', p[3]);
+      var n = (i + 1 < 10 ? '0' : '') + (i + 1);
+      tag.innerHTML = n + ' &middot; ' + p[0] +
+        ' <span class="sw" style="background:' + p[3] + '"></span>' +
+        '<span class="sw" style="background:' + p[4] + '"></span>';
+    }
+    var i = 0;
+    apply(P[0], 0);
+    if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    setInterval(function () {
+      i = (i + 1) % P.length;
+      apply(P[i], i);
+    }, 3400);
+  })();
+  </script>
 
   <section class="take">
     <div class="wrap">
