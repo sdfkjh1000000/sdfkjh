@@ -295,6 +295,33 @@
   .elsewhere .site-list li { margin: 0; }
   .elsewhere .site-list a { font-family: var(--mono); color: var(--amber-dim); font-size: calc(16px * var(--type-scale, 1)); }
   .elsewhere .site-list .site-desc { display: block; font-size: calc(15px * var(--type-scale, 1)); color: var(--ink-soft); margin-top: 4px; }
+  /* elsewhere preview: a little dark screen per site (echoes the hero plate),
+     each a house-palette rendering that scrolls through the page on hover.
+     no photos, no image weight; hover-scroll only, reduced-motion falls back. */
+  .site-preview { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin: 26px 0 0; text-align: left; }
+  @media (max-width: 680px) { .site-preview { grid-template-columns: 1fr; } }
+  .sp-card { display: flex; flex-direction: column; text-decoration: none; border: 1px solid var(--border); border-radius: calc(4px * var(--radius-scale, 1)); background: var(--surface); overflow: hidden; transition: border-color 0.18s ease, transform 0.18s ease; }
+  .sp-card:hover { border-color: var(--amber); transform: translateY(-2px); }
+  .sp-card:focus-visible { outline: 2px solid var(--amber); outline-offset: 2px; }
+  .sp-port { position: relative; height: 156px; overflow: hidden; background: #131110; border-bottom: 1px solid var(--border); }
+  .sp-port::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: 22px; background: linear-gradient(transparent, #131110); pointer-events: none; }
+  .sp-page { position: absolute; top: 0; left: 0; right: 0; padding: 13px 14px 18px; display: flex; flex-direction: column; gap: 6px; transition: transform 2.8s ease; }
+  .sp-card:hover .sp-port .sp-page, .sp-card:focus-visible .sp-port .sp-page { transform: translateY(calc(156px - 100%)); }
+  .sp-page .e { font-family: var(--mono); font-size: 7px; font-weight: 700; letter-spacing: 0.16em; text-transform: uppercase; color: var(--amber); }
+  .sp-page .h { font-family: var(--serif); font-weight: 500; font-size: 16px; line-height: 1.02; color: #f0ece2; margin: 1px 0; }
+  .sp-page .h u { text-decoration-color: var(--amber); text-underline-offset: 2px; }
+  .sp-page .h.up { text-transform: uppercase; letter-spacing: -0.01em; }
+  .sp-page .h2 { font-family: var(--serif); font-style: italic; font-size: 13px; color: var(--amber); }
+  .sp-page .sub { font-size: 8.5px; line-height: 1.4; color: #a6a193; }
+  .sp-page .btn { align-self: flex-start; background: var(--amber); color: #131110; font-family: var(--mono); font-size: 7px; font-weight: 700; padding: 3px 7px; margin-top: 2px; }
+  .sp-page .tag { align-self: flex-start; background: var(--amber); color: #131110; font-family: var(--mono); font-size: 6.5px; font-weight: 700; letter-spacing: 0.08em; padding: 2px 5px; }
+  .sp-page .plabel { font-family: var(--mono); font-size: 7px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase; color: #a6a193; margin-top: 6px; }
+  .sp-page .row { display: flex; flex-direction: column; border-top: 1px solid #2c2a24; padding-top: 5px; }
+  .sp-page .row b { font-family: var(--mono); font-size: 8px; font-weight: 700; color: #f0ece2; }
+  .sp-page .row i { font-family: var(--mono); font-style: normal; font-size: 7.5px; color: #a6a193; }
+  .sp-page .step { display: flex; align-items: baseline; gap: 6px; font-family: var(--mono); font-size: 8px; color: #cfc9bb; }
+  .sp-page .step em { font-style: normal; color: var(--amber); font-weight: 700; }
+  @media (prefers-reduced-motion: reduce) { .sp-card:hover .sp-port .sp-page, .sp-card:focus-visible .sp-port .sp-page { transform: none; } .sp-card:hover { transform: none; } }
   .take .panes { display: grid; grid-template-columns: 1fr 1fr; gap: 0; border: 1px solid var(--border); border-radius: calc(3px * var(--radius-scale, 1)); overflow: hidden; }
   .take .src {
     background: var(--surface); border-right: 1px solid var(--border);
@@ -1682,11 +1709,43 @@ Brand and web are two hands on one keyboard.
     <div class="wrap">
       <h2 class="eyebrow">elsewhere &middot; built on the home keys</h2>
       <p class="range-p">The same hand and stack, pointed at three other problems.</p>
-      <ul class="site-list">
-        <li><a href="https://byob.sdfkjh.com/">byob</a> <span class="site-desc">Be Your Own Broker. Car buying without the F&amp;I middleman.</span></li>
-        <li><a href="https://tanktalks.sdfkjh.com/">tanktalks</a> <span class="site-desc">Freshwater aquarium keeping, explained plainly.</span></li>
-        <li><a href="https://businessinternetsearch.sdfkjh.com/">business internet search</a> <span class="site-desc">B2B connectivity, sourced without the runaround.</span></li>
-      </ul>
+      <div class="site-preview">
+        <a class="sp-card" href="https://byob.sdfkjh.com/">
+          <span class="sp-port" aria-hidden="true"><span class="sp-page">
+            <span class="e">be your own broker</span>
+            <span class="h up">Walk in knowing <u>more</u>.</span>
+            <span class="btn">Check a deal &rarr;</span>
+            <span class="plabel">the five numbers</span>
+            <span class="row"><b>Amount financed</b><i>the real one, after fees</i></span>
+            <span class="row"><b>Interest rate</b><i>quoted vs. actual</i></span>
+            <span class="row"><b>Monthly payment</b><i>where the switch hides</i></span>
+          </span></span>
+          <span class="study-meta"><span class="study-name">byob</span><span class="study-desc">Be Your Own Broker, car buying without the middleman</span></span>
+        </a>
+        <a class="sp-card" href="https://tanktalks.sdfkjh.com/">
+          <span class="sp-port" aria-hidden="true"><span class="sp-page">
+            <span class="tag">featured &middot; shrimp</span>
+            <span class="h">Why your colony stopped growing.</span>
+            <span class="sub">A healthy colony grows like a slow-motion explosion. When yours just sits there, it is almost always one of five fixable things.</span>
+            <span class="plabel">read next</span>
+            <span class="row"><b>Start here</b><i>the nitrogen cycle, plainly</i></span>
+            <span class="row"><b>Troubleshooting</b><i>algae, melt, stalls</i></span>
+          </span></span>
+          <span class="study-meta"><span class="study-name">tanktalks</span><span class="study-desc">Freshwater aquarium keeping, explained plainly</span></span>
+        </a>
+        <a class="sp-card" href="https://businessinternetsearch.sdfkjh.com/">
+          <span class="sp-port" aria-hidden="true"><span class="sp-page">
+            <span class="h">Business internet quotes,</span>
+            <span class="h2">quick and easy.</span>
+            <span class="btn">Get a quote &rarr;</span>
+            <span class="plabel">how it works</span>
+            <span class="step"><em>1</em> Submit your info</span>
+            <span class="step"><em>2</em> We do the search</span>
+            <span class="step"><em>3</em> You get quoted</span>
+          </span></span>
+          <span class="study-meta"><span class="study-name">business internet search</span><span class="study-desc">B2B connectivity, sourced without the runaround</span></span>
+        </a>
+      </div>
     </div>
   </section>
 
