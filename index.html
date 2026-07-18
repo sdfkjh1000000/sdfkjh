@@ -120,6 +120,27 @@
   @font-face { font-family: 'Plus Jakarta Sans'; font-style: normal; font-weight: 400; font-display: swap; src: url('/assets/fonts/plus-jakarta-sans-400.woff2') format('woff2'); }
   @font-face { font-family: 'EB Garamond'; font-style: normal; font-weight: 400; font-display: swap; src: url('/assets/fonts/eb-garamond-400.woff2') format('woff2'); }
 
+  /* range-normalized twins (WORDS LOCK): SAME woff2 files as above - the browser cache shares
+     them, zero extra bytes - but with ascent/descent/line-gap overridden to one common set of
+     metrics. Inside the design-range band every profile face then plants its baseline at the
+     same y within the band's fixed line boxes, so the words cannot ride up or down as the
+     typeface changes. Used ONLY by .range[data-profile] font tokens; the page-wide families
+     above keep their true metrics. Browsers without metric overrides simply fall back to the
+     un-normalized behavior (layout slots still hold; only glyph y drifts a few px). */
+  @font-face { font-family: 'Range Newsreader'; font-style: normal; font-weight: 500; font-display: swap; src: url('/assets/fonts/newsreader-500.woff2') format('woff2'); ascent-override: 78%; descent-override: 22%; line-gap-override: 0%; }
+  @font-face { font-family: 'Range Newsreader'; font-style: italic; font-weight: 500; font-display: swap; src: url('/assets/fonts/newsreader-500-italic.woff2') format('woff2'); ascent-override: 78%; descent-override: 22%; line-gap-override: 0%; }
+  @font-face { font-family: 'Range Source Serif 4'; font-style: normal; font-weight: 400; font-display: swap; src: url('/assets/fonts/source-serif-4-400.woff2') format('woff2'); ascent-override: 78%; descent-override: 22%; line-gap-override: 0%; }
+  @font-face { font-family: 'Range Source Serif 4'; font-style: italic; font-weight: 400; font-display: swap; src: url('/assets/fonts/source-serif-4-400-italic.woff2') format('woff2'); ascent-override: 78%; descent-override: 22%; line-gap-override: 0%; }
+  @font-face { font-family: 'Range JetBrains Mono'; font-style: normal; font-weight: 400 700; font-display: swap; src: url('/assets/fonts/jetbrains-mono.woff2') format('woff2'); ascent-override: 78%; descent-override: 22%; line-gap-override: 0%; }
+  @font-face { font-family: 'Range Archivo'; font-style: normal; font-weight: 100 900; font-display: swap; src: url('/assets/fonts/archivo-400.woff2') format('woff2'); ascent-override: 78%; descent-override: 22%; line-gap-override: 0%; }
+  @font-face { font-family: 'Range Anton'; font-style: normal; font-weight: 400; font-display: swap; src: url('/assets/fonts/anton-400.woff2') format('woff2'); ascent-override: 78%; descent-override: 22%; line-gap-override: 0%; }
+  @font-face { font-family: 'Range Chakra Petch'; font-style: normal; font-weight: 700; font-display: swap; src: url('/assets/fonts/chakra-petch-700.woff2') format('woff2'); ascent-override: 78%; descent-override: 22%; line-gap-override: 0%; }
+  @font-face { font-family: 'Range Inter'; font-style: normal; font-weight: 400; font-display: swap; src: url('/assets/fonts/inter-400.woff2') format('woff2'); ascent-override: 78%; descent-override: 22%; line-gap-override: 0%; }
+  @font-face { font-family: 'Range Plus Jakarta Sans'; font-style: normal; font-weight: 400; font-display: swap; src: url('/assets/fonts/plus-jakarta-sans-400.woff2') format('woff2'); ascent-override: 78%; descent-override: 22%; line-gap-override: 0%; }
+  @font-face { font-family: 'Range EB Garamond'; font-style: normal; font-weight: 400; font-display: swap; src: url('/assets/fonts/eb-garamond-400.woff2') format('woff2'); ascent-override: 78%; descent-override: 22%; line-gap-override: 0%; }
+  @font-face { font-family: 'Range System'; font-style: normal; font-weight: 100 600; font-display: swap; src: local('Segoe UI'), local('Roboto'), local('Helvetica Neue'), local('Arial'); ascent-override: 78%; descent-override: 22%; line-gap-override: 0%; }
+  @font-face { font-family: 'Range System'; font-style: normal; font-weight: 700 900; font-display: swap; src: local('Segoe UI Bold'), local('Roboto Bold'), local('Helvetica Neue Bold'), local('Arial Bold'); ascent-override: 78%; descent-override: 22%; line-gap-override: 0%; }
+
   :root {
     --paper:     #FDFBF7;
     --surface:   #FFFFFF;
@@ -247,33 +268,276 @@
 
   /* ── take: live markdown ─────────────────────────────────── */
   .take { padding: var(--gap, 52px) 0; }
-  /* design range = the WHOLE section cycles through the /range profile looks:
-     each profile's real bg + fg + accent, transitioned smoothly. text uses the
-     profile's own fg-on-bg so contrast is built in. reduced-motion holds one. */
-  .range { position: relative; overflow: hidden; text-align: center; padding: clamp(56px, 8vw, 104px) 0;
-    --r-bg: var(--paper); --r-fg: var(--ink); --r-acc: var(--amber-dim); --r-acc2: var(--amber);
-    background-color: var(--r-bg); transition: background-color 0.9s ease, opacity 0.6s ease, translate 0.6s ease; }
-  .range .eyebrow { color: var(--r-fg); font-family: var(--r-label, var(--mono)); transition: color 0.9s ease; }
-  .range .range-h { font-family: var(--r-head, var(--serif)); font-weight: var(--r-head-w, 500); text-transform: var(--r-head-tf, none); letter-spacing: var(--r-head-ls, normal);
-    font-size: calc(28px * var(--type-scale, 1)); line-height: 1.12; margin: 0 0 10px; color: var(--r-fg); transition: color 0.9s ease; }
-  .range .range-h a { color: var(--r-acc); transition: color 0.9s ease; }
-  .range .range-p { font-family: var(--r-body, var(--body)); font-size: calc(17px * var(--type-scale, 1)); color: color-mix(in srgb, var(--r-fg) 80%, var(--r-bg)); max-width: 56ch; margin: 0 auto; transition: color 0.9s ease; }
-  .range-tag { position: absolute; top: 16px; left: 20px; display: flex; align-items: center; gap: 7px;
+  /* design range = the WHOLE section skins to each /range profile's HERO.
+     Real tokens (color + full type system) PLUS the profile's real hero
+     treatment (eyebrow chips, headline + em styling, sub, hero decorations),
+     re-scoped from html[data-profile="X"] (in /range) to .range[data-profile="X"].
+     Font-SIZE is held to this section's own scale so the box height stays
+     stable as it cycles; family / weight / tracking / colour / decoration are
+     each profile's own. Every body:: and hero:: decoration is re-homed onto
+     .range-fx (position:absolute, clipped by the section) so nothing leaks onto
+     the page. reduced-motion holds Editorial (the cycle JS returns early). */
+  .range { position: relative; overflow: hidden; text-align: left; padding: clamp(28px, 3.2vw, 40px) 0;
+    --bg:#FDFBF7; --surface:#FFFFFF; --fg:#1C1917; --fg-soft:#57534E; --line:#E7E5E4;
+    --accent:#a64a14; --accent-2:#ff7a1a;
+    --font-head: "Range Newsreader", Georgia, serif; --font-body: "Range Source Serif 4", Georgia, serif; --font-label: "Range JetBrains Mono", "Consolas", monospace;
+    --head-weight:500; --head-tracking:-0.02em; --head-leading:1.06; --head-transform:none;
+    --label-tracking:0.12em; --label-transform:uppercase;
+    --plate-h: 460px; --plate-top: 80%; --sec-minh: 220px;
+    background-color: var(--paper); color: var(--fg);
+    transition: color 0.9s ease; }
+  .range .wrap { position: relative; z-index: 2; max-width: 1080px; margin: 0 auto; padding: 0 32px;
+    min-height: var(--sec-minh); display: flex; flex-direction: column; justify-content: center; /* content height is fixed (see WORDS LOCK), so centre = zero drift as the band cycles */ }
+  /* every line box below carries an explicit numeric line-height, so its height is
+     font-size x line-height = a fixed px value NO MATTER which profile font renders it.
+     That (plus nowrap lines) is what makes the word layout profile-invariant. */
+  .range .eyebrow { display: inline-block; font-family: var(--font-label); font-size: 12.5px; font-weight: 600;
+    line-height: 1.4; letter-spacing: 0.12em; text-transform: var(--label-transform); color: var(--fg); margin: 0 0 14px; transition: color 0.9s ease; }
+  .range .eyebrow::before, .range .eyebrow::after { content: none; }
+  /* oversized display headline: exactly two lines, ALWAYS - each .hl is its own
+     non-wrapping block, so no profile font/uppercase can push it to a third line. */
+  .range .headline { font-family: var(--font-head); font-weight: var(--head-weight); letter-spacing: -0.01em;
+    line-height: 0.89; text-transform: var(--head-transform);
+    font-size: clamp(28px, 5vw, 70px); color: var(--fg); margin: 0 0 16px; transition: color 0.9s ease; }
+  .range .headline .hl { display: block; white-space: nowrap; }
+  /* line-height:0 keeps a different-family em (maximal's serif italic) from growing
+     the line box past the strut - glyphs may overpaint, the layout may not move */
+  .range .headline em { font-style: italic; color: var(--accent); line-height: 0; }
+  .range .sub { font-family: var(--font-body); font-size: calc(16px * var(--type-scale, 1)); line-height: 1.5;
+    color: var(--fg-soft); width: fit-content; max-width: none; margin: 0; transition: color 0.9s ease; }
+  .range .sub .sl { display: block; white-space: nowrap; }
+  /* "See the full range" lives in the sub (link:sub - MR control panel, 2026-07-18),
+     a plain inline link in the body font so it cannot disturb the display lines. */
+  .range .sub .range-more { font-weight: 600; color: var(--accent); text-underline-offset: 0.14em; }
+  /* brutal & constructivist: the saturated accent misses AA on their light ground; use ink + accent underline */
+  .range[data-profile="brutal"] .sub .range-more,
+  .range[data-profile="constructivist"] .sub .range-more { color: var(--fg); text-decoration-color: var(--accent); }
+  .range-tag { position: absolute; top: 16px; right: 20px; z-index: 3; display: flex; align-items: center; gap: 7px;
     font-family: var(--mono); font-size: 10.5px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase;
-    color: var(--r-fg); transition: color 0.9s ease; }
+    color: var(--ink); }
   .range-tag .sw { width: 9px; height: 9px; border-radius: 50%; display: inline-block; }
-  /* per-profile hero decoration, driven by accent + second accent; content sits above (z-index) */
-  .range .wrap { position: relative; z-index: 2; }
   .range-fx { position: absolute; inset: 0; z-index: 0; overflow: hidden; pointer-events: none; }
-  .range-fx[data-fx="glow"] { background:
-    radial-gradient(48% 62% at 22% 16%, color-mix(in srgb, var(--r-acc) 26%, transparent), transparent 70%),
-    radial-gradient(44% 56% at 82% 84%, color-mix(in srgb, var(--r-acc2) 18%, transparent), transparent 72%); }
-  .range-fx[data-fx="scan"] { background: repeating-linear-gradient(0deg, color-mix(in srgb, var(--r-acc) 15%, transparent) 0 1px, transparent 1px 5px); }
-  .range-fx[data-fx="frame"]::before { content: ""; position: absolute; inset: clamp(14px, 2vw, 24px); border: 1.5px solid color-mix(in srgb, var(--r-acc) 44%, transparent); }
-  .range-fx[data-fx="wedge"]::before { content: ""; position: absolute; top: -45%; right: -13%; width: 52%; height: 190%;
-    background: var(--r-acc); transform: rotate(-19deg); transform-origin: top right; opacity: 0.13; }
-  .range-fx[data-fx="wedge"]::after { content: ""; position: absolute; bottom: -34%; left: -11%; width: 28%; height: 150%;
-    background: var(--r-acc2); transform: rotate(-19deg); transform-origin: bottom left; opacity: 0.12; }
+  .range-fx::before, .range-fx::after { content: none; }
+  /* the profile colour is a centred plate (~the old live-band height); the section itself is the
+     page paper, and the oversized centred type sits on the plate. On the loud profiles the type
+     bleeds a touch out the plate top - the intended "escaping" look. (Jackie + MR, 2026-07-18) */
+  .range-plate { position: absolute; left: 0; right: 0; top: var(--plate-top, 50%); transform: translateY(-50%);
+    height: var(--plate-h, 300px); background: var(--bg); z-index: 0; overflow: hidden;
+    transition: background-color 0.9s ease, border-color 0.9s ease; }
+
+  /* ── per-profile hero skins (tokens + curated hero treatment, font-size held) ── */
+  /* 01 editorial (the base tokens above ARE editorial; just its hero touches) */
+  .range[data-profile="editorial"] .sub { font-style: italic; }
+  .range[data-profile="editorial"] .wrap::after { content: ""; display: block; width: 64px; height: 2px; background: var(--accent); margin-top: 16px; }
+
+  /* 02 swiss */
+  .range[data-profile="swiss"] { --bg:#FFFFFF; --surface:#FFFFFF; --fg:#0A0A0A; --fg-soft:#444444; --line:#0A0A0A; --accent:#D11A12; --accent-2:#E5231B;
+    --font-head:"Range Archivo","Archivo","Helvetica Neue",Arial,sans-serif; --font-body:"Range Archivo","Archivo","Helvetica Neue",Arial,sans-serif; --font-label:"Range Archivo","Archivo","Helvetica Neue",Arial,sans-serif;
+    --head-weight:800; --head-tracking:-0.035em; --head-leading:0.94; --head-transform:none; --label-tracking:0.16em; }
+  .range[data-profile="swiss"] .range-plate { border-top: 2px solid var(--fg); }
+  .range[data-profile="swiss"] .eyebrow { color: var(--fg); font-weight: 700; }
+  .range[data-profile="swiss"] .sub { font-weight: 400; }
+
+  /* 03 glitch (Cyberpunk) */
+  .range[data-profile="glitch"] { --bg:#0A0A0A; --surface:#0E0E12; --fg:#FFFFFF; --fg-soft:#B6F5EA; --line:#00FFCC; --accent:#00FFCC; --accent-2:#FF00FF;
+    --font-head:"Range Chakra Petch","Chakra Petch","Arial Narrow Bold",Impact,system-ui,sans-serif; --font-body:"Range JetBrains Mono","JetBrains Mono",ui-monospace,monospace; --font-label:"Range JetBrains Mono","JetBrains Mono",ui-monospace,monospace;
+    --head-weight:700; --head-tracking:0.04em; --head-leading:0.92; --head-transform:uppercase; --label-tracking:0.34em;
+    text-shadow: 0 0 1px rgba(0,255,204,.25);
+    background-image: linear-gradient(90deg, rgba(255,0,255,.035) 0 1px, transparent 1px 100%), radial-gradient(120% 80% at 50% -10%, rgba(0,255,204,.07), transparent 60%);
+    background-size: 3px 100%, 100% 100%; }
+  .range[data-profile="glitch"] .range-fx::before { content: ""; position: absolute; inset: 0; background: repeating-linear-gradient(0deg, rgba(0,255,204,.06) 0 1px, rgba(0,0,0,0) 1px 3px); mix-blend-mode: screen; }
+  .range[data-profile="glitch"] .range-fx::after { content: ""; position: absolute; inset: 0; background: radial-gradient(130% 110% at 50% 50%, transparent 58%, rgba(0,0,0,.55) 92%, rgba(0,0,0,.85) 100%), linear-gradient(90deg, rgba(255,0,255,.05), transparent 12%, transparent 88%, rgba(0,255,204,.05)); }
+  .range[data-profile="glitch"] .eyebrow { color: var(--accent-2); text-shadow: 0 0 8px rgba(255,0,255,.55); position: relative; padding-left: 18px; }
+  .range[data-profile="glitch"] .eyebrow::before { content: "\258C"; position: absolute; left: 0; top: 0; color: var(--accent); }
+  .range[data-profile="glitch"] .headline { color: var(--fg); text-shadow: 2px 0 var(--accent-2), -2px 0 var(--accent), 0 0 18px rgba(0,255,204,.35); }
+  .range[data-profile="glitch"] .headline em { font-style: normal; color: var(--accent-2); }
+  .range[data-profile="glitch"] .range-plate { border-top: 1px solid var(--accent); }
+  .range[data-profile="glitch"] .sub { color: var(--fg-soft); border-left: 2px solid var(--accent); padding-left: 14px; padding-right: 16px; /* mirrors bar+pad so the text stays optically centred */ }
+  .range[data-profile="glitch"] .wrap::after { content: "> _ SYSTEM READY"; display: block; font-family: var(--font-label); font-size: 12px; letter-spacing: .22em; color: var(--accent); margin-top: 16px; text-shadow: 0 0 8px rgba(0,255,204,.6); }
+
+  /* 04 zen */
+  .range[data-profile="zen"] { --bg:#F1F2F2; --surface:#F7F8F8; --fg:#1E2124; --fg-soft:#555B61; --line:#D5D8DA; --accent:#3E4A57; --accent-2:#3E4A57;
+    --font-head:"Range Newsreader",Georgia,serif; --font-body:"Range Source Serif 4",Georgia,serif; --font-label:"Range JetBrains Mono","Consolas",monospace;
+    --head-weight:500; --head-tracking:0.04em; --head-leading:1.18; --label-tracking:0.42em; }
+  .range[data-profile="zen"] .range-fx::before { content: ""; position: absolute; inset: 0; background: radial-gradient(120% 90% at 100% 0%, rgba(62,74,87,.05), transparent 55%), linear-gradient(180deg, rgba(30,33,36,.02), transparent 30%); }
+  .range[data-profile="zen"] .eyebrow { color: var(--fg-soft); font-weight: 400; padding-left: 34px; position: relative; }
+  .range[data-profile="zen"] .eyebrow::before { content: ""; position: absolute; left: 0; top: .55em; width: 22px; height: 1px; background: var(--accent); }
+  .range[data-profile="zen"] .headline em { font-style: italic; color: var(--accent); letter-spacing: .02em; }
+  .range[data-profile="zen"] .sub { color: var(--fg-soft); font-style: italic; }
+
+  /* 05 brutal (Brutalist) */
+  .range[data-profile="brutal"] { --bg:#FFFBE6; --surface:#FFFFFF; --fg:#000000; --fg-soft:#1A1A1A; --line:#000000; --accent:#FF3366; --accent-2:#00C400;
+    --font-head:"Range Archivo","Archivo","Arial Black",Impact,sans-serif; --font-body:"Range JetBrains Mono","JetBrains Mono",ui-monospace,monospace; --font-label:"Range JetBrains Mono","JetBrains Mono",ui-monospace,monospace;
+    --head-weight:900; --head-tracking:-0.045em; --head-leading:0.86; --head-transform:uppercase; --label-tracking:0.02em;
+    background-image: radial-gradient(#00000022 1.4px, transparent 1.4px); background-size: 22px 22px; background-position: -3px -3px; }
+  .range[data-profile="brutal"] .eyebrow { color: #000; background: #FFCC00; border: 3px solid #000; padding: 5px 10px; box-shadow: 4px 4px 0 #000; transform: rotate(-1.5deg); font-weight: 700; }
+  .range[data-profile="brutal"] .headline { color: #000; text-shadow: 5px 5px 0 var(--accent-2); }
+  .range[data-profile="brutal"] .headline em { font-style: normal; color: var(--accent); }
+  .range[data-profile="brutal"] .sub { color: #000; font-weight: 500; background: #FFFFFF; border: 3px solid #000; box-shadow: 5px 5px 0 #000; padding: 10px 14px; margin-block: -13px; /* box outsets around the text (border+pad = 13px); the words themselves do not move */ }
+
+  /* 06 clean (Clean SaaS) */
+  .range[data-profile="clean"] { --bg:#FFFFFF; --surface:#F9FAFB; --fg:#111827; --fg-soft:#5B6472; --line:#E5E7EB; --accent:#1D63D8; --accent-2:#1547A8;
+    --font-head:"Range Inter","Inter",system-ui,-apple-system,sans-serif; --font-body:"Range Inter","Inter",system-ui,-apple-system,sans-serif; --font-label:"Range JetBrains Mono","Consolas",monospace;
+    --head-weight:600; --head-tracking:-0.018em; --head-leading:1.12; --label-tracking:0.04em; }
+  .range[data-profile="clean"] .eyebrow { color: var(--accent); padding-bottom: 8px; border-bottom: 1px solid var(--line); }
+  .range[data-profile="clean"] .headline em { font-style: normal; color: var(--accent); }
+  .range[data-profile="clean"] .sub { color: var(--fg-soft); }
+
+  /* 07 prestige (dark, centred, serif) */
+  .range[data-profile="prestige"] { --bg:#0B0B0C; --surface:#161617; --fg:#F4F4F2; --fg-soft:#A7A7AC; --line:#2A2A2C; --accent:#C9A24B; --accent-2:#E8E6E1;
+    --font-head:"Range Newsreader",Georgia,serif; --font-body:"Range Newsreader",Georgia,serif; --font-label:"Range JetBrains Mono","Consolas",monospace;
+    --head-weight:500; --head-tracking:-0.02em; --head-leading:1.04; --label-tracking:0.18em;
+    text-align: center; }
+  .range[data-profile="prestige"] .range-fx::before { content: ""; position: absolute; inset: -30%; background: radial-gradient(60% 50% at 30% 20%, rgba(201,162,75,0.10), transparent 70%), radial-gradient(55% 45% at 75% 80%, rgba(232,230,225,0.06), transparent 72%); }
+  .range[data-profile="prestige"] .eyebrow { color: var(--fg-soft); display: inline-flex; align-items: center; gap: 0.7em; }
+  .range[data-profile="prestige"] .eyebrow::before { content: ""; width: 18px; height: 1px; background: var(--accent); display: inline-block; }
+  .range[data-profile="prestige"] .headline { margin-inline: auto; }
+  .range[data-profile="prestige"] .headline em { font-style: italic; color: var(--accent-2); }
+  .range[data-profile="prestige"] .sub { font-family: var(--font-head); font-style: italic; font-weight: 400; color: var(--fg-soft); }
+
+  /* 08 counsel */
+  .range[data-profile="counsel"] { --bg:#FFFFFF; --surface:#F4F6F8; --fg:#15202B; --fg-soft:#46535F; --line:#D7DEE4; --accent:#0E2C4B; --accent-2:#7E6428;
+    --font-head:"Range Newsreader",Georgia,serif; --font-body:"Range Source Serif 4",Georgia,serif; --font-label:"Range JetBrains Mono","Consolas",monospace;
+    --head-weight:500; --head-tracking:0; --head-leading:1.18; --label-tracking:0.18em; }
+  .range[data-profile="counsel"] .range-fx::before { content: ""; position: absolute; top: 0; left: 0; right: 0; height: 3px; background: var(--accent); }
+  .range[data-profile="counsel"] .eyebrow { color: var(--accent-2); font-weight: 700; display: inline-flex; align-items: center; gap: .6em; }
+  .range[data-profile="counsel"] .eyebrow::before { content: ""; width: 13px; height: 13px; flex: none; border: 1.5px solid var(--accent-2); border-radius: 50%; box-shadow: inset 0 0 0 2px var(--bg), inset 0 0 0 3px var(--accent-2); }
+  .range[data-profile="counsel"] .headline em { font-style: italic; color: var(--accent); }
+  .range[data-profile="counsel"] .sub { color: var(--fg-soft); }
+
+  /* 09 grove */
+  .range[data-profile="grove"] { --bg:#F4F1EA; --surface:#FBFAF5; --fg:#2C2724; --fg-soft:#5C5246; --line:#DED7C9; --accent:#5A6E4F; --accent-2:#985631;
+    --font-head:"Range Newsreader",Georgia,serif; --font-body:"Range Source Serif 4",Georgia,serif; --font-label:"Range JetBrains Mono","Consolas",monospace;
+    --head-weight:500; --head-tracking:-0.005em; --head-leading:1.2; --label-tracking:0.16em; }
+  .range[data-profile="grove"] .range-fx::before { content: ""; position: absolute; inset: 0; background: radial-gradient(120% 90% at 18% 8%, #EFEBDF 0%, var(--bg) 46%, #E7E9DE 100%); }
+  .range[data-profile="grove"] .range-fx::after { content: ""; position: absolute; left: 0; right: 0; bottom: -1px; height: 64px; background: var(--bg); -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1440' height='64' viewBox='0 0 1440 64' preserveAspectRatio='none'%3E%3Cpath d='M0 64V30C180 6 340 6 520 24C700 42 760 50 940 38C1120 26 1280 6 1440 26V64Z'/%3E%3C/svg%3E") bottom/100% 64px no-repeat; mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='1440' height='64' viewBox='0 0 1440 64' preserveAspectRatio='none'%3E%3Cpath d='M0 64V30C180 6 340 6 520 24C700 42 760 50 940 38C1120 26 1280 6 1440 26V64Z'/%3E%3C/svg%3E") bottom/100% 64px no-repeat; }
+  .range[data-profile="grove"] .eyebrow { color: var(--accent-2); }
+  .range[data-profile="grove"] .headline em { font-style: italic; color: var(--accent); }
+  .range[data-profile="grove"] .sub { color: var(--fg-soft); }
+
+  /* 10 cinematic (dark) */
+  .range[data-profile="cinematic"] { --bg:#08080B; --surface:#14141A; --fg:#FFFFFF; --fg-soft:#9CA3AF; --line:rgba(255,255,255,0.08); --accent:#3B82F6; --accent-2:#22D3EE;
+    --font-head:"Range Inter","Inter",system-ui,-apple-system,sans-serif; --font-body:"Range Inter","Inter",system-ui,-apple-system,sans-serif; --font-label:"Range JetBrains Mono","Consolas",monospace;
+    --head-weight:700; --head-tracking:-0.022em; --head-leading:1.04; --label-tracking:0.18em; }
+  .range[data-profile="cinematic"] .range-fx::before { content: ""; position: absolute; inset: 0; background: radial-gradient(58% 42% at 78% -8%, rgba(59,130,246,0.14), transparent 60%), radial-gradient(48% 38% at 8% 4%, rgba(34,211,238,0.07), transparent 58%), linear-gradient(180deg, #0A0A0E 0%, #08080B 36%, #060608 100%); }
+  .range[data-profile="cinematic"] .eyebrow { color: var(--accent-2); display: inline-flex; align-items: center; gap: 9px; }
+  .range[data-profile="cinematic"] .eyebrow::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: var(--accent-2); box-shadow: 0 0 10px rgba(34,211,238,0.9); }
+  .range[data-profile="cinematic"] .headline em { font-style: normal; background: linear-gradient(100deg, #60A5FA 0%, #22D3EE 100%); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; color: transparent; }
+  .range[data-profile="cinematic"] .sub { color: var(--fg-soft); }
+
+  /* 11 terminal (black mono) */
+  .range[data-profile="terminal"] { --bg:#000000; --surface:#0A0A0A; --fg:#FAFAFA; --fg-soft:#A1A1AA; --line:#27272A; --accent:#10B981; --accent-2:#10B981;
+    --font-head:"Range JetBrains Mono","Consolas",monospace; --font-body:"Range Inter","Inter",system-ui,sans-serif; --font-label:"Range JetBrains Mono","Consolas",monospace;
+    --head-weight:500; --head-tracking:-0.01em; --head-leading:1.08; --label-tracking:0.14em; }
+  .range[data-profile="terminal"] .eyebrow { color: var(--accent); }
+  .range[data-profile="terminal"] .eyebrow::before { content: "// "; color: var(--fg-soft); }
+  .range[data-profile="terminal"] .headline em { font-style: normal; color: var(--accent); }
+  .range[data-profile="terminal"] .sub { color: var(--fg-soft); }
+
+  /* 12 soft */
+  .range[data-profile="soft"] { --bg:#FAFAFF; --surface:#FFFFFF; --fg:#1F2937; --fg-soft:#6B7280; --line:#EEF0F8; --accent:#4F46E5; --accent-2:#EC4899;
+    --font-head:"Range Plus Jakarta Sans","Plus Jakarta Sans",sans-serif; --font-body:"Range Inter","Inter",sans-serif; --font-label:"Range Plus Jakarta Sans","Plus Jakarta Sans",sans-serif;
+    --head-weight:600; --head-tracking:-0.01em; --head-leading:1.1; --label-tracking:0.12em;
+    text-align: center;
+    background-image: radial-gradient(1100px 620px at 18% -8%, rgba(99,102,241,.10), transparent 60%), radial-gradient(960px 560px at 92% 4%, rgba(236,72,153,.08), transparent 62%); }
+  .range[data-profile="soft"] .wrap { text-align: center; }
+  .range[data-profile="soft"] .range-fx::before { content: ""; position: absolute; left: 50%; top: 6%; transform: translateX(-50%); width: min(820px,90vw); height: 420px; background: radial-gradient(closest-side, rgba(139,92,246,.20), rgba(236,72,153,.10) 58%, transparent 78%); filter: blur(8px); border-radius: 50%; }
+  .range[data-profile="soft"] .eyebrow { color: var(--accent); font-weight: 700; }
+  .range[data-profile="soft"] .headline { margin-inline: auto; }
+  .range[data-profile="soft"] .headline em { font-style: normal; background: linear-gradient(100deg, var(--accent), #9333EA); -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; color: var(--accent); }
+  .range[data-profile="soft"] .sub { color: var(--fg-soft); margin-inline: auto; }
+
+  /* 13 academic */
+  .range[data-profile="academic"] { --bg:#FFFFF0; --surface:#FFFFF0; --fg:#1A1A1A; --fg-soft:#403B33; --line:#D9D2BF; --accent:#8B0000; --accent-2:#2E5090;
+    --font-head:"Range EB Garamond","EB Garamond",Georgia,"Times New Roman",serif; --font-body:"Range EB Garamond","EB Garamond",Georgia,"Times New Roman",serif; --font-label:"Range EB Garamond","EB Garamond",Georgia,serif;
+    --head-weight:600; --head-tracking:0; --head-leading:1.12; --label-tracking:0.08em; --label-transform:none; }
+  .range[data-profile="academic"] .eyebrow { color: var(--accent); font-variant: small-caps; font-weight: 600; }
+  .range[data-profile="academic"] .headline em { font-style: italic; color: var(--accent); }
+  .range[data-profile="academic"] .sub { color: var(--fg); border-left: 2px solid var(--accent-2); padding-left: 16px; padding-right: 18px; /* mirrors bar+pad so the text stays optically centred */ }
+  .range[data-profile="academic"] .wrap::after { content: "sdfkjh.com \00B7 Received 2026 \00B7 Vol. 1, No. 9"; display: block; margin-top: 14px; font-family: var(--font-label); font-size: 13px; font-variant: small-caps; letter-spacing: .06em; color: var(--fg-soft); }
+
+  /* 14 fintech (dark, amber) */
+  .range[data-profile="fintech"] { --bg:#0A0A0A; --surface:#111111; --fg:#FFFFFF; --fg-soft:#A3A3A3; --line:#262626; --accent:#F59E0B; --accent-2:#FFFFFF;
+    --font-head:"Range Archivo","Archivo","Arial Narrow",Helvetica,sans-serif; --font-body:"Range Inter","Inter",system-ui,-apple-system,sans-serif; --font-label:"Range JetBrains Mono","Consolas",monospace;
+    --head-weight:800; --head-tracking:-0.03em; --head-leading:0.96; --head-transform:uppercase; --label-tracking:0.22em; }
+  .range[data-profile="fintech"] .eyebrow { color: var(--accent); display: inline-flex; align-items: center; gap: .85em; }
+  .range[data-profile="fintech"] .eyebrow::before { content: ""; width: 24px; height: 2px; background: var(--accent); flex: none; }
+  .range[data-profile="fintech"] .headline em { font-style: normal; color: var(--accent); border-bottom: 4px solid var(--accent); padding-bottom: .02em; }
+  .range[data-profile="fintech"] .sub { color: var(--fg-soft); }
+
+  /* 15 maximal (yellow, loud) */
+  .range[data-profile="maximal"] { --bg:#FFE600; --surface:#FFFFFF; --fg:#16140A; --fg-soft:#3A3520; --line:#16140A; --accent:#2B2BE0; --accent-2:#D6006E;
+    --c-cyan:#19E5C8; --font-head:"Range Anton","Anton",Impact,sans-serif; --font-body:"Range Archivo","Archivo","Helvetica Neue",Arial,sans-serif; --font-serif:"Range EB Garamond","EB Garamond",Georgia,serif; --font-label:"Range JetBrains Mono","Consolas",monospace;
+    --head-weight:400; --head-tracking:0.005em; --head-leading:0.9; --head-transform:uppercase; --label-tracking:0.16em;
+    background-image: linear-gradient(45deg, rgba(22,20,10,.045) 25%, transparent 25%, transparent 75%, rgba(22,20,10,.045) 75%), linear-gradient(45deg, rgba(22,20,10,.045) 25%, transparent 25%, transparent 75%, rgba(22,20,10,.045) 75%);
+    background-size: 34px 34px; background-position: 0 0, 17px 17px; }
+  .range[data-profile="maximal"] .eyebrow { color: var(--fg); background: var(--c-cyan); border: 2px solid var(--fg); padding: 5px 11px; box-shadow: 4px 4px 0 var(--fg); transform: rotate(-1.6deg); font-weight: 700; }
+  .range[data-profile="maximal"] .headline { color: var(--fg); text-shadow: 5px 5px 0 var(--accent), 9px 9px 0 var(--accent-2); }
+  .range[data-profile="maximal"] .headline em { font-family: var(--font-serif); font-style: italic; font-weight: 600; text-transform: none; color: var(--accent); }
+  .range[data-profile="maximal"] .sub { font-family: var(--font-serif); font-style: italic; color: var(--fg); font-weight: 500; background: var(--surface); border: 2px solid var(--fg); box-shadow: 5px 5px 0 var(--accent); padding: 10px 15px; margin-block: -12px; /* box outsets around the text (border+pad = 12px); the words themselves do not move */ }
+  .range[data-profile="maximal"] .wrap::after { content: ""; display: block; height: 12px; width: min(100%,520px); margin-top: 18px; background: repeating-linear-gradient(90deg, var(--accent) 0 22px, var(--accent-2) 22px 44px, var(--c-cyan) 44px 66px, #FF8A1E 66px 88px); border: 2px solid var(--fg); }
+
+  /* 16 basic (the intentionally generic default) */
+  .range[data-profile="basic"] { --bg:#F8FAFC; --surface:#FFFFFF; --fg:#1E293B; --fg-soft:#475569; --line:#E2E8F0; --accent:#2563EB; --accent-2:#7C3AED;
+    --font-head:"Range System",system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif; --font-body:"Range System",system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif; --font-label:"Range System",system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    --head-weight:800; --head-tracking:-0.02em; --head-leading:1.1; --label-tracking:0.06em;
+    text-align: center; }
+  .range[data-profile="basic"] .wrap { text-align: center; }
+  .range[data-profile="basic"] .eyebrow { color: var(--accent); background: #EFF6FF; border-radius: 999px; padding: 5px 14px; margin: 0 auto 18px; font-weight: 600; }
+  .range[data-profile="basic"] .headline { margin-inline: auto; }
+  .range[data-profile="basic"] .headline em { font-style: normal; color: var(--accent); }
+  .range[data-profile="basic"] .sub { color: var(--fg-soft); margin-inline: auto; }
+
+  /* 17 constructivist */
+  .range[data-profile="constructivist"] { --bg:#EAE3D5; --surface:#EAE3D5; --fg:#141210; --fg-soft:#4a463f; --line:#141210; --accent:#DE2417; --accent-2:#141210;
+    --font-head:"Range Anton","Anton","Arial Narrow Bold",Impact,sans-serif; --font-body:"Range Archivo","Archivo","Helvetica Neue",Arial,sans-serif; --font-label:"Range Archivo","Archivo","Helvetica Neue",Arial,sans-serif;
+    --head-weight:400; --head-tracking:-.01em; --head-leading:.84; --head-transform:uppercase; --label-tracking:.16em; }
+  .range[data-profile="constructivist"] .range-fx::before { content: ""; position: absolute; top: -30%; right: -12%; width: 62%; height: 150%; background: var(--accent); transform: rotate(-20deg); transform-origin: top right; }
+  .range[data-profile="constructivist"] .eyebrow { color: var(--fg); background: var(--bg); font-weight: 800; letter-spacing: .2em; padding: 5px 11px; }
+  .range[data-profile="constructivist"] .headline { color: var(--fg); transform: skewX(-4deg); }
+  .range[data-profile="constructivist"] .headline em { font-style: normal; color: var(--accent); }
+  .range[data-profile="constructivist"] .sub { position: relative; z-index: 2; font-weight: 600; color: var(--fg); border-left: 6px solid var(--fg); padding: 6px 22px 6px 16px; background: var(--bg); margin-block: -6px; /* symmetric pad + cancelled vertical pad: the words themselves do not move */ }
+
+  /* range band: ALL profiles centred (Jackie, 2026-07-18) - matches the original live section's
+     centred layout and keeps word placement consistent (no left<->centre jump) as the band cycles. */
+  .range[data-profile] { text-align: center; }
+  .range[data-profile] .wrap { text-align: center; max-width: 1080px; }
+  .range[data-profile] .headline, .range[data-profile] .sub { margin-inline: auto; }
+
+  /* WORDS LOCK (MR, 2026-07-18): the profile is a colour / font / texture filter passed over a
+     FIXED word layout - the words fall in the same place on every profile. The geometry is
+     closed-form and font-independent:
+       eyebrow 12.5x1.4 = 17.5 + 14 margin
+       headline 2 nowrap lines x 70x0.89 = 124.6 + 16 margin
+       sub 2 nowrap lines x 16x1.5 = 48          -> 220.1px = --sec-minh, every profile.
+     So strip anything that shifts words: eyebrow chips / markers / padding, em boxes (handled
+     per-em above), headline transforms, per-profile sub widths. Colour, font-family / weight,
+     text-shadow, gradient fills, and the plate + background decorations (the "filter") all stay. */
+  .range[data-profile] .eyebrow { background: none; border: 0; box-shadow: none; padding: 0; transform: none; display: inline-block; margin: 0 0 14px; }
+  .range[data-profile] .eyebrow::before, .range[data-profile] .eyebrow::after { content: none; }
+  .range[data-profile] .headline { transform: none; }
+  .range[data-profile] .sub { max-width: none; }
+  /* the four below-text signatures (editorial rule, glitch SYSTEM READY, academic citation,
+     maximal bar) keep their content but live OUT OF FLOW, pinned just under the fixed text
+     block - identity intact, zero height contribution, zero recentring. */
+  .range[data-profile] .wrap::after { position: absolute; left: 50%; top: calc(100% + 10px); transform: translateX(-50%); margin: 0; }
+  /* mobile: the sub must wrap (its locked lines outgrow narrow screens), so pin the block to
+     the top instead of centring - eyebrow + headline stay put, only the sub's tail varies
+     inside a constant-height wrap (300px covers the worst wrap: mono sub, 320px viewport),
+     so the section never changes height as the band cycles. Plate goes full-bleed so the
+     top-pinned text always sits on the profile colour, never on paper. */
+  @media (max-width: 840px) {
+    .range { --plate-h: 100%; --plate-top: 50%; }
+    .range .wrap { min-height: 330px; justify-content: flex-start; padding-top: 30px; /* uniform top clearance keeps the corner range-tag off the eyebrow */ }
+    .range .sub { width: auto; max-width: 100%; }
+    .range .sub .sl { display: inline; white-space: normal; }
+  }
+  /* below ~430px the uppercase eyebrows wrap to 2 lines while academic's lowercase stays on 1;
+     reserve the 2-line slot for everyone so the headline cannot lift on academic. */
+  @media (max-width: 430px) {
+    .range .eyebrow { min-height: 2.8em; }
+  }
+
   @media (prefers-reduced-motion: reduce) { .range, .range *, .range-tag { transition: none !important; } }
   .elsewhere { padding: var(--gap, 52px) 0; text-align: center; }
   .elsewhere .range-p { font-size: calc(17px * var(--type-scale, 1)); color: var(--ink-soft); max-width: 56ch; margin: 0 auto 28px; }
@@ -1249,13 +1513,13 @@
     </div>
   </section>
 
-  <section class="range">
+  <section class="range" data-profile="editorial">
     <span class="range-tag" aria-hidden="true"></span>
-    <div class="range-fx" aria-hidden="true"></div>
+    <div class="range-plate" aria-hidden="true"><div class="range-fx"></div></div>
     <div class="wrap">
-      <h2 class="eyebrow">design range &middot; one page, seventeen ways</h2>
-      <p class="range-h">This page tunes one design. <a href="/range">See the full range &rsaquo;</a></p>
-      <p class="range-p">Seventeen complete designs on a single markup. Switch the whole look live, then tune color, type, and layout in the browser.</p>
+      <p class="eyebrow">design range &middot; one page, seventeen ways</p>
+      <h2 class="headline"><span class="hl">This page tunes</span> <span class="hl">one <em>design</em>.</span></h2>
+      <p class="sub"><span class="sl">Seventeen complete designs on a single markup. Switch the whole look live,</span> <span class="sl">then tune color, type, and layout in the browser. <a class="range-more" href="/range">See the full range &rsaquo;</a></span></p>
     </div>
   </section>
 
@@ -1264,49 +1528,29 @@
     var sec = document.querySelector('.range');
     if (!sec) return;
     var tag = sec.querySelector('.range-tag');
-    var SERIF = 'Newsreader, serif', SS = "'Source Serif 4', serif", MONO = "'JetBrains Mono', monospace",
-        ARCH = 'Archivo, sans-serif', INTER = 'Inter, sans-serif', EBG = "'EB Garamond', serif",
-        PJS = "'Plus Jakarta Sans', sans-serif", CHK = "'Chakra Petch', sans-serif", ANTON = 'Anton, sans-serif',
-        SYS = 'system-ui, sans-serif';
-    /* [name, bg, fg, accent, accent-2, head, head-weight, transform, letter-spacing, body, label, fx]
-       full type system + a signature hero decoration (fx) per /range profile. ORDER + NAMES match
-       the /range switcher exactly, so the "NN . name" tag maps 1:1 to a real profile there. */
+    /* [data-profile slug, display name] in the exact /range switcher order, so the
+       "NN . name" tag maps 1:1 to a real profile there. The section's whole hero
+       look (colour + full type system + real hero treatment) is driven by the CSS
+       scoped to .range[data-profile="X"] above; this only flips the attribute and
+       reads the two accent swatches back out of the computed style, so the CSS stays
+       the single source of truth for every value. */
     var P = [
-      ['Editorial', '#FDFBF7', '#1C1917', '#a64a14', '#ff7a1a', SERIF, 500, 'none', 'normal', SS, MONO, 'flat'],
-      ['Swiss', '#FFFFFF', '#0A0A0A', '#D11A12', '#0A0A0A', ARCH, 700, 'none', '-0.02em', ARCH, ARCH, 'frame'],
-      ['Cyberpunk', '#0A0A0A', '#FFFFFF', '#00FFCC', '#FF00FF', CHK, 700, 'uppercase', '0.03em', MONO, MONO, 'scan'],
-      ['Zen', '#F1F2F2', '#1E2124', '#3E4A57', '#3E4A57', SERIF, 500, 'none', '0.02em', SS, MONO, 'flat'],
-      ['Brutalist', '#FFFBE6', '#000000', '#FF3366', '#FF3366', ARCH, 800, 'uppercase', '-0.01em', MONO, MONO, 'frame'],
-      ['Clean SaaS', '#FFFFFF', '#111827', '#1D63D8', '#1D63D8', INTER, 400, 'none', '-0.02em', INTER, MONO, 'glow'],
-      ['Prestige', '#0B0B0C', '#F4F4F2', '#C9A24B', '#C9A24B', SERIF, 500, 'none', '0.01em', SERIF, MONO, 'glow'],
-      ['Counsel', '#FFFFFF', '#15202B', '#0E2C4B', '#0E2C4B', SERIF, 500, 'none', 'normal', SS, MONO, 'flat'],
-      ['Grove', '#F4F1EA', '#2C2724', '#5A6E4F', '#5A6E4F', SERIF, 500, 'none', 'normal', SS, MONO, 'glow'],
-      ['Cinematic', '#08080B', '#FFFFFF', '#3B82F6', '#3B82F6', INTER, 400, 'none', '-0.02em', INTER, MONO, 'glow'],
-      ['Terminal', '#000000', '#FAFAFA', '#10B981', '#10B981', MONO, 700, 'none', 'normal', INTER, MONO, 'scan'],
-      ['Soft', '#FAFAFF', '#1F2937', '#4F46E5', '#4F46E5', PJS, 400, 'none', '-0.01em', INTER, PJS, 'glow'],
-      ['Academic', '#FFFFF0', '#1A1A1A', '#8B0000', '#8B0000', EBG, 400, 'none', 'normal', EBG, EBG, 'flat'],
-      ['Fintech', '#0A0A0A', '#FFFFFF', '#F59E0B', '#F59E0B', ARCH, 700, 'none', '-0.02em', INTER, MONO, 'glow'],
-      ['Maximal', '#FFE600', '#16140A', '#2B2BE0', '#2B2BE0', ANTON, 400, 'uppercase', '0.01em', ARCH, MONO, 'wedge'],
-      ['Basic', '#F8FAFC', '#1E293B', '#2563EB', '#2563EB', SYS, 600, 'none', '-0.01em', SYS, SYS, 'flat'],
-      ['Constructivist', '#EAE3D5', '#141210', '#DE2417', '#DE2417', ANTON, 400, 'uppercase', '0.02em', ARCH, ARCH, 'wedge']
+      ['editorial', 'Editorial'], ['swiss', 'Swiss'], ['glitch', 'Cyberpunk'],
+      ['zen', 'Zen'], ['brutal', 'Brutalist'], ['clean', 'Clean SaaS'],
+      ['prestige', 'Prestige'], ['counsel', 'Counsel'], ['grove', 'Grove'],
+      ['cinematic', 'Cinematic'], ['terminal', 'Terminal'], ['soft', 'Soft'],
+      ['academic', 'Academic'], ['fintech', 'Fintech'], ['maximal', 'Maximal'],
+      ['basic', 'Basic'], ['constructivist', 'Constructivist']
     ];
-    var fx = sec.querySelector('.range-fx');
     function apply(p, i) {
-      sec.style.setProperty('--r-bg', p[1]);
-      sec.style.setProperty('--r-fg', p[2]);
-      sec.style.setProperty('--r-acc', p[3]);
-      sec.style.setProperty('--r-acc2', p[4]);
-      sec.style.setProperty('--r-head', p[5]);
-      sec.style.setProperty('--r-head-w', p[6]);
-      sec.style.setProperty('--r-head-tf', p[7]);
-      sec.style.setProperty('--r-head-ls', p[8]);
-      sec.style.setProperty('--r-body', p[9]);
-      sec.style.setProperty('--r-label', p[10]);
-      fx.setAttribute('data-fx', p[11]);
+      sec.setAttribute('data-profile', p[0]);
+      var cs = getComputedStyle(sec);
+      var a1 = cs.getPropertyValue('--accent').trim() || '#000';
+      var a2 = cs.getPropertyValue('--accent-2').trim() || a1;
       var n = (i + 1 < 10 ? '0' : '') + (i + 1);
-      tag.innerHTML = n + ' &middot; ' + p[0] +
-        ' <span class="sw" style="background:' + p[3] + '"></span>' +
-        '<span class="sw" style="background:' + p[4] + '"></span>';
+      tag.innerHTML = n + ' &middot; ' + p[1] +
+        ' <span class="sw" style="background:' + a1 + '"></span>' +
+        '<span class="sw" style="background:' + a2 + '"></span>';
     }
     var i = 0;
     apply(P[0], 0);
