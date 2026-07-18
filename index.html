@@ -247,30 +247,50 @@
   .range .range-p { font-size: calc(17px * var(--type-scale, 1)); color: var(--ink-soft); max-width: 56ch; margin: 0 auto; }
   .elsewhere { padding: var(--gap, 52px) 0; text-align: center; }
   .elsewhere .range-p { font-size: calc(17px * var(--type-scale, 1)); color: var(--ink-soft); max-width: 56ch; margin: 0 auto 28px; }
-  /* axial grid section: the wordmark exploded into materials, off one spine.
-     amber is a rule/graphic only (2.5:1 on cream), never text; the stack is role=img. */
+  /* studies section: a uniform card grid, one per study, each with a small
+     signature motif. amber is a rule/graphic only (never small text on cream). */
   .axial { padding: var(--gap, 52px) 0; }
   .axial .ax-h { font-family: var(--serif); font-weight: 500; font-size: calc(28px * var(--type-scale, 1)); margin: 0 0 8px; }
   .axial .ax-p { font-size: calc(17px * var(--type-scale, 1)); color: var(--ink-soft); max-width: 56ch; margin: 0 0 28px; }
-  .ax-plate { position: relative; border: 1px solid var(--border); border-radius: calc(4px * var(--radius-scale, 1)); background: var(--surface); overflow: hidden; padding: clamp(30px, 4vw, 48px); --ax: 132px; }
-  .ax-spine { position: absolute; top: 0; bottom: 0; left: var(--ax); width: 2px; background: var(--amber); }
-  .ax-vtext { position: absolute; top: 0; bottom: 0; left: calc(var(--ax) - 17px); writing-mode: vertical-rl; transform: rotate(180deg); display: flex; align-items: center; padding: 22px 0; font-family: var(--mono); font-size: 10.5px; font-weight: 700; letter-spacing: 0.36em; text-transform: uppercase; color: var(--ink-soft); }
-  .ax-stack { margin-left: calc(var(--ax) + clamp(34px, 4vw, 60px)); display: flex; flex-direction: column; }
-  .ax-slab { font-family: var(--mono); font-weight: 700; font-size: clamp(30px, 6vw, 56px); line-height: 1.06; letter-spacing: 0.01em; }
-  .ax-ink { color: var(--ink); }
-  .ax-inv { color: var(--paper); background: var(--ink); width: max-content; max-width: 100%; padding: 1px 10px 5px; }
-  .ax-out { color: transparent; -webkit-text-stroke: 2.2px var(--amber); }
-  .ax-hatch { color: transparent; -webkit-text-fill-color: transparent; background: repeating-linear-gradient(-52deg, var(--ink) 0 2px, transparent 2px 7px); -webkit-background-clip: text; background-clip: text; }
-  .ax-fill { color: var(--amber); }
-  .axial .study-list { list-style: none; margin: 22px 0 0; padding: 0; display: flex; flex-direction: column; gap: 12px; }
-  .axial .study-list li { margin: 0; }
-  .axial .study-list a { font-family: var(--mono); color: var(--amber-dim); font-size: calc(14px * var(--type-scale, 1)); }
-  .axial .study-list .study-desc { color: var(--ink-soft); font-size: calc(15px * var(--type-scale, 1)); margin-left: 6px; }
-  @media (max-width: 640px) {
-    .ax-plate { --ax: 14px; }
-    .ax-vtext { display: none; }
-    .ax-stack { margin-left: 26px; }
-  }
+  /* studies grid: one compact card per study, each with its signature in
+     miniature. amber is a rule/graphic only; the name link uses --amber-dim
+     (the AA link token). thumbs are decorative (aria-hidden). */
+  .axial .study-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(184px, 1fr)); gap: 16px; margin: 26px 0 0; }
+  .study-card { display: flex; flex-direction: column; text-decoration: none; border: 1px solid var(--border); border-radius: calc(4px * var(--radius-scale, 1)); background: var(--surface); overflow: hidden; transition: border-color 0.18s ease, transform 0.18s ease; }
+  .study-card:hover { border-color: var(--amber); transform: translateY(-2px); }
+  .study-thumb { position: relative; height: 112px; background: var(--paper); border-bottom: 1px solid var(--border); overflow: hidden; }
+  .study-thumb .sp, .study-thumb .b, .study-thumb .s, .study-thumb .pg, .study-thumb .gut, .study-thumb .cap { position: absolute; }
+  .study-meta { padding: 12px 14px 15px; }
+  .study-name { display: block; font-family: var(--mono); font-weight: 700; font-size: calc(13px * var(--type-scale, 1)); letter-spacing: 0.02em; color: var(--amber-dim); }
+  .study-desc { display: block; margin-top: 5px; font-size: calc(13px * var(--type-scale, 1)); line-height: 1.4; color: var(--ink-soft); }
+  /* axial: off-centre spine + banded materials */
+  .th-axial .sp { top: 0; bottom: 0; left: 28%; width: 2px; background: var(--amber); }
+  .th-axial .b { left: 40%; height: 13px; }
+  .th-axial .b1 { top: 24%; width: 40%; background: var(--ink); }
+  .th-axial .b2 { top: 44%; width: 30%; border: 2px solid var(--ink); background: transparent; }
+  .th-axial .b3 { top: 64%; width: 46%; background: var(--amber); }
+  /* swiss: the visible grid + flush-left ragged column, one amber accent */
+  .th-swiss { background-image: repeating-linear-gradient(90deg, var(--border) 0 1px, transparent 1px 20%); }
+  .th-swiss .s { left: 12%; height: 9px; background: var(--ink); }
+  .th-swiss .s1 { top: 28%; width: 52%; }
+  .th-swiss .s2 { top: 46%; width: 38%; }
+  .th-swiss .s3 { top: 64%; width: 26%; background: var(--amber); }
+  /* spread: two facing pages, a gutter, a drop cap */
+  .th-spread .pg { top: 16%; bottom: 16%; width: 34%; border: 1px solid var(--ink-soft); }
+  .th-spread .pL { left: 13%; }
+  .th-spread .pR { right: 13%; }
+  .th-spread .gut { top: 12%; bottom: 12%; left: 50%; width: 1px; background: var(--ink-soft); }
+  .th-spread .cap { top: 26%; left: 17%; width: 14px; height: 14px; background: var(--amber); }
+  /* type: the wordmark at display size, the letters as the subject */
+  .th-type { display: grid; place-items: center; }
+  .th-type .wm { font-family: var(--serif); font-weight: 500; font-size: 44px; letter-spacing: -0.02em; color: var(--ink); }
+  /* brutalist: the raw bordered document, one amber signal */
+  .th-brut { display: grid; place-items: center; }
+  .th-brut .box { position: relative; width: 64%; height: 64%; border: 2px solid var(--ink); background: var(--paper); }
+  .th-brut .hd { position: absolute; top: 0; left: 0; right: 0; height: 26%; border-bottom: 2px solid var(--ink); }
+  .th-brut .ln { position: absolute; left: 11%; top: 44%; width: 36%; height: 6px; background: var(--ink); }
+  .th-brut .ln2 { position: absolute; left: 11%; top: 70%; width: 52%; height: 6px; background: var(--ink); }
+  .th-brut .sig { position: absolute; right: 10%; top: 42%; width: 28%; height: 16%; background: var(--amber); }
   .elsewhere .site-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 18px; }
   .elsewhere .site-list li { margin: 0; }
   .elsewhere .site-list a { font-family: var(--mono); color: var(--amber-dim); font-size: calc(16px * var(--type-scale, 1)); }
@@ -1674,25 +1694,29 @@ Brand and web are two hands on one keyboard.
     <div class="wrap">
       <h2 class="eyebrow">the studies &middot; one technique per page</h2>
       <p class="ax-h">Built openly, one lesson at a time.</p>
-      <p class="ax-p">Standalone pages, each proving one device from the printed tradition, live and measured. The plate is from the axial study.</p>
-      <div class="ax-plate">
-        <div class="ax-spine" aria-hidden="true"></div>
-        <div class="ax-vtext" aria-hidden="true">built on the home keys</div>
-        <div class="ax-stack" role="img" aria-label="The sdfkjh wordmark in five materials: solid, reversed as paper on ink, amber outline, hatch, and amber fill.">
-          <span class="ax-slab ax-ink" aria-hidden="true">sdfkjh</span>
-          <span class="ax-slab ax-inv" aria-hidden="true">sdfkjh</span>
-          <span class="ax-slab ax-out" aria-hidden="true">sdfkjh</span>
-          <span class="ax-slab ax-hatch" aria-hidden="true">sdfkjh</span>
-          <span class="ax-slab ax-fill" aria-hidden="true">sdfkjh</span>
-        </div>
+      <p class="ax-p">Standalone pages, each proving one device from the printed tradition, live and measured. Each opens its own way.</p>
+      <div class="study-grid">
+        <a class="study-card" href="/axial">
+          <span class="study-thumb th-axial" aria-hidden="true"><span class="sp"></span><span class="b b1"></span><span class="b b2"></span><span class="b b3"></span></span>
+          <span class="study-meta"><span class="study-name">axial grid</span><span class="study-desc">one spine, the wordmark in five materials</span></span>
+        </a>
+        <a class="study-card" href="/swiss">
+          <span class="study-thumb th-swiss" aria-hidden="true"><span class="s s1"></span><span class="s s2"></span><span class="s s3"></span></span>
+          <span class="study-meta"><span class="study-name">swiss grid</span><span class="study-desc">the Swiss grid, made visible</span></span>
+        </a>
+        <a class="study-card" href="/spread">
+          <span class="study-thumb th-spread" aria-hidden="true"><span class="pg pL"></span><span class="pg pR"></span><span class="gut"></span><span class="cap"></span></span>
+          <span class="study-meta"><span class="study-name">editorial spread</span><span class="study-desc">a magazine opening, set live</span></span>
+        </a>
+        <a class="study-card" href="/type">
+          <span class="study-thumb th-type" aria-hidden="true"><span class="wm">sdfkjh</span></span>
+          <span class="study-meta"><span class="study-name">type specimen</span><span class="study-desc">the site's own type stack, inspected</span></span>
+        </a>
+        <a class="study-card" href="/brutalist">
+          <span class="study-thumb th-brut" aria-hidden="true"><span class="box"><span class="hd"></span><span class="ln"></span><span class="sig"></span><span class="ln2"></span></span></span>
+          <span class="study-meta"><span class="study-name">raw document</span><span class="study-desc">the HTML, undisguised</span></span>
+        </a>
       </div>
-      <ul class="study-list">
-        <li><a href="/axial">axial grid</a> <span class="study-desc">one spine, the wordmark exploded into five materials</span></li>
-        <li><a href="/swiss">swiss grid</a> <span class="study-desc">the International Typographic Style, the grid made visible</span></li>
-        <li><a href="/spread">editorial spread</a> <span class="study-desc">a magazine opening set live: drop cap, measured columns, footnotes</span></li>
-        <li><a href="/type">type specimen</a> <span class="study-desc">the site's own five-file stack inspected, the bill in bytes</span></li>
-        <li><a href="/brutalist">raw document</a> <span class="study-desc">web brutalism: the HTML undisguised, strippable to its browser default</span></li>
-      </ul>
     </div>
   </section>
 
