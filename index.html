@@ -113,6 +113,12 @@
     font-family: 'Archivo'; font-style: normal; font-weight: 100 900;
     font-display: swap; src: url('/assets/fonts/archivo-400.woff2') format('woff2');
   }
+  /* profile display faces, self-hosted, lazy (swap) - used only by the design-range cycle */
+  @font-face { font-family: 'Anton'; font-style: normal; font-weight: 400; font-display: swap; src: url('/assets/fonts/anton-400.woff2') format('woff2'); }
+  @font-face { font-family: 'Chakra Petch'; font-style: normal; font-weight: 700; font-display: swap; src: url('/assets/fonts/chakra-petch-700.woff2') format('woff2'); }
+  @font-face { font-family: 'Inter'; font-style: normal; font-weight: 400; font-display: swap; src: url('/assets/fonts/inter-400.woff2') format('woff2'); }
+  @font-face { font-family: 'Plus Jakarta Sans'; font-style: normal; font-weight: 400; font-display: swap; src: url('/assets/fonts/plus-jakarta-sans-400.woff2') format('woff2'); }
+  @font-face { font-family: 'EB Garamond'; font-style: normal; font-weight: 400; font-display: swap; src: url('/assets/fonts/eb-garamond-400.woff2') format('woff2'); }
 
   :root {
     --paper:     #FDFBF7;
@@ -248,7 +254,8 @@
     --r-bg: var(--paper); --r-fg: var(--ink); --r-acc: var(--amber-dim);
     background-color: var(--r-bg); transition: background-color 0.9s ease, opacity 0.6s ease, translate 0.6s ease; }
   .range .eyebrow { color: var(--r-fg); transition: color 0.9s ease; }
-  .range .range-h { font-family: var(--serif); font-weight: 500; font-size: calc(28px * var(--type-scale, 1)); margin: 0 0 10px; color: var(--r-fg); transition: color 0.9s ease; }
+  .range .range-h { font-family: var(--r-head, var(--serif)); font-weight: var(--r-head-w, 500); text-transform: var(--r-head-tf, none); letter-spacing: var(--r-head-ls, normal);
+    font-size: calc(28px * var(--type-scale, 1)); line-height: 1.12; margin: 0 0 10px; color: var(--r-fg); transition: color 0.9s ease; }
   .range .range-h a { color: var(--r-acc); transition: color 0.9s ease; }
   .range .range-p { font-size: calc(17px * var(--type-scale, 1)); color: color-mix(in srgb, var(--r-fg) 80%, var(--r-bg)); max-width: 56ch; margin: 0 auto; transition: color 0.9s ease; }
   .range-tag { position: absolute; top: 16px; left: 20px; display: flex; align-items: center; gap: 7px;
@@ -1244,30 +1251,35 @@
     var sec = document.querySelector('.range');
     if (!sec) return;
     var tag = sec.querySelector('.range-tag');
-    /* [name, bg, fg, accent, accent-2] from the real /range profiles, interleaved light/dark */
+    /* [name, bg, fg, accent, accent-2, head-font, head-weight, transform, letter-spacing]
+       colours + head typeface from the real /range profiles, interleaved light/dark */
     var P = [
-      ['editorial', '#FDFBF7', '#1C1917', '#a64a14', '#ff7a1a'],
-      ['glitch', '#0A0A0A', '#FFFFFF', '#00FFCC', '#FF00FF'],
-      ['swiss', '#FFFFFF', '#0A0A0A', '#D11A12', '#0A0A0A'],
-      ['prestige', '#0B0B0C', '#F4F4F2', '#C9A24B', '#C9A24B'],
-      ['grove', '#F4F1EA', '#2C2724', '#5A6E4F', '#5A6E4F'],
-      ['cinematic', '#08080B', '#FFFFFF', '#3B82F6', '#3B82F6'],
-      ['soft', '#FAFAFF', '#1F2937', '#4F46E5', '#4F46E5'],
-      ['terminal', '#000000', '#FAFAFA', '#10B981', '#10B981'],
-      ['academic', '#FFFFF0', '#1A1A1A', '#8B0000', '#8B0000'],
-      ['fintech', '#0A0A0A', '#FFFFFF', '#F59E0B', '#F59E0B'],
-      ['clean', '#FFFFFF', '#111827', '#1D63D8', '#1D63D8'],
-      ['maximal', '#FFE600', '#16140A', '#2B2BE0', '#2B2BE0'],
-      ['brutal', '#FFFBE6', '#000000', '#FF3366', '#FF3366'],
-      ['constructivist', '#EAE3D5', '#141210', '#DE2417', '#DE2417'],
-      ['zen', '#F1F2F2', '#1E2124', '#3E4A57', '#3E4A57'],
-      ['counsel', '#FFFFFF', '#15202B', '#0E2C4B', '#0E2C4B'],
-      ['basic', '#F8FAFC', '#1E293B', '#2563EB', '#2563EB']
+      ['editorial', '#FDFBF7', '#1C1917', '#a64a14', '#ff7a1a', 'Newsreader, serif', 500, 'none', 'normal'],
+      ['glitch', '#0A0A0A', '#FFFFFF', '#00FFCC', '#FF00FF', "'Chakra Petch', sans-serif", 700, 'uppercase', '0.03em'],
+      ['swiss', '#FFFFFF', '#0A0A0A', '#D11A12', '#0A0A0A', 'Archivo, sans-serif', 700, 'none', '-0.02em'],
+      ['prestige', '#0B0B0C', '#F4F4F2', '#C9A24B', '#C9A24B', 'Newsreader, serif', 500, 'none', '0.01em'],
+      ['grove', '#F4F1EA', '#2C2724', '#5A6E4F', '#5A6E4F', 'Newsreader, serif', 500, 'none', 'normal'],
+      ['cinematic', '#08080B', '#FFFFFF', '#3B82F6', '#3B82F6', 'Inter, sans-serif', 400, 'none', '-0.02em'],
+      ['soft', '#FAFAFF', '#1F2937', '#4F46E5', '#4F46E5', "'Plus Jakarta Sans', sans-serif", 400, 'none', '-0.01em'],
+      ['terminal', '#000000', '#FAFAFA', '#10B981', '#10B981', "'JetBrains Mono', monospace", 700, 'none', 'normal'],
+      ['academic', '#FFFFF0', '#1A1A1A', '#8B0000', '#8B0000', "'EB Garamond', serif", 400, 'none', 'normal'],
+      ['fintech', '#0A0A0A', '#FFFFFF', '#F59E0B', '#F59E0B', 'Archivo, sans-serif', 700, 'none', '-0.02em'],
+      ['clean', '#FFFFFF', '#111827', '#1D63D8', '#1D63D8', 'Inter, sans-serif', 400, 'none', '-0.02em'],
+      ['maximal', '#FFE600', '#16140A', '#2B2BE0', '#2B2BE0', 'Anton, sans-serif', 400, 'uppercase', '0.01em'],
+      ['brutal', '#FFFBE6', '#000000', '#FF3366', '#FF3366', 'Archivo, sans-serif', 800, 'uppercase', '-0.01em'],
+      ['constructivist', '#EAE3D5', '#141210', '#DE2417', '#DE2417', 'Anton, sans-serif', 400, 'uppercase', '0.02em'],
+      ['zen', '#F1F2F2', '#1E2124', '#3E4A57', '#3E4A57', 'Newsreader, serif', 500, 'none', '0.02em'],
+      ['counsel', '#FFFFFF', '#15202B', '#0E2C4B', '#0E2C4B', 'Newsreader, serif', 500, 'none', 'normal'],
+      ['basic', '#F8FAFC', '#1E293B', '#2563EB', '#2563EB', 'system-ui, sans-serif', 600, 'none', '-0.01em']
     ];
     function apply(p, i) {
       sec.style.setProperty('--r-bg', p[1]);
       sec.style.setProperty('--r-fg', p[2]);
       sec.style.setProperty('--r-acc', p[3]);
+      sec.style.setProperty('--r-head', p[5]);
+      sec.style.setProperty('--r-head-w', p[6]);
+      sec.style.setProperty('--r-head-tf', p[7]);
+      sec.style.setProperty('--r-head-ls', p[8]);
       var n = (i + 1 < 10 ? '0' : '') + (i + 1);
       tag.innerHTML = n + ' &middot; ' + p[0] +
         ' <span class="sw" style="background:' + p[3] + '"></span>' +
