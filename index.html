@@ -1255,26 +1255,27 @@
         ARCH = 'Archivo, sans-serif', INTER = 'Inter, sans-serif', EBG = "'EB Garamond', serif",
         PJS = "'Plus Jakarta Sans', sans-serif", CHK = "'Chakra Petch', sans-serif", ANTON = 'Anton, sans-serif',
         SYS = 'system-ui, sans-serif';
-    /* [name, bg, fg, accent, accent-2, head, head-weight, transform, letter-spacing, body, label]
-       the FULL type system per /range profile: head + body + label fonts, colours, interleaved */
+    /* [display-name, bg, fg, accent, accent-2, head, head-weight, transform, letter-spacing, body, label]
+       the FULL type system per /range profile. ORDER + NAMES match the /range switcher exactly,
+       so the "NN . name" tag maps 1:1 to a real profile on the full-range page. */
     var P = [
-      ['editorial', '#FDFBF7', '#1C1917', '#a64a14', '#ff7a1a', SERIF, 500, 'none', 'normal', SS, MONO],
-      ['glitch', '#0A0A0A', '#FFFFFF', '#00FFCC', '#FF00FF', CHK, 700, 'uppercase', '0.03em', MONO, MONO],
-      ['swiss', '#FFFFFF', '#0A0A0A', '#D11A12', '#0A0A0A', ARCH, 700, 'none', '-0.02em', ARCH, ARCH],
-      ['prestige', '#0B0B0C', '#F4F4F2', '#C9A24B', '#C9A24B', SERIF, 500, 'none', '0.01em', SERIF, MONO],
-      ['grove', '#F4F1EA', '#2C2724', '#5A6E4F', '#5A6E4F', SERIF, 500, 'none', 'normal', SS, MONO],
-      ['cinematic', '#08080B', '#FFFFFF', '#3B82F6', '#3B82F6', INTER, 400, 'none', '-0.02em', INTER, MONO],
-      ['soft', '#FAFAFF', '#1F2937', '#4F46E5', '#4F46E5', PJS, 400, 'none', '-0.01em', INTER, PJS],
-      ['terminal', '#000000', '#FAFAFA', '#10B981', '#10B981', MONO, 700, 'none', 'normal', INTER, MONO],
-      ['academic', '#FFFFF0', '#1A1A1A', '#8B0000', '#8B0000', EBG, 400, 'none', 'normal', EBG, EBG],
-      ['fintech', '#0A0A0A', '#FFFFFF', '#F59E0B', '#F59E0B', ARCH, 700, 'none', '-0.02em', INTER, MONO],
-      ['clean', '#FFFFFF', '#111827', '#1D63D8', '#1D63D8', INTER, 400, 'none', '-0.02em', INTER, MONO],
-      ['maximal', '#FFE600', '#16140A', '#2B2BE0', '#2B2BE0', ANTON, 400, 'uppercase', '0.01em', ARCH, MONO],
-      ['brutal', '#FFFBE6', '#000000', '#FF3366', '#FF3366', ARCH, 800, 'uppercase', '-0.01em', MONO, MONO],
-      ['constructivist', '#EAE3D5', '#141210', '#DE2417', '#DE2417', ANTON, 400, 'uppercase', '0.02em', ARCH, ARCH],
-      ['zen', '#F1F2F2', '#1E2124', '#3E4A57', '#3E4A57', SERIF, 500, 'none', '0.02em', SS, MONO],
-      ['counsel', '#FFFFFF', '#15202B', '#0E2C4B', '#0E2C4B', SERIF, 500, 'none', 'normal', SS, MONO],
-      ['basic', '#F8FAFC', '#1E293B', '#2563EB', '#2563EB', SYS, 600, 'none', '-0.01em', SYS, SYS]
+      ['Editorial', '#FDFBF7', '#1C1917', '#a64a14', '#ff7a1a', SERIF, 500, 'none', 'normal', SS, MONO],
+      ['Swiss', '#FFFFFF', '#0A0A0A', '#D11A12', '#0A0A0A', ARCH, 700, 'none', '-0.02em', ARCH, ARCH],
+      ['Cyberpunk', '#0A0A0A', '#FFFFFF', '#00FFCC', '#FF00FF', CHK, 700, 'uppercase', '0.03em', MONO, MONO],
+      ['Zen', '#F1F2F2', '#1E2124', '#3E4A57', '#3E4A57', SERIF, 500, 'none', '0.02em', SS, MONO],
+      ['Brutalist', '#FFFBE6', '#000000', '#FF3366', '#FF3366', ARCH, 800, 'uppercase', '-0.01em', MONO, MONO],
+      ['Clean SaaS', '#FFFFFF', '#111827', '#1D63D8', '#1D63D8', INTER, 400, 'none', '-0.02em', INTER, MONO],
+      ['Prestige', '#0B0B0C', '#F4F4F2', '#C9A24B', '#C9A24B', SERIF, 500, 'none', '0.01em', SERIF, MONO],
+      ['Counsel', '#FFFFFF', '#15202B', '#0E2C4B', '#0E2C4B', SERIF, 500, 'none', 'normal', SS, MONO],
+      ['Grove', '#F4F1EA', '#2C2724', '#5A6E4F', '#5A6E4F', SERIF, 500, 'none', 'normal', SS, MONO],
+      ['Cinematic', '#08080B', '#FFFFFF', '#3B82F6', '#3B82F6', INTER, 400, 'none', '-0.02em', INTER, MONO],
+      ['Terminal', '#000000', '#FAFAFA', '#10B981', '#10B981', MONO, 700, 'none', 'normal', INTER, MONO],
+      ['Soft', '#FAFAFF', '#1F2937', '#4F46E5', '#4F46E5', PJS, 400, 'none', '-0.01em', INTER, PJS],
+      ['Academic', '#FFFFF0', '#1A1A1A', '#8B0000', '#8B0000', EBG, 400, 'none', 'normal', EBG, EBG],
+      ['Fintech', '#0A0A0A', '#FFFFFF', '#F59E0B', '#F59E0B', ARCH, 700, 'none', '-0.02em', INTER, MONO],
+      ['Maximal', '#FFE600', '#16140A', '#2B2BE0', '#2B2BE0', ANTON, 400, 'uppercase', '0.01em', ARCH, MONO],
+      ['Basic', '#F8FAFC', '#1E293B', '#2563EB', '#2563EB', SYS, 600, 'none', '-0.01em', SYS, SYS],
+      ['Constructivist', '#EAE3D5', '#141210', '#DE2417', '#DE2417', ANTON, 400, 'uppercase', '0.02em', ARCH, ARCH]
     ];
     function apply(p, i) {
       sec.style.setProperty('--r-bg', p[1]);
