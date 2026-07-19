@@ -283,7 +283,7 @@
     --font-head: "Range Newsreader", Georgia, serif; --font-body: "Range Source Serif 4", Georgia, serif; --font-label: "Range JetBrains Mono", "Consolas", monospace;
     --head-weight:500; --head-tracking:-0.02em; --head-leading:1.06; --head-transform:none;
     --label-tracking:0.12em; --label-transform:uppercase;
-    --plate-h: 460px; --plate-top: 80%; --sec-minh: 220px;
+    --plate-h: 460px; --plate-top: 50%; --sec-minh: 220px;
     background-color: var(--paper); color: var(--fg);
     transition: color 0.9s ease; }
   .range .wrap { position: relative; z-index: 2; max-width: 1080px; margin: 0 auto; padding: 0 32px;
@@ -473,7 +473,7 @@
     background-size: 34px 34px; background-position: 0 0, 17px 17px; }
   .range[data-profile="maximal"] .eyebrow { color: var(--fg); background: var(--c-cyan); border: 2px solid var(--fg); padding: 5px 11px; box-shadow: 4px 4px 0 var(--fg); transform: rotate(-1.6deg); font-weight: 700; }
   .range[data-profile="maximal"] .headline { color: var(--fg); text-shadow: 5px 5px 0 var(--accent), 9px 9px 0 var(--accent-2); }
-  .range[data-profile="maximal"] .headline em { font-family: var(--font-serif); font-style: italic; font-weight: 600; text-transform: none; color: var(--accent); }
+  .range[data-profile="maximal"] .headline em { font-style: normal; color: var(--accent); }
   .range[data-profile="maximal"] .sub { font-family: var(--font-serif); font-style: italic; color: var(--fg); font-weight: 500; background: var(--surface); border: 2px solid var(--fg); box-shadow: 5px 5px 0 var(--accent); padding: 10px 15px; margin-block: -12px; /* box outsets around the text (border+pad = 12px); the words themselves do not move */ }
   .range[data-profile="maximal"] .wrap::after { content: ""; display: block; height: 12px; width: min(100%,520px); margin-top: 18px; background: repeating-linear-gradient(90deg, var(--accent) 0 22px, var(--accent-2) 22px 44px, var(--c-cyan) 44px 66px, #FF8A1E 66px 88px); border: 2px solid var(--fg); }
 
