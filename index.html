@@ -548,6 +548,29 @@
   /* studies section: a uniform card grid, one per study, each with a small
      signature motif. amber is a rule/graphic only (never small text on cream). */
   .axial { padding: var(--gap, 52px) 0; }
+
+  /* ── background motion (from the motion lab): one restrained move per section, drawn from the
+     site's own paper + amber, mixed in oklab. GPU-safe (transform/opacity only). Each move is
+     clipped to its section by .bg-clip (so existing section decorations are untouched) and sits
+     behind the content (.wrap is z-index 1). All degrade to a still state under reduced-motion. */
+  .take, .axial, .elsewhere { position: relative; }
+  .take > .bg-clip, .axial > .bg-clip, .elsewhere > .bg-clip { position: absolute; inset: 0; overflow: hidden; z-index: 0; pointer-events: none; }
+  .take > .wrap, .axial > .wrap, .elsewhere > .wrap { position: relative; z-index: 1; }
+  /* take · afternoon: an ambient warm radial drifting diagonally, sun crossing a wall */
+  .bg-afternoon { position: absolute; inset: -45%; background: radial-gradient(closest-side at 50% 50%, color-mix(in oklab, #FDFBF7, #ff7a1a 4%), transparent 72%); animation: bg-drift 36s cubic-bezier(0.37, 0, 0.63, 1) infinite alternate; will-change: transform; }
+  @keyframes bg-drift { from { transform: translate3d(-13%, -7%, 0); } to { transform: translate3d(13%, 7%, 0); } }
+  /* axial (studies) · set square: a straight edge of surface-white the reader's scroll drags across */
+  .bg-edge { position: absolute; top: -5%; bottom: -5%; left: -70%; width: 165%; background: linear-gradient(102deg, #FFFFFF 46%, transparent calc(46% + 8%)); animation: bg-sweep auto linear both; animation-timeline: view(); animation-range: cover 5% cover 95%; will-change: transform; }
+  @keyframes bg-sweep { from { transform: translateX(-4%); } to { transform: translateX(36%); } }
+  @supports not (animation-timeline: view()) { .bg-edge { animation: none; transform: translateX(16%); } }
+  /* elsewhere · resolve: the plate is absent until the reader arrives, then resolves once and stays */
+  .bg-plate { position: absolute; left: 0; right: 0; top: 50%; translate: 0 -50%; height: min(100%, 64%); background: color-mix(in oklab, #FDFBF7, #ff7a1a 4%); opacity: 0; transition: opacity 2.2s cubic-bezier(0.22, 0.61, 0.36, 1); }
+  .elsewhere.is-on .bg-plate { opacity: 1; }
+  @media (prefers-reduced-motion: reduce) {
+    .bg-afternoon { animation: none; }
+    .bg-edge { animation: none; transform: translateX(16%); }
+    .bg-plate { transition: none; opacity: 1; }
+  }
   .axial .ax-h { font-family: var(--serif); font-weight: 500; font-size: calc(28px * var(--type-scale, 1)); margin: 0 0 8px; }
   .axial .ax-p { font-size: calc(17px * var(--type-scale, 1)); color: var(--ink-soft); max-width: 56ch; margin: 0 0 28px; }
   /* studies grid: one compact card per study, each with its signature in
@@ -1570,6 +1593,7 @@
   </script>
 
   <section class="take">
+    <div class="bg-clip" aria-hidden="true"><div class="bg-afternoon"></div></div>
     <div class="wrap">
       <h2 class="eyebrow">The take &middot; markdown</h2>
       <p class="code-caption"><span class="t">rendered live from</span> take.md <span class="t">· a tiny parser, ~25 lines</span></p>
@@ -2064,6 +2088,7 @@ Brand and web are two hands on one keyboard.
   </section>
 
   <section class="axial">
+    <div class="bg-clip" aria-hidden="true"><div class="bg-edge"></div></div>
     <div class="wrap">
       <h2 class="eyebrow">the studies &middot; one technique per page</h2>
       <p class="ax-h">Built openly, one lesson at a time.</p>
@@ -2094,6 +2119,7 @@ Brand and web are two hands on one keyboard.
   </section>
 
   <section class="elsewhere">
+    <div class="bg-clip" aria-hidden="true"><div class="bg-plate"></div></div>
     <div class="wrap">
       <h2 class="eyebrow">elsewhere &middot; built on the home keys</h2>
       <p class="range-p">The same hand and stack, pointed at three other problems.</p>
@@ -3945,6 +3971,18 @@ ${c.web.items.map(i=>'- '+i).join('\n')}
   if('IntersectionObserver' in window){ new IntersectionObserver(function(es){ es.forEach(function(e){ e.isIntersecting?play():stop(); }); },{threshold:0.02}).observe(box); }
   var rt; window.addEventListener('resize', function(){ if(!ready)return; clearTimeout(rt); rt=setTimeout(function(){ build(); draw(0); },150); });
 })();
+</script>
+<script>
+  /* elsewhere - resolve: reveal the colour plate once the section arrives (in-view, one-shot).
+     Reduced-motion users get it shown immediately via CSS; no-IO fallback shows it too. */
+  (function () {
+    var el = document.querySelector('.elsewhere');
+    if (!el) return;
+    if (!('IntersectionObserver' in window)) { el.classList.add('is-on'); return; }
+    new IntersectionObserver(function (es, io) {
+      es.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('is-on'); io.unobserve(e.target); } });
+    }, { threshold: 0.35 }).observe(el);
+  })();
 </script>
 </body>
 </html>
