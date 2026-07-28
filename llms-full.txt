@@ -1,0 +1,277 @@
+---
+date: 2026-07-28
+---
+
+# sdfkjh.com: full page content
+
+> Complete markdown content of sdfkjh.com for language models. Index and summary: https://sdfkjh.com/llms.txt
+
+# sdfkjh · brand and web, built on the home keys
+
+Source: https://sdfkjh.com/
+
+sdfkjh is six letters off the home row of a keyboard (sdf + kjh). The site is a single-page craft showcase: every section is a working artifact built by hand (a live Markdown renderer, a format switcher, an in-page design-token editor, an effects lab, and a JavaScript REPL), not a description of one. The page is the portfolio.
+
+## The take
+
+Left hand: **sdf**. Right hand: **kjh**. Brand and web are two hands on one keyboard.
+
+> The page is what they type together.
+
+## Brand
+
+- Wordmark: [ sdfkjh ] in mono, brackets in amber.
+- Type: Newsreader, Source Serif 4, JetBrains Mono.
+- Palette: paper, ink, amber.
+
+## Web
+
+- Markup: one static index.html.
+- Stack: vanilla JS, no framework.
+- Hosting: Cloudflare Pages, edge-served.
+
+One page renders in five formats: html · markdown · json · css · javascript.
+
+## Elsewhere
+
+The same hand and stack, pointed at three other problems:
+
+- [byob](https://byob.sdfkjh.com/): Be Your Own Broker. Car buying without the F&I middleman.
+- [tanktalks](https://tanktalks.sdfkjh.com/): freshwater aquarium keeping, explained plainly.
+- [business internet search](https://businessinternetsearch.sdfkjh.com/): B2B connectivity, sourced without the runaround.
+
+## The studies
+
+Standalone design-technique pages: each proves one device from the printed tradition, live and measured. Noindex by choice; linked only from the home page.
+
+- [axial grid](https://sdfkjh.com/axial): one spine, the wordmark exploded into five materials.
+- [swiss grid](https://sdfkjh.com/swiss): the International Typographic Style, the grid made visible.
+- [editorial spread](https://sdfkjh.com/spread): a magazine opening set live: drop cap, measured columns, footnotes.
+- [type specimen](https://sdfkjh.com/type): the site's own five-file font stack inspected, with the bill in bytes.
+- [raw document](https://sdfkjh.com/brutalist): web brutalism, the HTML undisguised; a component you can strip to its raw browser default, with its real source printed live.
+
+## Design range
+
+One markup, seventeen complete design systems. Switch the whole look live, then tune color, type, and layout in the browser: [sdfkjh.com/range](https://sdfkjh.com/range).
+
+## The console
+
+The homepage includes a working JavaScript REPL. Commands:
+
+- `whoami`: show the wordmark.
+- `brand`: show the brand.
+- `web`: show the web.
+- `both`: show both.
+- `contact`: show the email.
+- `time`: local time.
+- `weather [city]`: current weather (via wttr.in).
+- `news`: top stories (Hacker News).
+- `cve`: recent CVEs (NVD / NIST).
+- `ping <host>`: simulated round-trip.
+- `clear`: wipe the screen.
+
+## Facts
+
+- Static site, hand-built, no framework. Hosted on Cloudflare Pages.
+- Fonts and images are self-hosted; the page loads no third-party resources on page load. The REPL makes on-demand calls to public APIs (weather, Hacker News, NVD) only when a visitor types those commands.
+- No analytics, no tracking cookies.
+- Contact: info@sdfkjh.com
+- Parent domain of a small family of hand-built sites. The machine-readable directory of live properties is at https://sdfkjh.com/api/sites (see https://sdfkjh.com/.well-known/api-catalog).
+
+---
+
+# Accessibility Statement · sdfkjh
+
+Source: https://sdfkjh.com/accessibility
+
+# Accessibility Statement
+
+sdfkjh.com is built to be usable by everyone, including people with disabilities.
+
+## Conformance status
+
+This site aims to meet WCAG 2.2 Level AA, the technical standard most U.S. accessibility guidance points to. It is substantially conformant with that standard, with any exceptions noted under Known limitations below.
+
+## What is in place
+
+-   Semantic landmarks and a logical heading order on every page.
+-   A skip-to-content link as the first focusable element.
+-   Text and interface colors that meet AA contrast levels.
+-   Full keyboard operation, with a visible focus indicator that is never removed without a replacement.
+-   Descriptive text alternatives on meaningful images; decorative images marked as such.
+-   A declared page language.
+-   Reduced-motion support: animations and visual effects honor your browser's reduced-motion setting.
+
+## Known limitations
+
+The homepage includes an interactive playground: a command console and a visual-effects lab, built for demonstration. These are optional and sit alongside the main content. If any part of the playground is difficult to use, the information on the page does not depend on it.
+
+## Get in touch
+
+If you have trouble using any part of this site, or want information in another format, email [info@sdfkjh.com](mailto:info@sdfkjh.com) and we will help.
+
+Last reviewed: July 2026
+
+---
+
+# The Compliance Layer · sdfkjh
+
+Source: https://sdfkjh.com/compliance
+
+# The compliance layer
+
+Every page on this site carries a legal and accessibility layer you're not meant to notice. This page points at it.
+
+## What this site carries
+
+-   A [privacy policy](/privacy) that describes this site as it actually is (no analytics, no tracking cookies, fonts and images served from this domain) rather than a template's guess.
+-   A [Do Not Sell or Share](/do-not-sell) page stating California privacy rights plainly.
+-   [Terms of use](/terms) sized to what the site actually does.
+-   An informational privacy notice, not a consent wall. Normal browsing sets no cookies and needs no permission, so the banner asks for none. The one thing worth a choice, whether the optional `weather`, `news`, and `cve` lookups may reach their third-party APIs, is a single real preference stored in your browser, not a row of toggles pretending to gate nothing.
+-   Accessibility tested against WCAG 2.2 AA on every page: zero violations, last checked July 2026. Keyboard navigation, visible focus, a skip link, honest alt text.
+-   Security headers on every response: a content security policy, strict transport security, frame denial.
+
+## Why a personal site bothers
+
+It mostly doesn't have to. This site collects nothing, so the law asks very little of it.
+
+Business sites are a different story. California's Online Privacy Protection Act requires any website that collects personal information from California residents to post a privacy policy. A contact form or an online ordering page is enough to qualify, and there is no small-business exemption. Separately, a business with a physical location can face accessibility claims tied to its website, and California's Unruh Civil Rights Act sets statutory damages starting at $4,000 per violation. Demand letters built on exactly that arrive at small businesses every week.
+
+The layer is cheap to build when it's built honestly, and expensive to ignore. So this site carries it anyway: partly as good manners, mostly as a working example.
+
+## How it's kept true
+
+-   The policies were written to the site, not pasted onto it. When the site changes, the policies change.
+-   The privacy policy's claims are enforced by build discipline. "Fonts are served from this domain" stays true because the fonts live in `/assets/fonts/`, not on someone's CDN.
+-   Accessibility is tested against the WCAG 2.2 AA standard on every page, then re-checked when anything ships.
+
+If you're curious whether a site has this layer, scroll to its footer. Either the links are there, or they aren't.
+
+Last updated: July 2026
+
+---
+
+# Do Not Sell or Share My Personal Information · sdfkjh
+
+Source: https://sdfkjh.com/do-not-sell
+
+# Do Not Sell or Share My Personal Information
+
+Your rights under the California Consumer Privacy Act (CCPA) and California Privacy Rights Act (CPRA).
+
+## We don't sell or share your data
+
+sdfkjh.com does not sell personal information as defined by the CCPA (Cal. Civ. Code § 1798.140(ad)). We do not share personal information for cross-context behavioral advertising as defined by the CPRA (Cal. Civ. Code § 1798.140(ah)).
+
+We have not sold or shared personal information in the preceding twelve months.
+
+## What we collect
+
+This site does not collect personal information. There is no contact form, no user accounts, and no analytics. The only way to contact us is via a direct email link. No data is transmitted to us through this website. For full details, see our [Privacy Policy](/privacy).
+
+## Third-party services
+
+This site is hosted on Cloudflare. No external fonts, scripts, analytics, advertising, or tracking technologies are loaded on its own. Fonts and images are served from this domain. The on-page command console can optionally call public third-party APIs (wttr.in, Hacker News, NVD) when you run specific commands, and only then; see the [privacy policy](/privacy) for details. Neither Cloudflare hosting nor those on-demand lookups constitute a "sale" or "sharing" of personal information under CCPA/CPRA.
+
+## Your rights under CCPA/CPRA
+
+California residents have the right to:
+
+-   Know what personal information is collected and how it is used
+-   Request deletion of personal information
+-   Opt out of the sale or sharing of personal information (not applicable, we don't sell or share)
+-   Non-discrimination for exercising privacy rights
+
+## Contact
+
+To exercise your rights or ask questions about our data practices: [info@sdfkjh.com](mailto:info@sdfkjh.com)
+
+Last updated: July 2026
+
+---
+
+# Privacy Policy · sdfkjh
+
+Source: https://sdfkjh.com/privacy
+
+# Privacy Policy
+
+What information sdfkjh.com collects and how it is used.
+
+## Information collected
+
+This site does not collect personal information. There is no contact form, no analytics, no tracking cookies, and no user accounts. The only contact method is a mailto link (info@sdfkjh.com), which opens your own email client. No data is transmitted to us until you send an email.
+
+## Information collected automatically
+
+We don't use analytics software or tracking cookies on this site.
+
+Our hosting provider, Cloudflare, processes and logs web requests as part of delivering the site, including standard request metadata such as IP address. Cloudflare also derives aggregate, server-side traffic statistics from that activity (for example, page views and visitor country), computed at its edge with no script added to the page and no cookies set. See [Cloudflare's privacy policy](https://www.cloudflare.com/privacypolicy/) for details.
+
+## Third-party services
+
+This site loads no third-party scripts, fonts, analytics, or tracking resources on its own. Fonts and images are served from this domain; only Cloudflare's infrastructure is involved, for hosting and delivery.
+
+The on-page command console includes optional commands (`weather`, `news`, `cve`) that fetch from public third-party APIs only when you type them: [wttr.in](https://wttr.in), [Hacker News](https://news.ycombinator.com), and [NVD (nvd.nist.gov)](https://nvd.nist.gov). Those endpoints see your IP address as part of the request, like any other website you visit. No request is made until you run the command, and you can turn these lookups off from the on-page privacy option (the console's `privacy` command), after which those commands make no request at all.
+
+## Cookies and local storage
+
+This site sets no cookies. It stores small preferences in your browser's localStorage instead: one value remembers that you dismissed the privacy notice, and one records whether the optional third-party lookups (`weather`, `news`, `cve`) are allowed or blocked. Allowed is the default. You can change it any time from the on-page privacy option. These values stay in your browser and are never sent to us; localStorage is not a cookie and does not track you across sites.
+
+## Data retention
+
+No user data is collected or stored by this site. If you email us directly, that correspondence is retained only as long as needed to respond.
+
+## California privacy rights (CCPA/CPRA)
+
+We do not sell or share personal information as defined by California law. For a full statement of your rights under the CCPA and CPRA, see our [Do Not Sell or Share My Personal Information](/do-not-sell) page.
+
+## Contact
+
+Questions about this policy: [info@sdfkjh.com](mailto:info@sdfkjh.com)
+
+Last updated: July 2026
+
+---
+
+# Terms and Conditions · sdfkjh
+
+Source: https://sdfkjh.com/terms
+
+# Terms and Conditions
+
+By using sdfkjh.com you agree to the following terms.
+
+## Use of this site
+
+This website is provided for informational purposes only. You may browse the site freely. You agree not to use the site for any unlawful purpose or in any way that could damage, disable, or impair its operation.
+
+## Intellectual property
+
+All content on this site, including text, design, graphics, logos, and code, is the property of sdfkjh.com and is protected by applicable intellectual property laws. You may not reproduce, distribute, or create derivative works from this content without prior written permission.
+
+## No warranties
+
+This site and its content are provided "as is" without warranties of any kind, either express or implied. We do not guarantee that the site will be available, uninterrupted, or error-free.
+
+## Limitation of liability
+
+To the fullest extent permitted by law, sdfkjh.com and its owner shall not be liable for any direct, indirect, incidental, or consequential damages arising from your use of or inability to use this site.
+
+## External links
+
+This site may contain links to third-party websites. We are not responsible for the content, privacy practices, or terms of any linked sites.
+
+## Changes to these terms
+
+We may update these terms at any time. Continued use of the site after changes constitutes acceptance of the revised terms.
+
+## Governing law
+
+These terms are governed by the laws of the State of California, without regard to conflict of law principles.
+
+## Contact
+
+Questions about these terms: [info@sdfkjh.com](mailto:info@sdfkjh.com)
+
+Last updated: May 2026

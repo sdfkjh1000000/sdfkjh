@@ -1,6 +1,12 @@
+---
+date: 2026-07-28
+---
+
 # sdfkjh.com
 
 > sdfkjh is six letters off the home row of a keyboard (sdf + kjh). The site is a single-page craft showcase: every section is a working artifact built by hand (a live Markdown renderer, a format switcher, an in-page design-token editor, an effects lab, and a JavaScript REPL), not a description of one. Brand work decides how a thing sounds and looks; web work decides whether it loads, ranks, and lasts. The page is the portfolio.
+
+Full page content for language models: https://sdfkjh.com/llms-full.txt
 
 ## Pages
 
@@ -12,9 +18,40 @@
 - [Accessibility](https://sdfkjh.com/accessibility): accessibility statement and WCAG 2.2 AA commitment.
 - [Compliance](https://sdfkjh.com/compliance): the legal and accessibility layer every page carries.
 
-## Notes
+## The studies
 
-- Static site, hand-built, no framework. Hosted on Cloudflare Pages.
-- sdfkjh.com is the parent of a small family of hand-built sites: byob (car buying), tanktalks (freshwater aquariums), business internet search (B2B connectivity). Machine-readable directory: https://sdfkjh.com/api/sites
+Standalone design-technique pages: each proves one device from the printed tradition, live and measured. Noindex by choice; linked only from the home page.
+
+- [Axial grid](https://sdfkjh.com/axial): one spine, the wordmark exploded into five materials.
+- [Swiss grid](https://sdfkjh.com/swiss): the International Typographic Style, the grid made visible.
+- [Editorial spread](https://sdfkjh.com/spread): a magazine opening set live: drop cap, measured columns, footnotes.
+- [Type specimen](https://sdfkjh.com/type): the site's own five-file font stack inspected, with the bill in bytes.
+- [Raw document](https://sdfkjh.com/brutalist): web brutalism, the HTML undisguised; a component you can strip to its raw browser default, with its real source printed live.
+
+## The console
+
+The homepage includes a working JavaScript REPL: `whoami` · `brand` · `web` · `both` · `time` · `weather [city]` (wttr.in) · `news` (Hacker News) · `cve` (NVD/NIST) · `ping <host>` · `clear`. The weather, news, and CVE commands are the only outbound calls the page ever makes, and only when a visitor types them.
+
+## Site family
+
+sdfkjh.com is the parent of a small family of hand-built sites. Machine-readable directory: https://sdfkjh.com/api/sites
+
+- [BYOB](https://byob.sdfkjh.com/): Be Your Own Broker. Car buying without the dealership F&I middleman, keeping the deal in the buyer's hands.
+- [Tank Talks](https://tanktalks.sdfkjh.com/): freshwater aquarium keeping, explained plainly. How-to and troubleshooting on fish, shrimp, plants, and water chemistry.
+- [Business Internet Quotes](https://businessinternetsearch.sdfkjh.com/): finds business-grade internet providers serviceable at a specific commercial address. Free to the business; carriers pay the referral.
+
+## Agent access
+
+- MCP server (read-only, no auth, Streamable HTTP): https://mcp.sdfkjh.com/mcp with tools get_overview, list_sites, list_repl_commands. Server card: https://sdfkjh.com/.well-known/mcp/server-card.json
+- Markdown content negotiation: request any content page with `Accept: text/markdown` for a clean markdown version.
+- API catalog: https://sdfkjh.com/.well-known/api-catalog (the site directory at GET /api/sites).
+- Agent skills: https://sdfkjh.com/.well-known/agent-skills/index.json
+- Crawl policy: AI crawlers are welcome for search and real-time answering; content is not licensed for training. See https://sdfkjh.com/robots.txt
+
+## Facts
+
+- Static site, hand-built, no framework. Vanilla JS, edge-served on Cloudflare Pages.
 - Fonts and images are self-hosted; the page loads no third-party resources on page load.
-- The in-page console (REPL) makes on-demand calls to public APIs (weather, Hacker News, NVD) only when a visitor types those commands.
+- No analytics, no tracking cookies.
+- One page renders in five formats: html · markdown · json · css · javascript.
+- Type: Newsreader, Source Serif 4, JetBrains Mono. Palette: paper, ink, amber.
